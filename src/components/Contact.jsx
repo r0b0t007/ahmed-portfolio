@@ -13,8 +13,8 @@ const infoItems = [
   {
     icon: <FaEnvelope />,
     label: 'Email',
-    value: 'ahmedchioua@outlook.com',
-    href: 'mailto:ahmedchioua@outlook.com',
+    value: 'ahmedchioua@gmail.com',
+    href: 'mailto:ahmedchioua@gmail.com',
     color: 'var(--accent-secondary)',
   },
   {
@@ -35,17 +35,26 @@ const infoItems = [
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
 
   const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const { name, email, subject, message } = formData
-    const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-    window.location.href = `mailto:ahmedchioua@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
+    setStatus('sending')
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ 'form-name': 'contact', ...formData }).toString(),
+      })
+      setStatus('success')
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      setTimeout(() => setStatus('idle'), 5000)
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 5000)
+    }
   }
 
   return (
@@ -115,12 +124,16 @@ const Contact = () => {
           {/* Form column */}
           <motion.form
             className="contact-form"
+            name="contact"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             onSubmit={handleSubmit}
           >
+            {/* Netlify required fields */}
+            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="bot-field" />
             <div className="form-row">
               <div className="form-group">
                 <label>Name</label>
@@ -169,18 +182,15 @@ const Contact = () => {
             </div>
             <motion.button
               type="submit"
-              className="submit-btn"
-              whileHover={{ scale: 1.03 }}
+              className={`submit-btn ${status}`}
+              disabled={status === 'sending'}
+              whileHover={{ scale: status === 'idle' ? 1.03 : 1 }}
               whileTap={{ scale: 0.97 }}
             >
-              {sent ? (
-                '✓ Opening your email client…'
-              ) : (
-                <>
-                  <FaPaperPlane size={13} />
-                  Send Message
-                </>
-              )}
+              {status === 'sending' && 'Sending…'}
+              {status === 'success' && '✓ Message sent!'}
+              {status === 'error'   && '✗ Failed — please retry'}
+              {status === 'idle'    && <><FaPaperPlane size={13} /> Send Message</>}
             </motion.button>
           </motion.form>
         </div>
@@ -308,6 +318,9 @@ const Contact = () => {
           transition: box-shadow var(--transition);
         }
         .submit-btn:hover { box-shadow: 0 0 36px rgba(45,212,191,0.38); }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        .submit-btn.success { background: linear-gradient(135deg, #34D399, #059669); box-shadow: 0 0 24px rgba(52,211,153,0.3); }
+        .submit-btn.error   { background: linear-gradient(135deg, #F87171, #DC2626); box-shadow: 0 0 24px rgba(248,113,113,0.3); }
         @media (max-width: 860px) {
           .contact-grid { grid-template-columns: 1fr; gap: 40px; }
           .form-row { grid-template-columns: 1fr; }
