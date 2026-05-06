@@ -1,26 +1,51 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
+
+const infoItems = [
+  {
+    icon: <FaPhone />,
+    label: 'Phone',
+    value: '(+212) 626-410-690',
+    href: 'tel:+212626410690',
+    color: 'var(--accent-primary)',
+  },
+  {
+    icon: <FaEnvelope />,
+    label: 'Email',
+    value: 'ahmedchioua@outlook.com',
+    href: 'mailto:ahmedchioua@outlook.com',
+    color: 'var(--accent-secondary)',
+  },
+  {
+    icon: <FaLinkedin />,
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/ahmedchioua',
+    href: 'https://linkedin.com/in/ahmedchioua',
+    color: 'var(--accent-pink)',
+  },
+  {
+    icon: <FaMapMarkerAlt />,
+    label: 'Location',
+    value: 'Tetouan, Morocco · Remote',
+    href: null,
+    color: 'var(--accent-green)',
+  },
+]
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  })
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
+  const [sent, setSent] = useState(false)
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault()
     const { name, email, subject, message } = formData
-
-    const mailtoLink = `mailto:ahmedchioua@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`
-
-    window.location.href = mailtoLink
+    const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    window.location.href = `mailto:ahmedchioua@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setSent(true)
+    setTimeout(() => setSent(false), 3000)
   }
 
   return (
@@ -31,13 +56,17 @@ const Contact = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.55 }}
         >
+          <p className="section-label">Contact</p>
           <h2 className="section-title">Get In Touch</h2>
-          <div className="section-line"></div>
+          <p className="section-subtitle">
+            Prefer email? Drop me a message and I'll reply within 24 hours.
+          </p>
         </motion.div>
 
-        <div className="contact-content">
+        <div className="contact-grid">
+          {/* Info column */}
           <motion.div
             className="contact-info"
             initial={{ opacity: 0, x: -30 }}
@@ -45,93 +74,114 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3>Let's Connect</h3>
-            <p>
-              I'm always open to discussing new opportunities, Agile transformations, or just connecting with fellow professionals.
+            <p className="info-intro">
+              Always open to discussing Agile transformations, new opportunities,
+              or just connecting with fellow professionals.
             </p>
 
-            <div className="info-item">
-              <div className="icon-box">
-                <FaPhone />
-              </div>
-              <div>
-                <h4>Phone</h4>
-                <p>(+212) 626-410-690</p>
-              </div>
-            </div>
-
-            <div className="info-item">
-              <div className="icon-box">
-                <FaEnvelope />
-              </div>
-              <div>
-                <h4>Email</h4>
-                <p>ahmedchioua@outlook.com</p>
-              </div>
-            </div>
-
-            <div className="info-item">
-              <div className="icon-box">
-                <FaLinkedin />
-              </div>
-              <div>
-                <h4>LinkedIn</h4>
-                <a href="https://linkedin.com/in/ahmedchioua" target="_blank" rel="noopener noreferrer">
-                  linkedin.com/in/ahmedchioua
-                </a>
-              </div>
+            <div className="info-list">
+              {infoItems.map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  className="info-card"
+                  style={{ '--ic': item.color }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.09 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <div className="info-icon">{item.icon}</div>
+                  <div>
+                    <p className="info-label">{item.label}</p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target={item.href.startsWith('http') ? '_blank' : undefined}
+                        rel="noopener noreferrer"
+                        className="info-value link"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="info-value">{item.value}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
 
+          {/* Form column */}
           <motion.form
             className="contact-form"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             onSubmit={handleSubmit}
           >
-            <div className="form-group">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+            <div className="form-row">
+              <div className="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
             <div className="form-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
+              <label>Subject</label>
               <input
                 type="text"
                 name="subject"
-                placeholder="Subject"
+                placeholder="What's this about?"
                 value={formData.subject}
                 onChange={handleChange}
                 required
               />
             </div>
             <div className="form-group">
+              <label>Message</label>
               <textarea
                 name="message"
-                placeholder="Message"
+                placeholder="Tell me more..."
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
                 required
-              ></textarea>
+              />
             </div>
-            <button type="submit" className="btn btn-primary">Send Message</button>
+            <motion.button
+              type="submit"
+              className="submit-btn"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {sent ? (
+                '✓ Opening your email client…'
+              ) : (
+                <>
+                  <FaPaperPlane size={13} />
+                  Send Message
+                </>
+              )}
+            </motion.button>
           </motion.form>
         </div>
       </div>
@@ -140,87 +190,127 @@ const Contact = () => {
         .contact-section {
           background: var(--bg-secondary);
         }
-
-        .contact-content {
+        .contact-grid {
           display: grid;
-          grid-template-columns: 1fr 1.5fr;
-          gap: 50px;
+          grid-template-columns: 1fr 1.4fr;
+          gap: 60px;
+          align-items: start;
         }
-
-        .contact-info h3 {
-          font-size: 2rem;
-          margin-bottom: 20px;
-        }
-
-        .contact-info p {
+        .info-intro {
+          font-size: 0.97rem;
           color: var(--text-secondary);
-          margin-bottom: 40px;
+          line-height: 1.8;
+          margin-bottom: 32px;
         }
-
-        .info-item {
+        .info-list { display: flex; flex-direction: column; gap: 14px; }
+        .info-card {
           display: flex;
           align-items: center;
-          margin-bottom: 30px;
+          gap: 16px;
+          padding: 16px 20px;
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: var(--radius-md);
+          transition: border-color var(--transition), background var(--transition), transform var(--transition);
+          cursor: default;
         }
-
-        .icon-box {
-          width: 50px;
-          height: 50px;
-          background: rgba(45, 212, 191, 0.1);
+        .info-card:hover {
+          border-color: var(--ic, var(--accent-primary));
+          background: var(--bg-card-hover);
+        }
+        .info-icon {
+          width: 42px; height: 42px;
+          background: color-mix(in srgb, var(--ic) 12%, transparent);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--accent-primary);
-          font-size: 1.2rem;
-          margin-right: 20px;
+          color: var(--ic, var(--accent-primary));
+          font-size: 1rem;
+          flex-shrink: 0;
         }
-
-        .info-item h4 {
-          font-size: 1.1rem;
-          margin-bottom: 5px;
+        .info-label {
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--text-muted);
+          margin-bottom: 3px;
         }
-
-        .info-item p, .info-item a {
+        .info-value {
+          font-size: 0.88rem;
+          font-weight: 600;
           color: var(--text-secondary);
-          margin: 0;
         }
-
-        .info-item a:hover {
-          color: var(--accent-primary);
-        }
-
+        .info-value.link { transition: color var(--transition); }
+        .info-value.link:hover { color: var(--ic, var(--accent-primary)); }
+        /* Form */
         .contact-form {
-          background: var(--bg-card);
-          padding: 40px;
-          border-radius: 15px;
-          border: 1px solid #222;
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: var(--radius-xl);
+          padding: 36px;
         }
-
+        .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
         .form-group {
-          margin-bottom: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 7px;
+          margin-bottom: 16px;
         }
-
-        .form-group input, .form-group textarea {
+        .form-group:last-of-type { margin-bottom: 24px; }
+        .form-group label {
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--text-secondary);
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+        }
+        .form-group input,
+        .form-group textarea {
           width: 100%;
-          padding: 15px;
-          background: var(--bg-primary);
-          border: 1px solid #333;
-          border-radius: 8px;
+          padding: 13px 16px;
+          background: rgba(5,8,22,0.8);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: var(--radius-sm);
           color: var(--text-primary);
           font-family: var(--font-main);
-          transition: border-color 0.3s ease;
+          font-size: 0.92rem;
+          transition: border-color var(--transition), box-shadow var(--transition);
+          resize: none;
         }
-
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: var(--text-muted); }
+        .form-group input:focus,
+        .form-group textarea:focus {
           outline: none;
           border-color: var(--accent-primary);
+          box-shadow: 0 0 0 3px rgba(45,212,191,0.1);
         }
-
-        @media (max-width: 768px) {
-          .contact-content {
-            grid-template-columns: 1fr;
-          }
+        .submit-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          width: 100%;
+          padding: 14px;
+          background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+          border: none;
+          border-radius: var(--radius-md);
+          color: #050816;
+          font-size: 0.95rem;
+          font-weight: 700;
+          box-shadow: 0 0 24px rgba(45,212,191,0.25);
+          transition: box-shadow var(--transition);
+        }
+        .submit-btn:hover { box-shadow: 0 0 36px rgba(45,212,191,0.38); }
+        @media (max-width: 860px) {
+          .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+          .form-row { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>

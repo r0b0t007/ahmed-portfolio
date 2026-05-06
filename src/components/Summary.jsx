@@ -1,145 +1,259 @@
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView } from 'framer-motion'
 
-const Summary = () => {
-  return (
-    <section id="summary" className="section summary-section">
-      <div className="container">
+const stats = [
+  { value: 9,  suffix: '+', label: 'Years Experience', color: 'var(--accent-primary)' },
+  { value: 7,  suffix: '+', label: 'Projects Delivered', color: 'var(--accent-secondary)' },
+  { value: 3,  suffix: '',  label: 'Certifications', color: 'var(--accent-pink)' },
+  { value: 3,  suffix: '',  label: 'Languages', color: 'var(--accent-green)' },
+]
+
+const AnimatedNumber = ({ value, suffix }) => {
+  const [display, setDisplay] = useState(0)
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  useEffect(() => {
+    if (!inView) return
+    let start = 0
+    const end = value
+    const duration = 1400
+    const step = (duration / end)
+    const timer = setInterval(() => {
+      start += 1
+      setDisplay(start)
+      if (start >= end) clearInterval(timer)
+    }, step)
+    return () => clearInterval(timer)
+  }, [inView, value])
+
+  return <span ref={ref}>{display}{suffix}</span>
+}
+
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  show:  { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] } }
+}
+
+const Summary = () => (
+  <section id="summary" className="section summary-section">
+    <div className="container">
+      <motion.div
+        className="section-header"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55 }}
+      >
+        <p className="section-label">About Me</p>
+        <h2 className="section-title">Servant Leader.<br />Agile Champion.</h2>
+        <p className="section-subtitle">
+          Bridging teams and strategy to deliver outcomes that matter.
+        </p>
+      </motion.div>
+
+      {/* Bento grid */}
+      <div className="bento">
+        {/* Bio — spans 2 cols */}
         <motion.div
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="bento-card bento-bio"
+          initial="hidden" whileInView="show" variants={item} viewport={{ once: true }}
         >
-          <h2 className="section-title">About Me</h2>
-          <div className="section-line"></div>
+          <div className="bio-tag">Bio</div>
+          <p>
+            Instrumental <strong>Scrum Master</strong> with over{' '}
+            <strong>9 years of experience</strong> driving Agile success in demanding IT environments.
+            I combine deep Agile expertise with a scalable mindset to deliver high-impact results
+            across complex projects and organizations.
+          </p>
+          <p>
+            As a dedicated servant leader, I empower teams by removing impediments, fostering
+            collaboration, and promoting a culture of continuous improvement — diligent,
+            forward-thinking, and highly adaptable.
+          </p>
         </motion.div>
 
-        <div className="summary-content">
+        {/* Stats */}
+        {stats.map((s, i) => (
           <motion.div
-            className="summary-text"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            key={s.label}
+            className="bento-card bento-stat"
+            style={{ '--sc': s.color }}
+            initial={{ opacity: 0, scale: 0.88 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
+            whileHover={{ y: -6 }}
           >
-            <p>
-              Instrumental <strong>Scrum Master</strong> with a strong technical background and over <strong>9 years of experience</strong> driving Agile success in demanding IT environments.
-            </p>
-            <p>
-              I combine deep Agile expertise with a scalable mindset to deliver high-impact results across complex projects and organizations. Diligent, forward-thinking, and highly adaptable, I thrive in dynamic environments—responding effectively to evolving company, customer, and project demands.
-            </p>
-            <p>
-              As a dedicated servant leader, I empower teams by removing impediments, fostering collaboration, and promoting a culture of continuous improvement.
-            </p>
+            <div className="stat-value">
+              <AnimatedNumber value={s.value} suffix={s.suffix} />
+            </div>
+            <div className="stat-label">{s.label}</div>
+            <div className="stat-glow" />
           </motion.div>
+        ))}
 
-          <motion.div
-            className="summary-stats"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="stat-card">
-              <h3>9+</h3>
-              <p>Years Experience</p>
-            </div>
-            <div className="stat-card">
-              <h3>PSM I</h3>
-              <p>Certified</p>
-            </div>
-            <div className="stat-card">
-              <h3>SSM</h3>
-              <p>Certified</p>
-            </div>
-          </motion.div>
-        </div>
+        {/* Availability card */}
+        <motion.div
+          className="bento-card bento-avail"
+          initial="hidden" whileInView="show" variants={item} viewport={{ once: true, delay: 0.2 }}
+        >
+          <span className="avail-dot" />
+          <div>
+            <p className="avail-title">Available for Hire</p>
+            <p className="avail-sub">Open to Scrum Master &amp; Agile Coach roles globally</p>
+          </div>
+        </motion.div>
+
+        {/* Location card */}
+        <motion.div
+          className="bento-card bento-loc"
+          initial="hidden" whileInView="show" variants={item} viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+        >
+          <div className="loc-flag">🇲🇦</div>
+          <p className="loc-name">Morocco</p>
+          <p className="loc-sub">Tetouan / Remote</p>
+        </motion.div>
       </div>
+    </div>
 
-      <style>{`
-        .summary-section {
-          background: var(--bg-secondary);
-        }
+    <style>{`
+      .summary-section {
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      }
+      .bento {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto;
+        gap: 16px;
+      }
+      .bento-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        transition: border-color var(--transition), background var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+      .bento-card:hover {
+        border-color: rgba(255,255,255,0.12);
+        background: var(--bg-card-hover);
+      }
+      /* Bio: spans 2 cols, 1 row */
+      .bento-bio {
+        grid-column: span 2;
+      }
+      .bio-tag {
+        display: inline-block;
+        padding: 4px 12px;
+        background: rgba(45,212,191,0.1);
+        border: 1px solid rgba(45,212,191,0.2);
+        border-radius: 100px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--accent-primary);
+        margin-bottom: 20px;
+      }
+      .bento-bio p {
+        font-size: 0.97rem;
+        color: var(--text-secondary);
+        line-height: 1.85;
+        margin-bottom: 14px;
+      }
+      .bento-bio p:last-child { margin-bottom: 0; }
+      .bento-bio strong { color: var(--text-primary); font-weight: 600; }
+      /* Stats */
+      .bento-stat {
+        grid-column: span 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        cursor: default;
+        min-height: 130px;
+      }
+      .stat-value {
+        font-size: 2.6rem;
+        font-weight: 900;
+        color: var(--sc, var(--accent-primary));
+        line-height: 1;
+        margin-bottom: 10px;
+        letter-spacing: -1px;
+      }
+      .stat-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        letter-spacing: 0.5px;
+      }
+      .stat-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(45,212,191,0.05) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      /* Availability */
+      .bento-avail {
+        grid-column: span 2;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .avail-dot {
+        width: 12px; height: 12px;
+        background: var(--accent-green);
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 12px var(--accent-green);
+        animation: pulseDot 2.5s ease-in-out infinite;
+      }
+      @keyframes pulseDot {
+        0%,100% { opacity:1; transform:scale(1); }
+        50% { opacity:0.55; transform:scale(0.8); }
+      }
+      .avail-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+      .avail-sub {
+        font-size: 0.83rem;
+        color: var(--text-secondary);
+      }
+      /* Location */
+      .bento-loc {
+        grid-column: span 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .loc-flag { font-size: 2rem; margin-bottom: 4px; }
+      .loc-name { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+      .loc-sub { font-size: 0.83rem; color: var(--text-secondary); }
 
-        .section-header {
-          text-align: center;
-          margin-bottom: 60px;
-        }
-
-        .section-title {
-          font-size: 2.5rem;
-          margin-bottom: 15px;
-        }
-
-        .section-line {
-          width: 60px;
-          height: 4px;
-          background: var(--accent-primary);
-          margin: 0 auto;
-          border-radius: 2px;
-        }
-
-        .summary-content {
-          display: grid;
-          grid-template-columns: 1.5fr 1fr;
-          gap: 50px;
-          align-items: center;
-        }
-
-        .summary-text p {
-          margin-bottom: 20px;
-          font-size: 1.1rem;
-          color: var(--text-secondary);
-        }
-
-        .summary-text strong {
-          color: var(--text-primary);
-        }
-
-        .summary-stats {
-          display: grid;
+      @media (max-width: 900px) {
+        .bento {
           grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
         }
-
-        .stat-card {
-          background: var(--bg-card);
-          padding: 30px;
-          border-radius: 15px;
-          text-align: center;
-          border: 1px solid #222;
-          transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-          transform: translateY(-5px);
-          border-color: var(--accent-primary);
-        }
-
-        .stat-card h3 {
-          font-size: 2rem;
-          color: var(--accent-primary);
-          margin-bottom: 5px;
-        }
-
-        .stat-card p {
-          color: var(--text-secondary);
-          font-size: 0.9rem;
-        }
-
-        .stat-card:nth-child(1) {
+        .bento-bio, .bento-avail, .bento-loc {
           grid-column: span 2;
         }
-
-        @media (max-width: 768px) {
-          .summary-content {
-            grid-template-columns: 1fr;
-          }
+      }
+      @media (max-width: 540px) {
+        .bento { grid-template-columns: 1fr; }
+        .bento-bio, .bento-stat, .bento-avail, .bento-loc {
+          grid-column: span 1;
         }
-      `}</style>
-    </section>
-  )
-}
+      }
+    `}</style>
+  </section>
+)
 
 export default Summary
