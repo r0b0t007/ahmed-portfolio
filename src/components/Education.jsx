@@ -2,19 +2,14 @@ import { motion } from 'framer-motion'
 
 const education = [
   {
-    degree: 'State Engineer — Computer Engineering',
+    degree: 'State Engineer Degree in Computer Engineering',
     school: 'Mohammed VI International Academy of Civil Aviation',
     location: 'Casablanca, Morocco',
   },
   {
-    degree: 'Preparatory Classes for Higher Education',
+    degree: 'Preparatory Classes for Higher Education Entrance Examinations',
     school: 'Lycée Technique Settat',
     location: 'Settat, Morocco',
-  },
-  {
-    degree: 'High School Diploma — Science & Electrical Technologies',
-    school: 'Lycée Technique Tetouan',
-    location: 'Tetouan, Morocco',
   },
 ]
 
@@ -25,21 +20,36 @@ const certifications = [
     color: 'var(--accent-primary)',
   },
   {
-    name: 'SAFe Agilist',
+    name: 'SAFe® 6 Scrum Master',
     issuer: 'Scaled Agile, Inc.',
     color: 'var(--accent-secondary)',
   },
   {
-    name: 'Certified SAFe® 6 Scrum Master (SSM)',
+    name: 'SAFe® 6 Agilist',
     issuer: 'Scaled Agile, Inc.',
     color: 'var(--accent-pink)',
   },
 ]
 
 const languages = [
-  { lang: 'Arabic',  level: 'Native',  pct: 100, color: 'var(--accent-primary)' },
-  { lang: 'English', level: 'C2 / C1', pct: 90,  color: 'var(--accent-secondary)' },
-  { lang: 'French',  level: 'C1 / B2', pct: 80,  color: 'var(--accent-pink)' },
+  { lang: 'Arabic',  level: 'Native',           pct: 100, color: 'var(--accent-primary)' },
+  { lang: 'English', level: 'C2 written / C1 spoken', pct: 92, color: 'var(--accent-secondary)' },
+  { lang: 'French',  level: 'C1 written / B2 spoken', pct: 78, color: 'var(--accent-pink)' },
+]
+
+const leadership = [
+  {
+    role: 'Product Owner — Internal ERP Implementation',
+    location: 'Tétouan, Morocco',
+    period: 'Dec 2023 – Jun 2024',
+    desc: 'Led a team of developers; owned roadmap and milestones; provided Scrum and Kanban training to the team.',
+  },
+  {
+    role: 'Mentor — Company Mentorship Program',
+    location: 'NTT DATA',
+    period: 'Feb 2024 – Jun 2024',
+    desc: 'Mentored junior engineers on agile practices and career development; coaching on leadership and communication.',
+  },
 ]
 
 const cardIn = (delay = 0) => ({
@@ -62,6 +72,7 @@ const Education = () => (
       </motion.div>
 
       <div className="edu-grid">
+
         {/* Education column */}
         <motion.div
           initial="hidden"
@@ -160,6 +171,40 @@ const Education = () => (
           </motion.div>
         </div>
       </div>
+
+      {/* Leadership & Volunteering */}
+      <motion.div
+        className="leadership-section"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <h3 className="col-heading" style={{ marginBottom: '24px' }}>
+          <span className="col-icon">🌱</span>
+          Leadership &amp; Volunteering
+        </h3>
+        <div className="leadership-grid">
+          {leadership.map((l, i) => (
+            <motion.div
+              key={l.role}
+              className="lead-card"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ y: -4 }}
+            >
+              <div className="lead-head">
+                <p className="lead-role">{l.role}</p>
+                <span className="lead-period">{l.period}</span>
+              </div>
+              <p className="lead-location">{l.location}</p>
+              <p className="lead-desc">{l.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </div>
 
     <style>{`
@@ -276,8 +321,40 @@ const Education = () => (
         border-radius: 2px;
         opacity: 0.85;
       }
+      /* Leadership */
+      .leadership-section { margin-top: 60px; }
+      .leadership-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .lead-card {
+        padding: 22px 24px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-left: 3px solid var(--accent-green);
+        border-radius: var(--radius-md);
+        transition: border-left-color var(--transition), background var(--transition), transform var(--transition);
+        cursor: default;
+      }
+      .lead-card:hover {
+        background: var(--bg-card-hover);
+        border-left-color: var(--accent-primary);
+      }
+      .lead-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 4px;
+      }
+      .lead-role { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+      .lead-period { font-size: 0.72rem; font-weight: 600; color: var(--accent-primary); white-space: nowrap; flex-shrink: 0; }
+      .lead-location { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
+      .lead-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; }
       @media (max-width: 768px) {
         .edu-grid { grid-template-columns: 1fr; gap: 40px; }
+        .leadership-grid { grid-template-columns: 1fr; }
       }
     `}</style>
   </section>

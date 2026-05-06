@@ -2,34 +2,28 @@ import { motion } from 'framer-motion'
 
 const categories = [
   {
-    title: 'Agile Methodologies',
+    title: 'Agile & Scrum',
     color: 'var(--accent-primary)',
     icon: '⚡',
-    skills: ['Scrum', 'SAFe 6', 'Kanban', 'Scaled Agile', 'Servant Leadership', 'Continuous Improvement', 'Retrospectives', 'Sprint Planning'],
+    skills: ['Scrum', 'Kanban', 'SAFe (Scaled Agile)', 'PI Planning', 'Backlog Refinement', 'Story Sizing', 'Velocity Tracking', 'Sprint Metrics', 'Release Planning', 'Definition of Done/Ready', 'Continuous Improvement'],
   },
   {
-    title: 'Tools & Management',
+    title: 'Facilitation',
     color: 'var(--accent-secondary)',
-    icon: '🛠',
-    skills: ['Jira', 'Confluence', 'Azure DevOps', 'Miro', 'Trello', 'Asana', 'GitLab', 'MS Teams'],
+    icon: '🎯',
+    skills: ['Remote Team Facilitation', 'Retrospective Design', 'Conflict Resolution', 'Stakeholder Communication', 'Servant Leadership', 'Coaching & Mentoring'],
   },
   {
-    title: 'Programming & Web',
+    title: 'Agile Tooling',
     color: 'var(--accent-pink)',
-    icon: '💻',
-    skills: ['Java (SE/EE)', 'Spring Framework', 'Node.js', 'TypeScript', 'Swift 5', 'Angular', 'REST APIs', 'iOS'],
+    icon: '🛠',
+    skills: ['Jira', 'Confluence', 'Azure DevOps Boards', 'Miro', 'Trello', 'Asana'],
   },
   {
-    title: 'DevOps & Cloud',
+    title: 'Engineering Foundation',
     color: '#FB923C',
-    icon: '☁️',
-    skills: ['Docker', 'Kubernetes', 'AWS (SQS/RDS)', 'CI/CD', 'GitLab CI', 'Jenkins', 'Prometheus', 'Grafana', 'Kibana'],
-  },
-  {
-    title: 'Databases',
-    color: 'var(--accent-green)',
-    icon: '🗃',
-    skills: ['Oracle 11g', 'SQL / PL-SQL', 'CouchDB', 'Amazon RDS'],
+    icon: '💻',
+    skills: ['Java/JEE', 'Spring', 'Node.js', 'TypeScript', 'Angular', 'REST APIs', 'SQL', 'Docker', 'Kubernetes', 'GitLab CI/CD', 'AWS'],
   },
 ]
 

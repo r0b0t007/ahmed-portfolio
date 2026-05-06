@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const stats = [
-  { value: 9,  suffix: '+', label: 'Years Experience', color: 'var(--accent-primary)' },
-  { value: 7,  suffix: '+', label: 'Projects Delivered', color: 'var(--accent-secondary)' },
-  { value: 3,  suffix: '',  label: 'Certifications', color: 'var(--accent-pink)' },
-  { value: 3,  suffix: '',  label: 'Languages', color: 'var(--accent-green)' },
+  { value: 9, suffix: '+', label: 'Years in Tech',       color: 'var(--accent-primary)' },
+  { value: 5, suffix: '+', label: 'Years as Scrum Master', color: 'var(--accent-secondary)' },
+  { value: 3, suffix: '',  label: 'Certifications',       color: 'var(--accent-pink)' },
+  { value: 3, suffix: '',  label: 'Languages',            color: 'var(--accent-green)' },
 ]
 
 const AnimatedNumber = ({ value, suffix }) => {
@@ -61,15 +61,17 @@ const Summary = () => (
         >
           <div className="bio-tag">Bio</div>
           <p>
-            Instrumental <strong>Scrum Master</strong> with over{' '}
-            <strong>9 years of experience</strong> driving Agile success in demanding IT environments.
-            I combine deep Agile expertise with a scalable mindset to deliver high-impact results
-            across complex projects and organizations.
+            Certified <strong>Scrum Master</strong> with <strong>5+ years of dedicated SM experience</strong>{' '}
+            and a 9-year background in software engineering. Proven track record facilitating agile
+            delivery for distributed product engineering teams across <strong>telecom, automotive,
+            life sciences, and retail</strong>.
           </p>
           <p>
-            As a dedicated servant leader, I empower teams by removing impediments, fostering
-            collaboration, and promoting a culture of continuous improvement — diligent,
-            forward-thinking, and highly adaptable.
+            Servant leader who protects the process, removes blockers, and coaches teams to mature
+            their practices — balancing process adherence with pragmatic, outcome-focused delivery.
+            Deep working knowledge of <strong>Scrum, Kanban, and SAFe</strong>; fluent in Jira,
+            Confluence, and Azure DevOps; comfortable partnering with product managers to keep
+            backlogs healthy and prioritized.
           </p>
         </motion.div>
 

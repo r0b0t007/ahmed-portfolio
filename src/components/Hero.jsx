@@ -15,11 +15,11 @@ const item = {
 }
 
 const floatingBadges = [
-  { label: 'PSM I',       x: 0,    y: -148, color: '#2DD4BF', delay: 0 },
-  { label: 'SAFe 6',      x: 141,  y: -46,  color: '#818CF8', delay: 0.3 },
-  { label: 'Scrum',       x: 87,   y: 120,  color: '#F472B6', delay: 0.6 },
-  { label: 'SSM',         x: -87,  y: 120,  color: '#34D399', delay: 0.9 },
-  { label: 'Agile Coach', x: -141, y: -46,  color: '#FB923C', delay: 1.2 },
+  { label: 'PSM I',        x: 0,    y: -148, color: '#2DD4BF', delay: 0 },
+  { label: 'SAFe 6 SM',   x: 141,  y: -46,  color: '#818CF8', delay: 0.3 },
+  { label: 'Scrum',        x: 87,   y: 120,  color: '#F472B6', delay: 0.6 },
+  { label: 'SAFe Agilist', x: -87,  y: 120,  color: '#34D399', delay: 0.9 },
+  { label: 'Kanban',       x: -141, y: -46,  color: '#FB923C', delay: 1.2 },
 ]
 
 const Hero = () => (
@@ -47,8 +47,9 @@ const Hero = () => (
         </motion.p>
 
         <motion.p variants={item} className="hero-desc">
-          9+ years driving Agile transformation across complex organizations —
-          empowering teams, removing impediments, and delivering high-impact results at scale.
+          5+ years as Scrum Master · 9-year engineering background · telecom, automotive,
+          life sciences &amp; retail. Servant leader who protects the process, removes blockers,
+          and coaches teams to deliver outcomes that matter.
         </motion.p>
 
         <motion.div variants={item} className="hero-ctas">
@@ -67,7 +68,7 @@ const Hero = () => (
         </motion.div>
 
         <motion.div variants={item} className="hero-chips">
-          {['9+ Years XP', 'PSM I Certified', 'SAFe 6 Agilist', 'SSM Certified'].map((c, i) => (
+          {['9 Yrs in Tech', '5+ Yrs as SM', 'PSM I', 'SAFe 6 Agilist', 'SAFe 6 SM'].map((c, i) => (
             <motion.span
               key={c}
               className="chip"
