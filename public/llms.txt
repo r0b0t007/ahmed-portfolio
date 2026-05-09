@@ -1,0 +1,102 @@
+# Ahmed Chioua — Scrum Master & Agile Expert
+
+> Certified Scrum Master (PSM I · SAFe® 6 SM · SAFe® 6 Agilist) with 5+ years of dedicated
+> Scrum Master experience and a 9-year background in software engineering. Remote-first,
+> based in Tetouan, Morocco (GMT+1). Available for Scrum Master and Agile Coach engagements globally.
+
+## Identity
+
+- **Full name**: Ahmed Chioua
+- **Role**: Scrum Master / Agile Expert
+- **Location**: Tetouan, Morocco · Remote (GMT+1)
+- **Email**: ahmedchioua@gmail.com
+- **Phone**: +212 626-410-690
+- **LinkedIn**: https://linkedin.com/in/ahmedchioua
+- **GitHub**: https://github.com/r0b0t007
+- **Book a call**: https://calendly.com/ahmedchioua/30min
+
+## Professional Summary
+
+Certified Scrum Master with 5+ years of dedicated Scrum Master experience and a 9-year background
+in software engineering. Proven track record facilitating agile delivery for distributed product
+engineering teams across telecom, automotive, life sciences, and retail.
+
+Servant leader who protects the process, removes blockers, and coaches teams to mature their
+practices — balancing process adherence with pragmatic, outcome-focused delivery. Deep working
+knowledge of Scrum, Kanban, and SAFe; fluent in Jira, Confluence, and Azure DevOps; comfortable
+partnering with product managers to keep backlogs healthy and prioritized.
+
+## Certifications
+
+- Professional Scrum Master I (PSM I) — Scrum.org
+- SAFe® 6 Scrum Master (SSM) — Scaled Agile, Inc.
+- SAFe® 6 Agilist — Scaled Agile, Inc.
+
+## Work Experience
+
+### Scrum Master — Bell.ca (via consulting engagement) · Jun 2024 – Present
+Remote – Morocco | Project: Service Assurance (large-scale telecom platform)
+- Facilitate daily standups, sprint planning, sprint reviews, and retrospectives for a fully distributed team
+- Remove impediments and escalate blockers; protect the team from scope creep
+- Track velocity, sprint burndown, and delivery health metrics; coach on continuous improvement
+- Partner with PMs and POs on backlog refinement and prioritization
+- Coordinate cross-team dependencies in a scaled agile environment
+- Tools: Jira · Confluence · Miro · Scrum · SAFe · Kanban
+
+### Scrum Master — NTT DATA · Oct 2023 – Jun 2024
+Remote – Tetouan, Morocco | Client: Bayer | Project: CS Regulatory (life sciences IT)
+- Facilitated all Scrum ceremonies for a distributed team across multiple time zones
+- Resolved cross-team dependencies; coached on definition of done and refinement cadence
+- Reported sprint metrics and delivery health; flagged risks early
+- Tools: Azure DevOps Boards · OneNote · Scrum · Kanban
+
+### Scrum Master — NTT DATA · Jun 2021 – Dec 2023
+Remote – Tetouan, Morocco | Client: BMW | Projects: On-Demand Mobility Carsharing & BMW Tele-Services
+- Served as Scrum Master for multiple cloud-native product engineering teams in a scaled agile setup
+- Ran focused retrospectives; coached teams on story slicing and improving flow
+- Partnered with POs on backlog refinement and release planning across multi-team programs
+- Mediated conflicts; built psychological safety in a distributed, multicultural environment
+- Coordinated with Scrum Masters and RTEs on dependencies and PI planning
+- Tools: Jira · Confluence · Miro · Scrum · SAFe · Kanban
+
+### DevOps Engineer — NTT DATA · Jan 2021 – Jun 2021
+Tetouan, Morocco | Client: BMW | Project: On-Demand Mobility Carsharing Platform
+- Built CI/CD pipelines and observability tooling before transitioning to Scrum Master role
+- Stack: Java EE · Docker · Kubernetes · GitLab CI/CD · AWS · Grafana · Prometheus · Kibana
+
+### Software Engineer — Harman Connected Services · Jun 2019 – Jan 2021
+Casablanca, Morocco | Client: Maincare Solutions | Project: Health Management Apps
+- Delivered features within Scrum cycles; built developer-side perspective informing SM practice
+- Stack: Spring Boot · Java EE · Node.js · TypeScript · Angular · iOS/Swift 5 · SQL · Jenkins
+
+### Software Engineer — Harman Connected Services · Sep 2017 – Jun 2019
+Casablanca, Morocco | Client: Symphony Retail AI | Project: ERP G.O.L.D V5/V6
+- Delivered ERP capabilities to enterprise retail clients (Disney, Carrefour, Casino, Fnac)
+- Stack: Java/JEE · Oracle 11g · JavaScript · REST APIs · PL/SQL · SonarQube
+
+## Skills
+
+**Agile & Scrum**: Scrum · Kanban · SAFe · PI Planning · Backlog Refinement · Story Sizing ·
+Velocity Tracking · Sprint Metrics · Release Planning · Definition of Done/Ready · Continuous Improvement
+
+**Facilitation**: Remote Team Facilitation · Retrospective Design · Conflict Resolution ·
+Stakeholder Communication · Servant Leadership · Coaching & Mentoring
+
+**Agile Tooling**: Jira · Confluence · Azure DevOps Boards · Miro · Trello · Asana
+
+**Engineering Foundation**: Java/JEE · Spring · Node.js · TypeScript · Angular · REST APIs ·
+SQL · Docker · Kubernetes · GitLab CI/CD · AWS
+
+**Languages**: Arabic (Native) · English (C2 written / C1 spoken) · French (C1 written / B2 spoken)
+
+## Education
+
+- State Engineer Degree in Computer Engineering — Mohammed VI International Academy of Civil Aviation, Casablanca
+- Preparatory Classes for Higher Education — Lycée Technique Settat
+
+## Leadership & Volunteering
+
+- **Product Owner — Internal ERP Implementation** (Dec 2023 – Jun 2024, Tétouan)
+  Led a team of developers; owned roadmap and milestones; provided Scrum and Kanban training
+- **Mentor — Company Mentorship Program** (Feb 2024 – Jun 2024, NTT DATA)
+  Mentored junior engineers on agile practices, career development, leadership and communication

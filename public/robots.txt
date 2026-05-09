@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block build artifacts
+Disallow: /assets/*.map
+
+Sitemap: https://ahmedchioua.netlify.app/sitemap.xml
