@@ -133,7 +133,9 @@ const Contact = () => {
           >
             {/* Netlify required fields */}
             <input type="hidden" name="form-name" value="contact" />
-            <input type="hidden" name="bot-field" />
+            <div style={{display:'none'}}>
+              <label>Do not fill: <input name="bot-field" /></label>
+            </div>
             <div className="form-row">
               <div className="form-group">
                 <label>Name</label>
