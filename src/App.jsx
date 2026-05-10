@@ -1,13 +1,15 @@
+import { Suspense, lazy } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import Summary from './components/Summary'
-import Experience from './components/Experience'
-import Skills from './components/Skills'
-import Education from './components/Education'
-import Calendly from './components/Calendly'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
 import MatrixRain from './components/MatrixRain'
+
+const Summary    = lazy(() => import('./components/Summary'))
+const Experience = lazy(() => import('./components/Experience'))
+const Skills     = lazy(() => import('./components/Skills'))
+const Education  = lazy(() => import('./components/Education'))
+const Calendly   = lazy(() => import('./components/Calendly'))
+const Contact    = lazy(() => import('./components/Contact'))
+const Footer     = lazy(() => import('./components/Footer'))
 
 function App() {
   return (
@@ -16,14 +18,18 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <Summary />
-        <Experience />
-        <Skills />
-        <Education />
-        <Calendly />
-        <Contact />
+        <Suspense fallback={null}>
+          <Summary />
+          <Experience />
+          <Skills />
+          <Education />
+          <Calendly />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   )
 }

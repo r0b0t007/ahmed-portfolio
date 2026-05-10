@@ -1,22 +1,32 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaCalendarAlt, FaClock, FaVideo } from 'react-icons/fa'
 
-// Update this URL to your real Calendly link
 const CALENDLY_URL =
   'https://calendly.com/ahmedchioua/30min?hide_gdpr_banner=1&background_color=050816&text_color=e8eaf6&primary_color=2DD4BF'
 
 const perks = [
-  { icon: <FaClock />,      text: '30-minute focused session' },
-  { icon: <FaVideo />,      text: 'Google Meet or Teams' },
+  { icon: <FaClock />,       text: '30-minute focused session' },
+  { icon: <FaVideo />,       text: 'Google Meet or Teams' },
   { icon: <FaCalendarAlt />, text: 'Flexible scheduling, any timezone' },
 ]
 
 const Calendly = () => {
   const widgetRef = useRef(null)
+  const [widgetLoaded, setWidgetLoaded] = useState(false)
 
   useEffect(() => {
-    // Load Calendly CSS
+    if (!widgetLoaded) return
+
+    const initWidget = () => {
+      if (window.Calendly && widgetRef.current) {
+        window.Calendly.initInlineWidget({
+          url: CALENDLY_URL,
+          parentElement: widgetRef.current,
+        })
+      }
+    }
+
     if (!document.querySelector('#calendly-css')) {
       const link = document.createElement('link')
       link.id = 'calendly-css'
@@ -25,28 +35,17 @@ const Calendly = () => {
       document.head.appendChild(link)
     }
 
-    // Load Calendly JS and init inline widget
     if (!document.querySelector('#calendly-js')) {
       const script = document.createElement('script')
       script.id = 'calendly-js'
       script.src = 'https://assets.calendly.com/assets/external/widget.js'
       script.async = true
-      script.onload = () => {
-        if (window.Calendly && widgetRef.current) {
-          window.Calendly.initInlineWidget({
-            url: CALENDLY_URL,
-            parentElement: widgetRef.current,
-          })
-        }
-      }
+      script.onload = initWidget
       document.body.appendChild(script)
-    } else if (window.Calendly && widgetRef.current) {
-      window.Calendly.initInlineWidget({
-        url: CALENDLY_URL,
-        parentElement: widgetRef.current,
-      })
+    } else {
+      initWidget()
     }
-  }, [])
+  }, [widgetLoaded])
 
   return (
     <section id="calendly" className="section cal-section">
@@ -92,7 +91,7 @@ const Calendly = () => {
           ))}
         </motion.div>
 
-        {/* Inline Calendly widget */}
+        {/* Inline Calendly widget — loads on click to avoid third-party cookies on page load */}
         <motion.div
           className="cal-widget-wrap"
           initial={{ opacity: 0, y: 30 }}
@@ -100,12 +99,20 @@ const Calendly = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.65, delay: 0.25 }}
         >
-          <div
-            ref={widgetRef}
-            className="calendly-inline-widget"
-            data-url={CALENDLY_URL}
-            style={{ minWidth: '320px', height: '700px' }}
-          />
+          {widgetLoaded ? (
+            <div
+              ref={widgetRef}
+              className="calendly-inline-widget"
+              data-url={CALENDLY_URL}
+              style={{ minWidth: '320px', height: '700px' }}
+            />
+          ) : (
+            <div className="cal-trigger" onClick={() => setWidgetLoaded(true)}>
+              <span className="cal-trigger-icon"><FaCalendarAlt /></span>
+              <span className="cal-trigger-label">Load booking calendar</span>
+              <p className="cal-trigger-sub">Calendly loads only when you click — no third-party tracking until then</p>
+            </div>
+          )}
         </motion.div>
       </div>
 
@@ -157,6 +164,37 @@ const Calendly = () => {
         }
         .calendly-inline-widget {
           border-radius: var(--radius-xl);
+        }
+        .cal-trigger {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          min-height: 220px;
+          cursor: pointer;
+          padding: 48px 24px;
+          transition: background var(--transition);
+        }
+        .cal-trigger:hover {
+          background: var(--bg-card-hover);
+        }
+        .cal-trigger-icon {
+          font-size: 2.2rem;
+          color: var(--accent-primary);
+          display: flex;
+        }
+        .cal-trigger-label {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+        .cal-trigger-sub {
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          text-align: center;
+          max-width: 360px;
+          line-height: 1.6;
         }
       `}</style>
     </section>
