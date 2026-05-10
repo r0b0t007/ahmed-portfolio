@@ -91,7 +91,7 @@ const Calendly = () => {
               <p className="cal-trigger-sub">Calendly loads only when you click — no third-party tracking until then</p>
             </div>
           )}
-        </motion.div>
+        </div>
       </div>
 
       <style>{`
