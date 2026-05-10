@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
 import { FaCalendarAlt, FaClock, FaVideo } from 'react-icons/fa'
+import { useFadeIn } from '../hooks/useFadeIn'
 
 const CALENDLY_URL =
   'https://calendly.com/ahmedchioua/30min?hide_gdpr_banner=1&background_color=050816&text_color=e8eaf6&primary_color=2DD4BF'
@@ -12,8 +12,11 @@ const perks = [
 ]
 
 const Calendly = () => {
-  const widgetRef = useRef(null)
+  const widgetRef   = useRef(null)
   const [widgetLoaded, setWidgetLoaded] = useState(false)
+  const headerRef   = useFadeIn()
+  const perksRef    = useFadeIn(0.1)
+  const widgetWrap  = useFadeIn(0.1)
 
   useEffect(() => {
     if (!widgetLoaded) return
@@ -53,52 +56,27 @@ const Calendly = () => {
       <div className="cal-glow" />
 
       <div className="container">
-        <motion.div
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-        >
+        <div ref={headerRef} className="fade-in section-header">
           <p className="section-label">Let's Talk</p>
           <h2 className="section-title">Book a Discovery Call</h2>
           <p className="section-subtitle">
             Whether you're exploring an Agile transformation, looking for a Scrum Master,
             or just want to connect — pick a time that works for you.
           </p>
-        </motion.div>
+        </div>
 
         {/* Perks row */}
-        <motion.div
-          className="cal-perks"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-        >
+        <div ref={perksRef} className="fade-in cal-perks">
           {perks.map((p, i) => (
-            <motion.div
-              key={i}
-              className="perk"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 + i * 0.08 }}
-            >
+            <div key={i} className="perk">
               <span className="perk-icon">{p.icon}</span>
               <span>{p.text}</span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Inline Calendly widget — loads on click to avoid third-party cookies on page load */}
-        <motion.div
-          className="cal-widget-wrap"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65, delay: 0.25 }}
-        >
+        <div ref={widgetWrap} className="fade-in cal-widget-wrap">
           {widgetLoaded ? (
             <div
               ref={widgetRef}

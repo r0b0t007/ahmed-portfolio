@@ -1,41 +1,51 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
+import { useFadeIn } from '../hooks/useFadeIn'
 
 const infoItems = [
-  {
-    icon: <FaPhone />,
-    label: 'Phone',
-    value: '(+212) 626-410-690',
-    href: 'tel:+212626410690',
-    color: 'var(--accent-primary)',
-  },
-  {
-    icon: <FaEnvelope />,
-    label: 'Email',
-    value: 'ahmedchioua@gmail.com',
-    href: 'mailto:ahmedchioua@gmail.com',
-    color: 'var(--accent-secondary)',
-  },
-  {
-    icon: <FaLinkedin />,
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/ahmedchioua',
-    href: 'https://linkedin.com/in/ahmedchioua',
-    color: 'var(--accent-pink)',
-  },
-  {
-    icon: <FaMapMarkerAlt />,
-    label: 'Location',
-    value: 'Tetouan, Morocco · Remote',
-    href: null,
-    color: 'var(--accent-green)',
-  },
+  { icon: <FaPhone />,        label: 'Phone',    value: '(+212) 626-410-690',         href: 'tel:+212626410690',                   color: 'var(--accent-primary)' },
+  { icon: <FaEnvelope />,     label: 'Email',    value: 'ahmedchioua@gmail.com',       href: 'mailto:ahmedchioua@gmail.com',        color: 'var(--accent-secondary)' },
+  { icon: <FaLinkedin />,     label: 'LinkedIn', value: 'linkedin.com/in/ahmedchioua', href: 'https://linkedin.com/in/ahmedchioua', color: 'var(--accent-pink)' },
+  { icon: <FaMapMarkerAlt />, label: 'Location', value: 'Tetouan, Morocco · Remote',  href: null,                                  color: 'var(--accent-green)' },
 ]
 
+const InfoCardItem = ({ item }) => {
+  const ref = useFadeIn(0.1)
+  return (
+    <motion.div
+      ref={ref}
+      className="fade-in info-card"
+      style={{ '--ic': item.color }}
+      whileHover={{ x: 5 }}
+    >
+      <div className="info-icon">{item.icon}</div>
+      <div>
+        <p className="info-label">{item.label}</p>
+        {item.href ? (
+          <a
+            href={item.href}
+            target={item.href.startsWith('http') ? '_blank' : undefined}
+            rel="noopener noreferrer"
+            className="info-value link"
+          >
+            {item.value}
+          </a>
+        ) : (
+          <p className="info-value">{item.value}</p>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
 const Contact = () => {
+  const headerRef = useFadeIn()
+  const infoRef   = useFadeIn(0.1)
+  const formRef   = useFadeIn(0.1)
+
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [status, setStatus] = useState('idle')
 
   const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
@@ -60,78 +70,33 @@ const Contact = () => {
   return (
     <section id="contact" className="section contact-section">
       <div className="container">
-        <motion.div
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-        >
+        <div ref={headerRef} className="fade-in section-header">
           <p className="section-label">Contact</p>
           <h2 className="section-title">Get In Touch</h2>
           <p className="section-subtitle">
             Prefer email? Drop me a message and I'll reply within 24 hours.
           </p>
-        </motion.div>
+        </div>
 
         <div className="contact-grid">
           {/* Info column */}
-          <motion.div
-            className="contact-info"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div ref={infoRef} className="fade-in contact-info">
             <p className="info-intro">
               Always open to discussing Agile transformations, new opportunities,
               or just connecting with fellow professionals.
             </p>
-
             <div className="info-list">
-              {infoItems.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  className="info-card"
-                  style={{ '--ic': item.color }}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.09 }}
-                  whileHover={{ x: 5 }}
-                >
-                  <div className="info-icon">{item.icon}</div>
-                  <div>
-                    <p className="info-label">{item.label}</p>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        target={item.href.startsWith('http') ? '_blank' : undefined}
-                        rel="noopener noreferrer"
-                        className="info-value link"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="info-value">{item.value}</p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
+              {infoItems.map(item => <InfoCardItem key={item.label} item={item} />)}
             </div>
-          </motion.div>
+          </div>
 
           {/* Form column */}
-          <motion.form
-            className="contact-form"
+          <form
+            ref={formRef}
+            className="fade-in contact-form"
             name="contact"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
             onSubmit={handleSubmit}
           >
-            {/* Netlify required fields */}
             <input type="hidden" name="form-name" value="contact" />
             <div style={{display:'none'}}>
               <label>Do not fill: <input name="bot-field" /></label>
@@ -139,48 +104,20 @@ const Contact = () => {
             <div className="form-row">
               <div className="form-group">
                 <label>Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="text" name="name" placeholder="Your name" value={formData.name} onChange={handleChange} required />
               </div>
               <div className="form-group">
                 <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="your@email.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="email" name="email" placeholder="your@email.com" value={formData.email} onChange={handleChange} required />
               </div>
             </div>
             <div className="form-group">
               <label>Subject</label>
-              <input
-                type="text"
-                name="subject"
-                placeholder="What's this about?"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" name="subject" placeholder="What's this about?" value={formData.subject} onChange={handleChange} required />
             </div>
             <div className="form-group">
               <label>Message</label>
-              <textarea
-                name="message"
-                placeholder="Tell me more..."
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              />
+              <textarea name="message" placeholder="Tell me more..." rows="5" value={formData.message} onChange={handleChange} required />
             </div>
             <motion.button
               type="submit"
@@ -194,14 +131,12 @@ const Contact = () => {
               {status === 'error'   && '✗ Failed — please retry'}
               {status === 'idle'    && <><FaPaperPlane size={13} /> Send Message</>}
             </motion.button>
-          </motion.form>
+          </form>
         </div>
       </div>
 
       <style>{`
-        .contact-section {
-          background: var(--bg-secondary);
-        }
+        .contact-section { background: var(--bg-secondary); }
         .contact-grid {
           display: grid;
           grid-template-columns: 1fr 1.4fr;
@@ -249,31 +184,17 @@ const Contact = () => {
           color: var(--text-muted);
           margin-bottom: 3px;
         }
-        .info-value {
-          font-size: 0.88rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-        }
+        .info-value { font-size: 0.88rem; font-weight: 600; color: var(--text-secondary); }
         .info-value.link { transition: color var(--transition); }
         .info-value.link:hover { color: var(--ic, var(--accent-primary)); }
-        /* Form */
         .contact-form {
           background: var(--glass-bg);
           border: 1px solid var(--glass-border);
           border-radius: var(--radius-xl);
           padding: 36px;
         }
-        .form-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-        }
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 7px;
-          margin-bottom: 16px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
         .form-group:last-of-type { margin-bottom: 24px; }
         .form-group label {
           font-size: 0.78rem;

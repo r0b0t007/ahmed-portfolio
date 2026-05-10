@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaChevronDown, FaBriefcase, FaCode } from 'react-icons/fa'
+import { useFadeIn } from '../hooks/useFadeIn'
 
 const experiences = [
   {
@@ -97,23 +98,18 @@ const typeConfig = {
 }
 
 const ExperienceCard = ({ exp, index }) => {
+  const ref = useFadeIn(0.1)
   const [open, setOpen] = useState(index === 0)
   const cfg = typeConfig[exp.type]
 
   return (
-    <motion.div
-      className="tl-item"
-      initial={{ opacity: 0, x: -30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.55, delay: index * 0.07 }}
-    >
+    <div ref={ref} className="fade-in tl-item">
       {/* Timeline dot */}
       <div className="tl-dot" style={{ '--dc': cfg.color }}>
         <span className="dot-icon" style={{ color: cfg.color }}>{cfg.icon}</span>
       </div>
 
-      {/* Card */}
+      {/* Card — keep motion for hover border effect */}
       <motion.div
         className={`exp-card ${open ? 'open' : ''}`}
         style={{ '--cc': cfg.color }}
@@ -172,198 +168,192 @@ const ExperienceCard = ({ exp, index }) => {
           )}
         </AnimatePresence>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
 
-const Experience = () => (
-  <section id="experience" className="section exp-section">
-    <div className="container">
-      <motion.div
-        className="section-header"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.55 }}
-      >
-        <p className="section-label">Career</p>
-        <h2 className="section-title">Work Experience</h2>
-        <p className="section-subtitle">
-          7+ years across Agile coaching, DevOps engineering, and software development.
-        </p>
-      </motion.div>
+const Experience = () => {
+  const headerRef = useFadeIn()
 
-      <div className="timeline">
-        <div className="tl-line" />
-        {experiences.map((exp, i) => (
-          <ExperienceCard key={exp.id} exp={exp} index={i} />
-        ))}
+  return (
+    <section id="experience" className="section exp-section">
+      <div className="container">
+        <div ref={headerRef} className="fade-in section-header">
+          <p className="section-label">Career</p>
+          <h2 className="section-title">Work Experience</h2>
+          <p className="section-subtitle">
+            7+ years across Agile coaching, DevOps engineering, and software development.
+          </p>
+        </div>
+
+        <div className="timeline">
+          <div className="tl-line" />
+          {experiences.map((exp, i) => (
+            <ExperienceCard key={exp.id} exp={exp} index={i} />
+          ))}
+        </div>
       </div>
-    </div>
 
-    <style>{`
-      .exp-section {
-        background: var(--bg-primary);
-      }
-      .timeline {
-        position: relative;
-        max-width: 760px;
-        margin: 0 auto;
-      }
-      .tl-line {
-        position: absolute;
-        left: 18px;
-        top: 0; bottom: 0;
-        width: 1px;
-        background: linear-gradient(
-          to bottom,
-          transparent 0%,
-          rgba(45,212,191,0.25) 10%,
-          rgba(129,140,248,0.2) 60%,
-          rgba(244,114,182,0.15) 90%,
-          transparent 100%
-        );
-      }
-      .tl-item {
-        display: grid;
-        grid-template-columns: 38px 1fr;
-        gap: 20px;
-        margin-bottom: 20px;
-      }
-      .tl-dot {
-        width: 38px; height: 38px;
-        background: rgba(5,8,22,0.95);
-        border: 1px solid var(--dc, var(--accent-primary));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        box-shadow: 0 0 12px color-mix(in srgb, var(--dc) 30%, transparent);
-        z-index: 1;
-      }
-      .dot-icon { display: flex; }
-      .exp-card {
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        transition: border-color var(--transition);
-      }
-      .exp-card.open {
-        border-color: rgba(255,255,255,0.1);
-      }
-      .card-header {
-        width: 100%;
-        background: none;
-        border: none;
-        padding: 22px 24px;
-        text-align: left;
-        cursor: pointer;
-        color: var(--text-primary);
-      }
-      .card-meta {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 10px;
-      }
-      .exp-period {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--text-secondary);
-        letter-spacing: 0.3px;
-      }
-      .exp-type-tag {
-        padding: 2px 10px;
-        border: 1px solid;
-        border-radius: 100px;
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-      }
-      .card-title-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 8px;
-      }
-      .exp-role {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 3px;
-      }
-      .exp-company {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-      }
-      .chevron {
-        color: var(--text-muted);
-        flex-shrink: 0;
-        margin-top: 4px;
-        display: flex;
-      }
-      .exp-project {
-        font-size: 0.82rem;
-        color: var(--text-muted);
-        font-style: italic;
-      }
-      .card-body {
-        overflow: hidden;
-        border-top: 1px solid var(--glass-border);
-        padding: 20px 24px;
-      }
-      .exp-desc {
-        margin-bottom: 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .exp-desc li {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        padding-left: 16px;
-        position: relative;
-        line-height: 1.6;
-      }
-      .exp-desc li::before {
-        content: '▸';
-        position: absolute;
-        left: 0;
-        color: var(--cc, var(--accent-primary));
-        font-size: 0.7rem;
-        top: 2px;
-      }
-      .exp-tools {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .tool-tag {
-        padding: 4px 12px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.07);
-        border-radius: 100px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--text-secondary);
-        transition: border-color var(--transition), color var(--transition);
-      }
-      .tool-tag:hover {
-        border-color: var(--cc, var(--accent-primary));
-        color: var(--text-primary);
-      }
-      @media (max-width: 600px) {
-        .tl-item { grid-template-columns: 30px 1fr; gap: 14px; }
-        .tl-dot { width: 30px; height: 30px; }
-        .tl-line { left: 14px; }
-      }
-    `}</style>
-  </section>
-)
+      <style>{`
+        .exp-section { background: var(--bg-primary); }
+        .timeline {
+          position: relative;
+          max-width: 760px;
+          margin: 0 auto;
+        }
+        .tl-line {
+          position: absolute;
+          left: 18px;
+          top: 0; bottom: 0;
+          width: 1px;
+          background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(45,212,191,0.25) 10%,
+            rgba(129,140,248,0.2) 60%,
+            rgba(244,114,182,0.15) 90%,
+            transparent 100%
+          );
+        }
+        .tl-item {
+          display: grid;
+          grid-template-columns: 38px 1fr;
+          gap: 20px;
+          margin-bottom: 20px;
+        }
+        .tl-dot {
+          width: 38px; height: 38px;
+          background: rgba(5,8,22,0.95);
+          border: 1px solid var(--dc, var(--accent-primary));
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          box-shadow: 0 0 12px color-mix(in srgb, var(--dc) 30%, transparent);
+          z-index: 1;
+        }
+        .dot-icon { display: flex; }
+        .exp-card {
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          transition: border-color var(--transition);
+        }
+        .exp-card.open { border-color: rgba(255,255,255,0.1); }
+        .card-header {
+          width: 100%;
+          background: none;
+          border: none;
+          padding: 22px 24px;
+          text-align: left;
+          cursor: pointer;
+          color: var(--text-primary);
+        }
+        .card-meta {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 10px;
+        }
+        .exp-period {
+          font-size: 0.78rem;
+          font-weight: 600;
+          color: var(--text-secondary);
+          letter-spacing: 0.3px;
+        }
+        .exp-type-tag {
+          padding: 2px 10px;
+          border: 1px solid;
+          border-radius: 100px;
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+        }
+        .card-title-row {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 8px;
+        }
+        .exp-role {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: 3px;
+        }
+        .exp-company {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--text-secondary);
+        }
+        .chevron {
+          color: var(--text-muted);
+          flex-shrink: 0;
+          margin-top: 4px;
+          display: flex;
+        }
+        .exp-project {
+          font-size: 0.82rem;
+          color: var(--text-muted);
+          font-style: italic;
+        }
+        .card-body {
+          overflow: hidden;
+          border-top: 1px solid var(--glass-border);
+          padding: 20px 24px;
+        }
+        .exp-desc {
+          margin-bottom: 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .exp-desc li {
+          font-size: 0.9rem;
+          color: var(--text-secondary);
+          padding-left: 16px;
+          position: relative;
+          line-height: 1.6;
+        }
+        .exp-desc li::before {
+          content: '▸';
+          position: absolute;
+          left: 0;
+          color: var(--cc, var(--accent-primary));
+          font-size: 0.7rem;
+          top: 2px;
+        }
+        .exp-tools {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .tool-tag {
+          padding: 4px 12px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 100px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--text-secondary);
+          transition: border-color var(--transition), color var(--transition);
+        }
+        .tool-tag:hover {
+          border-color: var(--cc, var(--accent-primary));
+          color: var(--text-primary);
+        }
+        @media (max-width: 600px) {
+          .tl-item { grid-template-columns: 30px 1fr; gap: 14px; }
+          .tl-dot { width: 30px; height: 30px; }
+          .tl-line { left: 14px; }
+        }
+      `}</style>
+    </section>
+  )
+}
 
 export default Experience

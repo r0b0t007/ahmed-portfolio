@@ -30,6 +30,23 @@
     <meta name="color-scheme" content="dark" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
+    <!-- ── Google Fonts — async (non-render-blocking) ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" />
+    </noscript>
+
+    <!-- ── Inline critical CSS — prevents render-blocking on hero paint ── -->
+    <style>
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      body{background:#050816;color:#e8eaf6;font-family:'Outfit',sans-serif,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden}
+      #root{min-height:100vh}
+    </style>
+
     <!-- ── JSON-LD Structured Data (Person + WebSite) ── -->
     <script type="application/ld+json">
     {
