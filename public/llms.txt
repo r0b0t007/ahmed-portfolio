@@ -1,30 +1,76 @@
-# Ahmed Chioua — Scrum Master & Agile Expert
+# Ahmed Chioua — AI Transformation Consultant
 
-> Certified Scrum Master (PSM I · SAFe® 6 SM · SAFe® 6 Agilist) with 5+ years of dedicated
-> Scrum Master experience and a 9-year background in software engineering. Remote-first,
-> based in Tetouan, Morocco (GMT+1). Available for Scrum Master and Agile Coach engagements globally.
+> Last updated: 2026-07-27
+
+> AI Transformation Consultant helping organizations turn AI into shipped outcomes — AI adoption
+> strategy, agentic builds, and AI-augmented delivery — backed by 9 years of enterprise delivery
+> for Bell, BMW, and Bayer. Remote-first, based in Tetouan, Morocco (GMT+1). Available for AI
+> advisory and delivery engagements globally.
 
 ## Identity
 
 - **Full name**: Ahmed Chioua
-- **Role**: Scrum Master / Agile Expert
+- **Role**: AI Transformation Consultant
 - **Location**: Tetouan, Morocco · Remote (GMT+1)
 - **Email**: ahmedchioua@gmail.com
 - **Phone**: +212 626-410-690
 - **LinkedIn**: https://linkedin.com/in/ahmedchioua
 - **GitHub**: https://github.com/r0b0t007
-- **Book a call**: https://calendly.com/ahmedchioua/30min
+- **Book a consultation**: https://calendly.com/ahmedchioua/30min
 
 ## Professional Summary
 
-Certified Scrum Master with 5+ years of dedicated Scrum Master experience and a 9-year background
-in software engineering. Proven track record facilitating agile delivery for distributed product
-engineering teams across telecom, automotive, life sciences, and retail.
+AI Transformation Consultant pairing hands-on AI engineering — LLM applications, agentic workflows,
+and automation — with a 9-year enterprise delivery background. Helps teams across telecom,
+automotive, life sciences, and retail move from AI experiments to production.
 
-Servant leader who protects the process, removes blockers, and coaches teams to mature their
-practices — balancing process adherence with pragmatic, outcome-focused delivery. Deep working
-knowledge of Scrum, Kanban, and SAFe; fluent in Jira, Confluence, and Azure DevOps; comfortable
-partnering with product managers to keep backlogs healthy and prioritized.
+The differentiator is execution: 5+ years leading agile delivery for distributed engineering teams
+at Bell, BMW, and Bayer means advising on AI is paired with the delivery discipline (roadmapping,
+prioritization, ways of working) that turns strategy into shipped software. Certified in Scrum and
+SAFe; fluent in modern build tooling and cloud.
+
+## Services
+
+- **AI Adoption Strategy & Roadmapping** — identify high-value use cases, assess feasibility and ROI,
+  and build a pragmatic adoption roadmap with governance and guardrails.
+- **AI-Augmented Delivery** — bring AI into product and delivery workflows (refinement, documentation,
+  testing, reporting) without breaking cadence.
+- **Hands-on AI Build** — design and build LLM applications, agentic workflows, RAG, and automations,
+  from prototype to production.
+- **Team Enablement & AI Coaching** — upskill teams on practical AI use, prompt craft, and new ways
+  of working, and embed the habits.
+
+## Frequently Asked Questions
+
+### What does an AI Transformation Consultant do?
+An AI Transformation Consultant helps organizations identify where AI creates real value, then
+builds and ships it — combining AI strategy (use-case discovery, feasibility, ROI, governance) with
+hands-on delivery (LLM applications, agentic workflows, automation) and the change-management
+discipline needed to make adoption stick across teams.
+
+### What makes Ahmed Chioua's approach different?
+Ahmed pairs AI advisory with 9 years of enterprise delivery experience — as a certified Scrum
+Master and SAFe Agilist — at Bell, BMW, and Bayer. AI recommendations come with the roadmapping,
+prioritization, and delivery discipline needed to turn strategy into shipped software, not just a
+slide deck or workshop.
+
+### What services does Ahmed Chioua offer?
+Four core services: AI Adoption Strategy & Roadmapping, AI-Augmented Delivery (embedding AI into
+existing product and delivery workflows), Hands-on AI Build (LLM applications, agentic workflows,
+RAG, and automation), and Team Enablement & AI Coaching.
+
+### Which industries has Ahmed Chioua worked in?
+Telecom (Bell), automotive (BMW), life sciences (Bayer), and retail (enterprise clients including
+Disney, Carrefour, Casino, and Fnac via Symphony Retail AI), across 9 years of enterprise delivery
+experience.
+
+### Is Ahmed Chioua available for remote engagements?
+Yes. Ahmed is remote-first, based in Tetouan, Morocco (GMT+1), and available for AI advisory and
+delivery engagements globally.
+
+### How can I book a consultation with Ahmed Chioua?
+Book a free consultation at https://calendly.com/ahmedchioua/30min, or reach out directly by email
+(ahmedchioua@gmail.com) or LinkedIn (https://linkedin.com/in/ahmedchioua).
 
 ## Certifications
 
@@ -76,16 +122,18 @@ Casablanca, Morocco | Client: Symphony Retail AI | Project: ERP G.O.L.D V5/V6
 
 ## Skills
 
-**Agile & Scrum**: Scrum · Kanban · SAFe · PI Planning · Backlog Refinement · Story Sizing ·
-Velocity Tracking · Sprint Metrics · Release Planning · Definition of Done/Ready · Continuous Improvement
+**AI & Automation**: LLM Applications · Anthropic Claude & Claude Code · Agentic Workflows ·
+Prompt Engineering · Retrieval-Augmented Generation (RAG) · Workflow Automation · AI-Augmented
+Delivery · AI Adoption Strategy
 
-**Facilitation**: Remote Team Facilitation · Retrospective Design · Conflict Resolution ·
-Stakeholder Communication · Servant Leadership · Coaching & Mentoring
-
-**Agile Tooling**: Jira · Confluence · Azure DevOps Boards · Miro · Trello · Asana
+**Delivery & Agile**: Scrum · Kanban · SAFe · PI Planning · Backlog Refinement · Release Planning ·
+Delivery Metrics · Continuous Improvement
 
 **Engineering Foundation**: Java/JEE · Spring · Node.js · TypeScript · Angular · REST APIs ·
 SQL · Docker · Kubernetes · GitLab CI/CD · AWS
+
+**Advisory & Facilitation**: AI Adoption Roadmapping · Stakeholder Communication · Workshops &
+Coaching · Servant Leadership · Conflict Resolution · Team Enablement
 
 **Languages**: Arabic (Native) · English (C2 written / C1 spoken) · French (C1 written / B2 spoken)
 

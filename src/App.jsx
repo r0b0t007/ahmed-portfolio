@@ -1,29 +1,23 @@
 import { Suspense, lazy } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import MatrixRain from './components/MatrixRain'
 
-const Summary    = lazy(() => import('./components/Summary'))
+const Services = lazy(() => import('./components/Services'))
 const Experience = lazy(() => import('./components/Experience'))
-const Skills     = lazy(() => import('./components/Skills'))
-const Education  = lazy(() => import('./components/Education'))
-const Calendly   = lazy(() => import('./components/Calendly'))
+const About      = lazy(() => import('./components/Summary'))
 const Contact    = lazy(() => import('./components/Contact'))
 const Footer     = lazy(() => import('./components/Footer'))
 
 function App() {
   return (
     <div className="app">
-      <MatrixRain />
       <Header />
       <main>
         <Hero />
         <Suspense fallback={null}>
-          <Summary />
+          <Services />
           <Experience />
-          <Skills />
-          <Education />
-          <Calendly />
+          <About />
           <Contact />
         </Suspense>
       </main>

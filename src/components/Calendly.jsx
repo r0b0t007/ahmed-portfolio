@@ -3,7 +3,7 @@ import { FaCalendarAlt, FaClock, FaVideo } from 'react-icons/fa'
 import { useFadeIn } from '../hooks/useFadeIn'
 
 const CALENDLY_URL =
-  'https://calendly.com/ahmedchioua/30min?hide_gdpr_banner=1&background_color=050816&text_color=e8eaf6&primary_color=2DD4BF'
+  'https://calendly.com/ahmedchioua/30min?hide_gdpr_banner=1&background_color=0B1020&text_color=eef1f8&primary_color=2DD4BF'
 
 const perks = [
   { icon: <FaClock />,       text: '30-minute focused session' },
@@ -58,10 +58,10 @@ const Calendly = () => {
       <div className="container">
         <div ref={headerRef} className="fade-in section-header">
           <p className="section-label">Let's Talk</p>
-          <h2 className="section-title">Book a Discovery Call</h2>
+          <h2 className="section-title">Book a Consultation</h2>
           <p className="section-subtitle">
-            Whether you're exploring an Agile transformation, looking for a Scrum Master,
-            or just want to connect — pick a time that works for you.
+            Whether you're scoping an AI initiative, exploring where AI fits your roadmap,
+            or need delivery muscle to ship it — pick a time that works for you.
           </p>
         </div>
 

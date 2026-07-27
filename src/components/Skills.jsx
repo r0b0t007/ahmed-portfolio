@@ -3,28 +3,28 @@ import { useFadeIn } from '../hooks/useFadeIn'
 
 const categories = [
   {
-    title: 'Agile & Scrum',
+    title: 'AI & Automation',
     color: 'var(--accent-primary)',
-    icon: '⚡',
-    skills: ['Scrum', 'Kanban', 'SAFe (Scaled Agile)', 'PI Planning', 'Backlog Refinement', 'Story Sizing', 'Velocity Tracking', 'Sprint Metrics', 'Release Planning', 'Definition of Done/Ready', 'Continuous Improvement'],
+    icon: '🤖',
+    skills: ['LLM Applications', 'Anthropic Claude & Claude Code', 'Agentic Workflows', 'Prompt Engineering', 'Retrieval-Augmented Generation (RAG)', 'Workflow Automation', 'AI-Augmented Delivery', 'AI Adoption Strategy'],
   },
   {
-    title: 'Facilitation',
+    title: 'Delivery & Agile',
     color: 'var(--accent-secondary)',
-    icon: '🎯',
-    skills: ['Remote Team Facilitation', 'Retrospective Design', 'Conflict Resolution', 'Stakeholder Communication', 'Servant Leadership', 'Coaching & Mentoring'],
-  },
-  {
-    title: 'Agile Tooling',
-    color: 'var(--accent-pink)',
-    icon: '🛠',
-    skills: ['Jira', 'Confluence', 'Azure DevOps Boards', 'Miro', 'Trello', 'Asana'],
+    icon: '⚡',
+    skills: ['Scrum', 'Kanban', 'SAFe (Scaled Agile)', 'PI Planning', 'Backlog Refinement', 'Release Planning', 'Delivery Metrics', 'Continuous Improvement'],
   },
   {
     title: 'Engineering Foundation',
-    color: '#FB923C',
+    color: 'var(--accent-primary)',
     icon: '💻',
     skills: ['Java/JEE', 'Spring', 'Node.js', 'TypeScript', 'Angular', 'REST APIs', 'SQL', 'Docker', 'Kubernetes', 'GitLab CI/CD', 'AWS'],
+  },
+  {
+    title: 'Advisory & Facilitation',
+    color: 'var(--accent-secondary)',
+    icon: '🎯',
+    skills: ['AI Adoption Roadmapping', 'Stakeholder Communication', 'Workshops & Coaching', 'Servant Leadership', 'Conflict Resolution', 'Team Enablement'],
   },
 ]
 
@@ -68,10 +68,11 @@ const Skills = () => {
     <section id="skills" className="section skills-section">
       <div className="container">
         <div ref={headerRef} className="fade-in section-header">
-          <p className="section-label">Expertise</p>
+          <p className="section-label">Capabilities</p>
           <h2 className="section-title">Skills &amp; Tools</h2>
           <p className="section-subtitle">
-            A full-stack Agile toolkit — from ceremonies and frameworks to DevOps pipelines and cloud infrastructure.
+            An AI-first capability set — from strategy and agentic builds to the delivery and
+            engineering foundations that ship them.
           </p>
         </div>
 

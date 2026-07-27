@@ -1,65 +1,31 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
 import { useFadeIn } from '../hooks/useFadeIn'
 
-const infoItems = [
-  { icon: <FaPhone />,        label: 'Phone',    value: '(+212) 626-410-690',         href: 'tel:+212626410690',                   color: 'var(--accent-primary)' },
-  { icon: <FaEnvelope />,     label: 'Email',    value: 'ahmedchioua@gmail.com',       href: 'mailto:ahmedchioua@gmail.com',        color: 'var(--accent-secondary)' },
-  { icon: <FaLinkedin />,     label: 'LinkedIn', value: 'linkedin.com/in/ahmedchioua', href: 'https://linkedin.com/in/ahmedchioua', color: 'var(--accent-pink)' },
-  { icon: <FaMapMarkerAlt />, label: 'Location', value: 'Tetouan, Morocco · Remote',  href: null,                                  color: 'var(--accent-green)' },
+const details = [
+  { label: 'Email', value: 'ahmedchioua@gmail.com', href: 'mailto:ahmedchioua@gmail.com' },
+  { label: 'LinkedIn', value: 'linkedin.com/in/ahmedchioua', href: 'https://linkedin.com/in/ahmedchioua' },
+  { label: 'Location', value: 'Tétouan, Morocco · Remote', href: null },
 ]
 
-const InfoCardItem = ({ item }) => {
-  const ref = useFadeIn(0.1)
-  return (
-    <motion.div
-      ref={ref}
-      className="fade-in info-card"
-      style={{ '--ic': item.color }}
-      whileHover={{ x: 5 }}
-    >
-      <div className="info-icon">{item.icon}</div>
-      <div>
-        <p className="info-label">{item.label}</p>
-        {item.href ? (
-          <a
-            href={item.href}
-            target={item.href.startsWith('http') ? '_blank' : undefined}
-            rel="noopener noreferrer"
-            className="info-value link"
-          >
-            {item.value}
-          </a>
-        ) : (
-          <p className="info-value">{item.value}</p>
-        )}
-      </div>
-    </motion.div>
-  )
-}
-
 const Contact = () => {
-  const headerRef = useFadeIn()
-  const infoRef   = useFadeIn(0.1)
-  const formRef   = useFadeIn(0.1)
-
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
+  const leftRef = useFadeIn(0.1)
+  const formRef = useFadeIn(0.1)
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [status, setStatus] = useState('idle')
 
-  const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+  const change = e => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = async (e) => {
+  const submit = async e => {
     e.preventDefault()
     setStatus('sending')
     try {
       await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ 'form-name': 'contact', ...formData }).toString(),
+        body: new URLSearchParams({ 'form-name': 'contact', ...form }).toString(),
       })
       setStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      setForm({ name: '', email: '', subject: '', message: '' })
       setTimeout(() => setStatus('idle'), 5000)
     } catch {
       setStatus('error')
@@ -68,186 +34,81 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="section contact-section">
-      <div className="container">
-        <div ref={headerRef} className="fade-in section-header">
-          <p className="section-label">Contact</p>
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="section-subtitle">
-            Prefer email? Drop me a message and I'll reply within 24 hours.
-          </p>
-        </div>
-
-        <div className="contact-grid">
-          {/* Info column */}
-          <div ref={infoRef} className="fade-in contact-info">
-            <p className="info-intro">
-              Always open to discussing Agile transformations, new opportunities,
-              or just connecting with fellow professionals.
+    <section id="contact" className="section">
+      <div className="ed-contact">
+        <div ref={leftRef} className="fade-in ed-contact-left">
+          <div className="eyebrow-block" style={{ marginBottom: 0 }}>
+            <div className="eyebrow-row">
+              <span className="eyebrow">Contact</span>
+              <span className="eyebrow-index">( 04 )</span>
+            </div>
+            <h2 className="sec-title">Let's talk about <em>what ships</em></h2>
+            <p className="sec-lead" style={{ marginBottom: '28px' }}>
+              Tell me where AI is stuck in your organization — I'll tell you honestly whether
+              and how I can help.
             </p>
-            <div className="info-list">
-              {infoItems.map(item => <InfoCardItem key={item.label} item={item} />)}
-            </div>
+            <div className="ed-avail-solid"><span className="ed-dot-b" />Available for engagements</div>
+            <dl className="ed-details">
+              {details.map(d => (
+                <div key={d.label} className="ed-detail">
+                  <dt>{d.label}</dt>
+                  <dd>{d.href ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">{d.value}</a> : d.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-
-          {/* Form column */}
-          <form
-            ref={formRef}
-            className="fade-in contact-form"
-            name="contact"
-            onSubmit={handleSubmit}
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <div style={{display:'none'}}>
-              <label>Do not fill: <input name="bot-field" /></label>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Name</label>
-                <input type="text" name="name" placeholder="Your name" value={formData.name} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="your@email.com" value={formData.email} onChange={handleChange} required />
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Subject</label>
-              <input type="text" name="subject" placeholder="What's this about?" value={formData.subject} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea name="message" placeholder="Tell me more..." rows="5" value={formData.message} onChange={handleChange} required />
-            </div>
-            <motion.button
-              type="submit"
-              className={`submit-btn ${status}`}
-              disabled={status === 'sending'}
-              whileHover={{ scale: status === 'idle' ? 1.03 : 1 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              {status === 'sending' && 'Sending…'}
-              {status === 'success' && '✓ Message sent!'}
-              {status === 'error'   && '✗ Failed — please retry'}
-              {status === 'idle'    && <><FaPaperPlane size={13} /> Send Message</>}
-            </motion.button>
-          </form>
         </div>
+
+        <form ref={formRef} className="fade-in ed-form" name="contact" onSubmit={submit}>
+          <input type="hidden" name="form-name" value="contact" />
+          <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
+          <div className="ed-form-row">
+            <div className="ed-fg"><label>Name</label><input name="name" placeholder="Your name" value={form.name} onChange={change} required /></div>
+            <div className="ed-fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" value={form.email} onChange={change} required /></div>
+          </div>
+          <div className="ed-fg"><label>Subject</label><input name="subject" placeholder="What's this about?" value={form.subject} onChange={change} required /></div>
+          <div className="ed-fg"><label>Message</label><textarea name="message" rows="5" placeholder="Tell me more…" value={form.message} onChange={change} required /></div>
+          <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
+            {status === 'sending' ? 'Sending…' : status === 'success' ? '✓ Message sent' : status === 'error' ? '✗ Failed — retry' : 'Send message'}
+          </button>
+        </form>
       </div>
 
       <style>{`
-        .contact-section { background: var(--bg-secondary); }
-        .contact-grid {
-          display: grid;
-          grid-template-columns: 1fr 1.4fr;
-          gap: 60px;
-          align-items: start;
+        .ed-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+        .ed-avail-solid {
+          display: inline-flex; align-items: center; gap: 10px;
+          padding: 10px 18px; background: var(--ink); color: var(--paper);
+          font-size: 0.72rem; font-weight: 600;
         }
-        .info-intro {
-          font-size: 0.97rem;
-          color: var(--text-secondary);
-          line-height: 1.8;
-          margin-bottom: 32px;
+        .ed-dot-b { width: 7px; height: 7px; border-radius: 50%; background: var(--teal-bright); animation: dcpulse 2s infinite; }
+        .ed-details { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+        .ed-detail { display: grid; grid-template-columns: 90px 1fr; gap: 16px; align-items: baseline; }
+        .ed-detail dt { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+        .ed-detail dd { font-size: 0.9rem; color: var(--ink-2); }
+        .ed-detail dd a { border-bottom: 1px solid var(--hair); transition: border-color var(--transition); }
+        .ed-detail dd a:hover { border-color: var(--teal); color: var(--teal); }
+
+        .ed-form { background: var(--paper-card); border: 1px solid var(--hair); padding: 40px; }
+        .ed-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .ed-fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+        .ed-fg label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+        .ed-fg input, .ed-fg textarea {
+          width: 100%; padding: 12px 14px; background: var(--paper); border: 1px solid var(--hair);
+          color: var(--ink); font-family: var(--sans); font-size: 0.9rem; resize: none;
         }
-        .info-list { display: flex; flex-direction: column; gap: 14px; }
-        .info-card {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 16px 20px;
-          background: var(--glass-bg);
-          border: 1px solid var(--glass-border);
-          border-radius: var(--radius-md);
-          transition: border-color var(--transition), background var(--transition), transform var(--transition);
-          cursor: default;
+        .ed-fg input::placeholder, .ed-fg textarea::placeholder { color: var(--ink-muted); }
+        .ed-fg input:focus, .ed-fg textarea:focus { outline: none; border-color: var(--teal); }
+        .ed-submit {
+          width: 100%; padding: 15px; border: 1px solid var(--ink); background: var(--ink);
+          color: var(--paper); font-weight: 600; font-size: 0.88rem; font-family: var(--sans);
+          letter-spacing: 0.02em; transition: background var(--transition), border-color var(--transition);
         }
-        .info-card:hover {
-          border-color: var(--ic, var(--accent-primary));
-          background: var(--bg-card-hover);
-        }
-        .info-icon {
-          width: 42px; height: 42px;
-          background: color-mix(in srgb, var(--ic) 12%, transparent);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--ic, var(--accent-primary));
-          font-size: 1rem;
-          flex-shrink: 0;
-        }
-        .info-label {
-          font-size: 0.72rem;
-          font-weight: 700;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          color: var(--text-muted);
-          margin-bottom: 3px;
-        }
-        .info-value { font-size: 0.88rem; font-weight: 600; color: var(--text-secondary); }
-        .info-value.link { transition: color var(--transition); }
-        .info-value.link:hover { color: var(--ic, var(--accent-primary)); }
-        .contact-form {
-          background: var(--glass-bg);
-          border: 1px solid var(--glass-border);
-          border-radius: var(--radius-xl);
-          padding: 36px;
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
-        .form-group:last-of-type { margin-bottom: 24px; }
-        .form-group label {
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: var(--text-secondary);
-          letter-spacing: 0.5px;
-          text-transform: uppercase;
-        }
-        .form-group input,
-        .form-group textarea {
-          width: 100%;
-          padding: 13px 16px;
-          background: rgba(5,8,22,0.8);
-          border: 1px solid rgba(255,255,255,0.07);
-          border-radius: var(--radius-sm);
-          color: var(--text-primary);
-          font-family: var(--font-main);
-          font-size: 0.92rem;
-          transition: border-color var(--transition), box-shadow var(--transition);
-          resize: none;
-        }
-        .form-group input::placeholder,
-        .form-group textarea::placeholder { color: var(--text-muted); }
-        .form-group input:focus,
-        .form-group textarea:focus {
-          outline: none;
-          border-color: var(--accent-primary);
-          box-shadow: 0 0 0 3px rgba(45,212,191,0.1);
-        }
-        .submit-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          width: 100%;
-          padding: 14px;
-          background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-          border: none;
-          border-radius: var(--radius-md);
-          color: #050816;
-          font-size: 0.95rem;
-          font-weight: 700;
-          box-shadow: 0 0 24px rgba(45,212,191,0.25);
-          transition: box-shadow var(--transition);
-        }
-        .submit-btn:hover { box-shadow: 0 0 36px rgba(45,212,191,0.38); }
-        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-        .submit-btn.success { background: linear-gradient(135deg, #34D399, #059669); box-shadow: 0 0 24px rgba(52,211,153,0.3); }
-        .submit-btn.error   { background: linear-gradient(135deg, #F87171, #DC2626); box-shadow: 0 0 24px rgba(248,113,113,0.3); }
-        @media (max-width: 860px) {
-          .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-          .form-row { grid-template-columns: 1fr; }
-        }
+        .ed-submit:hover { background: var(--teal); border-color: var(--teal); }
+        .ed-submit:disabled { opacity: 0.7; cursor: default; }
+        .ed-submit.success { background: var(--teal); border-color: var(--teal); }
+        .ed-submit.error { background: #9a3535; border-color: #9a3535; }
+        @media (max-width: 820px) { .ed-contact { grid-template-columns: 1fr; gap: 40px; } .ed-form-row { grid-template-columns: 1fr; } }
       `}</style>
     </section>
   )
