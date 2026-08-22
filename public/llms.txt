@@ -1,76 +1,122 @@
-# Ahmed Chioua — AI Transformation Consultant
+# Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-07-27
+> Last updated: 2026-08-22
 
-> AI Transformation Consultant helping organizations turn AI into shipped outcomes — AI adoption
-> strategy, agentic builds, and AI-augmented delivery — backed by 9 years of enterprise delivery
-> for Bell, BMW, and Bayer. Remote-first, based in Tetouan, Morocco (GMT+1). Available for AI
-> advisory and delivery engagements globally.
+> I build websites and SaaS products with AI in the loop — which is why they ship in weeks. Nine
+> years delivering software for Bell, BMW and Bayer is why they don't fall over afterwards.
+> Remote-first, based in Tetouan, Morocco (GMT+1). Available for web, SaaS and MVP projects globally.
 
 ## Identity
 
 - **Full name**: Ahmed Chioua
-- **Role**: AI Transformation Consultant
+- **Role**: Web & SaaS Developer (AI-augmented)
 - **Location**: Tetouan, Morocco · Remote (GMT+1)
 - **Email**: ahmedchioua@gmail.com
 - **Phone**: +212 626-410-690
-- **LinkedIn**: https://linkedin.com/in/ahmedchioua
-- **GitHub**: https://github.com/r0b0t007
-- **Book a consultation**: https://calendly.com/ahmedchioua/30min
+- **LinkedIn**: [linkedin.com/in/ahmedchioua](https://linkedin.com/in/ahmedchioua)
+- **GitHub**: [github.com/r0b0t007](https://github.com/r0b0t007)
+- **Book a scope call**: [calendly.com/ahmedchioua/30min](https://calendly.com/ahmedchioua/30min)
+
+## Links
+
+- [Homepage](https://ahmedchioua.com/) — services, process, proof and FAQ
+- [Services](https://ahmedchioua.com/#services) — websites, SaaS & MVP builds, architecture rescue, AI automation
+- [Process](https://ahmedchioua.com/#process) — how engagements run, step by step
+- [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
+- [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
+- [Contact](https://ahmedchioua.com/#contact) — free scope call
+- [Source code for this site](https://github.com/r0b0t007/ahmed-portfolio)
 
 ## Professional Summary
 
-AI Transformation Consultant pairing hands-on AI engineering — LLM applications, agentic workflows,
-and automation — with a 9-year enterprise delivery background. Helps teams across telecom,
-automotive, life sciences, and retail move from AI experiments to production.
+Web and SaaS developer building websites, SaaS products and MVPs with AI in the loop — full-stack,
+design through deployment. Nine years of production software: roughly four years hands-on
+engineering (Java/JEE, Spring, Node.js, TypeScript, Angular, iOS) and five leading delivery for
+distributed enterprise teams across telecom, automotive, life sciences and retail.
 
-The differentiator is execution: 5+ years leading agile delivery for distributed engineering teams
-at Bell, BMW, and Bayer means advising on AI is paired with the delivery discipline (roadmapping,
-prioritization, ways of working) that turns strategy into shipped software. Certified in Scrum and
-SAFe; fluent in modern build tooling and cloud.
+The differentiator is the pairing: AI in the build loop is what compresses timelines from months to
+weeks, while nine years inside enterprise codebases and delivery programmes is what keeps the
+architecture, tests and data model sound enough to survive real users. Certified in Scrum and SAFe.
 
 ## Services
 
-- **AI Adoption Strategy & Roadmapping** — identify high-value use cases, assess feasibility and ROI,
-  and build a pragmatic adoption roadmap with governance and guardrails.
-- **AI-Augmented Delivery** — bring AI into product and delivery workflows (refinement, documentation,
-  testing, reporting) without breaking cadence.
-- **Hands-on AI Build** — design and build LLM applications, agentic workflows, RAG, and automations,
-  from prototype to production.
-- **Team Enablement & AI Coaching** — upskill teams on practical AI use, prompt craft, and new ways
-  of working, and embed the habits.
+- **Websites that rank and convert** — marketing sites, landing pages and portfolios designed and
+  built from scratch, not templated. Ships with the SEO foundation most sites bolt on too late:
+  structured data, clean semantics, real meta, sitemap, and Core Web Vitals as a requirement.
+- **SaaS & MVP builds** — the smallest version that proves the idea: auth, data model, core flows,
+  payments if needed, deployed on infrastructure that won't need replacing when it works.
+- **Architecture & technical rescue** — for products that shipped fast and now can't move. Codebase
+  audit, a plainly-stated view of what's worth saving, a sequenced refactor plan, or the work itself.
+- **AI-augmented automation** — LLM workflows, agents, retrieval over internal documents, and
+  integrations between systems that don't talk, measured against the pre-automation baseline.
+
+## How Engagements Run
+
+1. **Scope** (free, ~1 week) — a call, then a written scope: what gets built, what doesn't, cost, and
+   the date it lands. Includes an honest "I'm not the right fit" if that's the answer.
+2. **Build** (2 to 6 weeks typical) — a working link from week one, weekly demo, direct access, and an
+   architecture review at the end of each week.
+3. **Ship** (days) — live on the client's own infrastructure, domain and accounts, with performance,
+   accessibility and SEO verified before launch.
+4. **Hand over** (included) — repo, pipeline, documentation and a walkthrough. The client can take it
+   to any developer afterwards.
+
+Fixed scope. Fixed price. A date in writing. Code ownership transfers to the client from day one.
+
+## Proof and Current Status
+
+There are no client case studies for this offer yet — that is stated plainly rather than papered over
+with borrowed credibility. What is verifiable instead:
+
+- **ahmedchioua.com** — designed, built and deployed by Ahmed. React with hand-written CSS, no
+  template or page builder. Scores 100/100/100 on Lighthouse for accessibility, best practices and
+  SEO (mobile, measured 2026-08-22).
+- **Public source** — https://github.com/r0b0t007/ahmed-portfolio
+- **Track record** — nine years of production software for Bell, BMW, Bayer and Harman clients,
+  verifiable on LinkedIn, with matching certifications.
+
+The first few client projects go out at founding rates in exchange for a case study and a reference.
 
 ## Frequently Asked Questions
 
-### What does an AI Transformation Consultant do?
-An AI Transformation Consultant helps organizations identify where AI creates real value, then
-builds and ships it — combining AI strategy (use-case discovery, feasibility, ROI, governance) with
-hands-on delivery (LLM applications, agentic workflows, automation) and the change-management
-discipline needed to make adoption stick across teams.
+### What does Ahmed Chioua build?
+Marketing websites, SaaS products and MVPs, internal tools, and the AI automation behind them.
+Full-stack — design through deployment. If it runs in a browser and needs to work properly, it's in
+scope.
 
-### What makes Ahmed Chioua's approach different?
-Ahmed pairs AI advisory with 9 years of enterprise delivery experience — as a certified Scrum
-Master and SAFe Agilist — at Bell, BMW, and Bayer. AI recommendations come with the roadmapping,
-prioritization, and delivery discipline needed to turn strategy into shipped software, not just a
-slide deck or workshop.
+### How fast is "fast"?
+A marketing site is typically 2 to 3 weeks; an MVP typically 4 to 6, depending on scope. The date is
+fixed in the written scope before the client commits, and there's a working link from week one.
+Building with AI in the loop is what makes those timelines real rather than optimistic.
 
-### What services does Ahmed Chioua offer?
-Four core services: AI Adoption Strategy & Roadmapping, AI-Augmented Delivery (embedding AI into
-existing product and delivery workflows), Hands-on AI Build (LLM applications, agentic workflows,
-RAG, and automation), and Team Enablement & AI Coaching.
+### Does building with AI mean lower quality?
+The opposite of how it's usually assumed to work. AI accelerates the typing — scaffolding,
+boilerplate, tests, first drafts. It does not make the architectural decisions, and it does not
+review its own result. That's what nine years of enterprise delivery is for. This site is built that
+way; Lighthouse confirms it.
 
-### Which industries has Ahmed Chioua worked in?
-Telecom (Bell), automotive (BMW), life sciences (Bayer), and retail (enterprise clients including
-Disney, Carrefour, Casino, and Fnac via Symphony Retail AI), across 9 years of enterprise delivery
-experience.
+### Can I see client work?
+Not yet. Nine years were spent building inside enterprise programmes under NDA, and the independent
+client side is being built deliberately. So instead of showing someone else's logo, this site is the
+sample and its source is published. That's also why the first few projects go out at founding rates.
 
-### Is Ahmed Chioua available for remote engagements?
-Yes. Ahmed is remote-first, based in Tetouan, Morocco (GMT+1), and available for AI advisory and
-delivery engagements globally.
+### What does it cost?
+Fixed price per project, quoted in the free scope call, based on what's actually needed rather than
+hours logged. No retainers that can't be exited, no unexpected invoices. Founding-client rates apply
+to the next few projects.
 
-### How can I book a consultation with Ahmed Chioua?
-Book a free consultation at https://calendly.com/ahmedchioua/30min, or reach out directly by email
-(ahmedchioua@gmail.com) or LinkedIn (https://linkedin.com/in/ahmedchioua).
+### Who owns the code?
+The client — outright, from day one. Their repo, their infrastructure, their accounts. Handover
+includes documentation and a walkthrough specifically so the work can go to any other developer.
+
+### Does Ahmed work with existing codebases and teams?
+Yes. Audits, refactors and rescues are a service in their own right, and five years as a Scrum Master
+across distributed enterprise teams makes joining someone else's process familiar rather than
+friction.
+
+### Where is Ahmed based, and does it matter?
+Tetouan, Morocco (GMT+1), remote-first — which is how the last five years of work with Canadian and
+German teams have run. Overlap with Europe is complete and with US Eastern is most of the working day.
 
 ## Certifications
 
@@ -80,39 +126,34 @@ Book a free consultation at https://calendly.com/ahmedchioua/30min, or reach out
 
 ## Work Experience
 
-### Scrum Master — Bell.ca (via consulting engagement) · Jun 2024 – Present
+### Scrum Master — Bell Canada (via consulting engagement) · Jun 2024 – Present
 Remote – Morocco | Project: Service Assurance (large-scale telecom platform)
-- Facilitate daily standups, sprint planning, sprint reviews, and retrospectives for a fully distributed team
-- Remove impediments and escalate blockers; protect the team from scope creep
-- Track velocity, sprint burndown, and delivery health metrics; coach on continuous improvement
-- Partner with PMs and POs on backlog refinement and prioritization
-- Coordinate cross-team dependencies in a scaled agile environment
+- A platform where an outage is the product failing — uptime as a requirement, not a target
+- Fully distributed team in a scaled delivery setup; release cadence that can't slip quietly
+- Velocity, burndown and delivery-health metrics; cross-team dependency coordination
 - Tools: Jira · Confluence · Miro · Scrum · SAFe · Kanban
 
 ### Scrum Master — NTT DATA · Oct 2023 – Jun 2024
 Remote – Tetouan, Morocco | Client: Bayer | Project: CS Regulatory (life sciences IT)
-- Facilitated all Scrum ceremonies for a distributed team across multiple time zones
-- Resolved cross-team dependencies; coached on definition of done and refinement cadence
-- Reported sprint metrics and delivery health; flagged risks early
+- Regulated life-sciences IT, where "we'll document it later" isn't an option
+- Distributed across multiple time zones; risk flagged early or not at all
 - Tools: Azure DevOps Boards · OneNote · Scrum · Kanban
 
 ### Scrum Master — NTT DATA · Jun 2021 – Dec 2023
 Remote – Tetouan, Morocco | Client: BMW | Projects: On-Demand Mobility Carsharing & BMW Tele-Services
-- Served as Scrum Master for multiple cloud-native product engineering teams in a scaled agile setup
-- Ran focused retrospectives; coached teams on story slicing and improving flow
-- Partnered with POs on backlog refinement and release planning across multi-team programs
-- Mediated conflicts; built psychological safety in a distributed, multicultural environment
-- Coordinated with Scrum Masters and RTEs on dependencies and PI planning
+- Multiple cloud-native product engineering teams shipping connected-vehicle systems
+- Refinement and release planning across teams that had to integrate with each other
+- Dependency and PI planning coordination with other Scrum Masters and RTEs
 - Tools: Jira · Confluence · Miro · Scrum · SAFe · Kanban
 
 ### DevOps Engineer — NTT DATA · Jan 2021 – Jun 2021
 Tetouan, Morocco | Client: BMW | Project: On-Demand Mobility Carsharing Platform
-- Built CI/CD pipelines and observability tooling before transitioning to Scrum Master role
+- CI/CD pipelines and observability tooling — the infrastructure half of shipping
 - Stack: Java EE · Docker · Kubernetes · GitLab CI/CD · AWS · Grafana · Prometheus · Kibana
 
 ### Software Engineer — Harman Connected Services · Jun 2019 – Jan 2021
 Casablanca, Morocco | Client: Maincare Solutions | Project: Health Management Apps
-- Delivered features within Scrum cycles; built developer-side perspective informing SM practice
+- Full-stack feature delivery across multi-platform products
 - Stack: Spring Boot · Java EE · Node.js · TypeScript · Angular · iOS/Swift 5 · SQL · Jenkins
 
 ### Software Engineer — Harman Connected Services · Sep 2017 – Jun 2019
@@ -122,18 +163,18 @@ Casablanca, Morocco | Client: Symphony Retail AI | Project: ERP G.O.L.D V5/V6
 
 ## Skills
 
+**Build**: React · TypeScript · JavaScript · Node.js · Java/JEE · Spring · Angular · REST APIs · SQL ·
+HTML/CSS
+
 **AI & Automation**: LLM Applications · Anthropic Claude & Claude Code · Agentic Workflows ·
-Prompt Engineering · Retrieval-Augmented Generation (RAG) · Workflow Automation · AI-Augmented
-Delivery · AI Adoption Strategy
+Prompt Engineering · Retrieval-Augmented Generation (RAG) · Workflow Automation ·
+AI-Augmented Development
 
-**Delivery & Agile**: Scrum · Kanban · SAFe · PI Planning · Backlog Refinement · Release Planning ·
-Delivery Metrics · Continuous Improvement
+**Ship & Operate**: Docker · Kubernetes · AWS · GitLab CI/CD · Jenkins · Observability
+(Grafana, Prometheus, Kibana) · Core Web Vitals · Web Accessibility · Technical SEO
 
-**Engineering Foundation**: Java/JEE · Spring · Node.js · TypeScript · Angular · REST APIs ·
-SQL · Docker · Kubernetes · GitLab CI/CD · AWS
-
-**Advisory & Facilitation**: AI Adoption Roadmapping · Stakeholder Communication · Workshops &
-Coaching · Servant Leadership · Conflict Resolution · Team Enablement
+**Delivery**: Scrum · Kanban · SAFe · PI Planning · Scoping · Roadmapping · Release Planning ·
+Stakeholder Communication
 
 **Languages**: Arabic (Native) · English (C2 written / C1 spoken) · French (C1 written / B2 spoken)
 

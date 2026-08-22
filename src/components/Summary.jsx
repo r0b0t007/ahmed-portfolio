@@ -1,10 +1,10 @@
 import { useFadeIn } from '../hooks/useFadeIn'
 
 const panels = [
-  { i: '001', title: 'AI & Automation', tags: ['LLM Applications', 'Claude & Claude Code', 'Agentic Workflows', 'Prompt Engineering', 'RAG', 'Automation'] },
-  { i: '002', title: 'Delivery & Agile', tags: ['Scrum', 'Kanban', 'SAFe', 'PI Planning', 'Release Planning'] },
-  { i: '003', title: 'Engineering Foundation', tags: ['Java/JEE', 'Spring', 'Node.js', 'TypeScript', 'Docker', 'AWS'] },
-  { i: '004', title: 'Advisory & Facilitation', tags: ['AI Adoption Roadmapping', 'Stakeholder Communication', 'Workshops & Coaching', 'Team Enablement'] },
+  { i: '001', title: 'Build', tags: ['React', 'TypeScript', 'Node.js', 'Java/Spring', 'Angular', 'REST APIs', 'SQL'] },
+  { i: '002', title: 'AI & Automation', tags: ['LLM Applications', 'Claude & Claude Code', 'Agentic Workflows', 'RAG', 'Prompt Engineering'] },
+  { i: '003', title: 'Ship & Operate', tags: ['Docker', 'Kubernetes', 'AWS', 'GitLab CI/CD', 'Observability', 'Core Web Vitals'] },
+  { i: '004', title: 'Delivery', tags: ['Scrum', 'Kanban', 'SAFe', 'Scoping', 'Roadmapping', 'Stakeholder Communication'] },
 ]
 
 const certs = [
@@ -37,13 +37,15 @@ const About = () => {
       <div className="eyebrow-block">
         <div className="eyebrow-row">
           <span className="eyebrow">About</span>
-          <span className="eyebrow-index">( 03 )</span>
+          <span className="eyebrow-index">( 05 )</span>
         </div>
-        <h2 className="sec-title">AI fluency. <em>Delivery discipline.</em></h2>
+        <h2 className="sec-title">AI fluency. <em>Engineering discipline.</em></h2>
         <p ref={leadRef} className="fade-in sec-lead">
-          AI Transformation Consultant pairing hands-on AI engineering — LLMs, agentic workflows,
-          and automation — with a 9-year enterprise delivery background. I advise where AI fits,
-          build the systems, and leave teams able to keep shipping.
+          I build with AI in the loop every day — not as a novelty, but because it’s the difference
+          between quoting six weeks and quoting six months. What it doesn’t change is the part that
+          decides whether software survives contact with users: the data model, the architecture,
+          the tests, the decision about what not to build. Nine years in enterprise delivery taught
+          me that half. AI just made the rest faster.
         </p>
       </div>
 

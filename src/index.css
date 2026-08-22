@@ -7,7 +7,7 @@
   --paper-raised: #f1ece2;  /* raised panel */
   --ink: #1a1c1a;           /* primary text / heavy rule */
   --ink-2: #4a4d49;         /* secondary text */
-  --ink-muted: #83857f;     /* muted / mono meta */
+  --ink-muted: #64665f;     /* muted / mono meta — WCAG AA (4.9:1 on paper-raised, 5.4:1 on paper) */
   --teal: #0e5f55;          /* deep teal ink accent */
   --teal-bright: #4fd1b8;   /* status / highlight */
   --hair: #e2ddd3;          /* hairline border */

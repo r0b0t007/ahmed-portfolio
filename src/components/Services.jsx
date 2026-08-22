@@ -3,31 +3,31 @@ import { useFadeIn } from '../hooks/useFadeIn'
 const services = [
   {
     n: '01',
-    title: 'AI Adoption Strategy & Roadmapping',
-    tagline: 'Where AI actually moves your numbers.',
-    desc: 'Identify high-value use cases, assess feasibility and risk, and build a pragmatic adoption roadmap with the guardrails to ship responsibly.',
-    tags: ['Use-case discovery', 'Feasibility & ROI', 'Roadmap', 'Governance'],
+    title: 'Websites that rank and convert',
+    tagline: 'Fast to load. Built to be found.',
+    desc: 'Marketing sites, landing pages and portfolios that earn their keep — designed and built from scratch, not dropped into a template. Every build ships with the SEO foundation most sites bolt on too late: structured data, clean semantics, real meta, sitemap, and Core Web Vitals treated as a requirement rather than a cleanup task.',
+    tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
   },
   {
     n: '02',
-    title: 'AI-Augmented Delivery',
-    tagline: 'AI inside how your teams already ship.',
-    desc: 'Bring AI into the product and delivery workflow — refinement, docs, testing, reporting — without breaking cadence. Faster teams, same quality bar.',
-    tags: ['Workflow design', 'Tooling', 'Enablement', 'Delivery metrics'],
+    title: 'SaaS & MVP builds',
+    tagline: 'From idea to something real users can touch.',
+    desc: 'A working product, not a prototype that dies in a demo. We scope the smallest version that proves the thing, then I build it — auth, data model, core flows, payments if you need them — deployed on infrastructure that won’t need replacing when it works.',
+    tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
   },
   {
     n: '03',
-    title: 'Agentic Systems & Automation',
-    tagline: 'Working systems, not slideware.',
-    desc: 'Design and build LLM-powered workflows — agents, RAG, automation — integrated with your stack and measured against real baselines.',
-    tags: ['LLM applications', 'Agentic workflows', 'RAG', 'Integration'],
+    title: 'Architecture & technical rescue',
+    tagline: 'For products that shipped fast and now can’t move.',
+    desc: 'Someone built it quickly, it worked, and now every change breaks something else. I audit what’s there, tell you plainly what’s worth saving, and give you a sequenced plan — or do the work. Nine years inside enterprise codebases means I’ve seen how this ends, and how to stop it without a rewrite you can’t afford.',
+    tags: ['Codebase audit', 'Refactor plan', 'Performance', 'Remediation'],
   },
   {
     n: '04',
-    title: 'Team Enablement & AI Fluency',
-    tagline: 'Capability that stays after I leave.',
-    desc: 'Hands-on training and playbooks so product and delivery teams keep shipping with AI — prompting, tooling, and ways of working.',
-    tags: ['Workshops', 'Playbooks', 'Coaching'],
+    title: 'AI-augmented automation',
+    tagline: 'AI inside the work, not beside it.',
+    desc: 'The internal tooling that quietly removes hours a week — LLM workflows, agents, retrieval over your own documents, integrations between systems that don’t talk. Built against your real processes and measured against how long the job took before. If AI doesn’t beat the baseline, I’ll say so.',
+    tags: ['LLM applications', 'Agentic workflows', 'RAG', 'Integrations'],
   },
 ]
 
@@ -53,10 +53,10 @@ const Services = () => (
         <span className="eyebrow">Services</span>
         <span className="eyebrow-index">( 01 )</span>
       </div>
-      <h2 className="sec-title">How I <em>help</em></h2>
+      <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">
-        Four ways I take organizations from AI curiosity to shipped, measurable outcomes —
-        strategy, delivery, build, and the capability to keep going.
+        Four things, done properly. Scoped up front, shipped on a date, handed over with
+        the keys — not a dependency on me.
       </p>
     </div>
 

@@ -40,12 +40,13 @@ const Contact = () => {
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
               <span className="eyebrow">Contact</span>
-              <span className="eyebrow-index">( 04 )</span>
+              <span className="eyebrow-index">( 07 )</span>
             </div>
-            <h2 className="sec-title">Let's talk about <em>what ships</em></h2>
+            <h2 className="sec-title">Tell me what <em>you're building</em></h2>
             <p className="sec-lead" style={{ marginBottom: '28px' }}>
-              Tell me where AI is stuck in your organization — I'll tell you honestly whether
-              and how I can help.
+              Send me the shape of it and I'll tell you honestly whether I'm the right person,
+              what it would take, and what it would cost. The scope call is free and there's
+              nothing to unsubscribe from.
             </p>
             <div className="ed-avail-solid"><span className="ed-dot-b" />Available for engagements</div>
             <dl className="ed-details">

@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 
 const navLinks = [
   { name: 'Services', href: '#services' },
-  { name: 'Experience', href: '#experience' },
+  { name: 'Process', href: '#process' },
+  { name: 'Proof', href: '#proof' },
   { name: 'About', href: '#about' },
+  { name: 'FAQ', href: '#faq' },
   { name: 'Contact', href: '#contact', accent: true },
 ]
 
@@ -54,7 +56,7 @@ const Header = () => {
           font-family: var(--serif); font-style: italic; font-size: 1rem; font-weight: 600;
           color: var(--ink); letter-spacing: 0.2px;
         }
-        .ed-nav { display: flex; gap: 36px; }
+        .ed-nav { display: flex; gap: 26px; }
         .ed-nav a { font-size: 0.82rem; font-weight: 500; color: var(--ink-2); transition: color var(--transition); }
         .ed-nav a:hover { color: var(--ink); }
         .ed-nav a.accent { color: var(--teal); border-bottom: 1px solid var(--teal); padding-bottom: 2px; }
@@ -70,7 +72,7 @@ const Header = () => {
         }
         .ed-mobile a { padding: 14px 0; font-size: 0.95rem; color: var(--ink-2); border-bottom: 1px solid var(--hair); }
         .ed-mobile a.accent { color: var(--teal); }
-        @media (max-width: 720px) {
+        @media (max-width: 860px) {
           .ed-nav { display: none; }
           .ed-burger { display: flex; }
         }

@@ -11,7 +11,7 @@ const Footer = () => (
     <div className="ed-foot-top">
       <div>
         <div className="ed-foot-name">Ahmed Chioua</div>
-        <p className="ed-foot-tag">AI Transformation Consultant — from strategy to shipped.</p>
+        <p className="ed-foot-tag">Websites and SaaS, built fast and built properly.</p>
       </div>
       <div className="ed-foot-socials">
         {socials.map(s => (
@@ -25,7 +25,7 @@ const Footer = () => (
     </div>
     <div className="ed-foot-bottom">
       <span>© 2026 Ahmed Chioua. All rights reserved.</span>
-      <a href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a consultation ↗</a>
+      <a href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a scope call ↗</a>
     </div>
 
     <style>{`

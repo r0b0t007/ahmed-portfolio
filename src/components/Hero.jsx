@@ -1,23 +1,24 @@
 const CALENDLY = 'https://calendly.com/ahmedchioua/30min'
 
 const stats = [
-  { n: '9', sup: '+', label: 'Years enterprise delivery' },
-  { n: '3', sup: '',  label: 'Global enterprise clients' },
-  { n: '4', sup: '',  label: 'Industries served' },
+  { n: '9', sup: '+', label: 'Years shipping production software' },
+  { n: '100', sup: '', label: 'Lighthouse: a11y, SEO, best practices' },
+  { n: '3', sup: '',  label: 'Enterprise clients — Bell, BMW, Bayer' },
 ]
 
 const Hero = () => (
   <section id="hero" className="ed-hero">
     <div className="ed-hero-text">
-      <p className="ed-kicker">AI Transformation Consultant — Tétouan, Morocco · Remote</p>
-      <h1 className="ed-h1">AI that ships,<br />not <em>hype</em> that stalls.</h1>
+      <p className="ed-kicker">Web &amp; SaaS Builder — Tétouan, Morocco · Remote</p>
+      <h1 className="ed-h1">Shipped in weeks,<br />built to <em>last</em>.</h1>
       <p className="ed-lead">
-        Nine years of enterprise delivery for <strong>Bell</strong>, <strong>BMW</strong>, and{' '}
-        <strong>Bayer</strong> — now focused on turning AI investment into shipped, measured outcomes.
+        I build websites and SaaS products with AI in the loop — which is why they ship in weeks.
+        Nine years delivering software for <strong>Bell</strong>, <strong>BMW</strong> and{' '}
+        <strong>Bayer</strong> is why they don't fall over afterwards.
       </p>
       <div className="ed-cta-row">
-        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="btn-ink">Book a consultation</a>
-        <a href="#services" className="link-teal">See how I help →</a>
+        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="btn-ink">Start a project</a>
+        <a href="#process" className="link-teal">See how I build →</a>
       </div>
       <div className="ed-stats">
         {stats.map(s => (
@@ -30,7 +31,7 @@ const Hero = () => (
     </div>
 
     <div className="ed-hero-portrait">
-      <img src="/headshot.webp" width="440" height="550" alt="Ahmed Chioua, AI Transformation Consultant" fetchPriority="high" />
+      <img src="/headshot.webp" width="440" height="550" alt="Ahmed Chioua, web and SaaS developer" fetchPriority="high" />
       <div className="ed-avail"><span className="ed-dot" />Available for engagements</div>
     </div>
 
@@ -60,12 +61,13 @@ const Hero = () => (
       .ed-lead strong { font-weight: 600; color: var(--ink); }
       .ed-cta-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
       .ed-stats {
-        display: flex; gap: 44px; margin-top: 64px;
-        border-top: 1px solid var(--hair); padding-top: 26px; max-width: 540px; flex-wrap: wrap;
+        display: flex; gap: 32px; margin-top: 64px;
+        border-top: 1px solid var(--hair); padding-top: 26px; max-width: 620px; flex-wrap: wrap;
       }
+      .ed-stat { flex: 1 1 0; min-width: 130px; max-width: 180px; }
       .ed-stat-n { font-family: var(--serif); font-size: 1.9rem; font-weight: 300; line-height: 1; }
       .ed-stat-n sup { color: var(--teal); font-size: 1rem; }
-      .ed-stat-l { font-size: 0.75rem; color: var(--ink-muted); margin-top: 6px; }
+      .ed-stat-l { font-size: 0.75rem; color: var(--ink-muted); margin-top: 6px; line-height: 1.5; }
 
       .ed-hero-portrait {
         position: relative;

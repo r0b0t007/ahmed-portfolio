@@ -2,48 +2,51 @@ import { useFadeIn } from '../hooks/useFadeIn'
 
 const roles = [
   {
-    date: ['Jun 2024 —', 'Present'], kind: 'Agile',
+    date: ['Jun 2024 —', 'Present'], kind: 'Delivery',
     role: 'Scrum Master', org: 'Bell Canada (via consulting engagement)',
     project: 'Service Assurance — large-scale telecom platform',
     bullets: [
-      'Facilitate ceremonies for a fully distributed team; remove blockers and protect focus.',
-      'Track velocity and delivery-health metrics; coach continuous improvement.',
+      'A platform where an outage is the product failing — uptime as a requirement, not a target.',
+      'Distributed team, scaled delivery, release cadence that can’t slip quietly.',
     ],
     tools: ['Jira', 'Confluence', 'SAFe'],
   },
   {
-    date: ['Oct 2023 —', 'Jun 2024'], kind: 'Agile',
+    date: ['Oct 2023 —', 'Jun 2024'], kind: 'Delivery',
     role: 'Scrum Master', org: 'NTT DATA — Client: Bayer',
     project: 'CS Regulatory — life sciences IT platform',
     bullets: [
-      'Facilitated all ceremonies for a distributed team across multiple time zones.',
-      'Reported sprint metrics and delivery health; flagged risks early.',
+      'Regulated life-sciences IT, where “we’ll document it later” isn’t an option.',
+      'Distributed across multiple time zones, with risk flagged early or not at all.',
     ],
     tools: ['Azure DevOps', 'Scrum', 'Kanban'],
   },
   {
-    date: ['Jun 2021 —', 'Dec 2023'], kind: 'Agile',
+    date: ['Jun 2021 —', 'Dec 2023'], kind: 'Delivery',
     role: 'Scrum Master', org: 'NTT DATA — Client: BMW',
     project: 'On-Demand Mobility Carsharing — connected vehicle',
     bullets: [
-      'Scrum Master for multiple cloud-native product teams in a scaled agile setup.',
-      'Partnered with POs on refinement and release planning across programs.',
+      'Multiple cloud-native product teams shipping connected-vehicle systems in a scaled programme.',
+      'Refinement and release planning across teams that had to integrate with each other.',
     ],
     tools: ['Jira', 'Miro', 'SAFe'],
   },
   {
-    date: ['Jan 2021 —', 'Jun 2021'], kind: 'DevOps',
+    date: ['Jan 2021 —', 'Jun 2021'], kind: 'Infrastructure',
     role: 'DevOps Engineer', org: 'NTT DATA — Client: BMW',
     project: 'On-Demand Mobility Carsharing Platform',
-    bullets: ['Built CI/CD pipelines and observability tooling before moving into the SM role.'],
+    bullets: ['CI/CD pipelines and observability — the infrastructure half of shipping.'],
     tools: ['Docker', 'Kubernetes', 'AWS'],
   },
   {
     date: ['2017 —', '2021'], kind: 'Engineering',
     role: 'Software Engineer', org: 'Harman Connected Services',
     project: 'Enterprise engagements for Maincare & Symphony Retail AI (Disney, Carrefour, Casino, Fnac)',
-    bullets: ['Delivered features within Scrum cycles across full-stack, multi-platform products.'],
-    tools: ['Java/JEE', 'Node.js', 'Angular'],
+    bullets: [
+      'Four years hands-on across full-stack, multi-platform products.',
+      'Enterprise retail and health platforms used by companies that audit their vendors.',
+    ],
+    tools: ['Java/JEE', 'Spring', 'Node.js', 'Angular'],
   },
 ]
 
@@ -74,10 +77,14 @@ const Experience = () => (
   <section id="experience" className="section">
     <div className="eyebrow-block">
       <div className="eyebrow-row">
-        <span className="eyebrow">Experience</span>
-        <span className="eyebrow-index">( 02 )</span>
+        <span className="eyebrow">Background</span>
+        <span className="eyebrow-index">( 04 )</span>
       </div>
-      <h2 className="sec-title">Nine years of <em>enterprise</em> delivery</h2>
+      <h2 className="sec-title">Where the <em>standards</em> come from</h2>
+      <p className="sec-lead">
+        Nine years inside enterprise software — four building it, five making sure teams
+        shipped it. Both halves show up in how I work now.
+      </p>
     </div>
 
     <div className="ed-timeline">
