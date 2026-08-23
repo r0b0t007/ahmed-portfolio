@@ -37,6 +37,15 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <!-- ── LCP image preload ──
+         The hero portrait is the LCP element but is rendered by React, so the preload scanner
+         can't discover it until the bundle parses. Preloading here removes that load delay.
+         imagesrcset/imagesizes must stay in sync with the <img> in src/components/Hero.jsx. -->
+    <link rel="preload" as="image" href="/headshot-700.webp"
+      imagesrcset="/headshot-440.webp 440w, /headshot-700.webp 700w"
+      imagesizes="(max-width: 900px) 100vw, 42vw"
+      fetchpriority="high" />
+
     <!-- ── Google Fonts — async (non-render-blocking) ── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,7 +83,7 @@
           "url": "https://ahmedchioua.com/",
           "email": "ahmedchioua@gmail.com",
           "telephone": "+212626410690",
-          "image": "https://ahmedchioua.com/headshot.webp",
+          "image": "https://ahmedchioua.com/headshot-700.webp",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Tetouan",
