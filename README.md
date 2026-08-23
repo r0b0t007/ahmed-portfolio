@@ -10,7 +10,7 @@ the build config, the commit history.
 
 ## Lighthouse
 
-Measured on the production build, mobile:
+Measured on the production build, mobile emulation:
 
 | Category | Score |
 |---|---|
@@ -19,8 +19,24 @@ Measured on the production build, mobile:
 | SEO | 100 |
 | Agentic Browsing | 100 |
 
-Zero failed audits. Reproduce it yourself: `npm run build && npm run preview`, then run Lighthouse
-against the preview URL.
+Zero failed audits across those four categories.
+
+**Performance is not in that table** — the automated run used to produce it excludes the category,
+so quoting a number would be inventing one. What was measured directly, on a local production
+build without throttling:
+
+| Core Web Vital | Observed |
+|---|---|
+| LCP | 200 ms |
+| CLS | 0.00 |
+| INP | 45 ms |
+
+Those are lab numbers on localhost. Real-world figures will be worse — network latency, Google
+Fonts, and the hero image all cost something over the wire. Treat CLS 0.00 as the meaningful one:
+it's a structural property of the layout, not an artefact of a fast connection.
+
+Reproduce any of it yourself: `npm run build && npm run preview`, then run Lighthouse against the
+preview URL.
 
 ## Stack
 
@@ -57,15 +73,24 @@ Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — th
 ## Structure
 
 ```
-index.html              meta, JSON-LD (Person/Service/FAQPage/WebSite), no-JS crawler fallback
+index.html              meta, JSON-LD (Person/Service/WebSite), no-JS crawler fallback
+vite.config.js          build config + FAQPage JSON-LD generation
 public/llms.txt         structured summary for AI crawlers
 src/index.css           design tokens + shared editorial primitives
 src/App.jsx             section composition, lazy boundaries
+src/content/faqs.js     single source of truth for FAQ copy (page + schema)
 src/hooks/useFadeIn.js  IntersectionObserver scroll reveal
 src/components/
   Header · Hero · TrustStrip · Services · Process · Proof
   Experience · Summary (About) · Faq · Contact · Footer
 ```
+
+### FAQ copy
+
+Google requires `FAQPage` answer text to match the answer visible on the page. Rather than
+maintain two copies, `src/content/faqs.js` is the only source: `Faq.jsx` renders from it, and a
+small Vite plugin generates the JSON-LD from the same strings at build time. Edit the copy there
+and both stay in sync by construction.
 
 ## Accessibility
 
@@ -82,11 +107,6 @@ npm run build    # production build to dist/
 npm run preview  # serve the production build
 npm run lint
 ```
-
-## Notes
-
-`AmbientBackground.jsx`, `MatrixRain.jsx`, `Skills.jsx`, `Education.jsx` and `Calendly.jsx` are
-retained but not mounted — earlier design passes kept around for reference.
 
 ---
 

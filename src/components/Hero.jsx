@@ -23,7 +23,7 @@ const Hero = () => (
       <div className="ed-stats">
         {stats.map(s => (
           <div key={s.label} className="ed-stat">
-            <div className="ed-stat-n">{s.n}<sup>{s.sup}</sup></div>
+            <div className="ed-stat-n">{s.n}{s.sup && <sup>{s.sup}</sup>}</div>
             <div className="ed-stat-l">{s.label}</div>
           </div>
         ))}
