@@ -52,6 +52,10 @@ em { font-style: italic; }
 ::selection { background: rgba(14, 95, 85, 0.15); color: var(--ink); }
 :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
 
+/* Hydration island wrappers (see src/App.jsx). display:contents so they create no box —
+   a real wrapper around .ed-header would become its containing block and break position:sticky. */
+.island { display: contents; }
+
 /* ── Shared editorial primitives ── */
 .section {
   padding: 96px var(--pad);

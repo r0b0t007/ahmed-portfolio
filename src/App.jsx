@@ -11,15 +11,20 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 /**
- * Sections are imported statically rather than lazily so the whole page can be prerendered to
- * static HTML (see scripts/prerender.js). React.lazy suspends during renderToString, which would
- * emit empty fallbacks and then mismatch on hydration. The nine section chunks totalled ~14 kB
- * gzipped, and with the markup already in the HTML the bundle no longer gates first paint.
+ * Rendered in full at build time (scripts/prerender.js) so the served HTML carries the whole page.
+ *
+ * On the client only the two interactive regions are hydrated — see src/main.jsx. They're marked
+ * with `island` wrappers so the client has a container to hydrate into. The wrappers are
+ * `display: contents` (see index.css) so they create no box of their own: a real wrapper element
+ * around the header would become its containing block and break `position: sticky`.
+ *
+ * Everything else is static markup that never gets hydrated, which is the point — it's what keeps
+ * React off the main thread for ~80% of the tree.
  */
 function App() {
   return (
     <div className="app">
-      <Header />
+      <div className="island" id="island-header"><Header /></div>
       <main>
         <Hero />
         <TrustStrip />
@@ -29,7 +34,7 @@ function App() {
         <Experience />
         <About />
         <Faq />
-        <Contact />
+        <div className="island" id="island-contact"><Contact /></div>
       </main>
       <Footer />
     </div>
