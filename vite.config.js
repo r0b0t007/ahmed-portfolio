@@ -37,15 +37,17 @@ function faqSchema() {
   }
 }
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), faqSchema()],
   build: {
     rollupOptions: {
-      output: {
+      // React is external in the SSR build, so it can't be chunked there — manualChunks is
+      // client-only. Without this guard `vite build --ssr` fails on the vendor entry.
+      output: isSsrBuild ? {} : {
         manualChunks: {
           'vendor': ['react', 'react-dom'],
-        }
-      }
-    }
-  }
-})
+        },
+      },
+    },
+  },
+}))

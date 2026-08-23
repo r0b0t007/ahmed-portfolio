@@ -73,17 +73,36 @@ Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — th
 ## Structure
 
 ```
-index.html              meta, JSON-LD (Person/Service/WebSite), no-JS crawler fallback
+index.html              meta + JSON-LD (Person/Service/WebSite)
 vite.config.js          build config + FAQPage JSON-LD generation
+scripts/prerender.js    injects rendered markup into dist/index.html
 public/llms.txt         structured summary for AI crawlers
 src/index.css           design tokens + shared editorial primitives
-src/App.jsx             section composition, lazy boundaries
+src/App.jsx             section composition
+src/main.jsx            client entry — hydrates the prerendered markup
+src/entry-server.jsx    build-time server entry (renderToString)
 src/content/faqs.js     single source of truth for FAQ copy (page + schema)
 src/hooks/useFadeIn.js  IntersectionObserver scroll reveal
 src/components/
   Header · Hero · TrustStrip · Services · Process · Proof
   Experience · Summary (About) · Faq · Contact · Footer
 ```
+
+### Prerendering
+
+`npm run build` runs three steps: the client build, an SSR build of
+`src/entry-server.jsx`, then `scripts/prerender.js`, which renders the app to a string and injects
+it into `dist/index.html`. The client entry hydrates that markup rather than rendering into an
+empty root.
+
+This matters for two reasons. The page paints from HTML instead of waiting for the bundle to parse
+— the previous build shipped an empty `<div id="root">`, so nothing was visible until JavaScript
+executed. And crawlers that don't run JavaScript, including several AI crawlers, now see the real
+content rather than an empty shell (which is why the old hand-written `<noscript>` mirror could be
+dropped).
+
+Sections are imported statically for this reason: `React.lazy` suspends during `renderToString`,
+which would prerender empty fallbacks and mismatch on hydration.
 
 ### FAQ copy
 

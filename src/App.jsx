@@ -1,17 +1,21 @@
-import { Suspense, lazy } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import TrustStrip from './components/TrustStrip'
+import Services from './components/Services'
+import Process from './components/Process'
+import Proof from './components/Proof'
+import Experience from './components/Experience'
+import About from './components/Summary'
+import Faq from './components/Faq'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
 
-const Services   = lazy(() => import('./components/Services'))
-const Process    = lazy(() => import('./components/Process'))
-const Proof      = lazy(() => import('./components/Proof'))
-const Experience = lazy(() => import('./components/Experience'))
-const About      = lazy(() => import('./components/Summary'))
-const Faq        = lazy(() => import('./components/Faq'))
-const Contact    = lazy(() => import('./components/Contact'))
-const Footer     = lazy(() => import('./components/Footer'))
-
+/**
+ * Sections are imported statically rather than lazily so the whole page can be prerendered to
+ * static HTML (see scripts/prerender.js). React.lazy suspends during renderToString, which would
+ * emit empty fallbacks and then mismatch on hydration. The nine section chunks totalled ~14 kB
+ * gzipped, and with the markup already in the HTML the bundle no longer gates first paint.
+ */
 function App() {
   return (
     <div className="app">
@@ -19,19 +23,15 @@ function App() {
       <main>
         <Hero />
         <TrustStrip />
-        <Suspense fallback={null}>
-          <Services />
-          <Process />
-          <Proof />
-          <Experience />
-          <About />
-          <Faq />
-          <Contact />
-        </Suspense>
+        <Services />
+        <Process />
+        <Proof />
+        <Experience />
+        <About />
+        <Faq />
+        <Contact />
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      <Footer />
     </div>
   )
 }
