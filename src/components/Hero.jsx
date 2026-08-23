@@ -31,7 +31,15 @@ const Hero = () => (
     </div>
 
     <div className="ed-hero-portrait">
-      <img src="/headshot.webp" width="440" height="550" alt="Ahmed Chioua, web and SaaS developer" fetchPriority="high" />
+      <img
+        src="/headshot-700.webp"
+        srcSet="/headshot-440.webp 440w, /headshot-700.webp 700w"
+        sizes="(max-width: 900px) 100vw, 42vw"
+        width="440" height="550"
+        alt="Ahmed Chioua, web and SaaS developer"
+        fetchPriority="high"
+        decoding="async"
+      />
       <div className="ed-avail"><span className="ed-dot" />Available for engagements</div>
     </div>
 
