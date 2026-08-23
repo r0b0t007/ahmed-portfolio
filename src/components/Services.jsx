@@ -64,30 +64,6 @@ const Services = () => (
       {services.map(s => <ServiceCard key={s.n} s={s} />)}
     </div>
 
-    <style>{`
-      .ed-svc-grid { grid-template-columns: 1fr 1fr; }
-      .ed-svc {
-        background: var(--paper-card);
-        padding: 36px 34px;
-        transition: background var(--transition);
-      }
-      .ed-svc:hover { background: var(--paper); }
-      .ed-svc-n {
-        font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-        letter-spacing: 0.14em; color: var(--teal); margin-bottom: 22px;
-      }
-      .ed-svc-t {
-        font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
-        line-height: 1.25; margin-bottom: 8px;
-      }
-      .ed-svc-tag {
-        font-family: var(--serif); font-style: italic; font-size: 0.95rem;
-        color: var(--teal); margin-bottom: 14px;
-      }
-      .ed-svc-desc { font-size: 0.95rem; color: var(--ink-2); line-height: 1.75; margin-bottom: 22px; }
-      .ed-svc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-      @media (max-width: 720px) { .ed-svc-grid { grid-template-columns: 1fr; } }
-    `}</style>
   </section>
 )
 

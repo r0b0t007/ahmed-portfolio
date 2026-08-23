@@ -75,42 +75,6 @@ const Contact = () => {
         </form>
       </div>
 
-      <style>{`
-        .ed-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-        .ed-avail-solid {
-          display: inline-flex; align-items: center; gap: 10px;
-          padding: 10px 18px; background: var(--ink); color: var(--paper);
-          font-size: 0.72rem; font-weight: 600;
-        }
-        .ed-dot-b { width: 7px; height: 7px; border-radius: 50%; background: var(--teal-bright); animation: dcpulse 2s infinite; }
-        .ed-details { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
-        .ed-detail { display: grid; grid-template-columns: 90px 1fr; gap: 16px; align-items: baseline; }
-        .ed-detail dt { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
-        .ed-detail dd { font-size: 0.9rem; color: var(--ink-2); }
-        .ed-detail dd a { border-bottom: 1px solid var(--hair); transition: border-color var(--transition); }
-        .ed-detail dd a:hover { border-color: var(--teal); color: var(--teal); }
-
-        .ed-form { background: var(--paper-card); border: 1px solid var(--hair); padding: 40px; }
-        .ed-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .ed-fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
-        .ed-fg label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
-        .ed-fg input, .ed-fg textarea {
-          width: 100%; padding: 12px 14px; background: var(--paper); border: 1px solid var(--hair);
-          color: var(--ink); font-family: var(--sans); font-size: 0.9rem; resize: none;
-        }
-        .ed-fg input::placeholder, .ed-fg textarea::placeholder { color: var(--ink-muted); }
-        .ed-fg input:focus, .ed-fg textarea:focus { outline: none; border-color: var(--teal); }
-        .ed-submit {
-          width: 100%; padding: 15px; border: 1px solid var(--ink); background: var(--ink);
-          color: var(--paper); font-weight: 600; font-size: 0.88rem; font-family: var(--sans);
-          letter-spacing: 0.02em; transition: background var(--transition), border-color var(--transition);
-        }
-        .ed-submit:hover { background: var(--teal); border-color: var(--teal); }
-        .ed-submit:disabled { opacity: 0.7; cursor: default; }
-        .ed-submit.success { background: var(--teal); border-color: var(--teal); }
-        .ed-submit.error { background: #9a3535; border-color: #9a3535; }
-        @media (max-width: 820px) { .ed-contact { grid-template-columns: 1fr; gap: 40px; } .ed-form-row { grid-template-columns: 1fr; } }
-      `}</style>
     </section>
   )
 }

@@ -91,35 +91,6 @@ const Experience = () => (
       {roles.map((r, i) => <Row key={i} r={r} />)}
     </div>
 
-    <style>{`
-      .ed-timeline { max-width: 780px; }
-      .ed-row {
-        display: grid; grid-template-columns: 160px 1fr; gap: 32px;
-        padding: 30px 0; border-bottom: 1px solid var(--hair);
-      }
-      .ed-row-date {
-        font-family: var(--mono); font-size: 0.74rem; color: var(--ink-muted);
-        line-height: 1.8; padding-top: 5px;
-      }
-      .ed-kind {
-        display: inline-block; margin-top: 8px; padding: 3px 10px;
-        border: 1px solid var(--hair); color: var(--teal);
-        font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-      }
-      .ed-role { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; margin-bottom: 2px; }
-      .ed-org { font-size: 0.88rem; color: var(--ink-2); }
-      .ed-project {
-        font-family: var(--serif); font-style: italic; font-size: 0.95rem;
-        color: var(--teal); margin: 8px 0 14px;
-      }
-      .ed-bullets { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
-      .ed-bullet { font-size: 0.9rem; color: var(--ink-2); padding-left: 18px; position: relative; line-height: 1.65; }
-      .ed-bullet span { position: absolute; left: 0; color: var(--teal); }
-      .ed-tools { display: flex; flex-wrap: wrap; gap: 8px; }
-      @media (max-width: 620px) {
-        .ed-row { grid-template-columns: 1fr; gap: 14px; }
-      }
-    `}</style>
   </section>
 )
 

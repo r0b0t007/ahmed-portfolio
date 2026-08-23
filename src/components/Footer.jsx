@@ -28,22 +28,6 @@ const Footer = () => (
       <a href={CALENDLY} target="_blank" rel="noopener noreferrer">Book a scope call ↗</a>
     </div>
 
-    <style>{`
-      .ed-footer { padding: 56px var(--pad) 40px; border-top: 1px solid var(--ink); }
-      .ed-foot-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; padding-bottom: 40px; flex-wrap: wrap; }
-      .ed-foot-name { font-family: var(--serif); font-style: italic; font-size: 1.5rem; }
-      .ed-foot-tag { font-size: 0.88rem; color: var(--ink-2); max-width: 300px; line-height: 1.7; margin-top: 10px; }
-      .ed-foot-socials { display: flex; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
-      .ed-foot-socials a { width: 44px; height: 44px; background: var(--paper-card); display: flex; align-items: center; justify-content: center; color: var(--ink-2); transition: background var(--transition), color var(--transition); }
-      .ed-foot-socials a:hover { background: var(--ink); color: var(--paper); }
-      .ed-foot-bottom {
-        border-top: 1px solid var(--hair); padding-top: 22px;
-        display: flex; justify-content: space-between; align-items: center;
-        font-family: var(--mono); font-size: 0.68rem; color: var(--ink-muted); flex-wrap: wrap; gap: 8px;
-      }
-      .ed-foot-bottom a { color: var(--teal); font-weight: 500; }
-      @media (max-width: 540px) { .ed-foot-bottom { justify-content: center; text-align: center; } }
-    `}</style>
   </footer>
 )
 

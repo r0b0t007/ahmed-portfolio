@@ -70,39 +70,6 @@ const About = () => {
         </div>
       </div>
 
-      <style>{`
-        .ed-about-grid { grid-template-columns: 1fr 1fr; max-width: 940px; }
-        .ed-panel { background: var(--paper-card); padding: 30px 32px; }
-        .ed-panel-head {
-          display: flex; align-items: baseline; justify-content: space-between;
-          border-bottom: 1px solid var(--ink); padding-bottom: 14px; margin-bottom: 18px;
-        }
-        .ed-panel-head h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; }
-        .ed-panel-i { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-muted); }
-        .ed-panel-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .ed-pill {
-          padding: 6px 14px; border: 1px solid var(--hair); background: var(--paper);
-          font-size: 0.8rem; font-weight: 500; color: var(--ink-2);
-        }
-        .ed-cert-strip {
-          grid-column: span 2; background: var(--paper-card); padding: 24px 32px;
-          display: flex; flex-wrap: wrap; gap: 32px;
-        }
-        .ed-cert { display: flex; align-items: center; gap: 12px; }
-        .ed-cert-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
-        .ed-cert-n { font-size: 0.88rem; font-weight: 600; }
-        .ed-cert-by { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-top: 2px; }
-        .ed-lang-strip {
-          grid-column: span 2; background: var(--paper-card); padding: 20px 32px;
-          display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
-        }
-        .ed-lang-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
-        .ed-lang-val { font-size: 0.9rem; color: var(--ink-2); }
-        @media (max-width: 720px) {
-          .ed-about-grid { grid-template-columns: 1fr; }
-          .ed-cert-strip, .ed-lang-strip { grid-column: span 1; }
-        }
-      `}</style>
     </section>
   )
 }

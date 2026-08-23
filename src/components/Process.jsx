@@ -63,35 +63,6 @@ const Process = () => (
 
     <div className="ed-promise">Fixed scope. Fixed price. A date, in writing.</div>
 
-    <style>{`
-      .ed-steps { max-width: 820px; }
-      .ed-step {
-        display: grid; grid-template-columns: 170px 1fr; gap: 32px;
-        padding: 30px 0; border-bottom: 1px solid var(--hair);
-      }
-      .ed-step-side { padding-top: 4px; }
-      .ed-step-n {
-        font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-        letter-spacing: 0.14em; color: var(--teal);
-      }
-      .ed-step-meta {
-        font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); margin-top: 8px;
-      }
-      .ed-step-t {
-        font-family: var(--serif); font-size: 1.5rem; font-weight: 400; margin-bottom: 10px;
-      }
-      .ed-step-desc { font-size: 0.95rem; color: var(--ink-2); line-height: 1.8; max-width: 58ch; }
-      .ed-promise {
-        margin-top: 40px; max-width: 820px;
-        font-family: var(--serif); font-style: italic; font-size: 1.35rem;
-        color: var(--teal); border-left: 2px solid var(--teal); padding-left: 22px;
-      }
-      @media (max-width: 720px) {
-        .ed-step { grid-template-columns: 1fr; gap: 12px; }
-        .ed-step-side { display: flex; align-items: baseline; gap: 16px; }
-        .ed-step-meta { margin-top: 0; }
-      }
-    `}</style>
   </section>
 )
 

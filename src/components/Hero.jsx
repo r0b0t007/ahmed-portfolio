@@ -43,65 +43,6 @@ const Hero = () => (
       <div className="ed-avail"><span className="ed-dot" />Available for engagements</div>
     </div>
 
-    <style>{`
-      .ed-hero {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        min-height: calc(100vh - 73px);
-      }
-      .ed-hero-text { padding: 84px 48px 72px var(--pad); align-self: center; }
-      .ed-kicker {
-        font-family: var(--mono);
-        font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em;
-        text-transform: uppercase; color: var(--teal); margin-bottom: 28px;
-      }
-      .ed-h1 {
-        font-family: var(--serif);
-        font-size: clamp(2.8rem, 6vw, 4.5rem);
-        font-weight: 300; line-height: 1.05; letter-spacing: -1.5px;
-        margin-bottom: 26px; text-wrap: balance;
-      }
-      .ed-h1 em { color: var(--teal); font-style: italic; }
-      .ed-lead {
-        font-size: 1.05rem; line-height: 1.75; color: var(--ink-2);
-        max-width: 440px; margin-bottom: 40px;
-      }
-      .ed-lead strong { font-weight: 600; color: var(--ink); }
-      .ed-cta-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-      .ed-stats {
-        display: flex; gap: 32px; margin-top: 64px;
-        border-top: 1px solid var(--hair); padding-top: 26px; max-width: 620px; flex-wrap: wrap;
-      }
-      .ed-stat { flex: 1 1 0; min-width: 130px; max-width: 180px; }
-      .ed-stat-n { font-family: var(--serif); font-size: 1.9rem; font-weight: 300; line-height: 1; }
-      .ed-stat-n sup { color: var(--teal); font-size: 1rem; }
-      .ed-stat-l { font-size: 0.75rem; color: var(--ink-muted); margin-top: 6px; line-height: 1.5; }
-
-      .ed-hero-portrait {
-        position: relative;
-        border-left: 1px solid var(--hair);
-        background: var(--paper-raised);
-        overflow: hidden;
-      }
-      .ed-hero-portrait img {
-        position: absolute; inset: 0;
-        width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%;
-        filter: grayscale(100%) contrast(1.04) sepia(0.08);
-      }
-      .ed-avail {
-        position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-        display: inline-flex; align-items: center; gap: 10px;
-        padding: 12px 20px; background: var(--paper); border: 1px solid var(--hair);
-        font-size: 0.72rem; font-weight: 600; white-space: nowrap; color: var(--ink);
-      }
-      .ed-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: dcpulse 2s infinite; }
-
-      @media (max-width: 900px) {
-        .ed-hero { grid-template-columns: 1fr; min-height: 0; }
-        .ed-hero-portrait { order: -1; height: 340px; border-left: none; border-bottom: 1px solid var(--hair); }
-        .ed-hero-text { padding: 52px var(--pad); }
-      }
-    `}</style>
   </section>
 )
 
