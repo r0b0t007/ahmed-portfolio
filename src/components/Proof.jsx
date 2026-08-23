@@ -73,37 +73,6 @@ const Proof = () => {
         </p>
       </div>
 
-      <style>{`
-        .ed-proof-grid { grid-template-columns: repeat(3, 1fr); }
-        .ed-proof-item {
-          background: var(--paper-card); padding: 32px 30px;
-          display: flex; flex-direction: column;
-        }
-        .ed-proof-head {
-          display: flex; align-items: baseline; justify-content: space-between;
-          border-bottom: 1px solid var(--ink); padding-bottom: 14px; margin-bottom: 18px;
-        }
-        .ed-proof-head h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; }
-        .ed-proof-i { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-muted); }
-        .ed-proof-body { font-size: 0.92rem; color: var(--ink-2); line-height: 1.8; flex: 1; }
-        .ed-proof-link {
-          margin-top: 18px; font-family: var(--mono); font-size: 0.72rem;
-          color: var(--teal); border-bottom: 1px solid var(--hair); align-self: flex-start;
-          padding-bottom: 2px; transition: border-color var(--transition);
-        }
-        .ed-proof-link:hover { border-color: var(--teal); }
-        .ed-founding {
-          margin-top: 1px; background: var(--ink); color: var(--paper);
-          padding: 34px 32px; display: grid; grid-template-columns: 170px 1fr; gap: 32px;
-        }
-        .ed-founding-label {
-          font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
-          letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-bright);
-        }
-        .ed-founding p { font-size: 0.95rem; line-height: 1.8; max-width: 58ch; opacity: 0.92; }
-        @media (max-width: 900px) { .ed-proof-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 720px) { .ed-founding { grid-template-columns: 1fr; gap: 14px; } }
-      `}</style>
     </section>
   )
 }
