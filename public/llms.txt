@@ -1,6 +1,6 @@
 # Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-08-22
+> Last updated: 2026-08-28
 
 > I build websites and SaaS products with AI in the loop — which is why they ship in weeks. Nine
 > years delivering software for Bell, BMW and Bayer is why they don't fall over afterwards.
@@ -26,6 +26,7 @@
 - [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
 - [Contact](https://ahmedchioua.com/#contact) — free scope call
 - [Source code for this site](https://github.com/r0b0t007/ahmed-portfolio)
+- [PawPawCare](https://pawpawcare.app/) — pet health tracker app founded and built by Ahmed
 
 ## Professional Summary
 
@@ -68,6 +69,10 @@ Fixed scope. Fixed price. A date in writing. Code ownership transfers to the cli
 There are no client case studies for this offer yet — that is stated plainly rather than papered over
 with borrowed credibility. What is verifiable instead:
 
+- **PawPawCare** — https://pawpawcare.app/ — a pet health tracker (iOS and Android) that Ahmed
+  founded and built end to end: vaccine and medication reminders, weight trends, vet record storage,
+  AI-powered scanning of vaccination cards and prescriptions, shareable vet and caretaker links.
+  Live with real users; the closest thing to a case study for this offer.
 - **ahmedchioua.com** — designed, built and deployed by Ahmed. React with hand-written CSS, no
   template or page builder. Scores 100/100/100 on Lighthouse for accessibility, best practices and
   SEO (mobile, measured 2026-08-22).
@@ -96,9 +101,9 @@ review its own result. That's what nine years of enterprise delivery is for. Thi
 way; Lighthouse confirms it.
 
 ### Can I see client work?
-Not yet. Nine years were spent building inside enterprise programmes under NDA, and the independent
-client side is being built deliberately. So instead of showing someone else's logo, this site is the
-sample and its source is published. That's also why the first few projects go out at founding rates.
+Not client work. Nine years were spent building inside enterprise programmes under NDA, and the
+independent client side is being built deliberately. What is visible is Ahmed's own shipped product,
+PawPawCare (https://pawpawcare.app/), plus this site with its source published. That's also why the first few projects go out at founding rates.
 
 ### What does it cost?
 Fixed price per project, quoted in the free scope call, based on what's actually needed rather than

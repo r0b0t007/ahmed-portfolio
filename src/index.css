@@ -350,7 +350,7 @@ em { font-style: italic; }
 }
 
 /* ── Proof (Proof.jsx) ── */
-.ed-proof-grid { grid-template-columns: repeat(3, 1fr); }
+.ed-proof-grid { grid-template-columns: repeat(2, 1fr); }
 .ed-proof-item {
   background: var(--paper-card); padding: 32px 30px;
   display: flex; flex-direction: column;

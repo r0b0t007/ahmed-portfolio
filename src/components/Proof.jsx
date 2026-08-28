@@ -3,21 +3,29 @@ import { useFadeIn } from '../hooks/useFadeIn'
 const REPO = 'https://github.com/r0b0t007/ahmed-portfolio'
 const LINKEDIN = 'https://linkedin.com/in/ahmedchioua'
 
+const PAWPAW = 'https://pawpawcare.app/'
+
 const items = [
   {
     i: '001',
+    title: 'PawPawCare',
+    body: 'A pet health tracker I founded and built end to end — vaccine and medication reminders, weight trends, vet records, AI scanning of vaccination cards. Live on iOS and Android, with real users. The closest thing I have to a case study: a product, not a mock-up.',
+    link: { label: 'pawpawcare.app', href: PAWPAW },
+  },
+  {
+    i: '002',
     title: 'This site',
     body: 'Designed, built and deployed by me. React, hand-written CSS, no template, no page builder. Scores 100 / 100 / 100 on Lighthouse for accessibility, best practices and SEO — run it yourself.',
     link: null,
   },
   {
-    i: '002',
+    i: '003',
     title: 'The source',
     body: 'The whole thing is public. Read the code, the structured data, the build config, the commit history. If you want to know how I work, that’s the most honest answer I can give you.',
     link: { label: 'github.com/r0b0t007', href: REPO },
   },
   {
-    i: '003',
+    i: '004',
     title: 'The track record',
     body: 'Nine years of production software for companies that audit their vendors — Bell, BMW, Bayer. Verifiable, with certifications to match.',
     link: { label: 'linkedin.com/in/ahmedchioua', href: LINKEDIN },
@@ -52,11 +60,11 @@ const Proof = () => {
           <span className="eyebrow">Proof</span>
           <span className="eyebrow-index">( 03 )</span>
         </div>
-        <h2 className="sec-title">The sample is <em>this page</em></h2>
+        <h2 className="sec-title">A shipped product, and <em>this page</em></h2>
         <p ref={leadRef} className="fade-in sec-lead">
           I’m not going to show you a wall of client logos for this kind of work, because I’d be
-          borrowing credit I haven’t earned yet. Here’s what I can show you instead — all of it
-          checkable in about two minutes.
+          borrowing credit I haven’t earned yet. Here’s what I can show you instead — a product
+          I built and run myself, plus this site — all of it checkable in about two minutes.
         </p>
       </div>
 
