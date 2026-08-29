@@ -1,4 +1,3 @@
-import { useFadeIn } from '../hooks/useFadeIn'
 
 const roles = [
   {
@@ -51,9 +50,8 @@ const roles = [
 ]
 
 const Row = ({ r }) => {
-  const ref = useFadeIn(0.1)
   return (
-    <div ref={ref} className="fade-in ed-row">
+    <div className="fade-in ed-row">
       <div className="ed-row-date">
         {r.date[0]}<br />{r.date[1]}
         <span className="ed-kind">{r.kind}</span>

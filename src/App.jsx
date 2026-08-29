@@ -11,15 +11,19 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 /**
- * Sections are imported statically rather than lazily so the whole page can be prerendered to
- * static HTML (see scripts/prerender.js). React.lazy suspends during renderToString, which would
- * emit empty fallbacks and then mismatch on hydration. The nine section chunks totalled ~14 kB
- * gzipped, and with the markup already in the HTML the bundle no longer gates first paint.
+ * The full tree is rendered once, at build time, into static HTML (scripts/prerender.js). In the
+ * browser only two "islands" hydrate — Header (menu, scroll state) and Contact (the form); see
+ * src/main.jsx. Everything else has no interactivity and stays as prerendered markup, so those
+ * components never ship in the client bundle. The island wrappers use display: contents so they
+ * add no box (the header must stay position: sticky against <body>).
+ *
+ * React.lazy is not an option here: it suspends during renderToString.
  */
+import { ISLAND } from './islands'
 function App() {
   return (
     <div className="app">
-      <Header />
+      <div id={ISLAND.header} style={{ display: 'contents' }}><Header /></div>
       <main>
         <Hero />
         <TrustStrip />
@@ -29,7 +33,7 @@ function App() {
         <Experience />
         <About />
         <Faq />
-        <Contact />
+        <div id={ISLAND.contact} style={{ display: 'contents' }}><Contact /></div>
       </main>
       <Footer />
     </div>

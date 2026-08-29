@@ -1,4 +1,3 @@
-import { useFadeIn } from '../hooks/useFadeIn'
 import { products } from '../content/products'
 import { ordinal } from '../lib/ordinal'
 
@@ -28,9 +27,8 @@ const items = [
 const lastIsWide = items.length % 2 === 1
 
 const Item = ({ it, i, wide }) => {
-  const ref = useFadeIn(0.1)
   return (
-    <div ref={ref} className={`fade-in ed-proof-item${wide ? ' ed-proof-item--wide' : ''}`}>
+    <div className={`fade-in ed-proof-item${wide ? ' ed-proof-item--wide' : ''}`}>
       <div className="ed-proof-head">
         <h3>{it.title}</h3>
         <span className="ed-proof-i">{ordinal(i)}</span>
@@ -46,8 +44,6 @@ const Item = ({ it, i, wide }) => {
 }
 
 const Proof = () => {
-  const leadRef = useFadeIn(0.1)
-  const foundingRef = useFadeIn(0.1)
   return (
     <section id="proof" className="section">
       <div className="eyebrow-block">
@@ -56,7 +52,7 @@ const Proof = () => {
           <span className="eyebrow-index">( 03 )</span>
         </div>
         <h2 className="sec-title">Shipped products, and <em>this page</em></h2>
-        <p ref={leadRef} className="fade-in sec-lead">
+        <p className="fade-in sec-lead">
           I’m not going to show you a wall of client logos for this kind of work, because I’d be
           borrowing credit I haven’t earned yet. Here’s what I can show you instead — the products
           I build and run myself, plus this site — all of it checkable in about two minutes.
@@ -69,7 +65,7 @@ const Proof = () => {
         ))}
       </div>
 
-      <div ref={foundingRef} className="fade-in ed-founding">
+      <div className="fade-in ed-founding">
         <span className="ed-founding-label">Founding clients</span>
         <p>
           I’m building the client side of this portfolio deliberately, which means the first few

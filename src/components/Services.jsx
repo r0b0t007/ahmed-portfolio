@@ -1,4 +1,3 @@
-import { useFadeIn } from '../hooks/useFadeIn'
 import { ordinal } from '../lib/ordinal'
 
 const services = [
@@ -29,9 +28,8 @@ const services = [
 ]
 
 const ServiceCard = ({ s, i }) => {
-  const ref = useFadeIn(0.1)
   return (
-    <div ref={ref} className="fade-in ed-svc">
+    <div className="fade-in ed-svc">
       <div className="ed-svc-n">( {ordinal(i, 2)} )</div>
       <h3 className="ed-svc-t">{s.title}</h3>
       <div className="ed-svc-tag">{s.tagline}</div>

@@ -39,7 +39,8 @@ if (!html.includes(target)) {
   process.exit(1)
 }
 
-html = html.replace(target, `<div id="root">${markup}</div>`)
+// Function replacer: `$&`/`$1` sequences inside the markup must not be treated as patterns.
+html = html.replace(target, () => `<div id="root">${markup}</div>`)
 writeFileSync(htmlPath, html)
 
 // The SSR bundle is a build artefact; it must not be published.

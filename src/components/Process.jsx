@@ -1,4 +1,3 @@
-import { useFadeIn } from '../hooks/useFadeIn'
 import { ordinal } from '../lib/ordinal'
 
 const steps = [
@@ -25,9 +24,8 @@ const steps = [
 ]
 
 const Step = ({ s, i }) => {
-  const ref = useFadeIn(0.1)
   return (
-    <div ref={ref} className="fade-in ed-step">
+    <div className="fade-in ed-step">
       <div className="ed-step-side">
         <div className="ed-step-n">( {ordinal(i, 2)} )</div>
         <div className="ed-step-meta">{s.meta}</div>

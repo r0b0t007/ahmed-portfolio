@@ -1,4 +1,42 @@
-/* Fonts loaded via index.html (Newsreader + Archivo + IBM Plex Mono) */
+/* ── Self-hosted fonts — static instances subset to the glyphs this site uses (scripts/subset-fonts.py).
+   Vite hashes them into /assets/; vite.config.js injects preloads for the above-the-fold faces. ── */
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 300; font-display: swap; src: url('./fonts/newsreader-300.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 400; font-display: swap; src: url('./fonts/newsreader-400.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: italic; font-weight: 400; font-display: swap; src: url('./fonts/newsreader-400-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 400; font-display: swap; src: url('./fonts/archivo-400.woff2') format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 500; font-display: swap; src: url('./fonts/archivo-500.woff2') format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 600; font-display: swap; src: url('./fonts/archivo-600.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('./fonts/plexmono-400.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('./fonts/plexmono-500.woff2') format('woff2'); }
+
+/* Metric-matched local fallbacks so the swap to the web font doesn't reflow. size-adjust comes
+   from measuring real page text in Chrome (web width / fallback width); ascent/descent come from
+   the web fonts' hhea tables divided by that size-adjust. Bold and italic get their own faces so
+   the browser doesn't synthesise them from the regular fallback (which changes widths). The
+   percentages are tuned for Arial/Georgia (Windows, macOS, iOS); the Android locals listed after
+   them (Roboto, Noto Serif) are close enough in width that the overrides still beat unadjusted
+   system-ui/serif — but they are an approximation there, not a match. */
+@font-face {
+  font-family: 'Archivo fallback'; src: local('Arial'), local('Roboto'), local('Liberation Sans');
+  size-adjust: 100.9%; ascent-override: 87%; descent-override: 20.8%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo fallback'; font-weight: 500; src: local('Arial'), local('Roboto'), local('Liberation Sans');
+  size-adjust: 102.6%; ascent-override: 87%; descent-override: 20.8%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo fallback'; font-weight: 600; src: local('Arial Bold'), local('Roboto Bold'), local('Liberation Sans Bold');
+  size-adjust: 96.6%; ascent-override: 90.9%; descent-override: 21.7%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Newsreader fallback'; src: local('Georgia'), local('Noto Serif'), local('Droid Serif'), local('Liberation Serif');
+  size-adjust: 92.7%; ascent-override: 79.3%; descent-override: 28.6%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Newsreader fallback'; font-style: italic; src: local('Georgia Italic'), local('Noto Serif Italic'), local('Droid Serif Italic'), local('Liberation Serif Italic');
+  size-adjust: 86.2%; ascent-override: 85.3%; descent-override: 30.7%; line-gap-override: 0%;
+}
+
 
 :root {
   /* Editorial warm-paper palette */
@@ -12,8 +50,8 @@
   --teal-bright: #4fd1b8;   /* status / highlight */
   --hair: #e2ddd3;          /* hairline border */
 
-  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman', serif;
+  --sans: 'Archivo', 'Archivo fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   --pad: 64px;              /* section side padding */
@@ -187,7 +225,7 @@ em { font-style: italic; }
 }
 .ed-header.scrolled { padding: 16px var(--pad); box-shadow: 0 1px 0 rgba(0,0,0,0.03); }
 .ed-logo {
-  font-family: var(--serif); font-style: italic; font-size: 1rem; font-weight: 600;
+  font-family: var(--serif); font-style: italic; font-size: 1rem; font-weight: 400;
   color: var(--ink); letter-spacing: 0.2px;
 }
 .ed-nav { display: flex; gap: 26px; }
@@ -229,7 +267,7 @@ em { font-style: italic; }
   font-weight: 300; line-height: 1.05; letter-spacing: -1.5px;
   margin-bottom: 26px; text-wrap: balance;
 }
-.ed-h1 em { color: var(--teal); font-style: italic; }
+.ed-h1 em { color: var(--teal); font-style: italic; font-weight: 400; }
 .ed-lead {
   font-size: 1.05rem; line-height: 1.75; color: var(--ink-2);
   max-width: 440px; margin-bottom: 40px;

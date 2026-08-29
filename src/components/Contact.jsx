@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useFadeIn } from '../hooks/useFadeIn'
 
 const details = [
   { label: 'Email', value: 'ahmedchioua@gmail.com', href: 'mailto:ahmedchioua@gmail.com' },
@@ -8,8 +7,6 @@ const details = [
 ]
 
 const Contact = () => {
-  const leftRef = useFadeIn(0.1)
-  const formRef = useFadeIn(0.1)
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [status, setStatus] = useState('idle')
 
@@ -36,7 +33,7 @@ const Contact = () => {
   return (
     <section id="contact" className="section">
       <div className="ed-contact">
-        <div ref={leftRef} className="fade-in ed-contact-left">
+        <div className="fade-in ed-contact-left">
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
               <span className="eyebrow">Contact</span>
@@ -60,7 +57,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <form ref={formRef} className="fade-in ed-form" name="contact" onSubmit={submit}>
+        <form className="fade-in ed-form" name="contact" onSubmit={submit}>
           <input type="hidden" name="form-name" value="contact" />
           <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
           <div className="ed-form-row">
