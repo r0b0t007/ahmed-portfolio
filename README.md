@@ -44,7 +44,7 @@ preview URL.
 - **Hand-written CSS** — design tokens in `src/index.css`, component styles colocated in each
   component. No Tailwind, no CSS-in-JS runtime, no page builder.
 - **Framer Motion** for the few places motion earns its place
-- Deployed on **Netlify** (contact form uses Netlify Forms)
+- Deployed on **Netlify**. Contact form posts to `VITE_FORM_ENDPOINT` (Formspree / Web3Forms, see `.env.example`); when unset it falls back to Netlify Forms
 
 JS shipped: **~65 kB gzipped on first paint** (React + Framer Motion + hero), with each section
 below the fold split into its own chunk — ~14 kB more across all nine, loaded as you scroll.
