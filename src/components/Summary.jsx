@@ -1,4 +1,5 @@
 import { useFadeIn } from '../hooks/useFadeIn'
+import { ordinal } from '../lib/ordinal'
 
 const panels = [
   { title: 'Build', tags: ['React', 'TypeScript', 'Node.js', 'Java/Spring', 'Angular', 'REST APIs', 'SQL'] },
@@ -15,15 +16,13 @@ const certs = [
 
 const languages = 'Arabic (Native) · English (C2 / C1) · French (C1 / B2)'
 
-const index = n => String(n + 1).padStart(3, '0')
-
 const Panel = ({ p, i }) => {
   const ref = useFadeIn(0.1)
   return (
     <div ref={ref} className="fade-in ed-panel">
       <div className="ed-panel-head">
         <h3>{p.title}</h3>
-        <span className="ed-panel-i">{index(i)}</span>
+        <span className="ed-panel-i">{ordinal(i)}</span>
       </div>
       <div className="ed-panel-tags">
         {p.tags.map(t => <span key={t} className="ed-pill">{t}</span>)}

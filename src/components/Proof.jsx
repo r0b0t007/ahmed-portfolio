@@ -1,5 +1,6 @@
 import { useFadeIn } from '../hooks/useFadeIn'
 import { products } from '../content/products'
+import { ordinal } from '../lib/ordinal'
 
 const REPO = 'https://github.com/r0b0t007/ahmed-portfolio'
 const LINKEDIN = 'https://linkedin.com/in/ahmedchioua'
@@ -26,15 +27,13 @@ const items = [
 // The grid is two columns; an odd item count would leave the last card orphaned, so it spans.
 const lastIsWide = items.length % 2 === 1
 
-const index = n => String(n + 1).padStart(3, '0')
-
 const Item = ({ it, i, wide }) => {
   const ref = useFadeIn(0.1)
   return (
     <div ref={ref} className={`fade-in ed-proof-item${wide ? ' ed-proof-item--wide' : ''}`}>
       <div className="ed-proof-head">
         <h3>{it.title}</h3>
-        <span className="ed-proof-i">{index(i)}</span>
+        <span className="ed-proof-i">{ordinal(i)}</span>
       </div>
       <p className="ed-proof-body">{it.body}</p>
       {it.link && (
