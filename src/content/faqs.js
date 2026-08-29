@@ -3,11 +3,16 @@
  *
  * Consumed by:
  *   - src/components/Faq.jsx   — renders the visible section
- *   - vite.config.js           — generates the FAQPage JSON-LD injected into index.html
+ *   - vite.config.js           — generates the FAQPage JSON-LD injected into index.html and the
+ *                                FAQ section of llms.txt
  *
  * Google requires FAQPage answer text to match the answer visible on the page. Both consumers
  * read these exact strings, so they cannot drift. Edit the copy here and nowhere else.
  */
+import { products } from './products.js'
+
+const productClause = products.map(p => p.faq).join('; ')
+
 export const faqs = [
   {
     q: 'What exactly do you build?',
@@ -23,7 +28,7 @@ export const faqs = [
   },
   {
     q: 'Can I see client work?',
-    a: 'Not client work, honestly — I’ve spent nine years building inside enterprise programmes under NDA, and I’m building the independent client side of this deliberately. What you can see is my own product: PawPawCare, a pet health tracker on iOS and Android that I founded, built and run, plus this site with its source published. That’s also why the first few projects go out at founding rates — I’m trading price for proof.',
+    a: `Not client case studies yet, honestly — I’ve spent nine years building inside enterprise programmes under NDA, and I’m building the independent client side of this deliberately. What you can see is the products I build and run myself: ${productClause}; plus this site with its source published. That’s also why the first few projects go out at founding rates — I’m trading price for proof.`,
   },
   {
     q: 'What does it cost?',

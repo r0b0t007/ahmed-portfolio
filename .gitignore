@@ -25,3 +25,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local-only experiment, deliberately untracked (see d98c9a1)
+src/components/AmbientBackground.jsx

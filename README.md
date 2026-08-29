@@ -74,9 +74,11 @@ Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — th
 
 ```
 index.html              meta + JSON-LD (Person/Service/WebSite)
-vite.config.js          build config + FAQPage JSON-LD generation
+vite.config.js          build config + generated JSON-LD (FAQPage, product nodes) and llms.txt
 scripts/prerender.js    injects rendered markup into dist/index.html
-public/llms.txt         structured summary for AI crawlers
+src/content/faqs.js     FAQ copy — single source for the section and the FAQPage schema
+src/content/products.js shipped products — single source for Proof cards, schema nodes and llms.txt
+src/content/llms.txt    llms.txt template (product and FAQ placeholders filled at build)
 src/index.css           design tokens + shared editorial primitives
 src/App.jsx             section composition
 src/main.jsx            client entry — hydrates the prerendered markup

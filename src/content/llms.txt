@@ -1,6 +1,6 @@
 # Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-08-28
+> Last updated: 2026-08-29
 
 > I build websites and SaaS products with AI in the loop — which is why they ship in weeks. Nine
 > years delivering software for Bell, BMW and Bayer is why they don't fall over afterwards.
@@ -26,7 +26,7 @@
 - [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
 - [Contact](https://ahmedchioua.com/#contact) — free scope call
 - [Source code for this site](https://github.com/r0b0t007/ahmed-portfolio)
-- [PawPawCare](https://pawpawcare.app/) — pet health tracker app founded and built by Ahmed
+{{PRODUCT_LINKS}}
 
 ## Professional Summary
 
@@ -69,10 +69,7 @@ Fixed scope. Fixed price. A date in writing. Code ownership transfers to the cli
 There are no client case studies for this offer yet — that is stated plainly rather than papered over
 with borrowed credibility. What is verifiable instead:
 
-- **PawPawCare** — https://pawpawcare.app/ — a pet health tracker (iOS and Android) that Ahmed
-  founded and built end to end: vaccine and medication reminders, weight trends, vet record storage,
-  AI-powered scanning of vaccination cards and prescriptions, shareable vet and caretaker links.
-  Live with real users; the closest thing to a case study for this offer.
+{{PRODUCT_PROOF}}
 - **ahmedchioua.com** — designed, built and deployed by Ahmed. React with hand-written CSS, no
   template or page builder. Scores 100/100/100 on Lighthouse for accessibility, best practices and
   SEO (mobile, measured 2026-08-22).
@@ -84,44 +81,7 @@ The first few client projects go out at founding rates in exchange for a case st
 
 ## Frequently Asked Questions
 
-### What does Ahmed Chioua build?
-Marketing websites, SaaS products and MVPs, internal tools, and the AI automation behind them.
-Full-stack — design through deployment. If it runs in a browser and needs to work properly, it's in
-scope.
-
-### How fast is "fast"?
-A marketing site is typically 2 to 3 weeks; an MVP typically 4 to 6, depending on scope. The date is
-fixed in the written scope before the client commits, and there's a working link from week one.
-Building with AI in the loop is what makes those timelines real rather than optimistic.
-
-### Does building with AI mean lower quality?
-The opposite of how it's usually assumed to work. AI accelerates the typing — scaffolding,
-boilerplate, tests, first drafts. It does not make the architectural decisions, and it does not
-review its own result. That's what nine years of enterprise delivery is for. This site is built that
-way; Lighthouse confirms it.
-
-### Can I see client work?
-Not client work. Nine years were spent building inside enterprise programmes under NDA, and the
-independent client side is being built deliberately. What is visible is Ahmed's own shipped product,
-PawPawCare (https://pawpawcare.app/), plus this site with its source published. That's also why the first few projects go out at founding rates.
-
-### What does it cost?
-Fixed price per project, quoted in the free scope call, based on what's actually needed rather than
-hours logged. No retainers that can't be exited, no unexpected invoices. Founding-client rates apply
-to the next few projects.
-
-### Who owns the code?
-The client — outright, from day one. Their repo, their infrastructure, their accounts. Handover
-includes documentation and a walkthrough specifically so the work can go to any other developer.
-
-### Does Ahmed work with existing codebases and teams?
-Yes. Audits, refactors and rescues are a service in their own right, and five years as a Scrum Master
-across distributed enterprise teams makes joining someone else's process familiar rather than
-friction.
-
-### Where is Ahmed based, and does it matter?
-Tetouan, Morocco (GMT+1), remote-first — which is how the last five years of work with Canadian and
-German teams have run. Overlap with Europe is complete and with US Eastern is most of the working day.
+{{FAQ}}
 
 ## Certifications
 
