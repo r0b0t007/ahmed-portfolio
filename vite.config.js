@@ -79,6 +79,8 @@ export default defineConfig(({ isSsrBuild }) => ({
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
   plugins: [react(), contentSchema({ emitLlms: !isSsrBuild })],
   build: {
+    // One stylesheet, inlined into <head> by scripts/prerender.js — no render-blocking CSS request.
+    cssCodeSplit: false,
     rollupOptions: {
       // React is external in the SSR build, so it can't be chunked there — manualChunks is
       // client-only. Without this guard `vite build --ssr` fails on the vendor entry.

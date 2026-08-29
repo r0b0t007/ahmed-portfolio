@@ -40,6 +40,18 @@ if (!html.includes(target)) {
 }
 
 html = html.replace(target, `<div id="root">${markup}</div>`)
+
+// Inline the (single, ~4 KiB gzipped) stylesheet: a <link> costs a full round trip on the critical
+// path before first paint, and at this size the bytes are cheaper inline than the request.
+const cssLink = /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/
+const linkMatch = html.match(cssLink)
+if (!linkMatch) {
+  console.error('[prerender] expected exactly one <link rel="stylesheet"> for /assets/*.css in dist/index.html')
+  process.exit(1)
+}
+const css = readFileSync(resolve(root, 'dist', linkMatch[1].slice(1)), 'utf8').trim()
+html = html.replace(cssLink, `<style>${css}</style>`)
+rmSync(resolve(root, 'dist', linkMatch[1].slice(1)))
 writeFileSync(htmlPath, html)
 
 // The SSR bundle is a build artefact; it must not be published.
