@@ -1,10 +1,10 @@
 import { useFadeIn } from '../hooks/useFadeIn'
 
 const panels = [
-  { i: '001', title: 'Build', tags: ['React', 'TypeScript', 'Node.js', 'Java/Spring', 'Angular', 'REST APIs', 'SQL'] },
-  { i: '002', title: 'AI & Automation', tags: ['LLM Applications', 'Claude & Claude Code', 'Agentic Workflows', 'RAG', 'Prompt Engineering'] },
-  { i: '003', title: 'Ship & Operate', tags: ['Docker', 'Kubernetes', 'AWS', 'GitLab CI/CD', 'Observability', 'Core Web Vitals'] },
-  { i: '004', title: 'Delivery', tags: ['Scrum', 'Kanban', 'SAFe', 'Scoping', 'Roadmapping', 'Stakeholder Communication'] },
+  { title: 'Build', tags: ['React', 'TypeScript', 'Node.js', 'Java/Spring', 'Angular', 'REST APIs', 'SQL'] },
+  { title: 'AI & Automation', tags: ['LLM Applications', 'Claude & Claude Code', 'Agentic Workflows', 'RAG', 'Prompt Engineering'] },
+  { title: 'Ship & Operate', tags: ['Docker', 'Kubernetes', 'AWS', 'GitLab CI/CD', 'Observability', 'Core Web Vitals'] },
+  { title: 'Delivery', tags: ['Scrum', 'Kanban', 'SAFe', 'Scoping', 'Roadmapping', 'Stakeholder Communication'] },
 ]
 
 const certs = [
@@ -15,13 +15,15 @@ const certs = [
 
 const languages = 'Arabic (Native) · English (C2 / C1) · French (C1 / B2)'
 
-const Panel = ({ p }) => {
+const index = n => String(n + 1).padStart(3, '0')
+
+const Panel = ({ p, i }) => {
   const ref = useFadeIn(0.1)
   return (
     <div ref={ref} className="fade-in ed-panel">
       <div className="ed-panel-head">
         <h3>{p.title}</h3>
-        <span className="ed-panel-i">{p.i}</span>
+        <span className="ed-panel-i">{index(i)}</span>
       </div>
       <div className="ed-panel-tags">
         {p.tags.map(t => <span key={t} className="ed-pill">{t}</span>)}
@@ -50,7 +52,7 @@ const About = () => {
       </div>
 
       <div className="hair-grid ed-about-grid">
-        {panels.map(p => <Panel key={p.i} p={p} />)}
+        {panels.map((p, i) => <Panel key={p.title} p={p} i={i} />)}
 
         <div className="ed-cert-strip">
           {certs.map(c => (

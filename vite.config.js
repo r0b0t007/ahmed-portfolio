@@ -1,27 +1,44 @@
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
+import { products } from './src/content/products.js'
 
 /**
- * Generates the FAQPage JSON-LD from src/content/faqs.js — the same module the visible FAQ
- * section renders from — and injects it into index.html.
+ * Derives the content that must stay in sync with the visible page from the same modules the
+ * page renders from — src/content/faqs.js and src/content/products.js — and:
  *
- * Google requires FAQPage answer text to match what's visible on the page. Hand-maintaining a
- * second copy in index.html drifts (it already did once), so the markup is derived instead.
+ *   - injects a JSON-LD graph (FAQPage + one node per product) into index.html
+ *   - generates llms.txt from src/content/llms.txt, filling {{FAQ}} and the product placeholders
+ *
+ * Google requires FAQPage answer text to match what's visible on the page, and hand-maintained
+ * copies of product facts drifted across four files. Deriving them removes the second copy.
  */
-function faqSchema() {
+function contentSchema() {
+  const llmsTemplate = new URL('./src/content/llms.txt', import.meta.url)
+
+  const renderLlms = () => readFileSync(llmsTemplate, 'utf8')
+    .replace('{{PRODUCT_LINKS}}', products.map(p => `- [${p.name}](${p.url}) — ${p.summary}`).join('\n'))
+    .replace('{{PRODUCT_PROOF}}', products.map(p => `- **${p.name}** — ${p.url} — ${p.proof}`).join('\n'))
+    .replace('{{FAQ}}', faqs.map(({ q, a }) => `### ${q}\n${a}`).join('\n\n'))
+
   return {
-    name: 'inject-faq-schema',
+    name: 'inject-content-schema',
     transformIndexHtml(html) {
       const json = JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': 'https://ahmedchioua.com/#faq',
-        mainEntity: faqs.map(({ q, a }) => ({
-          '@type': 'Question',
-          name: q,
-          acceptedAnswer: { '@type': 'Answer', text: a },
-        })),
+        '@graph': [
+          {
+            '@type': 'FAQPage',
+            '@id': 'https://ahmedchioua.com/#faq',
+            mainEntity: faqs.map(({ q, a }) => ({
+              '@type': 'Question',
+              name: q,
+              acceptedAnswer: { '@type': 'Answer', text: a },
+            })),
+          },
+          ...products.map(p => p.schema),
+        ],
       }, null, 2)
 
       return {
@@ -34,11 +51,20 @@ function faqSchema() {
         }],
       }
     },
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'llms.txt', source: renderLlms() })
+    },
+    configureServer(server) {
+      server.middlewares.use('/llms.txt', (_req, res) => {
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        res.end(renderLlms())
+      })
+    },
   }
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
-  plugins: [react(), faqSchema()],
+  plugins: [react(), contentSchema()],
   build: {
     rollupOptions: {
       // React is external in the SSR build, so it can't be chunked there — manualChunks is

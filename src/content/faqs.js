@@ -23,7 +23,7 @@ export const faqs = [
   },
   {
     q: 'Can I see client work?',
-    a: 'Not client work, honestly — I’ve spent nine years building inside enterprise programmes under NDA, and I’m building the independent client side of this deliberately. What you can see is my own products: PawPawCare, a pet health tracker on iOS and Android that I founded, built and run; FitPal, a white-label gym member app already live at its first club; plus this site with its source published. That’s also why the first few projects go out at founding rates — I’m trading price for proof.',
+    a: 'Not client case studies yet, honestly — I’ve spent nine years building inside enterprise programmes under NDA, and I’m building the independent client side of this deliberately. What you can see is the products I build and run myself: PawPawCare, a pet health tracker on iOS and Android that I founded and built; FitPal, a white-label gym member app on an open-source core, live at its first club, FIT’ONE; plus this site with its source published. That’s also why the first few projects go out at founding rates — I’m trading price for proof.',
   },
   {
     q: 'What does it cost?',
