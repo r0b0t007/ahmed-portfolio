@@ -16,7 +16,7 @@ const items = [
   {
     i: '002',
     title: 'FitPal',
-    body: 'A white-label member app for gyms — passkey sign-in, owner-approved sign-ups, class timetable, workout tracking — installed from the browser, no app store. Built on the open-source openGym core, extended and shipped by me with a test-gated deploy pipeline and a bilingual site. First club live: FIT’ONE.',
+    body: 'A gym’s own member app, under its own brand — passkey sign-in, sign-ups the owner approves, class timetable, workout tracking. Installs from the browser, no app store. Brand, access flow, sessions, deploy pipeline and bilingual site delivered by me in days on an open-source core; already running at its first club, FIT’ONE.',
     link: { label: 'fitpal.ma', href: FITPAL },
   },
   {
