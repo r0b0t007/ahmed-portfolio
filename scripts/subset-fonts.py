@@ -1,17 +1,19 @@
 """
-Rebuilds public/fonts/*.woff2 — static, subset instances of the three families the site uses.
+Rebuilds src/fonts/*.woff2 — static, subset instances of the three families the site uses.
 
     python scripts/subset-fonts.py        (needs: pip install fonttools brotli)
 
 Why not Google Fonts: even when you ask for `wght@400`, Google serves the full variable file
 (Archivo 400/500/600 were three downloads of the same 34 KiB font) and the request costs two
 cross-origin connections plus a render-blocking stylesheet. Instantiating each weight and
-subsetting to the page's glyphs gets the whole set under 80 KiB, served same-origin, immutable.
+subsetting to the page's glyphs gets the whole set under 80 KiB. Vite hashes the files into
+/assets/ (immutable cache, busted on every regeneration) and vite.config.js injects the preloads.
 
 Glyph coverage:
   - Archivo (used in form inputs)      -> printable ASCII + Latin-1 + everything on the page
   - Newsreader, IBM Plex Mono          -> only the characters that appear in the rendered page
-                                          and in src/content/*.js (never renders user input)
+                                          or anywhere in src/ (JSX strings, placeholders, runtime
+                                          status text); they never render user input
 Re-run after copy changes that introduce a new character; the build does not do this for you.
 """
 import html, os, re, sys, urllib.request
@@ -22,7 +24,7 @@ from fontTools.ttLib import TTFont
 from fontTools.varLib import instancer
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / 'public' / 'fonts'
+OUT = ROOT / 'src' / 'fonts'
 CSS_URL = ('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,400'
            '&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap')
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -51,7 +53,7 @@ def site_glyphs():
         sys.exit('run `npm run build` first — glyphs are read from dist/index.html')
     doc = re.sub(r'<script.*?</script>|<style.*?</style>', '', dist.read_text('utf-8'), flags=re.S)
     text = html.unescape(re.sub(r'<[^>]+>', ' ', doc))
-    for f in (ROOT / 'src' / 'content').glob('*.js'):
+    for f in (ROOT / 'src').rglob('*.js*'):
         text += f.read_text('utf-8')
     return {ord(c) for c in text if not c.isspace()} | {0x20}
 

@@ -75,11 +75,45 @@ function contentSchema({ emitLlms }) {
   }
 }
 
+/**
+ * Post-build head rewrites, done here (with the bundle in hand) rather than by regex in prerender:
+ *   - inline the single stylesheet and drop its <link> — no render-blocking CSS request
+ *   - preload the hashed font files that are visible above the fold
+ */
+const PRELOAD_FONTS = ['newsreader-300', 'newsreader-400-italic', 'archivo-400']
+
+function criticalHead() {
+  return {
+    name: 'critical-head',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, { bundle }) {
+        if (!bundle) return html
+        const assets = Object.values(bundle).filter(a => a.type === 'asset')
+        const css = assets.filter(a => a.fileName.endsWith('.css'))
+        if (css.length !== 1) throw new Error(`critical-head: expected one stylesheet, found ${css.length}`)
+        const link = new RegExp(`<link[^>]*href="/${css[0].fileName}"[^>]*>`, 'g')
+        if ((html.match(link) || []).length !== 1) throw new Error(`critical-head: expected one <link> for ${css[0].fileName}`)
+        html = html.replace(link, () => `<style>${String(css[0].source).trim()}</style>`)
+        delete bundle[css[0].fileName]
+
+        const tags = PRELOAD_FONTS.map(name => {
+          const a = assets.find(a => new RegExp(`^assets/${name}-[\\w-]+\\.woff2$`).test(a.fileName))
+          if (!a) throw new Error(`critical-head: no emitted font matches ${name}`)
+          return { tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/' + a.fileName, crossorigin: true }, injectTo: 'head-prepend' }
+        })
+        return { html, tags }
+      },
+    },
+  }
+}
+
 export default defineConfig(({ isSsrBuild }) => ({
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
-  plugins: [react(), contentSchema({ emitLlms: !isSsrBuild })],
+  plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead()],
   build: {
-    // One stylesheet, inlined into <head> by scripts/prerender.js — no render-blocking CSS request.
+    // One stylesheet, inlined into <head> by the critical-head plugin — no render-blocking CSS request.
     cssCodeSplit: false,
     rollupOptions: {
       // React is external in the SSR build, so it can't be chunked there — manualChunks is

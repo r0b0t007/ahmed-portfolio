@@ -1,10 +1,8 @@
-import { useFadeIn } from '../hooks/useFadeIn'
 import { faqs } from '../content/faqs'
 
 const Row = ({ f }) => {
-  const ref = useFadeIn(0.1)
   return (
-    <div ref={ref} className="fade-in ed-faq-item">
+    <div className="fade-in ed-faq-item">
       <h3 className="ed-faq-q">{f.q}</h3>
       <p className="ed-faq-a">{f.a}</p>
     </div>

@@ -5,32 +5,34 @@ import Header from './components/Header'
 import Contact from './components/Contact'
 import { ISLAND } from './islands'
 
-// The build prerenders the whole page (scripts/prerender.js). Only the two components with
-// state hydrate; the rest is static HTML and never enters this bundle. The dev server has no
-// prerendered markup, so it falls back to rendering the full app client-side.
-const islands = [[ISLAND.header, Header], [ISLAND.contact, Contact]]
-
-if (document.getElementById(ISLAND.header)?.hasChildNodes()) {
-  for (const [id, Component] of islands) {
-    hydrateRoot(document.getElementById(id), <StrictMode><Component /></StrictMode>)
-  }
-  revealOnScroll()
-} else {
-  import('./App.jsx').then(({ default: App }) => {
-    createRoot(document.getElementById('root')).render(<StrictMode><App /></StrictMode>)
-  })
-}
-
-// The static sections use .fade-in / .fade-fill reveal classes that useFadeIn used to toggle
-// from React. Same behaviour, no hydration: one observer over every reveal element that is not
-// inside an island (islands keep the hook).
+// Every .fade-in / .fade-fill element on the page, islands included: classList changes survive
+// hydration, so one observer owns the reveal effect and no component needs a hook for it.
 function revealOnScroll() {
-  const inIsland = el => islands.some(([id]) => document.getElementById(id)?.contains(el))
-  const els = [...document.querySelectorAll('.fade-in, .fade-fill, .fade-fill-var')].filter(el => !inIsland(el))
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target) }
     }
   }, { threshold: 0.1 })
-  els.forEach(el => observer.observe(el))
+  document.querySelectorAll('.fade-in, .fade-fill, .fade-fill-var').forEach(el => observer.observe(el))
+}
+
+// The build prerenders the whole page (scripts/prerender.js). Only the two components with
+// state hydrate; the rest is static HTML and never enters this bundle.
+const islands = [[ISLAND.header, Header], [ISLAND.contact, Contact]]
+const prerendered = document.getElementById(ISLAND.header)?.hasChildNodes()
+
+if (prerendered) {
+  revealOnScroll() // before hydration, so a failed island can't leave the page invisible
+  for (const [id, Component] of islands) {
+    const el = document.getElementById(id)
+    if (el) hydrateRoot(el, <StrictMode><Component /></StrictMode>)
+    else console.error(`[islands] missing #${id} — App.jsx and islands.js out of sync`)
+  }
+} else if (import.meta.env.DEV) {
+  // The dev server has no prerendered markup: render the full app client-side. Guarded so the
+  // production bundle contains neither this branch nor an App chunk.
+  import('./App.jsx').then(({ default: App }) => {
+    createRoot(document.getElementById('root')).render(<StrictMode><App /></StrictMode>)
+    requestAnimationFrame(() => requestAnimationFrame(revealOnScroll))
+  })
 }

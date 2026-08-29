@@ -1,4 +1,3 @@
-import { useFadeIn } from '../hooks/useFadeIn'
 import { ordinal } from '../lib/ordinal'
 
 const panels = [
@@ -17,9 +16,8 @@ const certs = [
 const languages = 'Arabic (Native) · English (C2 / C1) · French (C1 / B2)'
 
 const Panel = ({ p, i }) => {
-  const ref = useFadeIn(0.1)
   return (
-    <div ref={ref} className="fade-in ed-panel">
+    <div className="fade-in ed-panel">
       <div className="ed-panel-head">
         <h3>{p.title}</h3>
         <span className="ed-panel-i">{ordinal(i)}</span>
@@ -32,7 +30,6 @@ const Panel = ({ p, i }) => {
 }
 
 const About = () => {
-  const leadRef = useFadeIn(0.1)
   return (
     <section id="about" className="section">
       <div className="eyebrow-block">
@@ -41,7 +38,7 @@ const About = () => {
           <span className="eyebrow-index">( 05 )</span>
         </div>
         <h2 className="sec-title">AI fluency. <em>Engineering discipline.</em></h2>
-        <p ref={leadRef} className="fade-in sec-lead">
+        <p className="fade-in sec-lead">
           I build with AI in the loop every day — not as a novelty, but because it’s the difference
           between quoting six weeks and quoting six months. What it doesn’t change is the part that
           decides whether software survives contact with users: the data model, the architecture,
