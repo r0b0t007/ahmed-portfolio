@@ -94,7 +94,10 @@
             "https://www.linkedin.com/in/ahmedchioua",
             "https://github.com/r0b0t007"
           ],
-          "owns": { "@id": "https://pawpawcare.app/#app" },
+          "owns": [
+            { "@id": "https://pawpawcare.app/#app" },
+            { "@id": "https://fitpal.ma/#app" }
+          ],
           "hasCredential": [
             {
               "@type": "EducationalOccupationalCredential",
@@ -213,6 +216,20 @@
           "creator": { "@id": "https://ahmedchioua.com/#person" },
           "publisher": { "@type": "Organization", "@id": "https://pawpawcare.app/#org", "name": "PawPawCare", "url": "https://pawpawcare.app/", "founder": { "@id": "https://ahmedchioua.com/#person" } },
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://fitpal.ma/#app",
+          "name": "FitPal",
+          "url": "https://fitpal.ma/",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "iOS, Android, Web (PWA)",
+          "description": "White-label member app for gyms: passkey sign-in, owner-approved access requests, group class timetable, workout and body-weight tracking. Built on the open-source openGym core, extended and delivered by Ahmed Chioua.",
+          "author": { "@id": "https://ahmedchioua.com/#person" },
+          "creator": { "@id": "https://ahmedchioua.com/#person" },
+          "isBasedOn": "https://gitea.com/DuarteSantos/openGym",
+          "publisher": { "@type": "Organization", "@id": "https://fitpal.ma/#org", "name": "FitPal", "url": "https://fitpal.ma/", "founder": { "@id": "https://ahmedchioua.com/#person" } },
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "description": "Free demo; setup quoted per club, flat monthly hosting." }
         },
         {
           "@type": "WebSite",

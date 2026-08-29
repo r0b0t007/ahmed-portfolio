@@ -4,6 +4,7 @@ const REPO = 'https://github.com/r0b0t007/ahmed-portfolio'
 const LINKEDIN = 'https://linkedin.com/in/ahmedchioua'
 
 const PAWPAW = 'https://pawpawcare.app/'
+const FITPAL = 'https://fitpal.ma/'
 
 const items = [
   {
@@ -14,18 +15,24 @@ const items = [
   },
   {
     i: '002',
+    title: 'FitPal',
+    body: 'A white-label member app for gyms — passkey sign-in, owner-approved sign-ups, class timetable, workout tracking — installed from the browser, no app store. Built on the open-source openGym core, extended and shipped by me with a test-gated deploy pipeline and a bilingual site. First club live: FIT’ONE.',
+    link: { label: 'fitpal.ma', href: FITPAL },
+  },
+  {
+    i: '003',
     title: 'This site',
     body: 'Designed, built and deployed by me. React, hand-written CSS, no template, no page builder. Scores 100 / 100 / 100 on Lighthouse for accessibility, best practices and SEO — run it yourself.',
     link: null,
   },
   {
-    i: '003',
+    i: '004',
     title: 'The source',
     body: 'The whole thing is public. Read the code, the structured data, the build config, the commit history. If you want to know how I work, that’s the most honest answer I can give you.',
     link: { label: 'github.com/r0b0t007', href: REPO },
   },
   {
-    i: '004',
+    i: '005',
     title: 'The track record',
     body: 'Nine years of production software for companies that audit their vendors — Bell, BMW, Bayer. Verifiable, with certifications to match.',
     link: { label: 'linkedin.com/in/ahmedchioua', href: LINKEDIN },
@@ -60,10 +67,10 @@ const Proof = () => {
           <span className="eyebrow">Proof</span>
           <span className="eyebrow-index">( 03 )</span>
         </div>
-        <h2 className="sec-title">A shipped product, and <em>this page</em></h2>
+        <h2 className="sec-title">Two shipped products, and <em>this page</em></h2>
         <p ref={leadRef} className="fade-in sec-lead">
           I’m not going to show you a wall of client logos for this kind of work, because I’d be
-          borrowing credit I haven’t earned yet. Here’s what I can show you instead — a product
+          borrowing credit I haven’t earned yet. Here’s what I can show you instead — two products
           I built and run myself, plus this site — all of it checkable in about two minutes.
         </p>
       </div>

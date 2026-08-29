@@ -1,6 +1,6 @@
 # Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-08-28
+> Last updated: 2026-08-29
 
 > I build websites and SaaS products with AI in the loop — which is why they ship in weeks. Nine
 > years delivering software for Bell, BMW and Bayer is why they don't fall over afterwards.
@@ -27,6 +27,7 @@
 - [Contact](https://ahmedchioua.com/#contact) — free scope call
 - [Source code for this site](https://github.com/r0b0t007/ahmed-portfolio)
 - [PawPawCare](https://pawpawcare.app/) — pet health tracker app founded and built by Ahmed
+- [FitPal](https://fitpal.ma/) — white-label gym member app, built and run by Ahmed
 
 ## Professional Summary
 
@@ -73,6 +74,11 @@ with borrowed credibility. What is verifiable instead:
   founded and built end to end: vaccine and medication reminders, weight trends, vet record storage,
   AI-powered scanning of vaccination cards and prescriptions, shareable vet and caretaker links.
   Live with real users; the closest thing to a case study for this offer.
+- **FitPal** — https://fitpal.ma/ — a white-label member app for gyms (PWA on iOS, Android and web):
+  passkey sign-in, owner-approved access requests, group class timetable, workout and body-weight
+  tracking, owner dashboard. Built on the open-source openGym core (AGPL), extended by Ahmed with
+  access requests, group sessions, a test-gated CI/CD pipeline and a bilingual FR/EN marketing site.
+  Live at its first club, FIT'ONE CLUB FITNESS.
 - **ahmedchioua.com** — designed, built and deployed by Ahmed. React with hand-written CSS, no
   template or page builder. Scores 100/100/100 on Lighthouse for accessibility, best practices and
   SEO (mobile, measured 2026-08-22).
@@ -102,8 +108,8 @@ way; Lighthouse confirms it.
 
 ### Can I see client work?
 Not client work. Nine years were spent building inside enterprise programmes under NDA, and the
-independent client side is being built deliberately. What is visible is Ahmed's own shipped product,
-PawPawCare (https://pawpawcare.app/), plus this site with its source published. That's also why the first few projects go out at founding rates.
+independent client side is being built deliberately. What is visible is Ahmed's own shipped products,
+PawPawCare (https://pawpawcare.app/) and FitPal (https://fitpal.ma/), plus this site with its source published. That's also why the first few projects go out at founding rates.
 
 ### What does it cost?
 Fixed price per project, quoted in the free scope call, based on what's actually needed rather than
