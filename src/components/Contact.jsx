@@ -10,16 +10,17 @@ const details = [
  * Where the form posts. Set VITE_FORM_ENDPOINT (build-time) to a form backend that accepts a
  * JSON POST — Formspree (https://formspree.io/f/<id>) or Web3Forms both do. Left unset, the
  * form falls back to Netlify Forms (POST to / with form-name), which only works while the
- * site is hosted on Netlify with the hidden <form netlify> in index.html.
+ * site is hosted on Netlify with the hidden <form netlify> in index.html. On Cloudflare Pages
+ * set it to /api/contact (functions/api/contact.js).
  */
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT
 
-async function send(form) {
+async function send(form, gotcha) {
   const res = ENDPOINT
     ? await fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...form, _subject: `Portfolio contact: ${form.subject}` }),
+        body: JSON.stringify({ ...form, _subject: `Portfolio contact: ${form.subject}`, _gotcha: gotcha }),
       })
     : await fetch('/', {
         method: 'POST',
@@ -40,7 +41,7 @@ const Contact = () => {
     e.preventDefault()
     setStatus('sending')
     try {
-      await send(form)
+      await send(form, e.target.elements['bot-field']?.value ?? '')
       setStatus('success')
       setForm({ name: '', email: '', subject: '', message: '' })
     } catch {
