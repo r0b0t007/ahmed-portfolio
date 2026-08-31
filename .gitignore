@@ -28,3 +28,8 @@ dist-ssr
 
 # Local-only experiment, deliberately untracked (see d98c9a1)
 src/components/AmbientBackground.jsx
+
+# Local env — VITE_FORM_ENDPOINT etc. Keep .env.example in git.
+.env
+.env.*
+!.env.example
