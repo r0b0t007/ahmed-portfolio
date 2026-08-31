@@ -7,26 +7,18 @@ const details = [
 ]
 
 /**
- * Where the form posts. Set VITE_FORM_ENDPOINT (build-time) to a form backend that accepts a
- * JSON POST — Formspree (https://formspree.io/f/<id>) or Web3Forms both do. Left unset, the
- * form falls back to Netlify Forms (POST to / with form-name), which only works while the
- * site is hosted on Netlify with the hidden <form netlify> in index.html. On Cloudflare Pages
- * set it to /api/contact (functions/api/contact.js).
+ * The form posts JSON to a Pages Function (functions/api/contact.js) which forwards it via
+ * Resend. VITE_FORM_ENDPOINT (build-time) can point elsewhere — e.g. a hosted form backend —
+ * but defaults to the function's route.
  */
-const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT
+const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || '/api/contact'
 
 async function send(form, gotcha) {
-  const res = ENDPOINT
-    ? await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...form, _subject: `Portfolio contact: ${form.subject}`, _gotcha: gotcha }),
-      })
-    : await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ 'form-name': 'contact', ...form }).toString(),
-      })
+  const res = await fetch(ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ ...form, _subject: `Portfolio contact: ${form.subject}`, _gotcha: gotcha }),
+  })
   // fetch only rejects on network failure; a 4xx/5xx must not read as "sent".
   if (!res.ok) throw new Error(`form endpoint responded ${res.status}`)
 }
@@ -78,7 +70,6 @@ const Contact = () => {
         </div>
 
         <form className="fade-in ed-form" name="contact" onSubmit={submit}>
-          <input type="hidden" name="form-name" value="contact" />
           <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
           <div className="ed-form-row">
             <div className="ed-fg"><label>Name</label><input name="name" placeholder="Your name" value={form.name} onChange={change} required /></div>
