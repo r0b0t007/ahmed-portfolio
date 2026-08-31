@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects — parity with netlify.toml's SPA fallback.
+# Pages Functions (/api/*) run before this rule, so the form endpoint is unaffected.
+/* /index.html 200
