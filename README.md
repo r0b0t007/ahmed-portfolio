@@ -44,7 +44,7 @@ preview URL.
 - **Hand-written CSS** — design tokens in `src/index.css`, component styles colocated in each
   component. No Tailwind, no CSS-in-JS runtime, no page builder.
 - **Framer Motion** for the few places motion earns its place
-- Deployed on **Netlify**. Contact form posts to `VITE_FORM_ENDPOINT` — on Cloudflare Pages that's `/api/contact`, a Pages Function (`functions/api/contact.js`) forwarding via Resend; when unset it falls back to Netlify Forms
+- Deployed on **Cloudflare Pages** (headers/redirects in `public/_headers` and `public/_redirects`). Contact form posts to a Pages Function (`functions/api/contact.js`) that forwards via Resend
 
 JS shipped: **~65 kB gzipped on first paint** (React + Framer Motion + hero), with each section
 below the fold split into its own chunk — ~14 kB more across all nine, loaded as you scroll.
