@@ -38,11 +38,12 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- ── LCP image preload ──
-         The hero portrait is the LCP element but is rendered by React, so the preload scanner
-         can't discover it until the bundle parses. Preloading here removes that load delay.
-         imagesrcset/imagesizes must stay in sync with the <img> in src/components/Hero.jsx. -->
-    <link rel="preload" as="image" href="/headshot-700.webp"
-      imagesrcset="/headshot-440.webp 440w, /headshot-700.webp 700w"
+         The hero portrait is the LCP element. The markup is prerendered, but it sits ~25 KB into
+         the document; preloading from <head> starts the fetch with the first bytes of HTML.
+         `type` makes browsers without AVIF ignore the hint and fall through to the WebP in the
+         <picture>. imagesrcset/imagesizes must stay in sync with src/components/Hero.jsx. -->
+    <link rel="preload" as="image" type="image/avif" href="/headshot-700.avif"
+      imagesrcset="/headshot-320.avif 320w, /headshot-412.avif 412w, /headshot-440.avif 440w, /headshot-700.avif 700w"
       imagesizes="(max-width: 900px) 100vw, 42vw"
       fetchpriority="high" />
 

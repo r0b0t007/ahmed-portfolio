@@ -78,9 +78,12 @@ function contentSchema({ emitLlms }) {
 /**
  * Post-build head rewrites, done here (with the bundle in hand) rather than by regex in prerender:
  *   - inline the single stylesheet and drop its <link> — no render-blocking CSS request
- *   - preload the hashed font files that are visible above the fold
+ *   - preload the faces the hero text paints with: both Newsreader files (heading, logo, em) and
+ *     Archivo (lead paragraph). Without the Archivo preload it arrives after first paint and the
+ *     swap re-wraps the lead — Lighthouse reported CLS 0.018 for exactly that. Plex Mono (kicker,
+ *     5 KB) is left to be discovered at first layout from the inline CSS.
  */
-const PRELOAD_FONTS = ['newsreader-300', 'newsreader-400-italic', 'archivo-400']
+const PRELOAD_FONTS = ['newsreader', 'newsreader-400-italic', 'archivo']
 
 function criticalHead() {
   return {
@@ -99,7 +102,8 @@ function criticalHead() {
         delete bundle[css[0].fileName]
 
         const tags = PRELOAD_FONTS.map(name => {
-          const a = assets.find(a => new RegExp(`^assets/${name}-[\\w-]+\\.woff2$`).test(a.fileName))
+          // {8}: exactly one Vite hash after the name, so 'newsreader' can't match 'newsreader-400-italic'
+          const a = assets.find(a => new RegExp(`^assets/${name}-[\\w-]{8}\\.woff2$`).test(a.fileName))
           if (!a) throw new Error(`critical-head: no emitted font matches ${name}`)
           return { tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/' + a.fileName, crossorigin: true }, injectTo: 'head-prepend' }
         })
@@ -119,8 +123,10 @@ export default defineConfig(({ isSsrBuild }) => ({
       // React is external in the SSR build, so it can't be chunked there — manualChunks is
       // client-only. Without this guard `vite build --ssr` fails on the vendor entry.
       output: isSsrBuild ? {} : {
+        // The React runtime (react-dom/client is what carries the weight, not 'react-dom')
+        // in one chunk: it changes only on upgrades, so it stays cached across deploys.
         manualChunks: {
-          'vendor': ['react', 'react-dom'],
+          'vendor': ['react', 'react-dom', 'react-dom/client'],
         },
       },
     },

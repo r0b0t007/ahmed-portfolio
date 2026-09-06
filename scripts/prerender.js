@@ -39,12 +39,25 @@ if (!html.includes(target)) {
   process.exit(1)
 }
 
+// Cloudflare's Email Address Obfuscation rewrites every mailto:/visible address and injects
+// /cdn-cgi/scripts/.../email-decode.min.js into the critical path to undo it. Addresses wrapped
+// in these comments are left alone, and with nothing to rewrite the script is not injected.
+// React can't emit HTML comments, so the wrap happens here. (The Person node in the JSON-LD is
+// inside <script>, which Cloudflare already skips.) Hydration ignores comment nodes.
+const EMAIL_OFF = /(<a\s[^>]*href="mailto:[^"]*"[^>]*>.*?<\/a>)/gs
+const guarded = markup.replace(EMAIL_OFF, '<!--email_off-->$1<!--/email_off-->')
+const wrapped = (guarded.match(/<!--email_off-->/g) || []).length
+if (wrapped === 0) {
+  console.error('[prerender] no mailto: link found to wrap in <!--email_off--> — Contact/Footer changed?')
+  process.exit(1)
+}
+
 // Function replacer: `$&`/`$1` sequences inside the markup must not be treated as patterns.
-html = html.replace(target, () => `<div id="root">${markup}</div>`)
+html = html.replace(target, () => `<div id="root">${guarded}</div>`)
 writeFileSync(htmlPath, html)
 
 // The SSR bundle is a build artefact; it must not be published.
 rmSync(resolve(root, 'dist-ssr'), { recursive: true, force: true })
 
 const kb = (Buffer.byteLength(html, 'utf8') / 1024).toFixed(1)
-console.log(`[prerender] injected ${markup.length.toLocaleString()} chars — dist/index.html now ${kb} kB`)
+console.log(`[prerender] injected ${guarded.length.toLocaleString()} chars (${wrapped} email links guarded) — dist/index.html now ${kb} kB`)
