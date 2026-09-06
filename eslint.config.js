@@ -5,7 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // dist/ is build output; .wrangler/ is the Pages Functions dev server's bundled worker.
+  globalIgnores(['dist', 'dist-ssr', '.wrangler']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
