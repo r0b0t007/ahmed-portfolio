@@ -31,15 +31,25 @@ const Hero = () => (
     </div>
 
     <div className="ed-hero-portrait">
-      <img
-        src="/headshot-700.webp"
-        srcSet="/headshot-440.webp 440w, /headshot-700.webp 700w"
-        sizes="(max-width: 900px) 100vw, 42vw"
-        width="440" height="677"
-        alt="Ahmed Chioua, web and SaaS developer"
-        fetchPriority="high"
-        decoding="async"
-      />
+      {/* AVIF first, WebP fallback. Candidates, `sizes` and the AVIF set must stay in sync with the
+          <link rel="preload"> in index.html; files come from scripts/build-images.py. Never add a
+          candidate above 700w — a DPR-2 phone would fetch it. */}
+      <picture>
+        <source
+          type="image/avif"
+          srcSet="/headshot-320.avif 320w, /headshot-412.avif 412w, /headshot-440.avif 440w, /headshot-700.avif 700w"
+          sizes="(max-width: 900px) 100vw, 42vw"
+        />
+        <img
+          src="/headshot-700.webp"
+          srcSet="/headshot-320.webp 320w, /headshot-412.webp 412w, /headshot-440.webp 440w, /headshot-700.webp 700w"
+          sizes="(max-width: 900px) 100vw, 42vw"
+          width="440" height="677"
+          alt="Ahmed Chioua, web and SaaS developer"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </picture>
       <div className="ed-avail"><span className="ed-dot" />Available for engagements</div>
     </div>
 

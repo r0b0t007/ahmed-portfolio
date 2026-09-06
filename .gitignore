@@ -33,3 +33,6 @@ src/components/AmbientBackground.jsx
 .env
 .env.*
 !.env.example
+
+# Wrangler dev-server output (Pages Functions)
+.wrangler/
