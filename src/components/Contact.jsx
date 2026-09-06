@@ -23,19 +23,30 @@ async function send(form, gotcha) {
   if (!res.ok) throw new Error(`form endpoint responded ${res.status}`)
 }
 
+/**
+ * The fields are uncontrolled on purpose. This island hydrates lazily (src/main.jsx), so there is
+ * a window after first paint in which the visitor can type into the prerendered form before
+ * React attaches. Controlled inputs start that render with empty state and blank whatever was
+ * typed on the first keystroke after hydration; reading the values off the form at submit time
+ * cannot lose them. It also drops a re-render per keystroke.
+ */
 const Contact = () => {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [status, setStatus] = useState('idle')
-
-  const change = e => setForm({ ...form, [e.target.name]: e.target.value })
 
   const submit = async e => {
     e.preventDefault()
+    const form = e.target
+    const fields = form.elements
     setStatus('sending')
     try {
-      await send(form, e.target.elements['bot-field']?.value ?? '')
+      await send({
+        name: fields.name.value,
+        email: fields.email.value,
+        subject: fields.subject.value,
+        message: fields.message.value,
+      }, fields['bot-field']?.value ?? '')
       setStatus('success')
-      setForm({ name: '', email: '', subject: '', message: '' })
+      form.reset()
     } catch {
       setStatus('error')
     }
@@ -72,11 +83,11 @@ const Contact = () => {
         <form className="fade-in ed-form" name="contact" onSubmit={submit}>
           <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
           <div className="ed-form-row">
-            <div className="ed-fg"><label>Name</label><input name="name" placeholder="Your name" value={form.name} onChange={change} required /></div>
-            <div className="ed-fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" value={form.email} onChange={change} required /></div>
+            <div className="ed-fg"><label>Name</label><input name="name" placeholder="Your name" required /></div>
+            <div className="ed-fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required /></div>
           </div>
-          <div className="ed-fg"><label>Subject</label><input name="subject" placeholder="What's this about?" value={form.subject} onChange={change} required /></div>
-          <div className="ed-fg"><label>Message</label><textarea name="message" rows="5" placeholder="Tell me more…" value={form.message} onChange={change} required /></div>
+          <div className="ed-fg"><label>Subject</label><input name="subject" placeholder="What's this about?" required /></div>
+          <div className="ed-fg"><label>Message</label><textarea name="message" rows="5" placeholder="Tell me more…" required /></div>
           <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
             {status === 'sending' ? 'Sending…' : status === 'success' ? '✓ Message sent' : status === 'error' ? '✗ Failed — retry' : 'Send message'}
           </button>

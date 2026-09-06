@@ -46,9 +46,14 @@ if (!html.includes(target)) {
 // inside <script>, which Cloudflare already skips.) Hydration ignores comment nodes.
 const EMAIL_OFF = /(<a\s[^>]*href="mailto:[^"]*"[^>]*>.*?<\/a>)/gs
 const guarded = markup.replace(EMAIL_OFF, '<!--email_off-->$1<!--/email_off-->')
+// Both of them: the Contact <dd> and the Footer icon link. Asserting the exact count means a
+// refactor that moves one address out of reach of the regex fails the build, instead of quietly
+// leaving Cloudflare one address to rewrite — which puts email-decode.min.js back in the
+// critical path. Update this number when the page gains or loses a mailto: link.
+const MAILTO_LINKS = 2
 const wrapped = (guarded.match(/<!--email_off-->/g) || []).length
-if (wrapped === 0) {
-  console.error('[prerender] no mailto: link found to wrap in <!--email_off--> — Contact/Footer changed?')
+if (wrapped !== MAILTO_LINKS) {
+  console.error(`[prerender] wrapped ${wrapped} mailto: links in <!--email_off-->, expected ${MAILTO_LINKS} — Contact/Footer changed?`)
   process.exit(1)
 }
 

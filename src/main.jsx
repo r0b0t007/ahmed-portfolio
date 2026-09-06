@@ -26,26 +26,43 @@ const prerendered = document.getElementById(ISLAND.header)?.hasChildNodes()
 if (prerendered) {
   revealOnScroll() // before hydration, so a failed island can't leave the page invisible
 
-  // Hydrate at the first sign the user wants to interact, or once the page is idle after
-  // load — whichever comes first. Nothing above the fold needs React to be readable; only the
-  // menu button, the header's scrolled state and the contact form do.
+  // Hydrate at the first sign the user wants to interact, or shortly after load — whichever
+  // comes first. Nothing above the fold needs React to be readable; only the menu button, the
+  // header's scrolled state and the contact form do.
+  //
+  // The idle timeout is deliberately short. Between first paint and hydration a tap on the menu
+  // button does nothing, so that window has to be bounded by the runtime download rather than by
+  // how long the browser feels like staying idle. `load` already fires after the LCP image, so
+  // starting the fetch there costs no metric.
+  const triggers = ['pointerdown', 'touchstart', 'keydown', 'focusin', 'scroll', 'mousemove']
+  const listen = fn => { for (const type of triggers) fn(type, hydrate, { capture: true, passive: true }) }
   let hydrating = false
-  const hydrate = () => {
+
+  function hydrate() {
     if (hydrating) return
     hydrating = true
-    for (const type of triggers) removeEventListener(type, hydrate, true)
-    import('./hydrate.jsx').then(({ hydrateIslands }) => hydrateIslands())
+    listen(removeEventListener)
+    import('./hydrate.jsx')
+      .then(({ hydrateIslands }) => hydrateIslands())
+      .catch(err => {
+        // The chunk can fail to load: a tab left open across a deploy no longer has its hashed
+        // asset, or the network dropped. Re-arm rather than leaving the menu and the contact
+        // form inert for the life of the page.
+        console.error('[islands] hydration chunk failed; retrying on next interaction', err)
+        hydrating = false
+        listen(addEventListener)
+      })
   }
-  const triggers = ['pointerdown', 'touchstart', 'keydown', 'focusin', 'scroll', 'mousemove']
-  for (const type of triggers) addEventListener(type, hydrate, { capture: true, passive: true })
-  const whenIdle = () => ('requestIdleCallback' in window ? requestIdleCallback(hydrate, { timeout: 1500 }) : setTimeout(hydrate, 0))
-  if (document.readyState === 'complete') whenIdle()
-  else addEventListener('load', whenIdle, { once: true })
+
+  listen(addEventListener)
+  const soon = () => ('requestIdleCallback' in window ? requestIdleCallback(hydrate, { timeout: 200 }) : setTimeout(hydrate, 0))
+  if (document.readyState === 'complete') soon()
+  else addEventListener('load', soon, { once: true })
 } else if (import.meta.env.DEV) {
   // The dev server has no prerendered markup: render the full app client-side. Guarded so the
-  // production bundle contains neither this branch nor an App chunk.
-  import('./hydrate.jsx').then(({ renderDev }) => {
-    renderDev()
-    requestAnimationFrame(() => requestAnimationFrame(revealOnScroll))
-  })
+  // production bundle contains neither this branch nor an App chunk. revealOnScroll must wait
+  // for the render to resolve — it observes elements that do not exist until then.
+  import('./hydrate.jsx')
+    .then(({ renderDev }) => renderDev())
+    .then(() => requestAnimationFrame(() => requestAnimationFrame(revealOnScroll)))
 }
