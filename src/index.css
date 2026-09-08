@@ -173,7 +173,9 @@ em { font-style: italic; }
   transition: background var(--transition), border-color var(--transition), color var(--transition);
 }
 .btn-wa svg { flex: none; }
-.btn-wa:hover, .btn-wa:focus-visible { background: #128C7E; border-color: #128C7E; color: #fff; }
+/* #128C7E gives only 4.14:1 against white at this size; #0F7A6B is 5.23:1 and still reads as
+   WhatsApp green. Focus-visible must not be the least legible state the button has. */
+.btn-wa:hover, .btn-wa:focus-visible { background: #0F7A6B; border-color: #0F7A6B; color: #fff; }
 
 
 /* Hairline grid helper (1px gaps via background bleed) */
@@ -513,6 +515,11 @@ em { font-style: italic; }
 
 /* ── Contact (Contact.jsx) ── */
 .ed-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+/* The availability pill and the WhatsApp button are both inline-flex with no margin of their
+   own; without this wrapper they render edge to edge and overlap by a pixel once they stack. */
+.ed-contact-actions {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+}
 .ed-avail-solid {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 10px 18px; background: var(--ink); color: var(--paper);
@@ -606,6 +613,7 @@ em { font-style: italic; }
 .ed-alt-cta { margin-top: 26px; font-size: 0.88rem; color: var(--ink-muted); }
 .ed-alt-cta a {
   color: var(--teal); font-family: var(--mono); font-size: 0.78rem;
-  transition: color var(--transition);
+  border-bottom: 1px solid var(--hair);
+  transition: color var(--transition), border-color var(--transition);
 }
-.ed-alt-cta a:hover { color: var(--ink); }
+.ed-alt-cta a:hover { color: var(--ink); border-color: var(--ink); }

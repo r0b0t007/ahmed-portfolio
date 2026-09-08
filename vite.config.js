@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
-import { FAQ_ID, PERSON_ID } from './src/content/site.js'
+import { BOOKING_URL, FAQ_ID, PERSON_ID } from './src/content/site.js'
 
 /**
  * Derives the content that must stay in sync with the visible page from the same modules the
@@ -35,6 +35,11 @@ function contentSchema({ emitLlms }) {
     transformIndexHtml(html) {
       if (!html.includes(`"@id": "${PERSON_ID}"`)) {
         throw new Error(`index.html no longer declares ${PERSON_ID}; generated product nodes would dangle`)
+      }
+      // The Service node's serviceUrl is a second copy of BOOKING_URL that no import reaches.
+      // A booking-provider switch already shipped a dead link once; fail the build instead.
+      if (!html.includes(`"serviceUrl": "${BOOKING_URL}"`)) {
+        throw new Error(`index.html serviceUrl is out of sync with BOOKING_URL (${BOOKING_URL})`)
       }
       const json = JSON.stringify({
         '@context': 'https://schema.org',
