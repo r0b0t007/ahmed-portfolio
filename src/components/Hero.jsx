@@ -10,12 +10,10 @@ const Hero = () => (
   <section id="hero" className="ed-hero">
     <div className="ed-hero-text">
       <p className="ed-kicker">Web &amp; SaaS Builder · Tétouan, Morocco · Remote</p>
-      <h1 className="ed-h1">Shipped in weeks,<br />built to <em>last</em>.</h1>
+      <h1 className="ed-h1">Built in weeks.<br />Still working in <em>a year</em>.</h1>
       <p className="ed-lead">
-        I build websites and SaaS products. AI does a lot of the typing, which is why projects
-        take weeks instead of months. Before this I spent nine years shipping software for{' '}
-        <strong>Bell</strong>, <strong>BMW</strong> and <strong>Bayer</strong>, which is where the
-        standards come from.
+        I build websites and SaaS products for founders. You get a working link in{' '}
+        <strong>week one</strong>, a fixed price, and a date in writing.
       </p>
       <div className="ed-cta-row">
         <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="btn-ink">Start a project</a>

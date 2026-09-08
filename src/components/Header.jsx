@@ -4,6 +4,7 @@ const navLinks = [
   { name: 'Services', href: '#services' },
   { name: 'Process', href: '#process' },
   { name: 'Proof', href: '#proof' },
+  { name: 'Pricing', href: '#pricing' },
   { name: 'About', href: '#about' },
   { name: 'FAQ', href: '#faq' },
   { name: 'Contact', href: '#contact', accent: true },

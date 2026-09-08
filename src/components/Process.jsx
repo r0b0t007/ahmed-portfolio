@@ -43,7 +43,7 @@ const Process = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Process</span>
-        <span className="eyebrow-index">( 02 )</span>
+        <span className="eyebrow-index">( 03 )</span>
       </div>
       <h2 className="sec-title">How I <em>build</em></h2>
       <p className="sec-lead">
