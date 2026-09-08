@@ -1,4 +1,4 @@
-const CALENDLY = 'https://calendly.com/ahmedchioua/30min'
+import { BOOKING_URL } from '../content/site'
 
 /**
  * The price objection gets its own section rather than a line in the FAQ, because the sharpest
@@ -32,7 +32,7 @@ const Pricing = () => (
           The speed is the discount. Weeks instead of months is money you don&rsquo;t spend waiting
           for the thing to exist.
         </p>
-        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="btn-ink ed-price-cta">
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink ed-price-cta">
           Get a price and a date
         </a>
       </div>

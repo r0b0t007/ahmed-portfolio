@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
+import { WhatsAppIcon } from './WhatsAppIcon'
 
 const details = [
   { label: 'Email', value: 'ahmedchioua@gmail.com', href: 'mailto:ahmedchioua@gmail.com' },
+  { label: 'WhatsApp', value: WHATSAPP_DISPLAY, href: WHATSAPP_URL },
   { label: 'LinkedIn', value: 'linkedin.com/in/ahmedchioua', href: 'https://linkedin.com/in/ahmedchioua' },
   { label: 'Location', value: 'Tétouan, Morocco · Remote', href: null },
 ]
@@ -68,6 +71,15 @@ const Contact = () => {
               the right person for it, I'll say so on the call.
             </p>
             <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
+            <a
+              className="btn-wa"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <WhatsAppIcon />
+              Message me on WhatsApp
+            </a>
             <dl className="ed-details">
               {details.map(d => (
                 <div key={d.label} className="ed-detail">

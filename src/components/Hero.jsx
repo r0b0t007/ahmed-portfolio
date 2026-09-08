@@ -1,4 +1,4 @@
-const CALENDLY = 'https://calendly.com/ahmedchioua/30min'
+import { BOOKING_URL } from '../content/site'
 
 const stats = [
   { n: '9', sup: '+', label: 'Years shipping production software' },
@@ -16,7 +16,7 @@ const Hero = () => (
         <strong>week one</strong>, a fixed price, and a date in writing.
       </p>
       <div className="ed-cta-row">
-        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="btn-ink">Start a project</a>
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">Start a project</a>
         <a href="#process" className="link-teal">See how I build →</a>
       </div>
       <div className="ed-stats">

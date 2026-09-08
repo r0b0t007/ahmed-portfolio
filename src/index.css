@@ -163,6 +163,19 @@ em { font-style: italic; }
 }
 .link-teal:hover { color: var(--ink); }
 
+/* WhatsApp: ghost button in the page's own language, resolving to WhatsApp green on interaction
+   so the affordance is unmistakable without a bright green slab sitting in an editorial layout. */
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 24px; border: 1px solid var(--ink);
+  background: transparent; color: var(--ink);
+  font-size: 0.88rem; font-weight: 600; letter-spacing: 0.02em;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.btn-wa svg { flex: none; }
+.btn-wa:hover, .btn-wa:focus-visible { background: #128C7E; border-color: #128C7E; color: #fff; }
+
+
 /* Hairline grid helper (1px gaps via background bleed) */
 .hair-grid {
   display: grid;
