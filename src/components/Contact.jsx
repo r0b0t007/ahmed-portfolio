@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
+import { BOOKING_URL, WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
 const details = [
@@ -72,15 +72,25 @@ const Contact = () => {
             </p>
             <div className="ed-contact-actions">
               <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
-              <a
-                className="btn-wa"
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <WhatsAppIcon />
-                Message me on WhatsApp
-              </a>
+              <div className="ed-contact-btns">
+                <a
+                  className="btn-ink"
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Book a scope call
+                </a>
+                <a
+                  className="btn-wa"
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <WhatsAppIcon />
+                  Message me on WhatsApp
+                </a>
+              </div>
             </div>
             <dl className="ed-details">
               {details.map(d => (
