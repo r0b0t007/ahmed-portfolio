@@ -351,6 +351,12 @@ em { font-style: italic; }
 }
 .ed-svc-desc { font-size: 0.95rem; color: var(--ink-2); line-height: 1.75; margin-bottom: 22px; }
 .ed-svc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.ed-svc-also {
+  margin-top: 34px; max-width: 62ch;
+  font-size: 0.95rem; color: var(--ink-2); line-height: 1.8;
+  border-left: 2px solid var(--hair); padding-left: 22px;
+}
+.ed-svc-also b { color: var(--ink); font-weight: 600; }
 @media (max-width: 720px) { .ed-svc-grid { grid-template-columns: 1fr; } }
 
 /* ── Process (Process.jsx) ── */
