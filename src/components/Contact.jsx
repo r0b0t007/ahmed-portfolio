@@ -70,27 +70,24 @@ const Contact = () => {
               Thirty minutes, free. You'll leave with a scope, a price and a date. If I'm not
               the right person for it, I'll say so on the call.
             </p>
-            <div className="ed-contact-actions">
-              <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
-              <div className="ed-contact-btns">
-                <a
-                  className="btn-ink"
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Book a scope call
-                </a>
-                <a
-                  className="btn-wa"
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <WhatsAppIcon />
-                  Message me on WhatsApp
-                </a>
-              </div>
+            <div className="ed-contact-btns">
+              <a
+                className="btn-ink"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a scope call
+              </a>
+              <a
+                className="btn-wa"
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WhatsAppIcon />
+                Message me on WhatsApp
+              </a>
             </div>
             <dl className="ed-details">
               {details.map(d => (

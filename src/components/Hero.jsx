@@ -49,7 +49,6 @@ const Hero = () => (
           decoding="async"
         />
       </picture>
-      <div className="ed-avail"><span className="ed-dot" />Available for new projects</div>
     </div>
 
   </section>
