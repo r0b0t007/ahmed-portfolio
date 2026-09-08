@@ -505,8 +505,8 @@ em { font-style: italic; }
 /* ── Contact (Contact.jsx) ── */
 .ed-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
 /* Book and WhatsApp sit side by side: the section promises a call, so the booking control has to
-   be the one next to it. Flex row stretches both to the same height. */
-.ed-contact-btns { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
+   be the one next to it. They match heights because align-items defaults to stretch. */
+.ed-contact-btns { display: flex; flex-wrap: wrap; gap: 12px; }
 .ed-details { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
 .ed-detail { display: grid; grid-template-columns: 90px 1fr; gap: 16px; align-items: baseline; }
 .ed-detail dt { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
