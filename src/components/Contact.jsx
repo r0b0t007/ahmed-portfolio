@@ -60,13 +60,12 @@ const Contact = () => {
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
               <span className="eyebrow">Contact</span>
-              <span className="eyebrow-index">( 07 )</span>
+              <span className="eyebrow-index">( 09 )</span>
             </div>
             <h2 className="sec-title">Tell me what <em>you're building</em></h2>
             <p className="sec-lead" style={{ marginBottom: '28px' }}>
-              Send me a rough description and I'll tell you whether I'm the right person for it,
-              what it would take, and what it would cost. The scope call is free, and you won't
-              end up on a mailing list.
+              Thirty minutes, free. You'll leave with a scope, a price and a date. If I'm not
+              the right person for it, I'll say so on the call.
             </p>
             <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
             <dl className="ed-details">
@@ -77,6 +76,12 @@ const Contact = () => {
                 </div>
               ))}
             </dl>
+            <p className="ed-alt-cta">
+              Not ready to talk?{' '}
+              <a href="https://github.com/r0b0t007/ahmed-portfolio" target="_blank" rel="noopener noreferrer">
+                Read the code first &rarr;
+              </a>
+            </p>
           </div>
         </div>
 

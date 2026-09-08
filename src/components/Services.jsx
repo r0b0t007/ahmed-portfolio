@@ -46,7 +46,7 @@ const Services = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Services</span>
-        <span className="eyebrow-index">( 01 )</span>
+        <span className="eyebrow-index">( 02 )</span>
       </div>
       <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">

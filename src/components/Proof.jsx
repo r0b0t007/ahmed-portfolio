@@ -49,13 +49,12 @@ const Proof = () => {
       <div className="eyebrow-block">
         <div className="eyebrow-row">
           <span className="eyebrow">Proof</span>
-          <span className="eyebrow-index">( 03 )</span>
+          <span className="eyebrow-index">( 04 )</span>
         </div>
         <h2 className="sec-title">Shipped products, and <em>this page</em></h2>
         <p className="fade-in sec-lead">
-          I don’t have client logos to show you for this kind of work yet, and putting some up
-          would be borrowing credit I haven’t earned. What I do have is the products I build and
-          run myself, and this site. You can check all of it in about two minutes.
+          Two of my products are live and being used by real people right now. This site is the
+          third thing you can check, and its source is open. All of it takes about two minutes.
         </p>
       </div>
 
@@ -68,9 +67,9 @@ const Proof = () => {
       <div className="fade-in ed-founding">
         <span className="ed-founding-label">Founding clients</span>
         <p>
-          The first few client projects go out at reduced rates in exchange for a case study and
-          a reference. You get senior work under market rate, and I get the proof I’m missing.
-          Mention it when you get in touch.
+          No paid client case studies yet, so the first few projects go out at reduced rates in
+          exchange for a case study and a reference. You get senior work under market rate, and I
+          get the proof I’m missing. Mention it when you get in touch.
         </p>
       </div>
 

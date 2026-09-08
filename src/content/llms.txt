@@ -2,10 +2,10 @@
 
 > Last updated: 2026-08-29
 
-> I build websites and SaaS products, and I use AI heavily while I do it, which is why projects
-> take weeks rather than months. Before this I spent nine years shipping software for Bell, BMW and
-> Bayer, which is where the standards come from. Remote-first, based in Tetouan, Morocco (GMT+1).
-> Available for web, SaaS and MVP projects globally.
+> I build websites and SaaS products for founders. A working link in week one, a fixed price, and
+> a date in writing. Marketing sites take 2 to 3 weeks and MVPs 4 to 6, because I build with AI in
+> the loop; nine years shipping software for Bell, BMW and Bayer is where the standards come from.
+> Remote-first, based in Tetouan, Morocco (GMT+1). Available for web, SaaS and MVP projects globally.
 
 ## Identity
 
@@ -23,6 +23,7 @@
 - [Homepage](https://ahmedchioua.com/) — services, process, proof and FAQ
 - [Services](https://ahmedchioua.com/#services) — websites, SaaS & MVP builds, architecture rescue, AI automation
 - [Process](https://ahmedchioua.com/#process) — how engagements run, step by step
+- [Pricing](https://ahmedchioua.com/#pricing) — fixed price per project, quoted in a free scope call
 - [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
 - [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
 - [Contact](https://ahmedchioua.com/#contact) — free scope call

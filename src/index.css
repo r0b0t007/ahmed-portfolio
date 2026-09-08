@@ -543,3 +543,50 @@ em { font-style: italic; }
 }
 .ed-foot-bottom a { color: var(--teal); font-weight: 500; }
 @media (max-width: 540px) { .ed-foot-bottom { justify-content: center; text-align: center; } }
+
+/* -- Benefits (Benefits.jsx) -- */
+.ed-ben-grid { grid-template-columns: repeat(3, 1fr); }
+.ed-ben {
+  background: var(--paper-card); padding: 34px 30px;
+  display: flex; flex-direction: column;
+}
+.ed-ben-n {
+  font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.14em; color: var(--teal); margin-bottom: 20px;
+}
+.ed-ben-t {
+  font-family: var(--serif); font-size: 1.35rem; font-weight: 400;
+  line-height: 1.25; margin-bottom: 16px; text-wrap: balance;
+}
+.ed-ben-l { font-size: 0.95rem; color: var(--ink-2); line-height: 1.75; }
+.ed-ben-l + .ed-ben-l { margin-top: 12px; }
+@media (max-width: 900px) { .ed-ben-grid { grid-template-columns: 1fr; } }
+
+/* -- Pricing (Pricing.jsx) -- */
+.ed-price {
+  max-width: 820px; background: var(--paper-card);
+  border: 1px solid var(--hair); padding: 34px 32px;
+  display: grid; grid-template-columns: 170px 1fr; gap: 32px;
+}
+.ed-price-label {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal);
+}
+.ed-price-q {
+  font-family: var(--serif); font-style: italic; font-size: 1.35rem;
+  color: var(--ink); margin-bottom: 18px; text-wrap: balance;
+}
+.ed-price-a { font-size: 0.95rem; color: var(--ink-2); line-height: 1.8; max-width: 58ch; }
+.ed-price-a + .ed-price-a { margin-top: 14px; }
+.ed-price-cta { margin-top: 26px; }
+@media (max-width: 720px) {
+  .ed-price { grid-template-columns: 1fr; gap: 16px; padding: 28px 24px; }
+}
+
+/* -- Secondary CTA under the contact details (Contact.jsx) -- */
+.ed-alt-cta { margin-top: 26px; font-size: 0.88rem; color: var(--ink-muted); }
+.ed-alt-cta a {
+  color: var(--teal); font-family: var(--mono); font-size: 0.78rem;
+  transition: color var(--transition);
+}
+.ed-alt-cta a:hover { color: var(--ink); }
