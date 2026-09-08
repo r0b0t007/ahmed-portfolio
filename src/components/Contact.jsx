@@ -70,16 +70,18 @@ const Contact = () => {
               Thirty minutes, free. You'll leave with a scope, a price and a date. If I'm not
               the right person for it, I'll say so on the call.
             </p>
-            <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
-            <a
-              className="btn-wa"
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <WhatsAppIcon />
-              Message me on WhatsApp
-            </a>
+            <div className="ed-contact-actions">
+              <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
+              <a
+                className="btn-wa"
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WhatsAppIcon />
+                Message me on WhatsApp
+              </a>
+            </div>
             <dl className="ed-details">
               {details.map(d => (
                 <div key={d.label} className="ed-detail">

@@ -6,7 +6,7 @@ over afterwards.
 
 Tétouan, Morocco (GMT+1) · Remote · Available for projects
 
-[Website](https://ahmedchioua.com) · [LinkedIn](https://linkedin.com/in/ahmedchioua) · [Book a scope call](https://calendly.com/ahmedchioua/30min) · ahmedchioua@gmail.com
+[Website](https://ahmedchioua.com) · [LinkedIn](https://linkedin.com/in/ahmedchioua) · [Book a scope call](https://cal.com/ahmedchioua/scope-call) · ahmedchioua@gmail.com
 
 ---
 
