@@ -1,6 +1,6 @@
 # Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-08-29
+> Last updated: 2026-09-08
 
 > I build websites and SaaS products for founders. A working link in week one, a fixed price, and
 > a date in writing. Marketing sites take 2 to 3 weeks and MVPs 4 to 6, because I build with AI in
@@ -20,8 +20,9 @@
 
 ## Links
 
-- [Homepage](https://ahmedchioua.com/) — services, process, proof and FAQ
-- [Services](https://ahmedchioua.com/#services) — websites, SaaS & MVP builds, architecture rescue, AI automation
+- [Homepage](https://ahmedchioua.com/) — what you get, services, process, pricing, proof and FAQ
+- [What you get](https://ahmedchioua.com/#benefits) — timelines, verifiable quality, code ownership
+- [Services](https://ahmedchioua.com/#services) — websites and SaaS/MVP builds; rescue and AI automation on request
 - [Process](https://ahmedchioua.com/#process) — how engagements run, step by step
 - [Pricing](https://ahmedchioua.com/#pricing) — fixed price per project, quoted in a free scope call
 - [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
@@ -50,6 +51,7 @@ Primary offers:
   the build, with Core Web Vitals measured before launch.
 - **SaaS & MVP builds**: the smallest version that proves the idea, covering auth, data model, core
   flows and payments if needed, deployed on infrastructure that can take growth.
+
 Also available, as standalone or follow-on engagements:
 
 - **Architecture & technical rescue**: for products that shipped fast and now can't move. Codebase
@@ -70,21 +72,32 @@ Also available, as standalone or follow-on engagements:
 
 Fixed scope, fixed price, and a date in writing. Code ownership transfers to the client from day one.
 
+## Pricing
+
+Fixed price per project, quoted in the free scope call, in writing, with a date attached. No hourly
+billing, and no retainer the client can't exit. Reduced founding-client rates apply to the next few
+projects, in exchange for a case study and a reference.
+
+A question that comes up often: if AI writes the code, why isn't it cheaper? The typing was never
+the expensive part. The cost sits in deciding what to build, deciding what to leave out, and being
+accountable when it breaks. The speed is the discount: weeks instead of months.
+
 ## Proof and Current Status
 
-There are no client case studies for this offer yet. That is said openly here rather than papered
-over with borrowed credibility. What is verifiable instead:
+What is verifiable today:
 
 {{PRODUCT_PROOF}}
 - **ahmedchioua.com**: designed, built and deployed by Ahmed, in React with hand-written CSS and no
   template or page builder. Scores 100/100/100 on Lighthouse for accessibility, best practices and
-  SEO (mobile, measured 2026-08-22).
+  SEO (mobile, measured 2026-09-08).
 - **Public source**: https://github.com/r0b0t007/ahmed-portfolio
 - **Track record**: nine years of production software for Bell, BMW, Bayer and Harman clients,
   delivered through NTT DATA, Harman and a consulting engagement. Verifiable on LinkedIn, with
   matching certifications.
 
-The first few client projects go out at reduced rates in exchange for a case study and a reference.
+There are no paid client case studies for this offer yet. That is stated openly rather than
+papered over with borrowed credibility, and it is why the first few client projects go out at
+reduced rates in exchange for a case study and a reference.
 
 ## Frequently Asked Questions
 
