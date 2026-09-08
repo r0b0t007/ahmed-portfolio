@@ -43,11 +43,15 @@ and data model sound enough to survive real users. Certified in Scrum and SAFe.
 
 ## Services
 
+Primary offers:
+
 - **Websites that rank and convert**: marketing sites, landing pages and portfolios designed and
   built from scratch. Structured data, clean semantics, proper meta tags and a sitemap go in during
   the build, with Core Web Vitals measured before launch.
 - **SaaS & MVP builds**: the smallest version that proves the idea, covering auth, data model, core
   flows and payments if needed, deployed on infrastructure that can take growth.
+Also available, as standalone or follow-on engagements:
+
 - **Architecture & technical rescue**: for products that shipped fast and now can't move. Codebase
   audit, a clear view of what's worth keeping, an ordered refactor plan, or the work itself.
 - **AI-augmented automation**: LLM workflows, agents, retrieval over internal documents, and

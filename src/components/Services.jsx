@@ -13,18 +13,6 @@ const services = [
     desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
     tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
   },
-  {
-    title: 'Architecture & technical rescue',
-    tagline: 'For products that shipped fast and now can’t move.',
-    desc: 'Someone built it quickly, it worked, and now every change breaks something else. I go through the codebase, tell you what’s worth keeping, and give you an ordered plan. I can also do the work. Nine years inside enterprise codebases means I’ve usually seen the failure before, and a full rewrite is rarely the answer.',
-    tags: ['Codebase audit', 'Refactor plan', 'Performance', 'Remediation'],
-  },
-  {
-    title: 'AI-augmented automation',
-    tagline: 'Automation that takes hours out of the week.',
-    desc: 'Internal tooling: LLM workflows, agents, retrieval over your own documents, integrations between systems that were never designed to talk to each other. I build it around your real process and time it against how long the job took before. If the AI version isn’t faster, I’ll tell you.',
-    tags: ['LLM applications', 'Agentic workflows', 'RAG', 'Integrations'],
-  },
 ]
 
 const ServiceCard = ({ s, i }) => {
@@ -50,14 +38,20 @@ const Services = () => (
       </div>
       <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">
-        Four things. Each one scoped up front, shipped on an agreed date, and handed over
-        so you can maintain it without me.
+        Two things, done end to end. Scoped up front, shipped on an agreed date, and handed
+        over so you can maintain them without me.
       </p>
     </div>
 
     <div className="hair-grid ed-svc-grid">
       {services.map((s, i) => <ServiceCard key={s.title} s={s} i={i} />)}
     </div>
+
+    <p className="fade-in ed-svc-also">
+      <b>Already have a codebase that won&rsquo;t move, or a process eating hours a week?</b>{' '}
+      Architecture rescues and AI automation are services too. Mention it in the scope call and
+      we&rsquo;ll price it the same way.
+    </p>
 
   </section>
 )
