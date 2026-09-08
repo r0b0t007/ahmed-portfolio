@@ -8,17 +8,17 @@ const items = [
   ...products.map(p => ({ title: p.name, body: p.card, link: { label: p.label, href: p.url } })),
   {
     title: 'This site',
-    body: 'Designed, built and deployed by me. React, hand-written CSS, no template, no page builder. Scores 100 / 100 / 100 on Lighthouse for accessibility, best practices and SEO — run it yourself.',
+    body: 'Designed, built and deployed by me, in React with hand-written CSS. No template, no page builder. It scores 100 / 100 / 100 on Lighthouse for accessibility, best practices and SEO. Run it yourself if you want to check.',
     link: null,
   },
   {
     title: 'The source',
-    body: 'The whole thing is public. Read the code, the structured data, the build config, the commit history. If you want to know how I work, that’s the most honest answer I can give you.',
+    body: 'The whole repository is public: the code, the structured data, the build config and every commit since the first one. It answers the question of how I work better than anything I could write here.',
     link: { label: 'github.com/r0b0t007', href: REPO },
   },
   {
     title: 'The track record',
-    body: 'Nine years of production software for companies that audit their vendors — Bell, BMW, Bayer. Verifiable, with certifications to match.',
+    body: 'Nine years of production software for Bell, BMW and Bayer, delivered through NTT DATA and a consulting engagement. It’s all on LinkedIn, with the certifications alongside it.',
     link: { label: 'linkedin.com/in/ahmedchioua', href: LINKEDIN },
   },
 ]
@@ -53,9 +53,9 @@ const Proof = () => {
         </div>
         <h2 className="sec-title">Shipped products, and <em>this page</em></h2>
         <p className="fade-in sec-lead">
-          I’m not going to show you a wall of client logos for this kind of work, because I’d be
-          borrowing credit I haven’t earned yet. Here’s what I can show you instead — the products
-          I build and run myself, plus this site — all of it checkable in about two minutes.
+          I don’t have client logos to show you for this kind of work yet, and putting some up
+          would be borrowing credit I haven’t earned. What I do have is the products I build and
+          run myself, and this site. You can check all of it in about two minutes.
         </p>
       </div>
 
@@ -68,9 +68,9 @@ const Proof = () => {
       <div className="fade-in ed-founding">
         <span className="ed-founding-label">Founding clients</span>
         <p>
-          I’m building the client side of this portfolio deliberately, which means the first few
-          projects go out at founding rates in exchange for a case study and a reference. You get
-          senior work below market; I get proof. Say so when you get in touch.
+          The first few client projects go out at reduced rates in exchange for a case study and
+          a reference. You get senior work under market rate, and I get the proof I’m missing.
+          Mention it when you get in touch.
         </p>
       </div>
 

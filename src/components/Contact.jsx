@@ -64,11 +64,11 @@ const Contact = () => {
             </div>
             <h2 className="sec-title">Tell me what <em>you're building</em></h2>
             <p className="sec-lead" style={{ marginBottom: '28px' }}>
-              Send me the shape of it and I'll tell you honestly whether I'm the right person,
-              what it would take, and what it would cost. The scope call is free and there's
-              nothing to unsubscribe from.
+              Send me a rough description and I'll tell you whether I'm the right person for it,
+              what it would take, and what it would cost. The scope call is free, and you won't
+              end up on a mailing list.
             </p>
-            <div className="ed-avail-solid"><span className="ed-dot-b" />Available for engagements</div>
+            <div className="ed-avail-solid"><span className="ed-dot-b" />Available for new projects</div>
             <dl className="ed-details">
               {details.map(d => (
                 <div key={d.label} className="ed-detail">

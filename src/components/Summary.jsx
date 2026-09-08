@@ -37,13 +37,12 @@ const About = () => {
           <span className="eyebrow">About</span>
           <span className="eyebrow-index">( 05 )</span>
         </div>
-        <h2 className="sec-title">AI fluency. <em>Engineering discipline.</em></h2>
+        <h2 className="sec-title">What I work <em>with</em></h2>
         <p className="fade-in sec-lead">
-          I build with AI in the loop every day — not as a novelty, but because it’s the difference
-          between quoting six weeks and quoting six months. What it doesn’t change is the part that
-          decides whether software survives contact with users: the data model, the architecture,
-          the tests, the decision about what not to build. Nine years in enterprise delivery taught
-          me that half. AI just made the rest faster.
+          I use AI every day in the build, and it’s the difference between quoting six weeks and
+          quoting six months. What it hasn’t changed is the part that decides whether software
+          survives real users: the data model, the architecture, the tests, and knowing what to
+          leave out. That half came from nine years of enterprise delivery.
         </p>
       </div>
 

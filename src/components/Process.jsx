@@ -4,22 +4,22 @@ const steps = [
   {
     title: 'Scope',
     meta: 'Free · 1 week',
-    desc: 'A call, then a written scope: what gets built, what doesn’t, what it costs, and the date it lands. If I don’t think I’m the right person for it, I’ll tell you here — that’s the whole point of this step being free.',
+    desc: 'A call, then a written scope: what gets built, what doesn’t, what it costs, and when it lands. If I don’t think I’m the right person for the job, I’ll say so at this stage. That’s why it’s free.',
   },
   {
     title: 'Build',
     meta: '2 to 6 weeks, typical',
-    desc: 'You see it running from week one. Weekly demo, a link you can click, and a channel where you can reach me. AI in the loop is why the timeline looks short; the architecture review at the end of each week is why it holds.',
+    desc: 'You get a working link in the first week, then a demo every week and a direct line to me. Building with AI is what makes the timeline short. I review the architecture at the end of every week so the speed doesn’t turn into debt you inherit.',
   },
   {
     title: 'Ship',
     meta: 'Days',
-    desc: 'Live on your infrastructure, your domain, your accounts. Performance, accessibility and SEO verified before launch, not promised for later.',
+    desc: 'Live on your infrastructure, your domain, your accounts. I check performance, accessibility and SEO before it goes out, and you see the numbers.',
   },
   {
     title: 'Hand over',
     meta: 'Included',
-    desc: 'The repo, the pipeline, the documentation, and a walkthrough. You can take it to any developer afterwards. If you’d rather I kept building, that’s a new scope — not an assumption.',
+    desc: 'You get the repo, the pipeline, the documentation and a walkthrough, so any developer can pick it up after me. If you’d rather I kept going, we scope that separately.',
   },
 ]
 
@@ -47,8 +47,8 @@ const Process = () => (
       </div>
       <h2 className="sec-title">How I <em>build</em></h2>
       <p className="sec-lead">
-        No open-ended retainers, no surprise invoices. Every project runs the same four
-        steps, and you know the shape before you commit.
+        Every project runs the same four steps, so you know what you’re committing to
+        before you commit to it. No open-ended retainers, no invoices you didn’t expect.
       </p>
     </div>
 
@@ -56,7 +56,7 @@ const Process = () => (
       {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
     </div>
 
-    <div className="ed-promise">Fixed scope. Fixed price. A date, in writing.</div>
+    <div className="ed-promise">Fixed scope, fixed price, and a date in writing.</div>
 
   </section>
 )

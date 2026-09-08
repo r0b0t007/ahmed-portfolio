@@ -5,8 +5,8 @@ const roles = [
     role: 'Scrum Master', org: 'Bell Canada (via consulting engagement)',
     project: 'Service Assurance — large-scale telecom platform',
     bullets: [
-      'A platform where an outage is the product failing — uptime as a requirement, not a target.',
-      'Distributed team, scaled delivery, release cadence that can’t slip quietly.',
+      'On a service assurance platform an outage is the product failing, so uptime was a hard requirement.',
+      'Fully distributed team on a scaled delivery setup, with a release cadence that had to hold.',
     ],
     tools: ['Jira', 'Confluence', 'SAFe'],
   },
@@ -15,8 +15,8 @@ const roles = [
     role: 'Scrum Master', org: 'NTT DATA — Client: Bayer',
     project: 'CS Regulatory — life sciences IT platform',
     bullets: [
-      'Regulated life-sciences IT, where “we’ll document it later” isn’t an option.',
-      'Distributed across multiple time zones, with risk flagged early or not at all.',
+      'Regulated life-sciences IT, where the documentation is part of the deliverable.',
+      'Teams spread across several time zones, which meant raising risks early or not at all.',
     ],
     tools: ['Azure DevOps', 'Scrum', 'Kanban'],
   },
@@ -34,7 +34,7 @@ const roles = [
     date: ['Jan 2021 —', 'Jun 2021'], kind: 'Infrastructure',
     role: 'DevOps Engineer', org: 'NTT DATA — Client: BMW',
     project: 'On-Demand Mobility Carsharing Platform',
-    bullets: ['CI/CD pipelines and observability — the infrastructure half of shipping.'],
+    bullets: ['CI/CD pipelines and observability tooling for a connected-vehicle platform.'],
     tools: ['Docker', 'Kubernetes', 'AWS'],
   },
   {
@@ -43,7 +43,7 @@ const roles = [
     project: 'Enterprise engagements for Maincare & Symphony Retail AI (Disney, Carrefour, Casino, Fnac)',
     bullets: [
       'Four years hands-on across full-stack, multi-platform products.',
-      'Enterprise retail and health platforms used by companies that audit their vendors.',
+      'Enterprise retail and health platforms with long release cycles and strict acceptance testing.',
     ],
     tools: ['Java/JEE', 'Spring', 'Node.js', 'Angular'],
   },
@@ -80,8 +80,8 @@ const Experience = () => (
       </div>
       <h2 className="sec-title">Where the <em>standards</em> come from</h2>
       <p className="sec-lead">
-        Nine years inside enterprise software — four building it, five making sure teams
-        shipped it. Both halves show up in how I work now.
+        Nine years inside enterprise software: about four building it, and five leading the
+        teams that shipped it. Both halves show up in how I work now.
       </p>
     </div>
 

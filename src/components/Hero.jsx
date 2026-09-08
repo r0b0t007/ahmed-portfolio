@@ -3,18 +3,19 @@ const CALENDLY = 'https://calendly.com/ahmedchioua/30min'
 const stats = [
   { n: '9', sup: '+', label: 'Years shipping production software' },
   { n: '100', sup: '', label: 'Lighthouse: a11y, SEO, best practices' },
-  { n: '3', sup: '',  label: 'Enterprise clients — Bell, BMW, Bayer' },
+  { n: '3', sup: '',  label: 'Enterprise clients: Bell, BMW, Bayer' },
 ]
 
 const Hero = () => (
   <section id="hero" className="ed-hero">
     <div className="ed-hero-text">
-      <p className="ed-kicker">Web &amp; SaaS Builder — Tétouan, Morocco · Remote</p>
+      <p className="ed-kicker">Web &amp; SaaS Builder · Tétouan, Morocco · Remote</p>
       <h1 className="ed-h1">Shipped in weeks,<br />built to <em>last</em>.</h1>
       <p className="ed-lead">
-        I build websites and SaaS products with AI in the loop — which is why they ship in weeks.
-        Nine years delivering software for <strong>Bell</strong>, <strong>BMW</strong> and{' '}
-        <strong>Bayer</strong> is why they don't fall over afterwards.
+        I build websites and SaaS products. AI does a lot of the typing, which is why projects
+        take weeks instead of months. Before this I spent nine years shipping software for{' '}
+        <strong>Bell</strong>, <strong>BMW</strong> and <strong>Bayer</strong>, which is where the
+        standards come from.
       </p>
       <div className="ed-cta-row">
         <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="btn-ink">Start a project</a>
@@ -50,7 +51,7 @@ const Hero = () => (
           decoding="async"
         />
       </picture>
-      <div className="ed-avail"><span className="ed-dot" />Available for engagements</div>
+      <div className="ed-avail"><span className="ed-dot" />Available for new projects</div>
     </div>
 
   </section>

@@ -11,7 +11,7 @@ const Footer = () => (
     <div className="ed-foot-top">
       <div>
         <div className="ed-foot-name">Ahmed Chioua</div>
-        <p className="ed-foot-tag">Websites and SaaS, built fast and built properly.</p>
+        <p className="ed-foot-tag">Web and SaaS development, remote from Morocco.</p>
       </div>
       <div className="ed-foot-socials">
         {socials.map(s => (

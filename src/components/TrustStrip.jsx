@@ -7,7 +7,7 @@ const TrustStrip = () => (
       {clients.map(c => <span key={c} className="ed-trust-name">{c}</span>)}
     </div>
     <p className="ed-trust-note">
-      Telecom · automotive · life sciences · retail — as engineer, then as delivery lead.
+      Telecom, automotive, life sciences and retail. First as an engineer, later as a delivery lead.
     </p>
 
   </section>

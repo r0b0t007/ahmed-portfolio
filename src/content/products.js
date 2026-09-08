@@ -18,10 +18,10 @@ const entries = [
   {
     name: 'PawPawCare',
     url: 'https://pawpawcare.app/',
-    card: 'A pet health tracker I founded and built end to end — vaccine and medication reminders, weight trends, vet records, AI scanning of vaccination cards. Live on iOS and Android, with real users. The closest thing I have to a case study: a product, not a mock-up.',
+    card: 'A pet health tracker I founded and built end to end: vaccine and medication reminders, weight trends, vet records, and AI scanning of vaccination cards. Live on iOS and Android with real users. It is the closest thing I have to a case study.',
     summary: 'pet health tracker app founded and built by Ahmed',
     faq: 'PawPawCare, a pet health tracker on iOS and Android that I founded and built',
-    proof: 'a pet health tracker (iOS and Android) that Ahmed founded and built end to end: vaccine and medication reminders, weight trends, vet record storage, AI-powered scanning of vaccination cards and prescriptions, shareable vet and caretaker links. Live with real users; the closest thing to a case study for this offer.',
+    proof: 'a pet health tracker (iOS and Android) that Ahmed founded and built end to end: vaccine and medication reminders, weight trends, vet record storage, AI-powered scanning of vaccination cards and prescriptions, shareable vet and caretaker links. Live with real users, and the closest thing to a case study for this offer.',
     schema: {
       '@type': 'MobileApplication',
       '@id': 'https://pawpawcare.app/#app',
@@ -37,10 +37,10 @@ const entries = [
   {
     name: 'FitPal',
     url: 'https://fitpal.ma/',
-    card: 'A gym’s own member app, under its own brand — passkey sign-in, sign-ups the owner approves, class timetable, workout tracking. Installs from the browser, no app store. Built and run by me on an open-source core (openGym): brand, access flow, sessions, deploy pipeline and bilingual site, delivered in days. Live at its first club, FIT’ONE.',
+    card: 'A gym’s own member app under its own brand: passkey sign-in, sign-ups the owner approves, a class timetable and workout tracking. It installs from the browser, with no app store involved. I built and run it on an open-source core (openGym), adding the brand, access flow, sessions, deploy pipeline and bilingual site in a matter of days. Live at its first club, FIT’ONE.',
     summary: 'white-label gym member app, built and run by Ahmed on an open-source core',
     faq: 'FitPal, a white-label gym member app on an open-source core, live at its first club, FIT’ONE',
-    proof: 'a white-label member app for gyms (installable PWA on iOS, Android and desktop): passkey sign-in, owner-approved access requests, group class timetable, workout and body-weight tracking, owner dashboard. Built and run by Ahmed on the open-source openGym core (AGPL) — he added access requests, group sessions, a test-gated CI/CD pipeline and a bilingual FR/EN marketing site. Live at its first club, FIT’ONE.',
+    proof: 'a white-label member app for gyms (installable PWA on iOS, Android and desktop): passkey sign-in, owner-approved access requests, group class timetable, workout and body-weight tracking, owner dashboard. Built and run by Ahmed on the open-source openGym core (AGPL), where he added access requests, group sessions, a test-gated CI/CD pipeline and a bilingual FR/EN marketing site. Live at its first club, FIT’ONE.',
     schema: {
       '@type': 'WebApplication',
       '@id': 'https://fitpal.ma/#app',

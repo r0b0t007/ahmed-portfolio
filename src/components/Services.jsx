@@ -3,26 +3,26 @@ import { ordinal } from '../lib/ordinal'
 const services = [
   {
     title: 'Websites that rank and convert',
-    tagline: 'Fast to load. Built to be found.',
-    desc: 'Marketing sites, landing pages and portfolios that earn their keep — designed and built from scratch, not dropped into a template. Every build ships with the SEO foundation most sites bolt on too late: structured data, clean semantics, real meta, sitemap, and Core Web Vitals treated as a requirement rather than a cleanup task.',
+    tagline: 'Built to load fast and get found.',
+    desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch. Structured data, clean semantics, proper meta tags and a sitemap all go in during the build, and I measure Core Web Vitals before launch instead of leaving them as cleanup for later.',
     tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
   },
   {
     title: 'SaaS & MVP builds',
-    tagline: 'From idea to something real users can touch.',
-    desc: 'A working product, not a prototype that dies in a demo. We scope the smallest version that proves the thing, then I build it — auth, data model, core flows, payments if you need them — deployed on infrastructure that won’t need replacing when it works.',
+    tagline: 'From an idea to a product people can sign into.',
+    desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
     tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
   },
   {
     title: 'Architecture & technical rescue',
     tagline: 'For products that shipped fast and now can’t move.',
-    desc: 'Someone built it quickly, it worked, and now every change breaks something else. I audit what’s there, tell you plainly what’s worth saving, and give you a sequenced plan — or do the work. Nine years inside enterprise codebases means I’ve seen how this ends, and how to stop it without a rewrite you can’t afford.',
+    desc: 'Someone built it quickly, it worked, and now every change breaks something else. I go through the codebase, tell you what’s worth keeping, and give you an ordered plan. I can also do the work. Nine years inside enterprise codebases means I’ve usually seen the failure before, and a full rewrite is rarely the answer.',
     tags: ['Codebase audit', 'Refactor plan', 'Performance', 'Remediation'],
   },
   {
     title: 'AI-augmented automation',
-    tagline: 'AI inside the work, not beside it.',
-    desc: 'The internal tooling that quietly removes hours a week — LLM workflows, agents, retrieval over your own documents, integrations between systems that don’t talk. Built against your real processes and measured against how long the job took before. If AI doesn’t beat the baseline, I’ll say so.',
+    tagline: 'Automation that takes hours out of the week.',
+    desc: 'Internal tooling: LLM workflows, agents, retrieval over your own documents, integrations between systems that were never designed to talk to each other. I build it around your real process and time it against how long the job took before. If the AI version isn’t faster, I’ll tell you.',
     tags: ['LLM applications', 'Agentic workflows', 'RAG', 'Integrations'],
   },
 ]
@@ -50,8 +50,8 @@ const Services = () => (
       </div>
       <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">
-        Four things, done properly. Scoped up front, shipped on a date, handed over with
-        the keys — not a dependency on me.
+        Four things. Each one scoped up front, shipped on an agreed date, and handed over
+        so you can maintain it without me.
       </p>
     </div>
 

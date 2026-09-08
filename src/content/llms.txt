@@ -2,9 +2,10 @@
 
 > Last updated: 2026-08-29
 
-> I build websites and SaaS products with AI in the loop — which is why they ship in weeks. Nine
-> years delivering software for Bell, BMW and Bayer is why they don't fall over afterwards.
-> Remote-first, based in Tetouan, Morocco (GMT+1). Available for web, SaaS and MVP projects globally.
+> I build websites and SaaS products, and I use AI heavily while I do it, which is why projects
+> take weeks rather than months. Before this I spent nine years shipping software for Bell, BMW and
+> Bayer, which is where the standards come from. Remote-first, based in Tetouan, Morocco (GMT+1).
+> Available for web, SaaS and MVP projects globally.
 
 ## Identity
 
@@ -30,54 +31,55 @@
 
 ## Professional Summary
 
-Web and SaaS developer building websites, SaaS products and MVPs with AI in the loop — full-stack,
-design through deployment. Nine years of production software: roughly four years hands-on
+Web and SaaS developer building websites, SaaS products and MVPs with AI in the loop, full-stack
+from design through to deployment. Nine years of production software: roughly four years hands-on
 engineering (Java/JEE, Spring, Node.js, TypeScript, Angular, iOS) and five leading delivery for
 distributed enterprise teams across telecom, automotive, life sciences and retail.
 
-The differentiator is the pairing: AI in the build loop is what compresses timelines from months to
-weeks, while nine years inside enterprise codebases and delivery programmes is what keeps the
-architecture, tests and data model sound enough to survive real users. Certified in Scrum and SAFe.
+The two halves work together. AI in the build loop compresses timelines from months to weeks, and
+nine years inside enterprise codebases and delivery programmes is what keeps the architecture, tests
+and data model sound enough to survive real users. Certified in Scrum and SAFe.
 
 ## Services
 
-- **Websites that rank and convert** — marketing sites, landing pages and portfolios designed and
-  built from scratch, not templated. Ships with the SEO foundation most sites bolt on too late:
-  structured data, clean semantics, real meta, sitemap, and Core Web Vitals as a requirement.
-- **SaaS & MVP builds** — the smallest version that proves the idea: auth, data model, core flows,
-  payments if needed, deployed on infrastructure that won't need replacing when it works.
-- **Architecture & technical rescue** — for products that shipped fast and now can't move. Codebase
-  audit, a plainly-stated view of what's worth saving, a sequenced refactor plan, or the work itself.
-- **AI-augmented automation** — LLM workflows, agents, retrieval over internal documents, and
-  integrations between systems that don't talk, measured against the pre-automation baseline.
+- **Websites that rank and convert**: marketing sites, landing pages and portfolios designed and
+  built from scratch. Structured data, clean semantics, proper meta tags and a sitemap go in during
+  the build, with Core Web Vitals measured before launch.
+- **SaaS & MVP builds**: the smallest version that proves the idea, covering auth, data model, core
+  flows and payments if needed, deployed on infrastructure that can take growth.
+- **Architecture & technical rescue**: for products that shipped fast and now can't move. Codebase
+  audit, a clear view of what's worth keeping, an ordered refactor plan, or the work itself.
+- **AI-augmented automation**: LLM workflows, agents, retrieval over internal documents, and
+  integrations between systems that were never designed to talk, timed against the old baseline.
 
 ## How Engagements Run
 
-1. **Scope** (free, ~1 week) — a call, then a written scope: what gets built, what doesn't, cost, and
-   the date it lands. Includes an honest "I'm not the right fit" if that's the answer.
-2. **Build** (2 to 6 weeks typical) — a working link from week one, weekly demo, direct access, and an
-   architecture review at the end of each week.
-3. **Ship** (days) — live on the client's own infrastructure, domain and accounts, with performance,
-   accessibility and SEO verified before launch.
-4. **Hand over** (included) — repo, pipeline, documentation and a walkthrough. The client can take it
-   to any developer afterwards.
+1. **Scope** (free, ~1 week): a call, then a written scope covering what gets built, what doesn't,
+   what it costs, and when it lands. Includes an "I'm not the right fit" if that's the answer.
+2. **Build** (2 to 6 weeks typical): a working link in the first week, a demo every week, direct
+   access, and an architecture review at the end of each week.
+3. **Ship** (days): live on the client's own infrastructure, domain and accounts, with performance,
+   accessibility and SEO checked before launch.
+4. **Hand over** (included): repo, pipeline, documentation and a walkthrough, so the client can take
+   it to any developer afterwards.
 
-Fixed scope. Fixed price. A date in writing. Code ownership transfers to the client from day one.
+Fixed scope, fixed price, and a date in writing. Code ownership transfers to the client from day one.
 
 ## Proof and Current Status
 
-There are no client case studies for this offer yet — that is stated plainly rather than papered over
-with borrowed credibility. What is verifiable instead:
+There are no client case studies for this offer yet. That is said openly here rather than papered
+over with borrowed credibility. What is verifiable instead:
 
 {{PRODUCT_PROOF}}
-- **ahmedchioua.com** — designed, built and deployed by Ahmed. React with hand-written CSS, no
+- **ahmedchioua.com**: designed, built and deployed by Ahmed, in React with hand-written CSS and no
   template or page builder. Scores 100/100/100 on Lighthouse for accessibility, best practices and
   SEO (mobile, measured 2026-08-22).
-- **Public source** — https://github.com/r0b0t007/ahmed-portfolio
-- **Track record** — nine years of production software for Bell, BMW, Bayer and Harman clients,
-  verifiable on LinkedIn, with matching certifications.
+- **Public source**: https://github.com/r0b0t007/ahmed-portfolio
+- **Track record**: nine years of production software for Bell, BMW, Bayer and Harman clients,
+  delivered through NTT DATA, Harman and a consulting engagement. Verifiable on LinkedIn, with
+  matching certifications.
 
-The first few client projects go out at founding rates in exchange for a case study and a reference.
+The first few client projects go out at reduced rates in exchange for a case study and a reference.
 
 ## Frequently Asked Questions
 
@@ -93,15 +95,15 @@ The first few client projects go out at founding rates in exchange for a case st
 
 ### Scrum Master — Bell Canada (via consulting engagement) · Jun 2024 – Present
 Remote – Morocco | Project: Service Assurance (large-scale telecom platform)
-- A platform where an outage is the product failing — uptime as a requirement, not a target
-- Fully distributed team in a scaled delivery setup; release cadence that can't slip quietly
+- On a service assurance platform an outage is the product failing, so uptime was a hard requirement
+- Fully distributed team in a scaled delivery setup, with a release cadence that had to hold
 - Velocity, burndown and delivery-health metrics; cross-team dependency coordination
 - Tools: Jira · Confluence · Miro · Scrum · SAFe · Kanban
 
 ### Scrum Master — NTT DATA · Oct 2023 – Jun 2024
 Remote – Tetouan, Morocco | Client: Bayer | Project: CS Regulatory (life sciences IT)
-- Regulated life-sciences IT, where "we'll document it later" isn't an option
-- Distributed across multiple time zones; risk flagged early or not at all
+- Regulated life-sciences IT, where the documentation is part of the deliverable
+- Teams spread across several time zones, which meant raising risks early or not at all
 - Tools: Azure DevOps Boards · OneNote · Scrum · Kanban
 
 ### Scrum Master — NTT DATA · Jun 2021 – Dec 2023
@@ -113,7 +115,7 @@ Remote – Tetouan, Morocco | Client: BMW | Projects: On-Demand Mobility Carshar
 
 ### DevOps Engineer — NTT DATA · Jan 2021 – Jun 2021
 Tetouan, Morocco | Client: BMW | Project: On-Demand Mobility Carsharing Platform
-- CI/CD pipelines and observability tooling — the infrastructure half of shipping
+- CI/CD pipelines and observability tooling for a connected-vehicle platform
 - Stack: Java EE · Docker · Kubernetes · GitLab CI/CD · AWS · Grafana · Prometheus · Kibana
 
 ### Software Engineer — Harman Connected Services · Jun 2019 – Jan 2021
