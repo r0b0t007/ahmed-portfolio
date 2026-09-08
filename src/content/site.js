@@ -9,7 +9,7 @@ export const SITE_URL = 'https://ahmedchioua.com/'
  * Where every "book a call" control points. Swapping booking provider is a one-line change here,
  * not a hunt through the components.
  */
-export const BOOKING_URL = 'https://cal.com/bangicode/scope-call'
+export const BOOKING_URL = 'https://cal.com/ahmedchioua/scope-call'
 
 /**
  * Direct contact for people who would rather message than book. wa.me wants the number in full
