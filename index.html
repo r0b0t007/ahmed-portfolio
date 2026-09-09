@@ -84,6 +84,7 @@
             "addressCountry": "MA"
           },
           "sameAs": [
+            "https://www.google.com/maps?cid=16714148622606336445",
             "https://www.linkedin.com/in/ahmedchioua",
             "https://github.com/r0b0t007"
           ],
@@ -173,6 +174,30 @@
           }
         },
         {
+          "@type": "ProfessionalService",
+          "@id": "https://ahmedchioua.com/#business",
+          "name": "Ahmed Chioua — Web & SaaS Development",
+          "description": "Websites, SaaS products and MVPs for founders and small businesses, with AI in the loop for speed and an architecture that still holds up once the product grows.",
+          "url": "https://ahmedchioua.com/",
+          "telephone": "+212626410690",
+          "email": "ahmedchioua@gmail.com",
+          "image": "https://ahmedchioua.com/headshot-700.webp",
+          "founder": { "@id": "https://ahmedchioua.com/#person" },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Tetouan",
+            "addressRegion": "Tanger-Tétouan-Al Hoceïma",
+            "addressCountry": "MA"
+          },
+          "areaServed": { "@type": "Country", "name": "Morocco" },
+          "makesOffer": { "@id": "https://ahmedchioua.com/#service" },
+          "sameAs": [
+            "https://www.google.com/maps?cid=16714148622606336445",
+            "https://www.linkedin.com/in/ahmedchioua",
+            "https://github.com/r0b0t007"
+          ]
+        },
+        {
           "@type": "Service",
           "@id": "https://ahmedchioua.com/#service",
           "name": "Ahmed Chioua — Web & SaaS Development",
@@ -181,7 +206,10 @@
           "provider": {
             "@id": "https://ahmedchioua.com/#person"
           },
-          "areaServed": "Worldwide",
+          "areaServed": [
+            { "@type": "Country", "name": "Morocco" },
+            { "@type": "Place", "name": "Remote, worldwide" }
+          ],
           "availableChannel": {
             "@type": "ServiceChannel",
             "serviceUrl": "https://cal.com/ahmedchioua/scope-call"
