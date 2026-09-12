@@ -4,6 +4,7 @@ import TrustStrip from './components/TrustStrip'
 import Benefits from './components/Benefits'
 import Services from './components/Services'
 import Process from './components/Process'
+import Handoff from './components/Handoff'
 import Proof from './components/Proof'
 import Pricing from './components/Pricing'
 import Experience from './components/Experience'
@@ -22,6 +23,7 @@ import Footer from './components/Footer'
  * React.lazy is not an option here: it suspends during renderToString.
  */
 import { ISLAND } from './islands'
+// Section order is also declared in src/lib/sections.js, which numbers the eyebrows; keep both in step.
 function App() {
   return (
     <div className="app">
@@ -32,6 +34,7 @@ function App() {
         <Benefits />
         <Services />
         <Process />
+        <Handoff />
         <Proof />
         <Pricing />
         <Experience />

@@ -1,0 +1,59 @@
+import { sectionIndex } from '../lib/sections'
+import { BenefitCard } from './BenefitCard'
+import { LAUNCH_COVER_DAYS } from '../content/site'
+
+/**
+ * The hand-off, unbundled. "You own the repo" is one line; the stack below is what a founder is
+ * actually buying at the end of the build. Shares BenefitCard with Benefits so the two
+ * three-column sections read as one system.
+ */
+const stack = [
+  {
+    title: 'Pure asset ownership',
+    lines: [
+      'Your GitHub repo, in your name, from day one.',
+      'Written documentation plus a recorded walkthrough.',
+      'Any developer can pick it up tomorrow. You are never locked in, including to me.',
+    ],
+  },
+  {
+    title: 'Infrastructure, configured and transferred',
+    lines: [
+      'Hosting, domain, database, auth, payments: set up on your accounts (Vercel, AWS, Supabase, Cloudflare).',
+      'Deploy pipeline live. Push code, it ships.',
+      'Analytics wired before launch, not after. Nobody “holds the keys for you”. You hold them.',
+    ],
+  },
+  {
+    title: `Launch insurance, ${LAUNCH_COVER_DAYS} days`,
+    lines: [
+      `Bugs surfaced in the first ${LAUNCH_COVER_DAYS} days: fixed, included.`,
+      'Small tweaks as real users hit it: included. The direct channel stays open.',
+      'The first month is when things break. I stay for it.',
+    ],
+  },
+]
+
+const Handoff = () => (
+  <section id="handoff" className="section">
+    <div className="eyebrow-block">
+      <div className="eyebrow-row">
+        <span className="eyebrow">What you walk away with</span>
+        <span className="eyebrow-index">( {sectionIndex('handoff')} )</span>
+      </div>
+      <h2 className="sec-title">You lift zero technical fingers. <em>You own everything.</em></h2>
+      <p className="sec-lead">
+        Most hand-offs are a zip file and a goodbye. This one is a stack.
+      </p>
+    </div>
+
+    <div className="hair-grid ed-ben-grid">
+      {stack.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+    </div>
+
+    <div className="ed-promise">All of it inside the fixed price. Not an add-on. Not an upsell.</div>
+
+  </section>
+)
+
+export default Handoff

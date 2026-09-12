@@ -1,3 +1,4 @@
+import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
 
 const services = [
@@ -34,7 +35,7 @@ const Services = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Services</span>
-        <span className="eyebrow-index">( 02 )</span>
+        <span className="eyebrow-index">( {sectionIndex('services')} )</span>
       </div>
       <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">

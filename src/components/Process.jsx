@@ -1,25 +1,27 @@
+import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
+import { FIRST_LINK_DAYS, LAUNCH_COVER_DAYS } from '../content/site'
 
 const steps = [
   {
     title: 'Scope',
     meta: 'Free · 1 week',
-    desc: 'A call, then a written scope: what gets built, what doesn’t, what it costs, and when it lands. If I don’t think I’m the right person for the job, I’ll say so at this stage. That’s why it’s free.',
+    desc: 'A 30-minute call, then a written scope: what gets built, what doesn’t, what it costs, and the date it goes live. If I’m not the right person for it, I’ll say so here. That’s why it’s free.',
   },
   {
     title: 'Build',
-    meta: '2 to 6 weeks, typical',
-    desc: 'You get a working link in the first week, then a demo every week and a direct line to me. Building with AI is what makes the timeline short. I review the architecture at the end of every week so the speed doesn’t turn into debt you inherit.',
+    meta: `Day ${FIRST_LINK_DAYS}: a link · then weekly`,
+    desc: `Day ${FIRST_LINK_DAYS}, you get a URL. It’s rough. It’s real. You click through the core flow, react, and we adjust while changes are still cheap. Every week after: a demo, an updated link, a direct line to me. AI in the loop is why the timeline is weeks, not months. The weekly architecture review is why it holds.`,
   },
   {
     title: 'Ship',
-    meta: 'Days',
-    desc: 'Live on your infrastructure, your domain, your accounts. I check performance, accessibility and SEO before it goes out, and you see the numbers.',
+    meta: 'On the date in your scope',
+    desc: 'Live on your infrastructure, your domain, your accounts. Performance, accessibility and SEO verified before it goes out, and you see the numbers. If I miss the date in your scope, I keep building until it ships, and the overrun is on me.',
   },
   {
     title: 'Hand over',
-    meta: 'Included',
-    desc: 'You get the repo, the pipeline, the documentation and a walkthrough, so any developer can pick it up after me. If you’d rather I kept going, we scope that separately.',
+    meta: `Included · ${LAUNCH_COVER_DAYS} days of cover`,
+    desc: `The repo, the pipeline, the documentation, a walkthrough, and ${LAUNCH_COVER_DAYS} days of post-launch fixes. Any developer can pick it up after me. If you’d rather I kept going, we scope that separately.`,
   },
 ]
 
@@ -43,12 +45,13 @@ const Process = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Process</span>
-        <span className="eyebrow-index">( 03 )</span>
+        <span className="eyebrow-index">( {sectionIndex('process')} )</span>
       </div>
-      <h2 className="sec-title">How I <em>build</em></h2>
+      <h2 className="sec-title">A working link in {FIRST_LINK_DAYS} days. <em>Then every week after.</em></h2>
       <p className="sec-lead">
-        Every project runs the same four steps, so you know what you’re committing to
-        before you commit to it. No open-ended retainers, no invoices you didn’t expect.
+        Agencies go quiet for six weeks and come back with a surprise. You don’t get to say
+        “that’s not what I meant” until it’s expensive to fix. Here, every project runs the same
+        four steps, and you can see it running from the first one.
       </p>
     </div>
 
@@ -56,7 +59,10 @@ const Process = () => (
       {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
     </div>
 
-    <div className="ed-promise">Fixed scope, fixed price, and a date in writing.</div>
+    <div className="ed-promise">
+      Every week you can’t see it is a week it can’t earn. Fast feedback loops mean a faster
+      launch, and a faster launch means your asset starts working sooner.
+    </div>
 
   </section>
 )

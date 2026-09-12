@@ -1,10 +1,12 @@
 # Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-09-08
+> Last updated: 2026-09-12
 
-> I build websites and SaaS products for founders. A working link in week one, a fixed price, and
-> a date in writing. Marketing sites take 2 to 3 weeks and MVPs 4 to 6, because I build with AI in
-> the loop; nine years shipping software for Bell, BMW and Bayer is where the standards come from.
+> I build websites and SaaS products for founders: live in weeks, at a fixed price, with a launch
+> date in writing. A working link in {{FIRST_LINK_DAYS}} days, then a demo every week. Marketing sites take 2 to 3
+> weeks and MVPs 4 to 6, because I build with AI in the loop; nine years shipping software for Bell,
+> BMW and Bayer is where the standards come from. The hand-off includes the repo, infrastructure on
+> the client's own accounts, documentation, and {{LAUNCH_COVER_DAYS}} days of post-launch fixes, all inside the price.
 > Remote-first, based in Tetouan, Morocco (GMT+1). Available for web, SaaS and MVP projects globally.
 
 ## Identity
@@ -21,10 +23,11 @@
 
 ## Links
 
-- [Homepage](https://ahmedchioua.com/) — what you get, services, process, pricing, proof and FAQ
-- [What you get](https://ahmedchioua.com/#benefits) — timelines, verifiable quality, code ownership
+- [Homepage](https://ahmedchioua.com/) — why it won't break, services, process, hand-off, pricing, proof and FAQ
+- [Why it won't break](https://ahmedchioua.com/#benefits) — the standards that ship with every build
 - [Services](https://ahmedchioua.com/#services) — websites and SaaS/MVP builds; rescue and AI automation on request
-- [Process](https://ahmedchioua.com/#process) — how engagements run, step by step
+- [Process](https://ahmedchioua.com/#process) — a working link in {{FIRST_LINK_DAYS}} days, then weekly, step by step
+- [Hand-off](https://ahmedchioua.com/#handoff) — code ownership, infrastructure transfer, {{LAUNCH_COVER_DAYS}} days of launch cover
 - [Pricing](https://ahmedchioua.com/#pricing) — fixed price per project, quoted in a free scope call
 - [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
 - [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
@@ -63,25 +66,32 @@ Also available, as standalone or follow-on engagements:
 ## How Engagements Run
 
 1. **Scope** (free, ~1 week): a call, then a written scope covering what gets built, what doesn't,
-   what it costs, and when it lands. Includes an "I'm not the right fit" if that's the answer.
-2. **Build** (2 to 6 weeks typical): a working link in the first week, a demo every week, direct
+   what it costs, and the date it goes live. Includes an "I'm not the right fit" if that's the answer.
+2. **Build** (2 to 6 weeks typical): a working link within the first {{FIRST_LINK_DAYS}} days, a demo every week, direct
    access, and an architecture review at the end of each week.
-3. **Ship** (days): live on the client's own infrastructure, domain and accounts, with performance,
+3. **Ship** (on the date in the scope): live on the client's own infrastructure, domain and accounts, with performance,
    accessibility and SEO checked before launch.
-4. **Hand over** (included): repo, pipeline, documentation and a walkthrough, so the client can take
-   it to any developer afterwards.
+4. **Hand over** (included): repo, pipeline, documentation and a recorded walkthrough, so the client
+   can take it to any developer afterwards. Hosting, domain, database, auth and payments are set up on
+   the client's own accounts (Vercel, AWS, Supabase, Cloudflare). {{LAUNCH_COVER_DAYS}} days of post-launch fixes and
+   small tweaks are included.
 
-Fixed scope, fixed price, and a date in writing. Code ownership transfers to the client from day one.
+Fixed scope, fixed price, and a date in writing. If the date is missed, Ahmed keeps building until it
+ships and the overrun is on him; scope changes requested mid-build move the date and the price, agreed in writing.
+After the {{LAUNCH_COVER_DAYS}} days: any developer can take over, or a scoped fixed-price follow-on, or a monthly care
+plan quoted separately. Nothing renews on its own. Code ownership transfers to the client from day one.
 
 ## Pricing
 
-Fixed price per project, quoted in the free scope call, in writing, with a date attached. No hourly
-billing, and no retainer the client can't exit. Reduced founding-client rates apply to the next few
-projects, in exchange for a case study and a reference.
+Fixed price per project, quoted in the free scope call, in writing, with a date attached. The price
+covers the build, the infrastructure setup, the hand-off and {{LAUNCH_COVER_DAYS}} days of post-launch fixes. No hourly
+billing, and no retainer the client can't exit. A founding-client rate exists for the next {{FOUNDING_SLOTS}}
+projects and is a trade, not a discount: a written case study and a reference in exchange for the
+founding price, with the same scope, date and hand-off.
 
-A question that comes up often: if AI writes the code, why isn't it cheaper? The typing was never
-the expensive part. The cost sits in deciding what to build, deciding what to leave out, and being
-accountable when it breaks. The speed is the discount: weeks instead of months.
+A question that comes up often: if AI writes the code, why isn't it cheaper? AI speeds up the typing.
+It doesn't make the decisions that keep a product alive: what to build, what to leave out, and who is
+accountable when it breaks. Cheap development is the expensive option, paid for later as a rebuild.
 
 ## Proof and Current Status
 
@@ -97,8 +107,7 @@ What is verifiable today:
   matching certifications.
 
 There are no paid client case studies for this offer yet. That is stated openly rather than
-papered over with borrowed credibility, and it is why the first few client projects go out at
-reduced rates in exchange for a case study and a reference.
+papered over with borrowed credibility; the founding-client rate above is how the first ones get made.
 
 ## Frequently Asked Questions
 

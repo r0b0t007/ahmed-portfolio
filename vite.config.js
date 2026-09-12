@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
-import { BOOKING_URL, FAQ_ID, PERSON_ID } from './src/content/site.js'
+import { BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID } from './src/content/site.js'
 
 /**
  * Derives the content that must stay in sync with the visible page from the same modules the
@@ -22,6 +22,9 @@ function contentSchema({ emitLlms }) {
     PRODUCT_LINKS: () => products.map(p => `- [${p.name}](${p.url}) — ${p.summary}`).join('\n'),
     PRODUCT_PROOF: () => products.map(p => `- **${p.name}** — ${p.url} — ${p.proof}`).join('\n'),
     FAQ: () => faqs.map(({ q, a }) => `### ${q}\n${a}`).join('\n\n'),
+    FIRST_LINK_DAYS: () => String(FIRST_LINK_DAYS),
+    LAUNCH_COVER_DAYS: () => String(LAUNCH_COVER_DAYS),
+    FOUNDING_SLOTS: () => String(FOUNDING_SLOTS),
   }
 
   // Replacer functions, not strings: a `$1` or `$&` typed into a FAQ answer must land literally.
@@ -40,6 +43,13 @@ function contentSchema({ emitLlms }) {
       // A booking-provider switch already shipped a dead link once; fail the build instead.
       if (!html.includes(`"serviceUrl": "${BOOKING_URL}"`)) {
         throw new Error(`index.html serviceUrl is out of sync with BOOKING_URL (${BOOKING_URL})`)
+      }
+      // The three meta descriptions and the Person description restate the offer's headline
+      // number by hand. Same reasoning as serviceUrl: no import reaches them, so fail the build
+      // the day FIRST_LINK_DAYS changes and they don't.
+      const claims = [...html.matchAll(/working link in (\d+) days/g)].map(m => Number(m[1]))
+      if (claims.length !== 4 || claims.some(d => d !== FIRST_LINK_DAYS)) {
+        throw new Error(`index.html states the working-link claim as [${claims}], expected ${FIRST_LINK_DAYS} in 4 places (3 meta descriptions + Person description)`)
       }
       const json = JSON.stringify({
         '@context': 'https://schema.org',

@@ -1,4 +1,5 @@
-import { BOOKING_URL } from '../content/site'
+import { sectionIndex } from '../lib/sections'
+import { BOOKING_URL, LAUNCH_COVER_DAYS } from '../content/site'
 
 /**
  * The price objection gets its own section rather than a line in the FAQ, because the sharpest
@@ -11,12 +12,13 @@ const Pricing = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Pricing</span>
-        <span className="eyebrow-index">( 05 )</span>
+        <span className="eyebrow-index">( {sectionIndex('pricing')} )</span>
       </div>
-      <h2 className="sec-title">Fixed price, quoted <em>before</em> you commit</h2>
+      <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
-        You get the number in the free scope call, in writing, with a date attached. No hourly
-        billing, and no retainer you can&rsquo;t exit.
+        One price, fixed in the free scope call, in writing, with a date attached. It covers the
+        build, the infrastructure, the hand-off and {LAUNCH_COVER_DAYS} days of launch insurance. No hourly meter.
+        No change-order ambush.
       </p>
     </div>
 
@@ -25,15 +27,15 @@ const Pricing = () => (
       <div>
         <p className="fade-in ed-price-q">&ldquo;AI writes the code. Why isn&rsquo;t it cheaper?&rdquo;</p>
         <p className="fade-in ed-price-a">
-          The typing was never the expensive part. You&rsquo;re paying for what to build, what to
-          leave out, and someone who answers when it breaks at an awkward hour.
+          AI makes me faster. It doesn&rsquo;t make the decisions that keep your product alive:
+          what to build, what to leave out, and who answers when it breaks at an awkward hour.
+          You&rsquo;re paying for those.
         </p>
         <p className="fade-in ed-price-a">
-          The speed is the discount. Weeks instead of months is money you don&rsquo;t spend waiting
-          for the thing to exist.
+          Cheap development is the expensive option. You just pay for it later, as a rebuild.
         </p>
         <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink ed-price-cta">
-          Get a price and a date
+          Lock in a price and a date
         </a>
       </div>
     </div>
