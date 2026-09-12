@@ -130,6 +130,7 @@ em { font-style: italic; }
   max-width: 56ch;
   line-height: 1.8;
 }
+.sec-lead + .sec-lead { margin-top: 14px; }
 
 /* Mono tag / pill (bordered) */
 .tag {
@@ -287,6 +288,11 @@ em { font-style: italic; }
 .ed-stat-n { font-family: var(--serif); font-size: 1.9rem; font-weight: 300; line-height: 1; }
 .ed-stat-n sup { color: var(--teal); font-size: 1rem; }
 .ed-stat-l { font-size: 0.75rem; color: var(--ink-muted); margin-top: 6px; line-height: 1.5; }
+/* Four stats need ~616px in a row; below ~1270px the hero column is narrower and the row broke 3+1. */
+@media (max-width: 1270px) {
+  .ed-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px; max-width: 420px; }
+  .ed-stat { min-width: 0; max-width: none; }
+}
 
 .ed-hero-portrait {
   position: relative;
@@ -582,6 +588,7 @@ em { font-style: italic; }
 
 /* -- Secondary CTA under the contact details (Contact.jsx) -- */
 .ed-alt-cta { margin-top: 26px; font-size: 0.88rem; color: var(--ink-muted); }
+.ed-alt-cta + .ed-alt-cta { margin-top: 10px; }
 .ed-alt-cta a {
   color: var(--teal); font-family: var(--mono); font-size: 0.78rem;
   border-bottom: 1px solid var(--hair);

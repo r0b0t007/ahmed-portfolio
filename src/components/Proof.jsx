@@ -1,3 +1,4 @@
+import { sectionIndex } from '../lib/sections'
 import { products } from '../content/products'
 import { ordinal } from '../lib/ordinal'
 
@@ -49,7 +50,7 @@ const Proof = () => {
       <div className="eyebrow-block">
         <div className="eyebrow-row">
           <span className="eyebrow">Proof</span>
-          <span className="eyebrow-index">( 05 )</span>
+          <span className="eyebrow-index">( {sectionIndex('proof')} )</span>
         </div>
         <h2 className="sec-title">Don&rsquo;t take my word for it. <em>Take two minutes.</em></h2>
         <p className="fade-in sec-lead">

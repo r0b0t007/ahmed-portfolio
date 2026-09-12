@@ -23,6 +23,7 @@ import Footer from './components/Footer'
  * React.lazy is not an option here: it suspends during renderToString.
  */
 import { ISLAND } from './islands'
+// Section order is also declared in src/lib/sections.js, which numbers the eyebrows; keep both in step.
 function App() {
   return (
     <div className="app">

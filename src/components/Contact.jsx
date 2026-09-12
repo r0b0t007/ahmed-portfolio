@@ -1,5 +1,6 @@
+import { sectionIndex } from '../lib/sections'
 import { useState } from 'react'
-import { BOOKING_URL, WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
+import { BOOKING_URL, CTA_LABEL, FIRST_LINK_DAYS, WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
 const details = [
@@ -63,9 +64,9 @@ const Contact = () => {
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
               <span className="eyebrow">Next step</span>
-              <span className="eyebrow-index">( 10 )</span>
+              <span className="eyebrow-index">( {sectionIndex('contact')} )</span>
             </div>
-            <h2 className="sec-title">Claim your <em>10-Day Prototype Slot</em></h2>
+            <h2 className="sec-title">Claim your <em>{FIRST_LINK_DAYS}-Day Prototype Slot</em></h2>
             <p className="sec-lead" style={{ marginBottom: '28px' }}>
               I run a few builds at a time; weekly demos are why. The scope call is free, 30
               minutes, and ends with a written answer: what gets built, what it costs, and the date
@@ -78,7 +79,7 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Claim a 10-Day Slot
+                {CTA_LABEL}
               </a>
               <a
                 className="btn-wa"
@@ -99,7 +100,9 @@ const Contact = () => {
               ))}
             </dl>
             <p className="ed-alt-cta">
-              No retainer. No deposit to talk. A written scope within days, or a straight &ldquo;not me&rdquo;.
+              No retainer. No deposit to talk. A written scope within a week, or a straight &ldquo;not me&rdquo;.
+            </p>
+            <p className="ed-alt-cta">
               Not ready to talk?{' '}
               <a href="https://github.com/r0b0t007/ahmed-portfolio" target="_blank" rel="noopener noreferrer">
                 Read the code first &rarr;

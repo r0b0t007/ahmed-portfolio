@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { CTA_LABEL_NAV } from '../content/site'
 
 const navLinks = [
   { name: 'Services', href: '#services' },
@@ -7,7 +8,7 @@ const navLinks = [
   { name: 'Pricing', href: '#pricing' },
   { name: 'About', href: '#about' },
   { name: 'FAQ', href: '#faq' },
-  { name: 'Claim a slot', href: '#contact', accent: true },
+  { name: CTA_LABEL_NAV, href: '#contact', accent: true },
 ]
 
 const Header = () => {

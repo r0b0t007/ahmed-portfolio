@@ -1,8 +1,10 @@
-import { ordinal } from '../lib/ordinal'
+import { sectionIndex } from '../lib/sections'
+import { BenefitCard } from './BenefitCard'
+import { LAUNCH_COVER_DAYS } from '../content/site'
 
 /**
  * The hand-off, unbundled. "You own the repo" is one line; the stack below is what a founder is
- * actually buying at the end of the build. Reuses the Benefits card styles (.ed-ben*) so the two
+ * actually buying at the end of the build. Shares BenefitCard with Benefits so the two
  * three-column sections read as one system.
  */
 const stack = [
@@ -23,29 +25,21 @@ const stack = [
     ],
   },
   {
-    title: 'Launch insurance, 30 days',
+    title: `Launch insurance, ${LAUNCH_COVER_DAYS} days`,
     lines: [
-      'Bugs surfaced in the first 30 days: fixed, included.',
+      `Bugs surfaced in the first ${LAUNCH_COVER_DAYS} days: fixed, included.`,
       'Small tweaks as real users hit it: included. The direct channel stays open.',
       'The first month is when things break. I stay for it.',
     ],
   },
 ]
 
-const Item = ({ b, i }) => (
-  <div className="fade-in ed-ben">
-    <div className="ed-ben-n">( {ordinal(i, 2)} )</div>
-    <h3 className="ed-ben-t">{b.title}</h3>
-    {b.lines.map(l => <p key={l} className="ed-ben-l">{l}</p>)}
-  </div>
-)
-
 const Handoff = () => (
   <section id="handoff" className="section">
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">What you walk away with</span>
-        <span className="eyebrow-index">( 04 )</span>
+        <span className="eyebrow-index">( {sectionIndex('handoff')} )</span>
       </div>
       <h2 className="sec-title">You lift zero technical fingers. <em>You own everything.</em></h2>
       <p className="sec-lead">
@@ -54,7 +48,7 @@ const Handoff = () => (
     </div>
 
     <div className="hair-grid ed-ben-grid">
-      {stack.map((b, i) => <Item key={b.title} b={b} i={i} />)}
+      {stack.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
     </div>
 
     <div className="ed-promise">All of it inside the fixed price. Not an add-on. Not an upsell.</div>

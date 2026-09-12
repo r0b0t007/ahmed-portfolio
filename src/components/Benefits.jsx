@@ -1,4 +1,5 @@
-import { ordinal } from '../lib/ordinal'
+import { sectionIndex } from '../lib/sections'
+import { BenefitCard } from './BenefitCard'
 
 /**
  * The "why it won't break" section. Founders can't judge code quality, so the argument is made
@@ -31,20 +32,12 @@ const standards = [
   },
 ]
 
-const Standard = ({ b, i }) => (
-  <div className="fade-in ed-ben">
-    <div className="ed-ben-n">( {ordinal(i, 2)} )</div>
-    <h3 className="ed-ben-t">{b.title}</h3>
-    {b.lines.map(l => <p key={l} className="ed-ben-l">{l}</p>)}
-  </div>
-)
-
 const Benefits = () => (
   <section id="benefits" className="section">
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Why it won&rsquo;t break on launch day</span>
-        <span className="eyebrow-index">( 01 )</span>
+        <span className="eyebrow-index">( {sectionIndex('benefits')} )</span>
       </div>
       <h2 className="sec-title">The cheapest developer is the one you <em>pay twice</em></h2>
       <p className="sec-lead">
@@ -54,15 +47,15 @@ const Benefits = () => (
         standards problem.
       </p>
       <p className="sec-lead">
-        I spent nine years building and running delivery for platforms at Bell, BMW and Bayer.
-        Companies that audit their vendors, where &ldquo;we&rsquo;ll fix it after launch&rdquo;
-        isn&rsquo;t allowed. Those standards ship with your build. They&rsquo;re the insurance
-        policy on your capital.
+        I spent nine years building and running delivery on platforms for Bell, BMW and Bayer,
+        through NTT DATA and a consulting engagement. Programmes where every vendor gets audited
+        and &ldquo;we&rsquo;ll fix it after launch&rdquo; isn&rsquo;t allowed. Those standards
+        ship with your build. They&rsquo;re the insurance policy on your capital.
       </p>
     </div>
 
     <div className="hair-grid ed-ben-grid">
-      {standards.map((b, i) => <Standard key={b.title} b={b} i={i} />)}
+      {standards.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
     </div>
 
   </section>

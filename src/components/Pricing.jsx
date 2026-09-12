@@ -1,4 +1,5 @@
-import { BOOKING_URL } from '../content/site'
+import { sectionIndex } from '../lib/sections'
+import { BOOKING_URL, LAUNCH_COVER_DAYS } from '../content/site'
 
 /**
  * The price objection gets its own section rather than a line in the FAQ, because the sharpest
@@ -11,12 +12,12 @@ const Pricing = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Pricing</span>
-        <span className="eyebrow-index">( 06 )</span>
+        <span className="eyebrow-index">( {sectionIndex('pricing')} )</span>
       </div>
       <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
         One price, fixed in the free scope call, in writing, with a date attached. It covers the
-        build, the infrastructure, the hand-off and 30 days of launch insurance. No hourly meter.
+        build, the infrastructure, the hand-off and {LAUNCH_COVER_DAYS} days of launch insurance. No hourly meter.
         No change-order ambush.
       </p>
     </div>

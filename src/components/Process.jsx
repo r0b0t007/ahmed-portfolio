@@ -1,4 +1,6 @@
+import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
+import { FIRST_LINK_DAYS, LAUNCH_COVER_DAYS } from '../content/site'
 
 const steps = [
   {
@@ -8,8 +10,8 @@ const steps = [
   },
   {
     title: 'Build',
-    meta: 'Day 10: a link · then weekly',
-    desc: 'Day ten, you get a URL. It’s rough. It’s real. You click through the core flow, react, and we adjust while changes are still cheap. Every week after: a demo, an updated link, a direct line to me. AI in the loop is why the timeline is weeks, not months. The weekly architecture review is why it holds.',
+    meta: `Day ${FIRST_LINK_DAYS}: a link · then weekly`,
+    desc: `Day ${FIRST_LINK_DAYS}, you get a URL. It’s rough. It’s real. You click through the core flow, react, and we adjust while changes are still cheap. Every week after: a demo, an updated link, a direct line to me. AI in the loop is why the timeline is weeks, not months. The weekly architecture review is why it holds.`,
   },
   {
     title: 'Ship',
@@ -18,8 +20,8 @@ const steps = [
   },
   {
     title: 'Hand over',
-    meta: 'Included · 30 days of cover',
-    desc: 'The repo, the pipeline, the documentation, a walkthrough, and 30 days of post-launch fixes. Any developer can pick it up after me. If you’d rather I kept going, we scope that separately.',
+    meta: `Included · ${LAUNCH_COVER_DAYS} days of cover`,
+    desc: `The repo, the pipeline, the documentation, a walkthrough, and ${LAUNCH_COVER_DAYS} days of post-launch fixes. Any developer can pick it up after me. If you’d rather I kept going, we scope that separately.`,
   },
 ]
 
@@ -43,9 +45,9 @@ const Process = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Process</span>
-        <span className="eyebrow-index">( 03 )</span>
+        <span className="eyebrow-index">( {sectionIndex('process')} )</span>
       </div>
-      <h2 className="sec-title">A working link in 10 days. <em>Then every week after.</em></h2>
+      <h2 className="sec-title">A working link in {FIRST_LINK_DAYS} days. <em>Then every week after.</em></h2>
       <p className="sec-lead">
         Agencies go quiet for six weeks and come back with a surprise. You don’t get to say
         “that’s not what I meant” until it’s expensive to fix. Here, every project runs the same

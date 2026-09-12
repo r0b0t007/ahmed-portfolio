@@ -1,10 +1,10 @@
-import { BOOKING_URL } from '../content/site'
+import { BOOKING_URL, CTA_LABEL_LONG, FIRST_LINK_DAYS } from '../content/site'
 
 const stats = [
-  { n: '10', sup: '', label: 'Days from kickoff to your first working link' },
-  { n: '1', sup: '', label: 'Price. Fixed before we start, never revised mid-build' },
+  { n: String(FIRST_LINK_DAYS), sup: '', label: 'Days from kickoff to your first working link' },
+  { n: '1', sup: '', label: 'Price. Fixed for the agreed scope before we start' },
   { n: '9', sup: '+', label: 'Years of production software for Bell, BMW, Bayer' },
-  { n: '100', sup: '', label: 'Lighthouse score of this page. Run it yourself' },
+  { n: '100', sup: '', label: 'Lighthouse: a11y, SEO, best practices. Run it yourself' },
 ]
 
 const Hero = () => (
@@ -13,12 +13,12 @@ const Hero = () => (
       <p className="ed-kicker">For founders who need it launched, not &ldquo;in progress&rdquo;</p>
       <h1 className="ed-h1">Your site or SaaS,<br />live in weeks.<br />Fixed price.<br /><em>Date in writing.</em></h1>
       <p className="ed-lead">
-        A working link in <strong>10 days</strong>. A launch date you can plan around. A price
+        A working link in <strong>{FIRST_LINK_DAYS} days</strong>. A launch date you can plan around. A price
         that doesn&rsquo;t move. Built by an engineer with nine years shipping production software
         for Bell, BMW and Bayer.
       </p>
       <div className="ed-cta-row">
-        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">Claim a 10-Day Prototype Slot</a>
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{CTA_LABEL_LONG}</a>
         <a href="#handoff" className="link-teal">See exactly what you get →</a>
       </div>
       <div className="ed-stats">
