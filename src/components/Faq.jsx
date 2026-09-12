@@ -14,7 +14,7 @@ const Faq = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Questions</span>
-        <span className="eyebrow-index">( 08 )</span>
+        <span className="eyebrow-index">( 09 )</span>
       </div>
       <h2 className="sec-title">Straight <em>answers</em></h2>
     </div>

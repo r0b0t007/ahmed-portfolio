@@ -62,13 +62,14 @@ const Contact = () => {
         <div className="fade-in ed-contact-left">
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
-              <span className="eyebrow">Contact</span>
-              <span className="eyebrow-index">( 09 )</span>
+              <span className="eyebrow">Next step</span>
+              <span className="eyebrow-index">( 10 )</span>
             </div>
-            <h2 className="sec-title">Tell me what <em>you're building</em></h2>
+            <h2 className="sec-title">Claim your <em>10-Day Prototype Slot</em></h2>
             <p className="sec-lead" style={{ marginBottom: '28px' }}>
-              Thirty minutes, free. You'll leave with a scope, a price and a date. If I'm not
-              the right person for it, I'll say so on the call.
+              I run a few builds at a time; weekly demos are why. The scope call is free, 30
+              minutes, and ends with a written answer: what gets built, what it costs, and the date
+              it goes live. If I'm not the right person for it, I'll tell you on the call.
             </p>
             <div className="ed-contact-btns">
               <a
@@ -77,7 +78,7 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Book a scope call
+                Claim a 10-Day Slot
               </a>
               <a
                 className="btn-wa"
@@ -98,6 +99,7 @@ const Contact = () => {
               ))}
             </dl>
             <p className="ed-alt-cta">
+              No retainer. No deposit to talk. A written scope within days, or a straight &ldquo;not me&rdquo;.
               Not ready to talk?{' '}
               <a href="https://github.com/r0b0t007/ahmed-portfolio" target="_blank" rel="noopener noreferrer">
                 Read the code first &rarr;

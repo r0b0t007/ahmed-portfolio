@@ -1,37 +1,37 @@
 import { ordinal } from '../lib/ordinal'
 
 /**
- * The three promises that decide whether a visitor keeps reading: speed, verifiability, and
- * ownership. Each maps to one of the three reasons founders don't buy — "it'll take forever",
- * "I can't tell if the work is any good", and "I'll be locked in".
+ * The "why it won't break" section. Founders can't judge code quality, so the argument is made
+ * in money: cheap builds get paid for twice. The three cards are the standards that ship with
+ * every build, and the Proof section further down is where the visitor checks them.
  *
  * Lines are deliberately short. This section is read on a phone more often than not.
  */
-const benefits = [
+const standards = [
   {
-    title: 'Fast, and you can watch it happen',
+    title: 'Architecture reviewed every week',
     lines: [
-      'A marketing site takes 2 to 3 weeks. An MVP takes 4 to 6.',
-      'You get a link you can open in week one, then a demo every week until it ships.',
+      'Not “cleaned up later”.',
+      'Speed that turns into debt you inherit isn’t speed. The review is how it stays yours.',
     ],
   },
   {
-    title: 'Check the work before you pay for it',
+    title: 'Performance, accessibility and SEO verified before launch',
     lines: [
-      'This site scores 100 / 100 / 100 on Lighthouse, and its source is public on GitHub.',
-      'Two of my own products are live with real users. Open them and judge for yourself.',
+      'Not promised for after.',
+      'You see the numbers before it goes live, the same way you can see this page’s.',
     ],
   },
   {
-    title: 'You own all of it, from day one',
+    title: 'Tests, docs and a deploy pipeline',
     lines: [
-      'Your repo, your hosting, your accounts.',
-      'Handover includes documentation and a walkthrough, so any developer can take over after me.',
+      'The boring parts that decide whether it survives month three.',
+      'They ship with the build, not as an add-on.',
     ],
   },
 ]
 
-const Benefit = ({ b, i }) => (
+const Standard = ({ b, i }) => (
   <div className="fade-in ed-ben">
     <div className="ed-ben-n">( {ordinal(i, 2)} )</div>
     <h3 className="ed-ben-t">{b.title}</h3>
@@ -43,18 +43,26 @@ const Benefits = () => (
   <section id="benefits" className="section">
     <div className="eyebrow-block">
       <div className="eyebrow-row">
-        <span className="eyebrow">What you get</span>
+        <span className="eyebrow">Why it won&rsquo;t break on launch day</span>
         <span className="eyebrow-index">( 01 )</span>
       </div>
-      <h2 className="sec-title">Three things that <em>decide it</em></h2>
+      <h2 className="sec-title">The cheapest developer is the one you <em>pay twice</em></h2>
       <p className="sec-lead">
-        Most people hiring a developer are making a call they don&rsquo;t feel qualified to make.
-        These are the three things that should settle it.
+        Here&rsquo;s how most founder builds go. You hire fast and cheap. The demo looks fine. Then
+        users arrive, something breaks, and nobody can find why. The fix is a rebuild, at full
+        price, plus the months you lost. That isn&rsquo;t a developer problem. It&rsquo;s a
+        standards problem.
+      </p>
+      <p className="sec-lead">
+        I spent nine years building and running delivery for platforms at Bell, BMW and Bayer.
+        Companies that audit their vendors, where &ldquo;we&rsquo;ll fix it after launch&rdquo;
+        isn&rsquo;t allowed. Those standards ship with your build. They&rsquo;re the insurance
+        policy on your capital.
       </p>
     </div>
 
     <div className="hair-grid ed-ben-grid">
-      {benefits.map((b, i) => <Benefit key={b.title} b={b} i={i} />)}
+      {standards.map((b, i) => <Standard key={b.title} b={b} i={i} />)}
     </div>
 
   </section>

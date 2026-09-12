@@ -49,12 +49,13 @@ const Proof = () => {
       <div className="eyebrow-block">
         <div className="eyebrow-row">
           <span className="eyebrow">Proof</span>
-          <span className="eyebrow-index">( 04 )</span>
+          <span className="eyebrow-index">( 05 )</span>
         </div>
-        <h2 className="sec-title">Shipped products, and <em>this page</em></h2>
+        <h2 className="sec-title">Don&rsquo;t take my word for it. <em>Take two minutes.</em></h2>
         <p className="fade-in sec-lead">
-          Two of my products are live and being used by real people right now. This site is the
-          third thing you can check, and its source is open. All of it takes about two minutes.
+          I won&rsquo;t show you client logos I haven&rsquo;t earned. I&rsquo;ll show you things you
+          can check: two products of mine that real people use right now, this site, its source,
+          and the track record behind it.
         </p>
       </div>
 
@@ -62,15 +63,6 @@ const Proof = () => {
         {items.map((it, i) => (
           <Item key={it.title} it={it} i={i} wide={lastIsWide && i === items.length - 1} />
         ))}
-      </div>
-
-      <div className="fade-in ed-founding">
-        <span className="ed-founding-label">Founding clients</span>
-        <p>
-          No paid client case studies yet, so the first few projects go out at reduced rates in
-          exchange for a case study and a reference. You get senior work under market rate, and I
-          get the proof I’m missing. Mention it when you get in touch.
-        </p>
       </div>
 
     </section>

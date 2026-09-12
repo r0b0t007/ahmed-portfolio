@@ -7,7 +7,7 @@ const navLinks = [
   { name: 'Pricing', href: '#pricing' },
   { name: 'About', href: '#about' },
   { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contact', accent: true },
+  { name: 'Claim a slot', href: '#contact', accent: true },
 ]
 
 const Header = () => {

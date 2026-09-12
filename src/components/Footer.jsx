@@ -12,7 +12,7 @@ const Footer = () => (
     <div className="ed-foot-top">
       <div>
         <div className="ed-foot-name">Ahmed Chioua</div>
-        <p className="ed-foot-tag">Web and SaaS development, remote from Morocco.</p>
+        <p className="ed-foot-tag">Fixed price. Date in writing. A working link in 10 days.</p>
       </div>
       <div className="ed-foot-socials">
         {socials.map(s => (
@@ -26,7 +26,7 @@ const Footer = () => (
     </div>
     <div className="ed-foot-bottom">
       <span>© 2026 Ahmed Chioua. All rights reserved.</span>
-      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a scope call ↗</a>
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Claim a 10-Day slot ↗</a>
     </div>
 
   </footer>

@@ -4,6 +4,7 @@ import TrustStrip from './components/TrustStrip'
 import Benefits from './components/Benefits'
 import Services from './components/Services'
 import Process from './components/Process'
+import Handoff from './components/Handoff'
 import Proof from './components/Proof'
 import Pricing from './components/Pricing'
 import Experience from './components/Experience'
@@ -32,6 +33,7 @@ function App() {
         <Benefits />
         <Services />
         <Process />
+        <Handoff />
         <Proof />
         <Pricing />
         <Experience />

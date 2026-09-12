@@ -35,7 +35,7 @@ const About = () => {
       <div className="eyebrow-block">
         <div className="eyebrow-row">
           <span className="eyebrow">About</span>
-          <span className="eyebrow-index">( 07 )</span>
+          <span className="eyebrow-index">( 08 )</span>
         </div>
         <h2 className="sec-title">What I work <em>with</em></h2>
         <p className="fade-in sec-lead">
