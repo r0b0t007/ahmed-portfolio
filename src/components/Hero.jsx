@@ -37,7 +37,15 @@ const Hero = () => (
           candidate above 700w — a DPR-2 phone would fetch it.
 
           `sizes` says 76px below 900px because that is the byline square, not a full-bleed cover:
-          a DPR-3 phone now resolves to the 320w candidate instead of the 700w one. */}
+          a DPR-3 phone now resolves to the 320w candidate instead of the 700w one.
+
+          No fetchPriority: below 900px this is a 76px byline rendered after the CTA, so raising
+          its priority would put it ahead of the fonts that paint the real LCP. Above 900px the
+          desktop-gated preload in index.html carries the high-priority hint and this request
+          dedupes against it.
+
+          alt is the name alone: the byline names the role below it on mobile and the <h1> carries
+          it on desktop, so the longer alt only made a screen reader say it twice. */}
       <picture>
         <source
           type="image/avif"
@@ -49,8 +57,7 @@ const Hero = () => (
           srcSet="/headshot-320.webp 320w, /headshot-412.webp 412w, /headshot-440.webp 440w, /headshot-700.webp 700w"
           sizes="(max-width: 900px) 76px, 42vw"
           width="440" height="677"
-          alt="Ahmed Chioua, web and SaaS developer"
-          fetchPriority="high"
+          alt="Ahmed Chioua"
           decoding="async"
         />
       </picture>

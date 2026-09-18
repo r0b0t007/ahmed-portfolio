@@ -5,8 +5,9 @@ import {
 
 /**
  * The band, set as a document table rather than a marketing card. The offer is a contract, so the
- * figures are tabular mono on hairline rules, and the number is the largest non-heading type in
- * the section: it is what the buyer came here for.
+ * rows are ruled and the figures are tabular and right-aligned (in the sans, not the mono; see
+ * .ed-price-figure in src/index.css for why). The number is the largest non-heading type in the
+ * section: it is what the buyer came here for.
  */
 const tiers = [
   { scope: 'Marketing site or landing page', from: PRICE_SITE_LABEL },
