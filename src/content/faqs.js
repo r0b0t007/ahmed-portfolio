@@ -10,7 +10,9 @@
  * read these exact strings, so they cannot drift. Edit the copy here and nowhere else.
  */
 import { products } from './products.js'
-import { FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS } from './site.js'
+import {
+  FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+} from './site.js'
 
 const productClause = products.map(p => p.faq).join('; ')
 
@@ -33,7 +35,7 @@ export const faqs = [
   },
   {
     q: 'What does it cost?',
-    a: `Fixed price per project, quoted in the free scope call and based on what the project needs rather than hours logged. The price covers the build, the infrastructure setup, the hand-off and ${LAUNCH_COVER_DAYS} days of post-launch fixes. No hourly meter, no retainers you can’t exit, and no invoices you didn’t see coming.`,
+    a: `Marketing sites start at ${PRICE_SITE_LABEL}, SaaS and MVP builds at ${PRICE_SAAS_LABEL}. The exact figure is fixed per project in the free scope call, based on what the project needs rather than hours logged, and it covers the build, the infrastructure setup, the hand-off and ${LAUNCH_COVER_DAYS} days of post-launch fixes. No hourly meter, no retainers you can’t exit, and no invoices you didn’t see coming.`,
   },
   {
     q: 'Is there a founding-client rate?',

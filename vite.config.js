@@ -3,7 +3,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
-import { BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID } from './src/content/site.js'
+import {
+  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID,
+  PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+} from './src/content/site.js'
 
 /**
  * Derives the content that must stay in sync with the visible page from the same modules the
@@ -25,6 +28,8 @@ function contentSchema({ emitLlms }) {
     FIRST_LINK_DAYS: () => String(FIRST_LINK_DAYS),
     LAUNCH_COVER_DAYS: () => String(LAUNCH_COVER_DAYS),
     FOUNDING_SLOTS: () => String(FOUNDING_SLOTS),
+    PRICE_SITE_LABEL: () => PRICE_SITE_LABEL,
+    PRICE_SAAS_LABEL: () => PRICE_SAAS_LABEL,
   }
 
   // Replacer functions, not strings: a `$1` or `$&` typed into a FAQ answer must land literally.

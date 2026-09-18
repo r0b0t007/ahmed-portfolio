@@ -28,7 +28,7 @@
 - [Services](https://ahmedchioua.com/#services) — websites and SaaS/MVP builds; rescue and AI automation on request
 - [Process](https://ahmedchioua.com/#process) — a working link in {{FIRST_LINK_DAYS}} days, then weekly, step by step
 - [Hand-off](https://ahmedchioua.com/#handoff) — code ownership, infrastructure transfer, {{LAUNCH_COVER_DAYS}} days of launch cover
-- [Pricing](https://ahmedchioua.com/#pricing) — fixed price per project, quoted in a free scope call
+- [Pricing](https://ahmedchioua.com/#pricing) — published floors ({{PRICE_SITE_LABEL}} sites, {{PRICE_SAAS_LABEL}} SaaS/MVP), fixed per project in a free scope call
 - [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
 - [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
 - [Contact](https://ahmedchioua.com/#contact) — free scope call
@@ -83,7 +83,8 @@ plan quoted separately. Nothing renews on its own. Code ownership transfers to t
 
 ## Pricing
 
-Fixed price per project, quoted in the free scope call, in writing, with a date attached. The price
+Marketing sites start at {{PRICE_SITE_LABEL}}, SaaS and MVP builds at {{PRICE_SAAS_LABEL}}. The exact figure is fixed
+per project in the free scope call, in writing, with a date attached. The price
 covers the build, the infrastructure setup, the hand-off and {{LAUNCH_COVER_DAYS}} days of post-launch fixes. No hourly
 billing, and no retainer the client can't exit. A founding-client rate exists for the next {{FOUNDING_SLOTS}}
 projects and is a trade, not a discount: a written case study and a reference in exchange for the

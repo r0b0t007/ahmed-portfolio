@@ -31,6 +31,22 @@ export const LAUNCH_COVER_DAYS = 30
 export const FOUNDING_SLOTS = 3
 
 /**
+ * The published price floors. A band, not a quote: the exact figure is still fixed in the scope
+ * call, but the buyer can qualify themselves before booking one. Two of the three offer pillars
+ * (days, cover) were already published as numbers; this is the third.
+ *
+ * Read by the Pricing section, the "What does it cost?" FAQ answer (and therefore the FAQPage
+ * JSON-LD derived from it) and llms.txt, so the three cannot drift.
+ */
+const CURRENCY = '€'
+const PRICE_SITE_FROM = 3000
+const PRICE_SAAS_FROM = 12000
+
+const money = n => `${CURRENCY}${n.toLocaleString('en-US')}`
+export const PRICE_SITE_LABEL = money(PRICE_SITE_FROM)
+export const PRICE_SAAS_LABEL = money(PRICE_SAAS_FROM)
+
+/**
  * The booking CTA in its three lengths. Every control that opens BOOKING_URL uses one of these,
  * so the label cannot drift into a fourth spelling.
  */
