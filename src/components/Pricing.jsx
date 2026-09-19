@@ -29,7 +29,8 @@ const Pricing = () => (
       </div>
       <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
-        One price, fixed in the free scope call, in writing, with a date attached. It covers the
+        The figures below are starting points. Your number is fixed once, in the free scope call,
+        in writing, with a date attached, and it doesn&rsquo;t move after that. It covers the
         build, the infrastructure, the hand-off and {LAUNCH_COVER_DAYS} days of launch insurance. No hourly meter.
         No change-order ambush.
       </p>
