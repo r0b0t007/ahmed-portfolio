@@ -20,7 +20,8 @@ Glyph coverage:
   - Newsreader, IBM Plex Mono          -> only the characters that appear in the rendered page
                                           or anywhere in src/ (JSX strings, placeholders, runtime
                                           status text); they never render user input
-Layout features are trimmed to `kern` (the site uses no ligatures, small caps or marks).
+Layout features are trimmed to `kern` and `tnum` (the site uses no ligatures, small caps or
+marks; tnum is what makes the price table's tabular-nums do anything).
 
 fonts.css is generated so each @font-face carries the exact unicode-range its file covers;
 src/index.css imports it. Re-run after copy changes that introduce a new character; the build
@@ -99,7 +100,10 @@ def build(face, cps, outdir):
         sys.exit(f"{face['file']}: static source but axes requested")
     opts = Options()
     opts.flavor, opts.hinting, opts.desubroutinize, opts.notdef_outline = 'woff2', False, True, True
-    opts.layout_features = ['kern']
+    # kern everywhere, plus tnum on Archivo only: the price table sets font-variant-numeric on
+    # .ed-price-figure, and trimming the feature out of the emitted file makes that CSS inert.
+    # Newsreader and Plex Mono set no numeric variant, so tnum would be bytes nobody reads.
+    opts.layout_features = ['kern', 'tnum'] if face['family'] == 'Archivo' else ['kern']
     sub = Subsetter(opts)
     sub.populate(unicodes=cps & set(font.getBestCmap()))
     sub.subset(font)

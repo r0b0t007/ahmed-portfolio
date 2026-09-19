@@ -1,5 +1,18 @@
 import { sectionIndex } from '../lib/sections'
-import { BOOKING_URL, LAUNCH_COVER_DAYS } from '../content/site'
+import {
+  BOOKING_URL, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+} from '../content/site'
+
+/**
+ * The band, set as a document table rather than a marketing card. The offer is a contract, so the
+ * rows are ruled and the figures are tabular and right-aligned (in the sans, not the mono; see
+ * .ed-price-figure in src/index.css for why). The number is the largest non-heading type in the
+ * section: it is what the buyer came here for.
+ */
+const tiers = [
+  { scope: 'Marketing site or landing page', from: PRICE_SITE_LABEL },
+  { scope: 'SaaS product or MVP', from: PRICE_SAAS_LABEL },
+]
 
 /**
  * The price objection gets its own section rather than a line in the FAQ, because the sharpest
@@ -16,11 +29,37 @@ const Pricing = () => (
       </div>
       <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
-        One price, fixed in the free scope call, in writing, with a date attached. It covers the
+        The figures below are starting points. Your number is fixed once, in the free scope call,
+        in writing, with a date attached, and it doesn&rsquo;t move after that. It covers the
         build, the infrastructure, the hand-off and {LAUNCH_COVER_DAYS} days of launch insurance. No hourly meter.
         No change-order ambush.
       </p>
     </div>
+
+    {/* A real table, not a grid of divs: this is tabular data with column headers, and the page
+        already reaches for semantic pairs elsewhere (the <dl> in Contact). A screen reader reads
+        "Marketing site or landing page, From, €3,000" instead of three loose spans. */}
+    <table className="ed-price-table">
+      <thead>
+        <tr>
+          <th scope="col">Scope</th>
+          <th scope="col">From</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tiers.map(t => (
+          <tr key={t.scope}>
+            <th scope="row" className="ed-price-scope">{t.scope}</th>
+            <td className="ed-price-figure">{t.from}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <p className="ed-price-note">
+      What moves the number: how much of it is new rather than adapted, and whether auth, payments
+      or third-party integrations are in scope.
+    </p>
 
     <div className="ed-price">
       <span className="ed-price-label">The question everyone asks</span>
