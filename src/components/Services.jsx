@@ -1,36 +1,21 @@
 import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
 import { servicePath } from '../content/routes'
-import { findService } from '../content/services'
+import { services } from '../content/services'
 
-const services = [
-  {
-    slug: 'website-development',
-    title: 'Websites that rank and convert',
-    tagline: 'Built to load fast and get found.',
-    desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch. Structured data, clean semantics, proper meta tags and a sitemap all go in during the build, and I measure Core Web Vitals before launch instead of leaving them as cleanup for later.',
-    tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
-  },
-  {
-    slug: 'saas-mvp-development',
-    title: 'SaaS & MVP builds',
-    tagline: 'From an idea to a product people can sign into.',
-    desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
-    tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
-  },
-]
-
+// One card per service page, in the same order: the card copy lives with the page's copy in
+// src/content/services.js, so a new service is one entry there, not one in each file.
 const ServiceCard = ({ s, i }) => {
   return (
     <div className="fade-in ed-svc">
       <div className="ed-svc-n">( {ordinal(i, 2)} )</div>
-      <h3 className="ed-svc-t">{s.title}</h3>
-      <div className="ed-svc-tag">{s.tagline}</div>
-      <p className="ed-svc-desc">{s.desc}</p>
+      <h3 className="ed-svc-t">{s.card.title}</h3>
+      <div className="ed-svc-tag">{s.card.tagline}</div>
+      <p className="ed-svc-desc">{s.card.desc}</p>
       <div className="ed-svc-tags">
-        {s.tags.map(t => <span key={t} className="tag">{t}</span>)}
+        {s.card.tags.map(t => <span key={t} className="tag">{t}</span>)}
       </div>
-      <a href={servicePath(s.slug)} className="link-teal ed-svc-more">{findService(s.slug).name} in detail →</a>
+      <a href={servicePath(s.slug)} className="link-teal ed-svc-more">{s.name} in detail →</a>
     </div>
   )
 }
@@ -50,7 +35,7 @@ const Services = () => (
     </div>
 
     <div className="hair-grid ed-svc-grid">
-      {services.map((s, i) => <ServiceCard key={s.title} s={s} i={i} />)}
+      {services.map((s, i) => <ServiceCard key={s.slug} s={s} i={i} />)}
     </div>
 
     <p className="fade-in ed-svc-also">

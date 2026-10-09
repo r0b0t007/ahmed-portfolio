@@ -4,6 +4,8 @@
  * the `included` cards, which rework the homepage service tags and hand-off items into new
  * sentences. Unmarked prose restates copy already published on the homepage.
  *
+ * `card` is the homepage Services card for the same service (src/components/Services.jsx).
+ *
  * Also read by src/content/routes.js (titles, descriptions, structured data) and, through it,
  * by vite.config.js (llms.txt) and scripts/prerender.js. Keep it JSX-free.
  */
@@ -22,6 +24,12 @@ export const services = [
   {
     slug: 'website-development',
     name: 'Website development',
+    card: {
+      title: 'Websites that rank and convert',
+      tagline: 'Built to load fast and get found.',
+      desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch. Structured data, clean semantics, proper meta tags and a sitemap all go in during the build, and I measure Core Web Vitals before launch instead of leaving them as cleanup for later.',
+      tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
+    },
     summary: `marketing sites and landing pages from ${PRICE_SITE_LABEL}, usually live in ${weeksText(SITE_WEEKS)} weeks`,
     title: 'Website Development, Fixed Price | Ahmed Chioua',
     description: `Marketing sites and landing pages from ${PRICE_SITE_LABEL}, usually live in ${weeksText(SITE_WEEKS)} weeks. A working link in ${FIRST_LINK_DAYS} days, a fixed price and a date in writing.`,
@@ -55,6 +63,12 @@ export const services = [
   {
     slug: 'saas-mvp-development',
     name: 'SaaS & MVP development',
+    card: {
+      title: 'SaaS & MVP builds',
+      tagline: 'From an idea to a product people can sign into.',
+      desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
+      tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
+    },
     summary: `SaaS products and MVPs from ${PRICE_SAAS_LABEL}, usually live in ${weeksText(SAAS_WEEKS)} weeks`,
     title: 'SaaS & MVP Development, Fixed Price | Ahmed Chioua',
     description: `SaaS products and MVPs from ${PRICE_SAAS_LABEL}, usually live in ${weeksText(SAAS_WEEKS)} weeks. A working link in ${FIRST_LINK_DAYS} days, a fixed price and a date in writing.`,
