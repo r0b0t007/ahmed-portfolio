@@ -64,3 +64,21 @@ export const CTA_LABEL = `Claim a ${FIRST_LINK_DAYS}-Day Slot`
 export const CTA_LABEL_NAV = 'Claim a slot'
 export const PERSON_ID = `${SITE_URL}#person`
 export const FAQ_ID = `${SITE_URL}#faq`
+
+/**
+ * The price promise, stated once. The homepage Pricing section and each service page both
+ * render it, so the commitment can't exist in two versions.
+ */
+export const PRICE_PROMISE = `Your number is fixed once, in the free scope call, in writing, with a date attached, and it doesn’t move after that. It covers the build, the infrastructure, the hand-off and ${LAUNCH_COVER_DAYS} days of launch insurance. No hourly meter.`
+
+/** The founding-client trade. The FAQ answers with it and the service pages' price sections restate it. */
+export const FOUNDING_OFFER = `for the next ${FOUNDING_SLOTS} projects, and it isn’t a discount. You trade a written case study and a reference for the founding price. Same scope, same date, same hand-off. Say “founding” in the scope call.`
+
+/**
+ * Typical build lengths in weeks. The FAQ, the service pages (facts strip, meta description,
+ * lead) and llms.txt all state them; changing a range is one edit here.
+ */
+export const SITE_WEEKS = { from: 2, to: 3 }
+export const SAAS_WEEKS = { from: 4, to: 6 }
+export const weeksRange = w => `${w.from}–${w.to}`
+export const weeksText = w => `${w.from} to ${w.to}`

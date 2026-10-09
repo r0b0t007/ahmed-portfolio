@@ -7,7 +7,8 @@ import { faqById } from '../content/faqs'
 import { steps } from '../content/process'
 import { productProof, siteProof } from '../content/proof'
 import {
-  BOOKING_URL, CTA_LABEL_LONG, FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_MOVERS,
+  BOOKING_URL, CTA_LABEL_LONG, FIRST_LINK_DAYS, FOUNDING_OFFER, LAUNCH_COVER_DAYS, PRICE_MOVERS,
+  PRICE_PROMISE,
 } from '../content/site'
 import { serviceSectionIndex as idx } from '../lib/sections'
 
@@ -41,7 +42,6 @@ const ServicePage = ({ slug }) => {
         <nav aria-label="Breadcrumb" className="crumbs">
           <ol>
             <li><a href="/">Home</a></li>
-            <li><a href="/#services">Services</a></li>
             <li aria-current="page">{s.name}</li>
           </ol>
         </nav>
@@ -89,14 +89,10 @@ const ServicePage = ({ slug }) => {
         <div className="eyebrow-block">
           <Eyebrow label="Price" id="price" />
           <h2 className="sec-title">From {s.priceLabel}. <em>Quoted once.</em></h2>
-          <p className="sec-lead">
-            {s.priceLabel} is the starting point. Your number is fixed once, in the free scope call,
-            in writing, with a date attached, and it doesn&rsquo;t move after that. It covers the
-            build, the infrastructure, the hand-off and {LAUNCH_COVER_DAYS} days of launch
-            insurance. No hourly meter.
-          </p>
+          <p className="sec-lead">{s.priceLabel} is the starting point. {PRICE_PROMISE}</p>
         </div>
         <p className="ed-price-note">{PRICE_MOVERS}</p>
+        <p className="ed-price-note"><b>Founding-client rate:</b> {FOUNDING_OFFER}</p>
         <div className="ed-cta-row svc-price-cta">
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">Lock in a price and a date</a>
         </div>
@@ -109,7 +105,7 @@ const ServicePage = ({ slug }) => {
           <p className="sec-lead">{s.proofLead}</p>
         </div>
         <div className="hair-grid ed-proof-grid">
-          {proof.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={false} />)}
+          {proof.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={proof.length % 2 === 1 && i === proof.length - 1} />)}
         </div>
       </section>
 

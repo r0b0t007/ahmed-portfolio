@@ -4,8 +4,7 @@ import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
 import {
-  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID,
-  PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_WEEKS, weeksText,
 } from './src/content/site.js'
 import { routes, absoluteUrl } from './src/content/routes.js'
 
@@ -31,6 +30,9 @@ function contentSchema({ emitLlms }) {
     FOUNDING_SLOTS: () => String(FOUNDING_SLOTS),
     PRICE_SITE_LABEL: () => PRICE_SITE_LABEL,
     PRICE_SAAS_LABEL: () => PRICE_SAAS_LABEL,
+    SITE_WEEKS: () => weeksText(SITE_WEEKS),
+    SAAS_WEEKS: () => weeksText(SAAS_WEEKS),
+    BUILD_WEEKS: () => `${SITE_WEEKS.from} to ${SAAS_WEEKS.to}`,
     PAGES: () => routes
       .filter(r => r.kind !== 'home')
       .map(r => `- [${r.name}](${absoluteUrl(r.path)}) — ${r.summary}`)

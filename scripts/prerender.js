@@ -37,10 +37,12 @@ const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 try {
   for (const route of routes) {
     const url = absoluteUrl(route.path)
-    let html = injectMarkup(template, render(route.path))
-    if (route.kind !== 'home') {
-      html = rewriteHead(html, { url, title: route.title, description: route.description, jsonLd: route.jsonLd })
-    }
+    // Head first, on the bare template: the "exactly once" checks must only ever see the head,
+    // not a <title> inside an SVG icon or JSON-LD that a component renders in the body.
+    const head = route.kind === 'home'
+      ? template
+      : rewriteHead(template, { url, title: route.title, description: route.description, jsonLd: route.jsonLd })
+    const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
     const file = dist(outFile(route.path))
     mkdirSync(dirname(file), { recursive: true })

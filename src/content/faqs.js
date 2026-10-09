@@ -12,7 +12,8 @@
  */
 import { products } from './products.js'
 import {
-  FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+  FIRST_LINK_DAYS, FOUNDING_OFFER, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+  SAAS_WEEKS, SITE_WEEKS, weeksText,
 } from './site.js'
 
 const productClause = products.map(p => p.faq).join('; ')
@@ -26,7 +27,7 @@ export const faqs = [
   {
     id: 'speed',
     q: 'How fast is "fast"?',
-    a: `A marketing site is usually 2 to 3 weeks. An MVP is usually 4 to 6, depending on what goes in it. You get a date in the written scope before you commit, and a working link within the first ${FIRST_LINK_DAYS} days. Building with AI is what makes those numbers realistic.`,
+    a: `A marketing site is usually ${weeksText(SITE_WEEKS)} weeks. An MVP is usually ${weeksText(SAAS_WEEKS)}, depending on what goes in it. You get a date in the written scope before you commit, and a working link within the first ${FIRST_LINK_DAYS} days. Building with AI is what makes those numbers realistic.`,
   },
   {
     id: 'ai-quality',
@@ -46,7 +47,7 @@ export const faqs = [
   {
     id: 'founding',
     q: 'Is there a founding-client rate?',
-    a: `Yes, for the next ${FOUNDING_SLOTS} projects, and it isn’t a discount. You trade a written case study and a reference for the founding price. Same scope, same date, same hand-off. Say “founding” in the scope call.`,
+    a: `Yes, ${FOUNDING_OFFER}`,
   },
   {
     id: 'slip',

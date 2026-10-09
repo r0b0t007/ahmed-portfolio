@@ -1,6 +1,6 @@
 import { sectionIndex } from '../lib/sections'
 import {
-  BOOKING_URL, LAUNCH_COVER_DAYS, PRICE_MOVERS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+  BOOKING_URL, PRICE_MOVERS, PRICE_PROMISE, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
 } from '../content/site'
 
 /**
@@ -29,10 +29,7 @@ const Pricing = () => (
       </div>
       <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
-        The figures below are starting points. Your number is fixed once, in the free scope call,
-        in writing, with a date attached, and it doesn&rsquo;t move after that. It covers the
-        build, the infrastructure, the hand-off and {LAUNCH_COVER_DAYS} days of launch insurance. No hourly meter.
-        No change-order ambush.
+        The figures below are starting points. {PRICE_PROMISE} No change-order ambush.
       </p>
     </div>
 

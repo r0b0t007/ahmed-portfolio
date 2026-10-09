@@ -3,8 +3,8 @@
 > Last updated: 2026-10-09
 
 > I build websites and SaaS products for founders: live in weeks, at a fixed price, with a launch
-> date in writing. A working link in {{FIRST_LINK_DAYS}} days, then a demo every week. Marketing sites take 2 to 3
-> weeks and MVPs 4 to 6, because I build with AI in the loop; nine years shipping software for Bell,
+> date in writing. A working link in {{FIRST_LINK_DAYS}} days, then a demo every week. Marketing sites take {{SITE_WEEKS}}
+> weeks and MVPs {{SAAS_WEEKS}}, because I build with AI in the loop; nine years shipping software for Bell,
 > BMW and Bayer is where the standards come from. The hand-off includes the repo, infrastructure on
 > the client's own accounts, documentation, and {{LAUNCH_COVER_DAYS}} days of post-launch fixes, all inside the price.
 > Remote-first, based in Tetouan, Morocco (GMT+1). Available for web, SaaS and MVP projects globally.
@@ -68,7 +68,7 @@ Also available, as standalone or follow-on engagements:
 
 1. **Scope** (free, ~1 week): a call, then a written scope covering what gets built, what doesn't,
    what it costs, and the date it goes live. Includes an "I'm not the right fit" if that's the answer.
-2. **Build** (2 to 6 weeks typical): a working link within the first {{FIRST_LINK_DAYS}} days, a demo every week, direct
+2. **Build** ({{BUILD_WEEKS}} weeks typical): a working link within the first {{FIRST_LINK_DAYS}} days, a demo every week, direct
    access, and an architecture review at the end of each week.
 3. **Ship** (on the date in the scope): live on the client's own infrastructure, domain and accounts, with performance,
    accessibility and SEO checked before launch.
