@@ -1,14 +1,18 @@
 import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
+import { servicePath } from '../content/routes'
+import { findService } from '../content/services'
 
 const services = [
   {
+    slug: 'website-development',
     title: 'Websites that rank and convert',
     tagline: 'Built to load fast and get found.',
     desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch. Structured data, clean semantics, proper meta tags and a sitemap all go in during the build, and I measure Core Web Vitals before launch instead of leaving them as cleanup for later.',
     tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
   },
   {
+    slug: 'saas-mvp-development',
     title: 'SaaS & MVP builds',
     tagline: 'From an idea to a product people can sign into.',
     desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
@@ -26,6 +30,7 @@ const ServiceCard = ({ s, i }) => {
       <div className="ed-svc-tags">
         {s.tags.map(t => <span key={t} className="tag">{t}</span>)}
       </div>
+      <a href={servicePath(s.slug)} className="link-teal ed-svc-more">{findService(s.slug).name} in detail →</a>
     </div>
   )
 }

@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import { CTA_LABEL_NAV } from '../content/site'
 
+// Root-relative: on "/" they scroll in place, and from a service page they lead back to the
+// homepage section. Header hydrates without props, so the links can't depend on the path.
 const navLinks = [
-  { name: 'Services', href: '#services' },
-  { name: 'Process', href: '#process' },
-  { name: 'Proof', href: '#proof' },
-  { name: 'Pricing', href: '#pricing' },
-  { name: 'About', href: '#about' },
-  { name: 'FAQ', href: '#faq' },
-  { name: CTA_LABEL_NAV, href: '#contact', accent: true },
+  { name: 'Services', href: '/#services' },
+  { name: 'Process', href: '/#process' },
+  { name: 'Proof', href: '/#proof' },
+  { name: 'Pricing', href: '/#pricing' },
+  { name: 'About', href: '/#about' },
+  { name: 'FAQ', href: '/#faq' },
+  { name: CTA_LABEL_NAV, href: '/#contact', accent: true },
 ]
 
 const Header = () => {
@@ -24,7 +26,7 @@ const Header = () => {
 
   return (
     <header className={`ed-header ${scrolled ? 'scrolled' : ''}`}>
-      <a href="#hero" className="ed-logo">Ahmed Chioua</a>
+      <a href="/" className="ed-logo">Ahmed Chioua</a>
 
       <nav className="ed-nav">
         {navLinks.map(l => (

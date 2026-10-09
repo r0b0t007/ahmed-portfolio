@@ -1050,7 +1050,7 @@ Append:
 .svc-hero { padding-top: 56px; }
 .svc-hero .ed-lead { max-width: 60ch; }
 .crumbs ol {
-  display: flex; flex-wrap: wrap; gap: 4px 10px; list-style: none; margin-bottom: 40px;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; list-style: none; margin-bottom: 40px;
   font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-muted);
 }
 .crumbs li + li::before { content: '/'; margin-right: 10px; }

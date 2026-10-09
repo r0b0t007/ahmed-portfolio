@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { useState } from 'react'
 import { BOOKING_URL, CTA_LABEL, FIRST_LINK_DAYS, WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
 import { WhatsAppIcon } from './WhatsAppIcon'
@@ -34,7 +33,7 @@ async function send(form, gotcha) {
  * typed on the first keystroke after hydration; reading the values off the form at submit time
  * cannot lose them. It also drops a re-render per keystroke.
  */
-const Contact = () => {
+const Contact = ({ index }) => {
   const [status, setStatus] = useState('idle')
 
   const submit = async e => {
@@ -64,7 +63,7 @@ const Contact = () => {
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
               <span className="eyebrow">Next step</span>
-              <span className="eyebrow-index">( {sectionIndex('contact')} )</span>
+              <span className="eyebrow-index">( {index} )</span>
             </div>
             <h2 className="sec-title">Claim your <em>{FIRST_LINK_DAYS}-Day Prototype Slot</em></h2>
             <p className="sec-lead" style={{ marginBottom: '28px' }}>
