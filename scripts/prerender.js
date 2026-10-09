@@ -42,7 +42,7 @@ for (const route of routes) {
     // not a <title> inside an SVG icon or JSON-LD that a component renders in the body.
     const head = route.kind === 'home'
       ? template
-      : rewriteHead(template, { url, title: route.title, description: route.description, jsonLd: route.jsonLd })
+      : rewriteHead(template, { url, title: route.title, description: route.description, jsonLd: route.jsonLd, og: route.og })
     const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
     // 404.html's "Get in touch" is a fixed /#contact link (src/404.html); the homepage must keep

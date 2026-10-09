@@ -5,6 +5,9 @@
  */
 export const SITE_URL = 'https://ahmedchioua.com/'
 
+/** The public source of this site. The Proof section and the build log both link into it. */
+export const REPO_URL = 'https://github.com/r0b0t007/ahmed-portfolio'
+
 /**
  * Where every "book a call" control points. Swapping booking provider is a one-line change here,
  * not a hunt through the components.

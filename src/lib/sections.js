@@ -21,3 +21,8 @@ export const sectionIndex = indexIn(SECTION_ORDER, 'sectionIndex')
 export const SERVICE_SECTION_ORDER = ['included', 'weeks', 'price', 'proof', 'faq', 'contact']
 
 export const serviceSectionIndex = indexIn(SERVICE_SECTION_ORDER, 'serviceSectionIndex')
+
+/** The numbered sections of a build log (src/pages/work/), in render order. */
+export const WORK_SECTION_ORDER = ['decisions', 'failures', 'method', 'check', 'contact']
+
+export const workSectionIndex = indexIn(WORK_SECTION_ORDER, 'workSectionIndex')

@@ -11,11 +11,10 @@ export const ProofItem = ({ it, i, wide }) => {
         <span className="ed-proof-i">{ordinal(i)}</span>
       </div>
       <p className="ed-proof-body">{it.body}</p>
-      {it.link && (
-        <a className="ed-proof-link" href={it.link.href} target="_blank" rel="noopener noreferrer">
-          {it.link.label} ↗
-        </a>
-      )}
+      {/* Other sites open in a new tab (↗); a page on this site opens in place (→). */}
+      {it.link && (it.link.href.startsWith('/')
+        ? <a className="ed-proof-link" href={it.link.href}>{it.link.label} →</a>
+        : <a className="ed-proof-link" href={it.link.href} target="_blank" rel="noopener noreferrer">{it.link.label} ↗</a>)}
     </div>
   )
 }

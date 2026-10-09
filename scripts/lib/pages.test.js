@@ -6,6 +6,7 @@ const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
 <meta name="description" content="home description" />
 <link rel="canonical" href="https://ahmedchioua.com/" />
+<meta property="og:type" content="website" />
 <meta property="og:url" content="https://ahmedchioua.com/" />
 <meta property="og:title" content="Home" />
 <meta property="og:description" content="home description" />
@@ -110,4 +111,13 @@ test('fillErrorPage lists every route by name, escaped, in place of the placehol
 test('fillErrorPage fails without exactly one placeholder', () => {
   assert.throws(() => fillErrorPage('<nav></nav>', []), /PAGE_LINKS/)
   assert.throws(() => fillErrorPage('<!--PAGE_LINKS--><!--PAGE_LINKS-->', []), /PAGE_LINKS/)
+})
+
+test('rewriteHead marks articles for link previews, and leaves other pages as websites', () => {
+  const article = rewriteHead(TEMPLATE, { ...PAGE, og: { type: 'article', publishedTime: '2026-10-09' } })
+  assert.match(article, /<meta property="og:type" content="article" \/>/)
+  assert.match(article, /<meta property="article:published_time" content="2026-10-09" \/>/)
+  const page = rewriteHead(TEMPLATE, PAGE)
+  assert.match(page, /<meta property="og:type" content="website" \/>/)
+  assert.doesNotMatch(page, /article:published_time/)
 })
