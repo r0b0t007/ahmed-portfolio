@@ -45,6 +45,7 @@ preview URL.
   component. No Tailwind, no CSS-in-JS runtime, no page builder.
 - **Framer Motion** for the few places motion earns its place
 - Deployed on **Cloudflare Pages** (headers in `public/_headers`, trailing-slash redirects generated into `dist/_redirects` from the route table; unknown paths get `public/404.html` with a real 404 status). Contact form posts to a Pages Function (`functions/api/contact.js`) that forwards via Resend
+- IndexNow key: `public/ad4aaf3bb72b340890815dca2923b919.txt` (served at the site root). Bing, Yandex and other IndexNow engines fetch it to confirm URL submissions come from the site owner. Do not delete or rename it; changing the key means resubmitting with the new one.
 
 JS shipped: **~65 kB gzipped on first paint** (React + Framer Motion + hero), with each section
 below the fold split into its own chunk — ~14 kB more across all nine, loaded as you scroll.
