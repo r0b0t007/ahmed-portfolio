@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { routes, absoluteUrl, findRoute, servicePath } from '../../src/content/routes.js'
+import { routes, absoluteUrl, findRoute, servicePath, workPath } from '../../src/content/routes.js'
 import { services } from '../../src/content/services.js'
 import { faqById } from '../../src/content/faqs.js'
 import { buildRedirects } from './pages.js'
@@ -15,7 +15,7 @@ test('service paths have no trailing slash', () => {
 })
 
 test('titles fit in 60 characters and descriptions in 160', () => {
-  for (const r of routes.filter(r => r.kind === 'service')) {
+  for (const r of routes.filter(r => r.kind !== 'home')) {
     assert.ok(r.title.length <= 60, `${r.path} title is ${r.title.length} chars`)
     assert.ok(r.description.length <= 160, `${r.path} description is ${r.description.length} chars`)
   }
@@ -53,4 +53,25 @@ test('every page except the homepage gets a trailing-slash redirect', () => {
   const rules = buildRedirects(routes.map(r => r.path)).split('\n').filter(l => l && !l.startsWith('#'))
   assert.equal(rules.length, routes.length - 1)
   for (const r of routes.filter(r => r.path !== '/')) assert.ok(rules.includes(`${r.path}/ ${r.path} 308`), r.path)
+})
+
+test('work pages live at /work/<slug> and resolve by slug', () => {
+  const work = routes.filter(r => r.kind === 'work')
+  assert.ok(work.length > 0)
+  for (const r of work) {
+    assert.match(r.path, /^\/work\/[a-z0-9-]+$/)
+    assert.equal(workPath(r.slug), r.path)
+  }
+  assert.throws(() => workPath('nope'), /no page at/)
+})
+
+test('work JSON-LD is a dated TechArticle by the Person, with a breadcrumb ending at the page', () => {
+  for (const r of routes.filter(r => r.kind === 'work')) {
+    const [article, crumbs] = r.jsonLd['@graph']
+    assert.equal(article['@type'], 'TechArticle')
+    assert.equal(article.url, absoluteUrl(r.path))
+    assert.equal(article.author['@id'], 'https://ahmedchioua.com/#person')
+    assert.match(article.datePublished, /^\d{4}-\d{2}-\d{2}$/)
+    assert.equal(crumbs.itemListElement.at(-1).item, absoluteUrl(r.path))
+  }
 })

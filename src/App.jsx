@@ -3,8 +3,9 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import ServicePage from './pages/ServicePage'
+import WorkPage from './pages/WorkPage'
 import { findRoute } from './content/routes'
-import { sectionIndex, serviceSectionIndex } from './lib/sections'
+import { sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/sections'
 
 /**
  * Each page is rendered once, at build time, into static HTML (scripts/prerender.js renders one
@@ -23,12 +24,15 @@ import { ISLAND } from './islands'
 
 function App({ path = '/' }) {
   const route = findRoute(path)
-  const contactProps = { index: route.kind === 'home' ? sectionIndex('contact') : serviceSectionIndex('contact') }
+  // Contact closes every page; its eyebrow number continues the page type's own section order.
+  const indexFor = { home: sectionIndex, service: serviceSectionIndex, work: workSectionIndex }[route.kind]
+  const contactProps = { index: indexFor('contact') }
+  const pages = { home: () => <Home />, service: () => <ServicePage slug={route.slug} />, work: () => <WorkPage slug={route.slug} /> }
   return (
     <div className="app">
       <div id={ISLAND.header} style={{ display: 'contents' }}><Header /></div>
       <main>
-        {route.kind === 'home' ? <Home /> : <ServicePage slug={route.slug} />}
+        {pages[route.kind]()}
         <div id={ISLAND.contact} data-props={JSON.stringify(contactProps)} style={{ display: 'contents' }}>
           <Contact {...contactProps} />
         </div>

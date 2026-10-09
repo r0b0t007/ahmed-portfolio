@@ -1,4 +1,5 @@
 import { BenefitCard } from '../components/BenefitCard'
+import { Breadcrumb } from '../components/Breadcrumb'
 import { Step } from '../components/Process'
 import { ProofItem } from '../components/Proof'
 import { FaqRow } from '../components/Faq'
@@ -40,12 +41,7 @@ const ServicePage = ({ slug }) => {
   return (
     <>
       <section id="hero" className="section svc-hero">
-        <nav aria-label="Breadcrumb" className="crumbs">
-          <ol>
-            <li><a href="/">Home</a></li>
-            <li aria-current="page">{s.name}</li>
-          </ol>
-        </nav>
+        <Breadcrumb name={s.name} />
         <h1 className="ed-h1">{s.h1} <em>{s.h1Em}</em></h1>
         <p className="ed-lead">{s.lead}</p>
         <div className="ed-cta-row">
