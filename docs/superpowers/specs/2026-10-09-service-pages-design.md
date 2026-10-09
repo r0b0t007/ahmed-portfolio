@@ -1,6 +1,6 @@
 # Service pages: design
 
-Date: 2026-10-09 · Status: approved in brainstorming, pending spec review
+Date: 2026-10-09 · Status: approved; implemented on `feat/service-pages`
 
 ## Goal
 
@@ -74,6 +74,8 @@ hand-written one in `index.html`.
   An unknown path throws, so a typo fails the build.
 - `src/App.jsx`: keeps Header, Footer and the two island wrappers on every page. The homepage
   sections become a `Home` component; service pages render their own component inside `<main>`.
+- The Contact island takes an `index` prop (its eyebrow number differs per page), serialised
+  into `data-props` on its wrapper and read back by `hydrate.jsx`, so hydration matches.
 - Header and Footer links change from `#section` to `/#section`. They work on `/` and on
   subpages, so Header needs no props and hydration is unchanged.
 - `src/main.jsx` and the production path in `src/hydrate.jsx` are unchanged: both islands
@@ -97,7 +99,7 @@ Canonical and `og:url` are `SITE_URL` + path, never written by hand.
 ### Generated files
 
 - `sitemap.xml` is generated from the route table at build time, and `public/sitemap.xml` is
-  deleted. `lastmod` is the build date.
+  deleted. No `lastmod`: a build date would change on every deploy and teach Google to ignore it.
 - `llms.txt` gains a "Pages" list from the route table, through a new placeholder.
 
 ### Structured data per service page
