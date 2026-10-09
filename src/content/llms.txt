@@ -1,6 +1,6 @@
 # Ahmed Chioua — Web & SaaS Developer
 
-> Last updated: 2026-09-12
+> Last updated: 2026-10-09
 
 > I build websites and SaaS products for founders: live in weeks, at a fixed price, with a launch
 > date in writing. A working link in {{FIRST_LINK_DAYS}} days, then a demo every week. Marketing sites take 2 to 3
@@ -29,6 +29,7 @@
 - [Process](https://ahmedchioua.com/#process) — a working link in {{FIRST_LINK_DAYS}} days, then weekly, step by step
 - [Hand-off](https://ahmedchioua.com/#handoff) — code ownership, infrastructure transfer, {{LAUNCH_COVER_DAYS}} days of launch cover
 - [Pricing](https://ahmedchioua.com/#pricing) — published floors ({{PRICE_SITE_LABEL}} sites, {{PRICE_SAAS_LABEL}} SaaS/MVP), fixed per project in a free scope call
+{{PAGES}}
 - [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
 - [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
 - [Contact](https://ahmedchioua.com/#contact) — free scope call

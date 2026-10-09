@@ -1,21 +1,28 @@
 /**
- * Prerenders the app into dist/index.html.
+ * Prerenders every route in src/content/routes.js into dist/.
  *
  * Runs after both Vite builds (see the "build" script in package.json):
  *   1. vite build                          -> dist/          (client bundle + index.html)
  *   2. vite build --ssr src/entry-server   -> dist-ssr/      (server bundle, build-time only)
- *   3. node scripts/prerender.js           -> injects markup into dist/index.html
+ *   3. node scripts/prerender.js           -> one HTML file per route, plus sitemap.xml
  *
  * Why: the site is client-rendered, so without this the served HTML has an empty #root. First
  * paint waits on the bundle parsing, and non-JS crawlers see nothing. Injecting the markup means
  * the page paints from HTML and React hydrates over it.
+ *
+ * The homepage keeps index.html's hand-written head. Every other route starts from the same
+ * built template, so it inherits the inlined CSS, font preloads and entry script, and gets its
+ * own title, description, canonical and JSON-LD (scripts/lib/pages.js). Routes are written as
+ * <path>.html, which Cloudflare Pages serves at the extensionless URL.
  */
-import { readFileSync, writeFileSync, rmSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { routes, absoluteUrl } from '../src/content/routes.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap } from './lib/pages.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const htmlPath = resolve(root, 'dist/index.html')
+const dist = file => resolve(root, 'dist', file)
 const ssrEntry = resolve(root, 'dist-ssr/entry-server.js')
 
 if (!existsSync(ssrEntry)) {
@@ -24,45 +31,28 @@ if (!existsSync(ssrEntry)) {
 }
 
 const { render } = await import(pathToFileURL(ssrEntry).href)
-const markup = render()
+const template = readFileSync(dist('index.html'), 'utf8')
+const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 
-if (!markup || markup.length < 1000) {
-  console.error(`[prerender] rendered markup looks wrong (${markup?.length ?? 0} chars) — aborting`)
+try {
+  for (const route of routes) {
+    const url = absoluteUrl(route.path)
+    let html = injectMarkup(template, render(route.path))
+    if (route.kind !== 'home') {
+      html = rewriteHead(html, { url, title: route.title, description: route.description, jsonLd: route.jsonLd })
+    }
+    assertPage(html, url)
+    const file = dist(outFile(route.path))
+    mkdirSync(dirname(file), { recursive: true })
+    writeFileSync(file, html)
+    console.log(`[prerender] ${route.path} -> dist/${outFile(route.path)} (${(Buffer.byteLength(html) / 1024).toFixed(1)} kB)`)
+  }
+  writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
+  console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
+} catch (err) {
+  console.error(err.message)
   process.exit(1)
 }
-
-let html = readFileSync(htmlPath, 'utf8')
-
-const target = '<div id="root"></div>'
-if (!html.includes(target)) {
-  console.error('[prerender] could not find an empty <div id="root"></div> in dist/index.html')
-  process.exit(1)
-}
-
-// Cloudflare's Email Address Obfuscation rewrites every mailto:/visible address and injects
-// /cdn-cgi/scripts/.../email-decode.min.js into the critical path to undo it. Addresses wrapped
-// in these comments are left alone, and with nothing to rewrite the script is not injected.
-// React can't emit HTML comments, so the wrap happens here. (The Person node in the JSON-LD is
-// inside <script>, which Cloudflare already skips.) Hydration ignores comment nodes.
-const EMAIL_OFF = /(<a\s[^>]*href="mailto:[^"]*"[^>]*>.*?<\/a>)/gs
-const guarded = markup.replace(EMAIL_OFF, '<!--email_off-->$1<!--/email_off-->')
-// Both of them: the Contact <dd> and the Footer icon link. Asserting the exact count means a
-// refactor that moves one address out of reach of the regex fails the build, instead of quietly
-// leaving Cloudflare one address to rewrite — which puts email-decode.min.js back in the
-// critical path. Update this number when the page gains or loses a mailto: link.
-const MAILTO_LINKS = 2
-const wrapped = (guarded.match(/<!--email_off-->/g) || []).length
-if (wrapped !== MAILTO_LINKS) {
-  console.error(`[prerender] wrapped ${wrapped} mailto: links in <!--email_off-->, expected ${MAILTO_LINKS} — Contact/Footer changed?`)
-  process.exit(1)
-}
-
-// Function replacer: `$&`/`$1` sequences inside the markup must not be treated as patterns.
-html = html.replace(target, () => `<div id="root">${guarded}</div>`)
-writeFileSync(htmlPath, html)
 
 // The SSR bundle is a build artefact; it must not be published.
 rmSync(resolve(root, 'dist-ssr'), { recursive: true, force: true })
-
-const kb = (Buffer.byteLength(html, 'utf8') / 1024).toFixed(1)
-console.log(`[prerender] injected ${guarded.length.toLocaleString()} chars (${wrapped} email links guarded) — dist/index.html now ${kb} kB`)
