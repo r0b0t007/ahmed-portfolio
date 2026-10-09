@@ -1,7 +1,7 @@
 import { sectionIndex } from '../lib/sections'
 import { faqs } from '../content/faqs'
 
-const Row = ({ f }) => {
+export const FaqRow = ({ f }) => {
   return (
     <div className="fade-in ed-faq-item">
       <h3 className="ed-faq-q">{f.q}</h3>
@@ -21,7 +21,7 @@ const Faq = () => (
     </div>
 
     <div className="ed-faq-grid">
-      {faqs.map(f => <Row key={f.q} f={f} />)}
+      {faqs.map(f => <FaqRow key={f.q} f={f} />)}
     </div>
 
   </section>

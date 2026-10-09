@@ -1,46 +1,37 @@
 import Header from './components/Header'
-import Hero from './components/Hero'
-import TrustStrip from './components/TrustStrip'
-import Benefits from './components/Benefits'
-import Services from './components/Services'
-import Process from './components/Process'
-import Handoff from './components/Handoff'
-import Proof from './components/Proof'
-import Pricing from './components/Pricing'
-import Experience from './components/Experience'
-import About from './components/Summary'
-import Faq from './components/Faq'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import Home from './pages/Home'
+import ServicePage from './pages/ServicePage'
+import { findRoute } from './content/routes'
+import { sectionIndex, serviceSectionIndex } from './lib/sections'
 
 /**
- * The full tree is rendered once, at build time, into static HTML (scripts/prerender.js). In the
- * browser only two "islands" hydrate — Header (menu, scroll state) and Contact (the form); see
- * src/main.jsx. Everything else has no interactivity and stays as prerendered markup, so those
- * components never ship in the client bundle. The island wrappers use display: contents so they
- * add no box (the header must stay position: sticky against <body>).
+ * Each page is rendered once, at build time, into static HTML (scripts/prerender.js renders one
+ * per route in src/content/routes.js). In the browser only two "islands" hydrate — Header (menu,
+ * scroll state) and Contact (the form); see src/main.jsx. Everything else has no interactivity
+ * and stays as prerendered markup, so those components never ship in the client bundle. The
+ * island wrappers use display: contents so they add no box (the header must stay
+ * position: sticky against <body>).
+ *
+ * Contact's props differ per page (its eyebrow index), so they are serialised into data-props:
+ * src/hydrate.jsx reads them back, and the client render matches the server's.
  *
  * React.lazy is not an option here: it suspends during renderToString.
  */
 import { ISLAND } from './islands'
-// Section order is also declared in src/lib/sections.js, which numbers the eyebrows; keep both in step.
-function App() {
+
+function App({ path = '/' }) {
+  const route = findRoute(path)
+  const contactProps = { index: route.kind === 'home' ? sectionIndex('contact') : serviceSectionIndex('contact') }
   return (
     <div className="app">
       <div id={ISLAND.header} style={{ display: 'contents' }}><Header /></div>
       <main>
-        <Hero />
-        <TrustStrip />
-        <Benefits />
-        <Services />
-        <Process />
-        <Handoff />
-        <Proof />
-        <Pricing />
-        <Experience />
-        <About />
-        <Faq />
-        <div id={ISLAND.contact} style={{ display: 'contents' }}><Contact /></div>
+        {route.kind === 'home' ? <Home /> : <ServicePage slug={route.slug} />}
+        <div id={ISLAND.contact} data-props={JSON.stringify(contactProps)} style={{ display: 'contents' }}>
+          <Contact {...contactProps} />
+        </div>
       </main>
       <Footer />
     </div>

@@ -1,0 +1,107 @@
+/**
+ * Copy and facts for the service pages (src/pages/ServicePage.jsx). Every number comes from
+ * site.js. Prose marked NEW was written for these pages and is awaiting Ahmed's review, including
+ * the `included` cards, which rework the homepage service tags and hand-off items into new
+ * sentences. Unmarked prose restates copy already published on the homepage.
+ *
+ * `card` is the homepage Services card for the same service (src/components/Services.jsx).
+ *
+ * Also read by src/content/routes.js (titles, descriptions, structured data) and, through it,
+ * by vite.config.js (llms.txt) and scripts/prerender.js. Keep it JSX-free.
+ */
+import {
+  FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_FROM, PRICE_SAAS_LABEL, PRICE_SITE_FROM,
+  PRICE_SITE_LABEL, SAAS_WEEKS, SITE_WEEKS, weeksRange, weeksText,
+} from './site.js'
+
+// NEW
+const handOff = {
+  title: 'Hand-off',
+  lines: [`The repo in your name, documentation, a recorded walkthrough, and ${LAUNCH_COVER_DAYS} days of post-launch fixes.`],
+}
+
+export const services = [
+  {
+    slug: 'website-development',
+    name: 'Website development',
+    card: {
+      title: 'Websites that rank and convert',
+      tagline: 'Built to load fast and get found.',
+      desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch. Structured data, clean semantics, proper meta tags and a sitemap all go in during the build, and I measure Core Web Vitals before launch instead of leaving them as cleanup for later.',
+      tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
+    },
+    summary: `marketing sites and landing pages from ${PRICE_SITE_LABEL}, usually live in ${weeksText(SITE_WEEKS)} weeks`,
+    title: 'Website Development, Fixed Price | Ahmed Chioua',
+    description: `Marketing sites and landing pages from ${PRICE_SITE_LABEL}, usually live in ${weeksText(SITE_WEEKS)} weeks. A working link in ${FIRST_LINK_DAYS} days, a fixed price and a date in writing.`,
+    serviceType: 'Website Design & Development',
+    priceFrom: PRICE_SITE_FROM,
+    priceLabel: PRICE_SITE_LABEL,
+    weeks: weeksRange(SITE_WEEKS),
+    // NEW
+    h1: 'Website development,',
+    h1Em: 'fixed price, date in writing.',
+    // NEW
+    lead: `Marketing sites, landing pages and portfolios, designed and built from scratch. A working link in ${FIRST_LINK_DAYS} days, the site live on your own domain usually ${weeksText(SITE_WEEKS)} weeks after kickoff, and a price fixed in writing before any of it starts.`,
+    // NEW
+    framing: 'A website earns its place two ways: search engines can find it, and the people who land on it can do what it was built for. Both are settled while it’s being built, so structured data, clean semantics and Core Web Vitals are part of the build, not a cleanup pass after launch.',
+    // NEW
+    included: [
+      { title: 'Designed and built from scratch', lines: ['A marketing site, landing page or portfolio, designed around your offer. No template, no page builder.'] },
+      { title: 'An SEO foundation', lines: ['Structured data, clean semantics, proper meta tags and a sitemap, all in during the build.'] },
+      { title: 'Core Web Vitals, measured', lines: ['Performance, accessibility and SEO verified before launch, and you see the numbers.'] },
+      { title: 'Analytics before launch', lines: ['Wired in before the site goes live, not after, so the first visitors are counted.'] },
+      { title: 'Your domain, your accounts', lines: ['Hosting, domain and deploy pipeline set up on accounts you control. Push code, it ships.'] },
+      handOff,
+    ],
+    proof: 'site',
+    proofTitle: 'Don’t take my word for it.',
+    proofTitleEm: 'Check this page.',
+    // NEW
+    proofLead: 'The page you’re reading was built the way your site would be. Run Lighthouse on it, or read the source.',
+    faqIds: ['speed', 'cost', 'ai-quality', 'ownership', 'after'],
+  },
+  {
+    slug: 'saas-mvp-development',
+    name: 'SaaS & MVP development',
+    card: {
+      title: 'SaaS & MVP builds',
+      tagline: 'From an idea to a product people can sign into.',
+      desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
+      tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
+    },
+    summary: `SaaS products and MVPs from ${PRICE_SAAS_LABEL}, usually live in ${weeksText(SAAS_WEEKS)} weeks`,
+    title: 'SaaS & MVP Development, Fixed Price | Ahmed Chioua',
+    description: `SaaS products and MVPs from ${PRICE_SAAS_LABEL}, usually live in ${weeksText(SAAS_WEEKS)} weeks. A working link in ${FIRST_LINK_DAYS} days, a fixed price and a date in writing.`,
+    serviceType: 'SaaS & MVP Development',
+    priceFrom: PRICE_SAAS_FROM,
+    priceLabel: PRICE_SAAS_LABEL,
+    weeks: weeksRange(SAAS_WEEKS),
+    // NEW
+    h1: 'SaaS and MVP development,',
+    h1Em: 'fixed price, date in writing.',
+    // NEW
+    lead: `From an idea to a product people can sign into. A working link in ${FIRST_LINK_DAYS} days, a demo every week after, and the product live on your own infrastructure usually ${weeksText(SAAS_WEEKS)} weeks after kickoff, at a price fixed in writing before any of it starts.`,
+    // NEW
+    framing: 'A first version has one job: prove that people want it. So the scope starts from the smallest version that can prove it, and everything else waits. The foundations don’t wait. Auth, the data model and the deploy pipeline are built to take growth, so the month it starts working isn’t the month you rebuild them.',
+    // NEW
+    included: [
+      { title: 'A scope that fits on a page', lines: ['The smallest version that proves the idea: what’s in, what’s out, the price and the launch date, in writing.'] },
+      { title: 'Auth and a data model', lines: ['Sign-in, accounts and a data model designed to hold up once real users arrive.'] },
+      { title: 'The core flows', lines: ['The screens and actions the product exists for, built end to end and demoed every week.'] },
+      { title: 'Payments, if you need them', lines: ['Set up on your own payment account, so the revenue is yours from the first charge.'] },
+      { title: 'Infrastructure on your accounts', lines: ['Hosting, database and auth on accounts you control (Vercel, AWS, Supabase, Cloudflare), with a deploy pipeline: push code, it ships.'] },
+      handOff,
+    ],
+    proof: 'products',
+    proofTitle: 'Products I build',
+    proofTitleEm: 'and run.',
+    proofLead: 'I won’t show you client logos I haven’t earned. These are two products of mine that real people use right now.',
+    faqIds: ['speed', 'cost', 'slip', 'ownership', 'after'],
+  },
+]
+
+export function findService(slug) {
+  const s = services.find(s => s.slug === slug)
+  if (!s) throw new Error(`services: no service with slug "${slug}"`)
+  return s
+}

@@ -14,3 +14,7 @@
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# Every prerendered page references hashed /assets/ chunks, so it must revalidate after a deploy.
+/services/*
+  Cache-Control: public, max-age=0, must-revalidate

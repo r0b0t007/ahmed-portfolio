@@ -9,8 +9,15 @@ export const SECTION_ORDER = [
   'benefits', 'services', 'process', 'handoff', 'proof', 'pricing', 'experience', 'about', 'faq', 'contact',
 ]
 
-export const sectionIndex = id => {
-  const i = SECTION_ORDER.indexOf(id)
-  if (i < 0) throw new Error(`sectionIndex: "${id}" is not in SECTION_ORDER`)
+const indexIn = (order, name) => id => {
+  const i = order.indexOf(id)
+  if (i < 0) throw new Error(`${name}: "${id}" is not in the section order`)
   return ordinal(i, 2)
 }
+
+export const sectionIndex = indexIn(SECTION_ORDER, 'sectionIndex')
+
+/** The numbered sections of a service page (src/pages/ServicePage.jsx), in render order. */
+export const SERVICE_SECTION_ORDER = ['included', 'weeks', 'price', 'proof', 'faq', 'contact']
+
+export const serviceSectionIndex = indexIn(SERVICE_SECTION_ORDER, 'serviceSectionIndex')

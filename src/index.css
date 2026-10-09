@@ -683,3 +683,25 @@ em { font-style: italic; }
   transition: color var(--transition), border-color var(--transition);
 }
 .ed-alt-cta a:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ── Service pages (src/pages/ServicePage.jsx) ── */
+.svc-hero { padding-top: 56px; }
+.svc-hero .ed-lead { max-width: 60ch; }
+.crumbs ol {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; list-style: none; margin-bottom: 40px;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-muted);
+}
+.crumbs li + li::before { content: '/'; margin-right: 10px; }
+/* Padding brings the tap target to ~25px tall without moving the text. */
+.crumbs a { display: inline-block; padding: 4px 0; color: var(--teal); }
+.crumbs a:hover { color: var(--ink); }
+.svc-facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 32px;
+  max-width: 880px; margin-top: 56px; padding-top: 26px; border-top: 1px solid var(--hair);
+}
+.svc-facts > div { display: flex; flex-direction: column; gap: 6px; }
+.svc-facts dd { order: -1; font-family: var(--serif); font-size: 1.9rem; font-weight: 300; line-height: 1; }
+.svc-facts dt { font-size: 0.75rem; color: var(--ink-muted); line-height: 1.5; }
+.svc-price-cta { margin-top: 32px; }
+.ed-svc-more { display: inline-block; margin-top: 22px; }
+@media (max-width: 720px) { .svc-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
