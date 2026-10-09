@@ -1,5 +1,6 @@
 import { BenefitCard } from '../components/BenefitCard'
 import { Breadcrumb } from '../components/Breadcrumb'
+import { Eyebrow as SharedEyebrow } from '../components/Eyebrow'
 import { Step } from '../components/Process'
 import { ProofItem } from '../components/Proof'
 import { FaqRow } from '../components/Faq'
@@ -16,12 +17,7 @@ import { spansLastRow } from '../lib/grid'
 
 const PROOF = { site: siteProof, products: productProof }
 
-const Eyebrow = ({ label, id }) => (
-  <div className="eyebrow-row">
-    <span className="eyebrow">{label}</span>
-    <span className="eyebrow-index">( {idx(id)} )</span>
-  </div>
-)
+const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 /**
  * One service, end to end: what it is, what's in it, how the weeks go, what it costs, what to

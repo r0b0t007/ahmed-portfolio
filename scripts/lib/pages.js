@@ -49,7 +49,7 @@ function replaceOnce(html, pattern, replacement, label) {
 const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*"\\s*/?>`)
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
 
-export function rewriteHead(html, { url, title, description, jsonLd }) {
+export function rewriteHead(html, { url, title, description, jsonLd, og }) {
   // index.html's head comments explain the homepage (the hero preload, the critical CSS). On any
   // other page they describe tags that are gone and cost first-wave bytes, so they go, before the
   // exactly-once checks below can count a tag that is only mentioned in their prose.
@@ -73,6 +73,15 @@ export function rewriteHead(html, { url, title, description, jsonLd }) {
     // it there would spend 34 KB of first-wave bandwidth on an image nobody sees.
     [/\s*<link rel="preload" as="image"[^>]*>/, '', 'hero image preload'],
   ]
+  // Articles (build logs) say so to link-preview crawlers, matching their TechArticle JSON-LD;
+  // every other page keeps index.html's og:type of "website".
+  if (og?.type === 'article') {
+    fields.push([
+      metaTag('property', 'og:type'),
+      `<meta property="og:type" content="article" />\n    <meta property="article:published_time" content="${escapeAttr(og.publishedTime)}" />`,
+      'og:type',
+    ])
+  }
   for (const [pattern, replacement, label] of fields) html = replaceOnce(html, pattern, replacement, label)
 
   // The homepage graph (Person, FAQPage, products) describes the homepage. Each route brings its own.

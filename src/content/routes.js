@@ -102,6 +102,7 @@ export const routes = [
       title: w.title,
       description: w.description,
       jsonLd: workJsonLd(w, absoluteUrl(path)),
+      og: { type: 'article', publishedTime: w.datePublished },
     }
   }),
 ]

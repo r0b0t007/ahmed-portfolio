@@ -12,9 +12,9 @@ export const ProofItem = ({ it, i, wide }) => {
       </div>
       <p className="ed-proof-body">{it.body}</p>
       {/* Other sites open in a new tab (↗); a page on this site opens in place (→). */}
-      {it.link && (it.link.href.startsWith('http')
-        ? <a className="ed-proof-link" href={it.link.href} target="_blank" rel="noopener noreferrer">{it.link.label} ↗</a>
-        : <a className="ed-proof-link" href={it.link.href}>{it.link.label} →</a>)}
+      {it.link && (it.link.href.startsWith('/')
+        ? <a className="ed-proof-link" href={it.link.href}>{it.link.label} →</a>
+        : <a className="ed-proof-link" href={it.link.href} target="_blank" rel="noopener noreferrer">{it.link.label} ↗</a>)}
     </div>
   )
 }

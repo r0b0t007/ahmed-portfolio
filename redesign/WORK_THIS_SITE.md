@@ -20,7 +20,7 @@ This is the log: what was built, what was measured, and what didn't work.
 | **Live** | ahmedchioua.com |
 | **Source** | github.com/r0b0t007/ahmed-portfolio |
 | **Started** | 5 May 2026 |
-| **History** | 109 commits · 32 pull requests (31 merged, 1 closed after measurement) |
+| **History** | 109 commits · pull requests #1 to #32 (31 merged, 1 closed after measurement), as of commit `016a0fa` |
 | **Stack** | React 19 and Vite 7, hand-written CSS, two runtime dependencies (`react`, `react-dom`) |
 | **Hosting** | Cloudflare Pages, plus one Pages Function for the contact form |
 | **Lighthouse (mobile)** | Accessibility 100 · Best practices 100 · SEO 100. Run it yourself |
@@ -61,7 +61,7 @@ fallback whose metrics match it, so text doesn't shift when the real font arrive
 ### Leave Netlify (PRs #10 and #11, 31 Aug)
 
 Netlify's credit-based free tier stopped production deploys, so the site moved to Cloudflare
-Pages over two days. The contact form became a Pages Function that sends mail through Resend.
+Pages. The contact form became a Pages Function that sends mail through Resend.
 
 ### Cut what loads before first paint (PR #12, 6 Sep)
 
@@ -112,7 +112,7 @@ checking the live site, and the build now writes those redirects itself.
 
 ## How it's built
 
-With AI in the loop: 73 of the 109 commits carry a `Co-Authored-By: Claude` line, visible in the
+With AI in the loop: up to commit `016a0fa`, 73 of the 109 commits carry a `Co-Authored-By: Claude` line, visible in the
 history. The AI writes a lot of the code. The decisions about what to build, what to measure and
 what to throw away are mine, and most changes go through a review pass before merging. Fifteen
 commits exist only to apply review findings.
@@ -136,6 +136,6 @@ commits exist only to apply review findings.
   Everything else is new and needs your approval.
 - **Numbers deliberately not used:** Lighthouse *performance* scores. Local runs varied too much
   to quote honestly (see "What didn't work"); the build log quotes bytes and structure instead.
-- **Dates:** "over two days" for the Netlify move matches the cutover commits (30–31 Aug).
+- **Dates:** the Netlify move has no duration claim; its PRs (#10, #11) both merged on 31 Aug.
 - **Counts to refresh at publish time:** commits (109), PRs (32/31/1), co-authored commits (73),
   review commits (15).

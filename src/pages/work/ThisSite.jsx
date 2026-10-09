@@ -1,24 +1,21 @@
 import { Breadcrumb } from '../../components/Breadcrumb'
+import { Eyebrow as SharedEyebrow } from '../../components/Eyebrow'
 import { BOOKING_URL, REPO_URL } from '../../content/site'
 import { servicePath } from '../../content/routes'
 import { workSectionIndex as idx } from '../../lib/sections'
 
 /**
  * Build log for this site. Every figure links to the commit or pull request it came from, so a
- * reader can check it. The counts in the facts table are fixed "as of" the date beside them
- * rather than computed at build time: Cloudflare's build may clone shallowly, and a count that
- * silently shrank would be worse than one that is honestly dated.
+ * reader can check it. The history counts are pinned to one commit rather than a date or the
+ * build: a date goes stale the moment this page's own PR merges, and Cloudflare's build may clone
+ * shallowly. `git rev-list --count 016a0fa` reproduces them exactly.
  */
-const AS_OF = '9 October 2026'
+const AS_OF = '016a0fa'
+const AsOf = () => <a href={`${REPO_URL}/commit/${AS_OF}`} target="_blank" rel="noopener noreferrer"><code>{AS_OF}</code></a>
 
 const PR = ({ n }) => <a href={`${REPO_URL}/pull/${n}`} target="_blank" rel="noopener noreferrer">PR #{n}</a>
 
-const Eyebrow = ({ label, id }) => (
-  <div className="eyebrow-row">
-    <span className="eyebrow">{label}</span>
-    <span className="eyebrow-index">( {idx(id)} )</span>
-  </div>
-)
+const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 const Entry = ({ title, meta, children }) => (
   <article className="fade-in log-entry">
@@ -32,7 +29,7 @@ const facts = [
   ['Live', 'ahmedchioua.com'],
   ['Source', <a key="src" href={REPO_URL} target="_blank" rel="noopener noreferrer">github.com/r0b0t007/ahmed-portfolio ↗</a>],
   ['Started', '5 May 2026'],
-  ['History', `109 commits · 32 pull requests (31 merged, 1 closed after measurement), as of ${AS_OF}`],
+  ['History', <span key="hist">109 commits · pull requests #1 to #32 (31 merged, 1 closed after measurement), as of commit <AsOf /></span>],
   ['Stack', 'React 19 and Vite 7, hand-written CSS, two runtime dependencies (react, react-dom)'],
   ['Hosting', 'Cloudflare Pages, plus one Pages Function for the contact form'],
   ['Lighthouse (mobile)', 'Accessibility 100 · Best practices 100 · SEO 100. Run it yourself'],
@@ -103,8 +100,8 @@ const ThisSite = ({ name }) => (
       <Entry title="Leave Netlify" meta={<><PR n={10} /> and <PR n={11} /> · 31 Aug 2026</>}>
         <p>
           Netlify’s credit-based free tier stopped production deploys, so the site moved to
-          Cloudflare Pages over two days. The contact form became a Pages Function that sends mail
-          through Resend.
+          Cloudflare Pages. The contact form became a Pages Function that sends mail through
+          Resend.
         </p>
       </Entry>
 
@@ -158,7 +155,7 @@ const ThisSite = ({ name }) => (
         </p>
       </Entry>
 
-      <Entry title="The measuring tool was noisier than the effects" meta="Same PR #5 investigation">
+      <Entry title="The measuring tool was noisier than the effects" meta={<><PR n={5} /> · the same investigation</>}>
         <p>
           Three Lighthouse runs on one identical build gave Total Blocking Time of 1,064, 2,095 and
           2,532 ms. That spread was larger than any difference being tested, so single scores
@@ -181,8 +178,8 @@ const ThisSite = ({ name }) => (
         <Eyebrow label="How it’s built" id="method" />
         <h2 className="sec-title">AI in the loop. <em>Decisions mine.</em></h2>
         <p className="sec-lead">
-          73 of the 109 commits carry a <code>Co-Authored-By: Claude</code> line, visible in the
-          history. The AI writes a lot of the code. The decisions about what to build, what to
+          Up to commit <AsOf />, 73 of the 109 commits carry a <code>Co-Authored-By: Claude</code>{' '}
+          line, visible in the history. The AI writes a lot of the code. The decisions about what to build, what to
           measure and what to throw away are mine, and most changes go through a review pass before
           merging. Fifteen commits exist only to apply review findings.
         </p>
