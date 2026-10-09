@@ -95,7 +95,7 @@ export const services = [
     proof: 'products',
     proofTitle: 'Products I build',
     proofTitleEm: 'and run.',
-    proofLead: 'I won’t show you client logos I haven’t earned. These are two products of mine that real people use right now.',
+    proofLead: 'I won’t show you client logos I haven’t earned. These are two products I built and run.',
     faqIds: ['speed', 'cost', 'slip', 'ownership', 'after'],
   },
 ]

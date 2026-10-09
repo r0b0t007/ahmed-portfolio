@@ -30,7 +30,7 @@ const Proof = () => {
         <h2 className="sec-title">Don&rsquo;t take my word for it. <em>Take two minutes.</em></h2>
         <p className="fade-in sec-lead">
           I won&rsquo;t show you client logos I haven&rsquo;t earned. I&rsquo;ll show you things you
-          can check: two products of mine that real people use right now, this site, its source,
+          can check: two products I built and run, this site, its source,
           and the track record behind it.
         </p>
       </div>
