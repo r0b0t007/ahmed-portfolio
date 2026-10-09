@@ -4,7 +4,7 @@
  * Runs after both Vite builds (see the "build" script in package.json):
  *   1. vite build                          -> dist/          (client bundle + index.html)
  *   2. vite build --ssr src/entry-server   -> dist-ssr/      (server bundle, build-time only)
- *   3. node scripts/prerender.js           -> one HTML file per route, plus sitemap.xml
+ *   3. node scripts/prerender.js           -> one HTML file per route, plus sitemap.xml and _redirects
  *
  * Why: the site is client-rendered, so without this the served HTML has an empty #root. First
  * paint waits on the bundle parsing, and non-JS crawlers see nothing. Injecting the markup means
@@ -19,7 +19,7 @@ import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap } from './lib/pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = file => resolve(root, 'dist', file)
@@ -58,6 +58,8 @@ for (const route of routes) {
 }
 writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
 console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
+writeFileSync(dist('_redirects'), buildRedirects(routes.map(r => r.path)))
+console.log(`[prerender] _redirects: ${routes.length - 1} trailing-slash rules`)
 
 // The SSR bundle is a build artefact; it must not be published.
 rmSync(resolve(root, 'dist-ssr'), { recursive: true, force: true })

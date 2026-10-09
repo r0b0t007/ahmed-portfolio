@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { routes, absoluteUrl, findRoute, servicePath } from '../../src/content/routes.js'
 import { services } from '../../src/content/services.js'
 import { faqById } from '../../src/content/faqs.js'
+import { buildRedirects } from './pages.js'
 
 test('the homepage is the first route and paths are unique', () => {
   assert.equal(routes[0].path, '/')
@@ -46,4 +47,10 @@ test('service JSON-LD carries the price floor and a breadcrumb ending at the pag
     assert.equal(last.item, absoluteUrl(r.path))
     assert.equal(last.position, crumbs.itemListElement.length)
   }
+})
+
+test('every page except the homepage gets a trailing-slash redirect', () => {
+  const rules = buildRedirects(routes.map(r => r.path)).split('\n').filter(l => l && !l.startsWith('#'))
+  assert.equal(rules.length, routes.length - 1)
+  for (const r of routes.filter(r => r.path !== '/')) assert.ok(rules.includes(`${r.path}/ ${r.path} 308`), r.path)
 })
