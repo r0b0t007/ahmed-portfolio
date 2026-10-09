@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, deadLinks } from './pages.js'
 
 const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
@@ -97,4 +97,10 @@ test('buildRedirects sends each page’s slash form to the page, and nothing els
   const rules = buildRedirects(['/', '/services/a', '/about'])
     .split('\n').filter(l => l && !l.startsWith('#'))
   assert.deepEqual(rules, ['/services/a/ /services/a 308', '/about/ /about 308'])
+})
+
+test('deadLinks reports root-relative links that match no page, ignoring fragments and other hosts', () => {
+  const html = '<a href="/">a</a><a href="/#contact">b</a><a href="/services/a">c</a>'
+    + '<a href="/services/gone">d</a><a href="https://example.com/x">e</a><link href="/favicon.svg">'
+  assert.deepEqual(deadLinks(html, ['/', '/services/a']), ['/services/gone'])
 })

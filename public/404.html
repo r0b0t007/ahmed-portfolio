@@ -7,6 +7,8 @@
   duplicate homepages to Google instead of showing up as 404s in Search Console.
 
   Deliberately standalone (no bundle, no web fonts): it must render even if /assets/ is what broke.
+  Its page links are typed by hand; scripts/prerender.js fails the build if one stops matching a
+  route in src/content/routes.js.
   The :root block is a copy of tokens from src/index.css; the build fails if they drift
   (errorPageTokens in vite.config.js).
 
@@ -45,9 +47,11 @@
     <main>
       <p class="code">Error 404</p>
       <h1>This page doesn’t exist.</h1>
-      <p class="lead">The link may be out of date, or the address mistyped. Everything on this site lives on one page.</p>
+      <p class="lead">The link may be out of date, or the address mistyped. These are the pages that exist:</p>
       <nav aria-label="Where to go instead">
-        <a href="/">Back to the homepage</a>
+        <a href="/">Homepage</a>
+        <a href="/services/website-development">Website development</a>
+        <a href="/services/saas-mvp-development">SaaS &amp; MVP development</a>
         <a href="/#contact">Get in touch</a>
       </nav>
     </main>

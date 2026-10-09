@@ -19,7 +19,7 @@ import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, deadLinks } from './lib/pages.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = file => resolve(root, 'dist', file)
@@ -56,6 +56,14 @@ for (const route of routes) {
     process.exit(1)
   }
 }
+// 404.html is hand-written and copied verbatim, so its links to pages aren't derived from the
+// route table. Check them against it, so renaming or removing a page can't leave one dead.
+const dead = deadLinks(readFileSync(dist('404.html'), 'utf8'), routes.map(r => r.path))
+if (dead.length) {
+  console.error(`[prerender] public/404.html links to pages that don't exist: ${dead.join(', ')}`)
+  process.exit(1)
+}
+
 writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
 console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
 writeFileSync(dist('_redirects'), buildRedirects(routes.map(r => r.path)))

@@ -116,3 +116,13 @@ export const buildRedirects = paths => [
   ...paths.filter(p => p !== '/').map(p => `${p}/ ${p} 308`),
   '',
 ].join('\n')
+
+/**
+ * Root-relative <a href>s in `html` whose path (fragment dropped) is not one of `paths`. For pages
+ * written by hand rather than rendered from the route table, like public/404.html, so a renamed
+ * or removed page fails the build instead of leaving a dead link behind.
+ */
+export const deadLinks = (html, paths) =>
+  [...html.matchAll(/<a\s[^>]*href="(\/[^"#]*)[^"]*"/g)]
+    .map(m => m[1])
+    .filter(path => !paths.includes(path))
