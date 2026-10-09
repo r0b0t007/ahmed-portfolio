@@ -1,6 +1,6 @@
 import { sectionIndex } from '../lib/sections'
 import {
-  BOOKING_URL, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
+  BOOKING_URL, LAUNCH_COVER_DAYS, PRICE_MOVERS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
 } from '../content/site'
 
 /**
@@ -56,10 +56,7 @@ const Pricing = () => (
       </tbody>
     </table>
 
-    <p className="ed-price-note">
-      What moves the number: how much of it is new rather than adapted, and whether auth, payments
-      or third-party integrations are in scope.
-    </p>
+    <p className="ed-price-note">{PRICE_MOVERS}</p>
 
     <div className="ed-price">
       <span className="ed-price-label">The question everyone asks</span>

@@ -39,12 +39,21 @@ export const FOUNDING_SLOTS = 3
  * JSON-LD derived from it) and llms.txt, so the three cannot drift.
  */
 const CURRENCY = '€'
-const PRICE_SITE_FROM = 3000
-const PRICE_SAAS_FROM = 12000
+// ISO 4217 code for the same currency, for structured data (Offer.priceCurrency).
+export const CURRENCY_CODE = 'EUR'
+export const PRICE_SITE_FROM = 3000
+export const PRICE_SAAS_FROM = 12000
 
 const money = n => `${CURRENCY}${n.toLocaleString('en-US')}`
 export const PRICE_SITE_LABEL = money(PRICE_SITE_FROM)
 export const PRICE_SAAS_LABEL = money(PRICE_SAAS_FROM)
+
+/**
+ * What makes a quote land above the floor. Shown under the price band on the homepage and on
+ * each service page, so the two can't drift into different answers.
+ */
+export const PRICE_MOVERS =
+  'What moves the number: how much of it is new rather than adapted, and whether auth, payments or third-party integrations are in scope.'
 
 /**
  * The booking CTA in its three lengths. Every control that opens BOOKING_URL uses one of these,
