@@ -133,9 +133,33 @@ function criticalHead() {
   }
 }
 
+/**
+ * public/404.html is copied verbatim (it must render even if /assets/ is what broke), so it can't
+ * import src/index.css and declares its own copy of the colour tokens. Fail the build when a token
+ * it declares no longer matches index.css, instead of letting a palette change skip the 404 page.
+ */
+function errorPageTokens() {
+  const tokens = file => new Map(
+    [...readFileSync(new URL(file, import.meta.url), 'utf8').matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8})\b/gi)]
+      .map(([, name, hex]) => [name, hex.toLowerCase()]),
+  )
+  return {
+    name: 'error-page-tokens',
+    apply: 'build',
+    buildStart() {
+      const site = tokens('./src/index.css')
+      const page = tokens('./public/404.html')
+      if (page.size === 0) throw new Error('404.html: no colour tokens found; expected a :root block copied from src/index.css')
+      for (const [name, hex] of page) {
+        if (site.get(name) !== hex) throw new Error(`404.html: ${name} is ${hex}, src/index.css has ${site.get(name) ?? 'no such token'}`)
+      }
+    },
+  }
+}
+
 export default defineConfig(({ isSsrBuild }) => ({
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
-  plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead()],
+  plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead(), errorPageTokens()],
   build: {
     // One stylesheet, inlined into <head> by the critical-head plugin — no render-blocking CSS request.
     cssCodeSplit: false,
