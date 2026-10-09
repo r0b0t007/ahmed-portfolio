@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, fillErrorPage } from './pages.js'
 
 const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
@@ -97,4 +97,17 @@ test('buildRedirects sends each page’s slash form to the page, and nothing els
   const rules = buildRedirects(['/', '/services/a', '/about'])
     .split('\n').filter(l => l && !l.startsWith('#'))
   assert.deepEqual(rules, ['/services/a/ /services/a 308', '/about/ /about 308'])
+})
+
+test('fillErrorPage lists every route by name, escaped, in place of the placeholder', () => {
+  const routes = [{ path: '/', kind: 'home' }, { path: '/services/a', kind: 'service', name: 'SaaS & MVP' }]
+  const html = fillErrorPage('<nav>\n        <!--PAGE_LINKS-->\n      </nav>', routes)
+  assert.match(html, /<a href="\/">Homepage<\/a>/)
+  assert.match(html, /<a href="\/services\/a">SaaS &amp; MVP<\/a>/)
+  assert.doesNotMatch(html, /PAGE_LINKS/)
+})
+
+test('fillErrorPage fails without exactly one placeholder', () => {
+  assert.throws(() => fillErrorPage('<nav></nav>', []), /PAGE_LINKS/)
+  assert.throws(() => fillErrorPage('<!--PAGE_LINKS--><!--PAGE_LINKS-->', []), /PAGE_LINKS/)
 })

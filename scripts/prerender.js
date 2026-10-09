@@ -33,6 +33,7 @@ if (!existsSync(ssrEntry)) {
 const { render } = await import(pathToFileURL(ssrEntry).href)
 const template = readFileSync(dist('index.html'), 'utf8')
 const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
+const paths = routes.map(r => r.path)
 
 for (const route of routes) {
   try {
@@ -44,6 +45,9 @@ for (const route of routes) {
       : rewriteHead(template, { url, title: route.title, description: route.description, jsonLd: route.jsonLd })
     const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
+    // 404.html's "Get in touch" is a fixed /#contact link (src/404.html); the homepage must keep
+    // rendering that anchor, or the link lands at the top of the page instead of the form.
+    if (route.kind === 'home' && !html.includes('id="contact"')) throw new Error('homepage has no id="contact" for 404.html to link to')
     const file = dist(outFile(route.path))
     mkdirSync(dirname(file), { recursive: true })
     writeFileSync(file, html)
@@ -56,9 +60,9 @@ for (const route of routes) {
     process.exit(1)
   }
 }
-writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
+writeFileSync(dist('sitemap.xml'), buildSitemap(paths.map(absoluteUrl)))
 console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
-writeFileSync(dist('_redirects'), buildRedirects(routes.map(r => r.path)))
+writeFileSync(dist('_redirects'), buildRedirects(paths))
 console.log(`[prerender] _redirects: ${routes.length - 1} trailing-slash rules`)
 
 // The SSR bundle is a build artefact; it must not be published.

@@ -1,6 +1,8 @@
 <!doctype html>
 <!--
-  Served by Cloudflare Pages, with a 404 status, for any path that matches no file.
+  Served by Cloudflare Pages, with a 404 status, for any path that matches no file. This is a
+  template: the errorPage plugin in vite.config.js fills the PAGE_LINKS placeholder from the route table
+  and emits the result as dist/404.html in every Vite build.
 
   Its presence is load-bearing: without a top-level 404.html, Pages assumes a single-page app and
   answers every unknown path with index.html and a 200, so typos and dead links look like
@@ -8,7 +10,7 @@
 
   Deliberately standalone (no bundle, no web fonts): it must render even if /assets/ is what broke.
   The :root block is a copy of tokens from src/index.css; the build fails if they drift
-  (errorPageTokens in vite.config.js).
+  (the errorPage plugin in vite.config.js).
 
   Pages also serves this file at /404, with a 200: every .html file gets an extensionless URL and
   there is no way to give that one route a 404 status without a Function. Nothing links to /404 and
@@ -45,9 +47,9 @@
     <main>
       <p class="code">Error 404</p>
       <h1>This page doesn’t exist.</h1>
-      <p class="lead">The link may be out of date, or the address mistyped. Everything on this site lives on one page.</p>
+      <p class="lead">The link may be out of date, or the address mistyped. These are the pages that exist:</p>
       <nav aria-label="Where to go instead">
-        <a href="/">Back to the homepage</a>
+        <!--PAGE_LINKS-->
         <a href="/#contact">Get in touch</a>
       </nav>
     </main>
