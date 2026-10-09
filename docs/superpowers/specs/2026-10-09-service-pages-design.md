@@ -35,7 +35,8 @@ Meta descriptions stay under 160 characters and state price floor, first link in
 
 ### Section order (both pages)
 
-1. **Breadcrumb**: Home › Services › page name. Links to `/` and `/#services`.
+1. **Breadcrumb**: Home › page name, linking to `/`. No middle "Services" crumb: there is no
+   `/services` page, and a `/#services` fragment is the homepage URL to a search engine.
 2. **Hero**: one `<h1>` that leads with the search term, a lead sentence, a fact strip
    (price floor · typical timeline · first link on day `FIRST_LINK_DAYS` ·
    `LAUNCH_COVER_DAYS` days of cover) and the booking CTA (`CTA_LABEL`, `BOOKING_URL`).
