@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap } from './pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './pages.js'
 
 const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
@@ -91,4 +91,10 @@ test('buildSitemap lists each URL once', () => {
   assert.match(xml, /^<\?xml version="1.0" encoding="UTF-8"\?>/)
   assert.equal(xml.match(/<loc>/g).length, 2)
   assert.match(xml, /<loc>https:\/\/ahmedchioua.com\/services\/x<\/loc>/)
+})
+
+test('buildRedirects sends each page’s slash form to the page, and nothing else', () => {
+  const rules = buildRedirects(['/', '/services/a', '/about'])
+    .split('\n').filter(l => l && !l.startsWith('#'))
+  assert.deepEqual(rules, ['/services/a/ /services/a 308', '/about/ /about 308'])
 })

@@ -1,5 +1,0 @@
-# Service pages live at /services/<slug> (no trailing slash). Production Pages answers the slash
-# form with a 404 rather than redirecting it, so send it to the canonical URL explicitly.
-# Only the slash form matches this rule, so it cannot loop. Pages Functions (/api/*) run before
-# these rules and are unaffected.
-/services/:slug/ /services/:slug 301
