@@ -117,12 +117,21 @@ export const buildRedirects = paths => [
   '',
 ].join('\n')
 
+const PAGE_LINKS = '<!--PAGE_LINKS-->'
+const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 /**
- * Root-relative <a href>s in `html` whose path (fragment dropped) is not one of `paths`. For pages
- * written by hand rather than rendered from the route table, like public/404.html, so a renamed
- * or removed page fails the build instead of leaving a dead link behind.
+ * Fills src/404.html's page list from the route table: one link per page, labelled with its name.
+ * The list is generated rather than typed, so a page added, renamed or removed in routes.js can't
+ * leave the 404 page missing it or pointing at another 404.
  */
-export const deadLinks = (html, paths) =>
-  [...html.matchAll(/<a\s[^>]*href="(\/[^"#]*)[^"]*"/g)]
-    .map(m => m[1])
-    .filter(path => !paths.includes(path))
+export function fillErrorPage(template, routes) {
+  const found = template.split(PAGE_LINKS).length - 1
+  if (found !== 1) throw new Error(`[404] expected one ${PAGE_LINKS} in src/404.html, found ${found}`)
+  // The placeholder's own indentation, so the generated lines line up with the hand-written ones.
+  const indent = template.match(new RegExp(`([ \\t]*)${PAGE_LINKS}`))[1]
+  const links = routes
+    .map(r => `<a href="${escapeAttr(r.path)}">${escapeHtml(r.kind === 'home' ? 'Homepage' : r.name)}</a>`)
+    .join(`\n${indent}`)
+  return template.replace(PAGE_LINKS, () => links)
+}

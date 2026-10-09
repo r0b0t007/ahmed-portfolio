@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, deadLinks } from './pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, fillErrorPage } from './pages.js'
 
 const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
@@ -99,8 +99,15 @@ test('buildRedirects sends each page’s slash form to the page, and nothing els
   assert.deepEqual(rules, ['/services/a/ /services/a 308', '/about/ /about 308'])
 })
 
-test('deadLinks reports root-relative links that match no page, ignoring fragments and other hosts', () => {
-  const html = '<a href="/">a</a><a href="/#contact">b</a><a href="/services/a">c</a>'
-    + '<a href="/services/gone">d</a><a href="https://example.com/x">e</a><link href="/favicon.svg">'
-  assert.deepEqual(deadLinks(html, ['/', '/services/a']), ['/services/gone'])
+test('fillErrorPage lists every route by name, escaped, in place of the placeholder', () => {
+  const routes = [{ path: '/', kind: 'home' }, { path: '/services/a', kind: 'service', name: 'SaaS & MVP' }]
+  const html = fillErrorPage('<nav>\n        <!--PAGE_LINKS-->\n      </nav>', routes)
+  assert.match(html, /<a href="\/">Homepage<\/a>/)
+  assert.match(html, /<a href="\/services\/a">SaaS &amp; MVP<\/a>/)
+  assert.doesNotMatch(html, /PAGE_LINKS/)
+})
+
+test('fillErrorPage fails without exactly one placeholder', () => {
+  assert.throws(() => fillErrorPage('<nav></nav>', []), /PAGE_LINKS/)
+  assert.throws(() => fillErrorPage('<!--PAGE_LINKS--><!--PAGE_LINKS-->', []), /PAGE_LINKS/)
 })

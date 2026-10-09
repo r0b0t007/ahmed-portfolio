@@ -7,6 +7,7 @@ import {
   BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_WEEKS, weeksText,
 } from './src/content/site.js'
 import { routes, absoluteUrl } from './src/content/routes.js'
+import { fillErrorPage } from './scripts/lib/pages.js'
 
 /**
  * Derives the content that must stay in sync with the visible page from the same modules the
@@ -141,32 +142,39 @@ function criticalHead() {
 }
 
 /**
- * public/404.html is copied verbatim (it must render even if /assets/ is what broke), so it can't
- * import src/index.css and declares its own copy of the colour tokens. Fail the build when a token
- * it declares no longer matches index.css, instead of letting a palette change skip the 404 page.
+ * dist/404.html, built from the src/404.html template. It is deliberately standalone (it must
+ * render even if /assets/ is what broke), so it can't import src/index.css and can't be rendered
+ * by React; this plugin does the two things that would otherwise be copied by hand:
+ *   - fails the build when a colour token it declares no longer matches index.css
+ *   - fills its page list from the route table (fillErrorPage in scripts/lib/pages.js)
+ * Emitted from generateBundle, so `vite build` alone (build:client) produces it too.
  */
-function errorPageTokens() {
-  const tokens = file => new Map(
-    [...readFileSync(new URL(file, import.meta.url), 'utf8').matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8})\b/gi)]
-      .map(([, name, hex]) => [name, hex.toLowerCase()]),
+function errorPage({ emit }) {
+  const template = new URL('./src/404.html', import.meta.url)
+  const tokens = text => new Map(
+    [...text.matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8})\b/gi)].map(([, name, hex]) => [name, hex.toLowerCase()]),
   )
   return {
-    name: 'error-page-tokens',
+    name: 'error-page',
     apply: 'build',
     buildStart() {
-      const site = tokens('./src/index.css')
-      const page = tokens('./public/404.html')
+      const site = tokens(readFileSync(new URL('./src/index.css', import.meta.url), 'utf8'))
+      const page = tokens(readFileSync(template, 'utf8'))
       if (page.size === 0) throw new Error('404.html: no colour tokens found; expected a :root block copied from src/index.css')
       for (const [name, hex] of page) {
         if (site.get(name) !== hex) throw new Error(`404.html: ${name} is ${hex}, src/index.css has ${site.get(name) ?? 'no such token'}`)
       }
+    },
+    generateBundle() {
+      if (!emit) return
+      this.emitFile({ type: 'asset', fileName: '404.html', source: fillErrorPage(readFileSync(template, 'utf8'), routes) })
     },
   }
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
-  plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead(), errorPageTokens()],
+  plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead(), errorPage({ emit: !isSsrBuild })],
   build: {
     // One stylesheet, inlined into <head> by the critical-head plugin — no render-blocking CSS request.
     cssCodeSplit: false,

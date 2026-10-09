@@ -19,7 +19,7 @@ import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, deadLinks } from './lib/pages.js'
+import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = file => resolve(root, 'dist', file)
@@ -33,6 +33,7 @@ if (!existsSync(ssrEntry)) {
 const { render } = await import(pathToFileURL(ssrEntry).href)
 const template = readFileSync(dist('index.html'), 'utf8')
 const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
+const paths = routes.map(r => r.path)
 
 for (const route of routes) {
   try {
@@ -44,6 +45,9 @@ for (const route of routes) {
       : rewriteHead(template, { url, title: route.title, description: route.description, jsonLd: route.jsonLd })
     const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
+    // 404.html's "Get in touch" is a fixed /#contact link (src/404.html); the homepage must keep
+    // rendering that anchor, or the link lands at the top of the page instead of the form.
+    if (route.kind === 'home' && !html.includes('id="contact"')) throw new Error('homepage has no id="contact" for 404.html to link to')
     const file = dist(outFile(route.path))
     mkdirSync(dirname(file), { recursive: true })
     writeFileSync(file, html)
@@ -56,17 +60,9 @@ for (const route of routes) {
     process.exit(1)
   }
 }
-// 404.html is hand-written and copied verbatim, so its links to pages aren't derived from the
-// route table. Check them against it, so renaming or removing a page can't leave one dead.
-const dead = deadLinks(readFileSync(dist('404.html'), 'utf8'), routes.map(r => r.path))
-if (dead.length) {
-  console.error(`[prerender] public/404.html links to pages that don't exist: ${dead.join(', ')}`)
-  process.exit(1)
-}
-
-writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
+writeFileSync(dist('sitemap.xml'), buildSitemap(paths.map(absoluteUrl)))
 console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
-writeFileSync(dist('_redirects'), buildRedirects(routes.map(r => r.path)))
+writeFileSync(dist('_redirects'), buildRedirects(paths))
 console.log(`[prerender] _redirects: ${routes.length - 1} trailing-slash rules`)
 
 // The SSR bundle is a build artefact; it must not be published.
