@@ -174,7 +174,7 @@ test('buildSitemap lists each URL once', () => {
 Add to `package.json` `"scripts"`:
 
 ```json
-"test": "node --test scripts/",
+"test": "node --test \"scripts/**/*.test.js\"",
 ```
 
 - [ ] **Step 2: Run the tests to verify they fail**
