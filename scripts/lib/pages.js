@@ -50,6 +50,13 @@ const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
 
 export function rewriteHead(html, { url, title, description, jsonLd }) {
+  // index.html's head comments explain the homepage (the hero preload, the critical CSS). On any
+  // other page they describe tags that are gone and cost first-wave bytes, so they go, before the
+  // exactly-once checks below can count a tag that is only mentioned in their prose.
+  const end = html.indexOf('</head>')
+  if (end < 0) throw new Error('[prerender] expected one </head> in the template, found 0')
+  html = html.slice(0, end).replace(/<!--[\s\S]*?-->\n?/g, '') + html.slice(end)
+
   const t = escapeAttr(title)
   const d = escapeAttr(description)
   const u = escapeAttr(url)

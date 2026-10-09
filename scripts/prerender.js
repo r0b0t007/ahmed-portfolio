@@ -34,8 +34,8 @@ const { render } = await import(pathToFileURL(ssrEntry).href)
 const template = readFileSync(dist('index.html'), 'utf8')
 const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 
-try {
-  for (const route of routes) {
+for (const route of routes) {
+  try {
     const url = absoluteUrl(route.path)
     // Head first, on the bare template: the "exactly once" checks must only ever see the head,
     // not a <title> inside an SVG icon or JSON-LD that a component renders in the body.
@@ -48,13 +48,16 @@ try {
     mkdirSync(dirname(file), { recursive: true })
     writeFileSync(file, html)
     console.log(`[prerender] ${route.path} -> dist/${outFile(route.path)} (${(Buffer.byteLength(html) / 1024).toFixed(1)} kB)`)
+  } catch (err) {
+    // The stack, not just the message: a component that throws while rendering is only findable
+    // by its file and line.
+    console.error(`[prerender] ${route.path} failed`)
+    console.error(err?.stack ?? err)
+    process.exit(1)
   }
-  writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
-  console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
-} catch (err) {
-  console.error(err.message)
-  process.exit(1)
 }
+writeFileSync(dist('sitemap.xml'), buildSitemap(routes.map(r => absoluteUrl(r.path))))
+console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
 
 // The SSR bundle is a build artefact; it must not be published.
 rmSync(resolve(root, 'dist-ssr'), { recursive: true, force: true })

@@ -11,6 +11,7 @@ import {
   PRICE_PROMISE,
 } from '../content/site'
 import { serviceSectionIndex as idx } from '../lib/sections'
+import { spansLastRow } from '../lib/grid'
 
 const PROOF = { site: siteProof, products: productProof }
 
@@ -105,7 +106,7 @@ const ServicePage = ({ slug }) => {
           <p className="sec-lead">{s.proofLead}</p>
         </div>
         <div className="hair-grid ed-proof-grid">
-          {proof.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={proof.length % 2 === 1 && i === proof.length - 1} />)}
+          {proof.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(proof, i)} />)}
         </div>
       </section>
 

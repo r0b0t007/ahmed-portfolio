@@ -1,9 +1,7 @@
 import { sectionIndex } from '../lib/sections'
 import { proofItems as items } from '../content/proof'
 import { ordinal } from '../lib/ordinal'
-
-// The grid is two columns; an odd item count would leave the last card orphaned, so it spans.
-const lastIsWide = items.length % 2 === 1
+import { spansLastRow } from '../lib/grid'
 
 export const ProofItem = ({ it, i, wide }) => {
   return (
@@ -40,7 +38,7 @@ const Proof = () => {
 
       <div className="hair-grid ed-proof-grid">
         {items.map((it, i) => (
-          <ProofItem key={it.title} it={it} i={i} wide={lastIsWide && i === items.length - 1} />
+          <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(items, i)} />
         ))}
       </div>
 

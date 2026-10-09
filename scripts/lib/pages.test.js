@@ -63,6 +63,12 @@ test('rewriteHead drops the hero preload and the homepage JSON-LD, keeps font pr
   assert.match(ld[0], /\\u003c\/script>/) // a "</script>" inside the data cannot close the tag
 })
 
+test('rewriteHead strips head comments, and only head comments', () => {
+  const html = rewriteHead(TEMPLATE.replace('<div id="root">', '<!--body note--><div id="root">'), PAGE)
+  assert.doesNotMatch(html.slice(0, html.indexOf('</head>')), /<!--/)
+  assert.match(html, /<!--body note-->/)
+})
+
 test('rewriteHead fails loudly when a head field is missing', () => {
   const noCanonical = TEMPLATE.replace(/<link rel="canonical"[^>]*>/, '')
   assert.throws(() => rewriteHead(noCanonical, PAGE), /canonical/)

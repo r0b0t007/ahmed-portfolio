@@ -19,8 +19,16 @@ export function hydrateIslands() {
       continue
     }
     // The props the server rendered this island with (App.jsx serialises them), so the client
-    // tree matches the prerendered markup.
-    const props = el.dataset.props ? JSON.parse(el.dataset.props) : {}
+    // tree matches the prerendered markup. A parse failure is contained to its own island: if it
+    // threw out of this loop, main.jsx would retry the whole function and call hydrateRoot a
+    // second time on the islands that had already hydrated.
+    let props
+    try {
+      props = el.dataset.props ? JSON.parse(el.dataset.props) : {}
+    } catch (err) {
+      console.error(`[islands] #${id} has unreadable data-props; leaving it as static markup`, err)
+      continue
+    }
     hydrateRoot(el, <StrictMode><Component {...props} /></StrictMode>)
   }
 }

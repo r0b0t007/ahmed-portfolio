@@ -32,7 +32,7 @@ function contentSchema({ emitLlms }) {
     PRICE_SAAS_LABEL: () => PRICE_SAAS_LABEL,
     SITE_WEEKS: () => weeksText(SITE_WEEKS),
     SAAS_WEEKS: () => weeksText(SAAS_WEEKS),
-    BUILD_WEEKS: () => `${SITE_WEEKS.from} to ${SAAS_WEEKS.to}`,
+    BUILD_WEEKS: () => weeksText({ from: SITE_WEEKS.from, to: SAAS_WEEKS.to }),
     PAGES: () => routes
       .filter(r => r.kind !== 'home')
       .map(r => `- [${r.name}](${absoluteUrl(r.path)}) — ${r.summary}`)
