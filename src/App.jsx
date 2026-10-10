@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import ServicePage from './pages/ServicePage'
 import WorkPage from './pages/WorkPage'
 import { findRoute } from './content/routes'
+import { contentFor } from './content/locale'
+import { LocaleContext } from './lib/content-context'
 import { sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/sections'
 
 /**
@@ -16,7 +18,8 @@ import { sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/secti
  * position: sticky against <body>).
  *
  * Contact's props differ per page (its eyebrow index), so they are serialised into data-props:
- * src/hydrate.jsx reads them back, and the client render matches the server's.
+ * src/hydrate.jsx reads them back, and the client render matches the server's. Every other
+ * component reads the page's language content from LocaleContext (src/lib/content-context.js).
  *
  * React.lazy is not an option here: it suspends during renderToString.
  */
@@ -26,7 +29,7 @@ import { ISLAND } from './islands'
 // the other.
 const PAGE_TYPES = {
   home: { render: () => <Home />, index: sectionIndex },
-  service: { render: r => <ServicePage slug={r.slug} />, index: serviceSectionIndex },
+  service: { render: r => <ServicePage id={r.id} />, index: serviceSectionIndex },
   work: { render: r => <WorkPage slug={r.slug} name={r.name} />, index: workSectionIndex },
 }
 
@@ -37,16 +40,18 @@ function App({ path = '/' }) {
   // Contact closes every page; its eyebrow number continues the page type's own section order.
   const contactProps = { index: type.index('contact') }
   return (
-    <div className="app">
-      <div id={ISLAND.header} style={{ display: 'contents' }}><Header /></div>
-      <main>
-        {type.render(route)}
-        <div id={ISLAND.contact} data-props={JSON.stringify(contactProps)} style={{ display: 'contents' }}>
-          <Contact {...contactProps} />
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <LocaleContext.Provider value={contentFor(route.locale)}>
+      <div className="app">
+        <div id={ISLAND.header} style={{ display: 'contents' }}><Header /></div>
+        <main>
+          {type.render(route)}
+          <div id={ISLAND.contact} data-props={JSON.stringify(contactProps)} style={{ display: 'contents' }}>
+            <Contact {...contactProps} />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </LocaleContext.Provider>
   )
 }
 

@@ -3,7 +3,7 @@
  * a line can start with the punctuation. Copy in src/content/fr/ is typed with ordinary spaces
  * and every module exports it through typo(), so no file has to carry invisible characters.
  */
-const fix = s => s.replace(/ ([:;?!»])/g, ' $1').replace(/« /g, '« ')
+const fix = s => s.replace(/ ([:;?!»])/g, '\u00a0$1').replace(/« /g, '«\u00a0')
 
 export const typo = v =>
   typeof v === 'string' ? fix(v)

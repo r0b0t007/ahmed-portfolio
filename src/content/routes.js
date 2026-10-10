@@ -77,12 +77,14 @@ const workJsonLd = (w, url) => ({
 })
 
 export const routes = [
-  { path: '/', kind: 'home' },
+  { path: '/', kind: 'home', locale: 'en' },
   ...services.map(s => {
     const path = `/services/${s.slug}`
     return {
       path,
       kind: 'service',
+      locale: 'en',
+      id: s.id,
       slug: s.slug,
       name: s.name,
       summary: s.summary,
@@ -96,6 +98,7 @@ export const routes = [
     return {
       path,
       kind: 'work',
+      locale: 'en',
       slug: w.slug,
       name: w.name,
       summary: w.summary,

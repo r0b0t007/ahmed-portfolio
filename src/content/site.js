@@ -57,7 +57,7 @@ export const PRICE_SAAS_LABEL = money(PRICE_SAAS_FROM)
 
 // The same floors written the French way ("3 000 €"). fr-FR groups with a narrow no-break space,
 // and the space before the currency is a no-break one, so a figure never wraps away from it.
-const moneyFr = n => `${n.toLocaleString('fr-FR')} ${CURRENCY}`
+const moneyFr = n => `${n.toLocaleString('fr-FR')}\u00a0${CURRENCY}`
 export const PRICE_SITE_LABEL_FR = moneyFr(PRICE_SITE_FROM)
 export const PRICE_SAAS_LABEL_FR = moneyFr(PRICE_SAAS_FROM)
 

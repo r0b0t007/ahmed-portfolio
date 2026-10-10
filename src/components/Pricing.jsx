@@ -14,6 +14,26 @@ const tiers = [
   { scope: 'SaaS product or MVP', from: PRICE_SAAS_LABEL },
 ]
 
+/** The price band as a table. The French homepage renders it with its own rows and headers. */
+export const PriceTable = ({ head, rows }) => (
+  <table className="ed-price-table">
+    <thead>
+      <tr>
+        <th scope="col">{head.scope}</th>
+        <th scope="col">{head.from}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(t => (
+        <tr key={t.scope}>
+          <th scope="row" className="ed-price-scope">{t.scope}</th>
+          <td className="ed-price-figure">{t.from}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)
+
 /**
  * The price objection gets its own section rather than a line in the FAQ, because the sharpest
  * version of it is one this positioning creates: if AI is what makes the build fast, a buyer
@@ -36,22 +56,7 @@ const Pricing = () => (
     {/* A real table, not a grid of divs: this is tabular data with column headers, and the page
         already reaches for semantic pairs elsewhere (the <dl> in Contact). A screen reader reads
         "Marketing site or landing page, From, €3,000" instead of three loose spans. */}
-    <table className="ed-price-table">
-      <thead>
-        <tr>
-          <th scope="col">Scope</th>
-          <th scope="col">From</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tiers.map(t => (
-          <tr key={t.scope}>
-            <th scope="row" className="ed-price-scope">{t.scope}</th>
-            <td className="ed-price-figure">{t.from}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <PriceTable head={{ scope: 'Scope', from: 'From' }} rows={tiers} />
 
     <p className="ed-price-note">{PRICE_MOVERS}</p>
 

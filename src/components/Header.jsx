@@ -1,21 +1,11 @@
 import { useState, useEffect } from 'react'
-import { CTA_LABEL_NAV } from '../content/site'
+import { uiFor } from '../content/i18n'
 
-// Section links are root-relative: on "/" they scroll in place, and from a service page they
-// lead back to the homepage section. The CTA is the exception: every page renders the contact
-// form, so "#contact" keeps the visitor on the page they were reading. Header hydrates without
-// props, so none of this can depend on the path.
-const navLinks = [
-  { name: 'Services', href: '/#services' },
-  { name: 'Process', href: '/#process' },
-  { name: 'Proof', href: '/#proof' },
-  { name: 'Pricing', href: '/#pricing' },
-  { name: 'About', href: '/#about' },
-  { name: 'FAQ', href: '/#faq' },
-  { name: CTA_LABEL_NAV, href: '#contact', accent: true },
-]
-
-const Header = () => {
+// An island: it hydrates with the props App.jsx serialised (src/hydrate.jsx), not from the URL or
+// the page's context, so everything it renders depends only on those props. The links' words and
+// targets live in src/content/ui.js.
+const Header = ({ locale = 'en' }) => {
+  const ui = uiFor(locale)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -28,21 +18,21 @@ const Header = () => {
 
   return (
     <header className={`ed-header ${scrolled ? 'scrolled' : ''}`}>
-      <a href="/#hero" className="ed-logo">Ahmed Chioua</a>
+      <a href={`${ui.home}#hero`} className="ed-logo">Ahmed Chioua</a>
 
       <nav className="ed-nav">
-        {navLinks.map(l => (
+        {ui.nav.map(l => (
           <a key={l.name} href={l.href} className={l.accent ? 'accent' : ''}>{l.name}</a>
         ))}
       </nav>
 
-      <button className="ed-burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
+      <button className="ed-burger" aria-label={ui.menu} aria-expanded={open} onClick={() => setOpen(!open)}>
         <span /><span /><span />
       </button>
 
       {open && (
         <div className="ed-mobile" onClick={() => setOpen(false)}>
-          {navLinks.map(l => (
+          {ui.nav.map(l => (
             <a key={l.name} href={l.href} className={l.accent ? 'accent' : ''}>{l.name}</a>
           ))}
         </div>

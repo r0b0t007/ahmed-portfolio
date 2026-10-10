@@ -4,8 +4,9 @@ import { servicePath } from '../content/routes'
 import { services } from '../content/services'
 
 // One card per service page, in the same order: the card copy lives with the page's copy in
-// src/content/services.js, so a new service is one entry there, not one in each file.
-const ServiceCard = ({ s, i }) => {
+// src/content/services.js, so a new service is one entry there, not one in each file. The link
+// and its label are passed in, because the French homepage renders the same card.
+export const ServiceCard = ({ s, i, href, more }) => {
   return (
     <div className="fade-in ed-svc">
       <div className="ed-svc-n">( {ordinal(i, 2)} )</div>
@@ -15,7 +16,7 @@ const ServiceCard = ({ s, i }) => {
       <div className="ed-svc-tags">
         {s.card.tags.map(t => <span key={t} className="tag">{t}</span>)}
       </div>
-      <a href={servicePath(s.slug)} className="link-teal ed-svc-more">{s.name} in detail →</a>
+      <a href={href} className="link-teal ed-svc-more">{more} →</a>
     </div>
   )
 }
@@ -35,7 +36,7 @@ const Services = () => (
     </div>
 
     <div className="hair-grid ed-svc-grid">
-      {services.map((s, i) => <ServiceCard key={s.slug} s={s} i={i} />)}
+      {services.map((s, i) => <ServiceCard key={s.slug} s={s} i={i} href={servicePath(s.slug)} more={`${s.name} in detail`} />)}
     </div>
 
     <p className="fade-in ed-svc-also">

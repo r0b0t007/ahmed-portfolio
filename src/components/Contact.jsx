@@ -1,12 +1,16 @@
 import { useState } from 'react'
-import { BOOKING_URL, CTA_LABEL, FIRST_LINK_DAYS, WHATSAPP_URL, WHATSAPP_DISPLAY } from '../content/site'
+import { BOOKING_URL, REPO_URL, WHATSAPP_DISPLAY } from '../content/site'
+import { uiFor } from '../content/i18n'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
-const details = [
-  { label: 'Email', value: 'ahmedchioua@gmail.com', href: 'mailto:ahmedchioua@gmail.com' },
-  { label: 'WhatsApp', value: WHATSAPP_DISPLAY, href: WHATSAPP_URL },
-  { label: 'LinkedIn', value: 'linkedin.com/in/ahmedchioua', href: 'https://linkedin.com/in/ahmedchioua' },
-  { label: 'Location', value: 'Tétouan, Morocco · Remote', href: null },
+const EMAIL = 'ahmedchioua@gmail.com'
+const LINKEDIN = 'https://linkedin.com/in/ahmedchioua'
+
+const details = ui => [
+  { label: ui.contact.details.email, value: EMAIL, href: `mailto:${EMAIL}` },
+  { label: ui.contact.details.whatsapp, value: WHATSAPP_DISPLAY, href: ui.whatsappUrl },
+  { label: ui.contact.details.linkedin, value: 'linkedin.com/in/ahmedchioua', href: LINKEDIN },
+  { label: ui.contact.details.location, value: ui.contact.details.place, href: null },
 ]
 
 /**
@@ -16,11 +20,11 @@ const details = [
  */
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || '/api/contact'
 
-async function send(form, gotcha) {
+async function send(form, gotcha, subjectPrefix) {
   const res = await fetch(ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ ...form, _subject: `Portfolio contact: ${form.subject}`, _gotcha: gotcha }),
+    body: JSON.stringify({ ...form, _subject: `${subjectPrefix}${form.subject}`, _gotcha: gotcha }),
   })
   // fetch only rejects on network failure; a 4xx/5xx must not read as "sent".
   if (!res.ok) throw new Error(`form endpoint responded ${res.status}`)
@@ -32,8 +36,12 @@ async function send(form, gotcha) {
  * React attaches. Controlled inputs start that render with empty state and blank whatever was
  * typed on the first keystroke after hydration; reading the values off the form at submit time
  * cannot lose them. It also drops a re-render per keystroke.
+ *
+ * An island: its words come from the locale App.jsx serialises into data-props.
  */
-const Contact = ({ index }) => {
+const Contact = ({ index, locale = 'en' }) => {
+  const ui = uiFor(locale)
+  const t = ui.contact
   const [status, setStatus] = useState('idle')
 
   const submit = async e => {
@@ -47,7 +55,7 @@ const Contact = ({ index }) => {
         email: fields.email.value,
         subject: fields.subject.value,
         message: fields.message.value,
-      }, fields['bot-field']?.value ?? '')
+      }, fields['bot-field']?.value ?? '', t.subjectPrefix)
       setStatus('success')
       form.reset()
     } catch {
@@ -62,50 +70,32 @@ const Contact = ({ index }) => {
         <div className="fade-in ed-contact-left">
           <div className="eyebrow-block" style={{ marginBottom: 0 }}>
             <div className="eyebrow-row">
-              <span className="eyebrow">Next step</span>
+              <span className="eyebrow">{t.eyebrow}</span>
               <span className="eyebrow-index">( {index} )</span>
             </div>
-            <h2 className="sec-title">Claim your <em>{FIRST_LINK_DAYS}-Day Prototype Slot</em></h2>
-            <p className="sec-lead" style={{ marginBottom: '28px' }}>
-              I run a few builds at a time; weekly demos are why. The scope call is free, 30
-              minutes, and ends with a written answer: what gets built, what it costs, and the date
-              it goes live. If I'm not the right person for it, I'll tell you on the call.
-            </p>
+            <h2 className="sec-title">{t.title} <em>{t.em}</em></h2>
+            <p className="sec-lead" style={{ marginBottom: '28px' }}>{t.lead}</p>
             <div className="ed-contact-btns">
-              <a
-                className="btn-ink"
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {CTA_LABEL}
+              <a className="btn-ink" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                {ui.cta.short}
               </a>
-              <a
-                className="btn-wa"
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a className="btn-wa" href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer">
                 <WhatsAppIcon />
-                Message me on WhatsApp
+                {t.whatsapp}
               </a>
             </div>
             <dl className="ed-details">
-              {details.map(d => (
+              {details(ui).map(d => (
                 <div key={d.label} className="ed-detail">
                   <dt>{d.label}</dt>
                   <dd>{d.href ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">{d.value}</a> : d.value}</dd>
                 </div>
               ))}
             </dl>
+            <p className="ed-alt-cta">{t.terms}</p>
             <p className="ed-alt-cta">
-              No retainer. No deposit to talk. A written scope within a week, or a straight &ldquo;not me&rdquo;.
-            </p>
-            <p className="ed-alt-cta">
-              Not ready to talk?{' '}
-              <a href="https://github.com/r0b0t007/ahmed-portfolio" target="_blank" rel="noopener noreferrer">
-                Read the code first &rarr;
-              </a>
+              {t.notReady}{' '}
+              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">{t.readCode}</a>
             </p>
           </div>
         </div>
@@ -113,13 +103,13 @@ const Contact = ({ index }) => {
         <form className="fade-in ed-form" name="contact" onSubmit={submit}>
           <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
           <div className="ed-form-row">
-            <div className="ed-fg"><label>Name</label><input name="name" placeholder="Your name" required /></div>
-            <div className="ed-fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required /></div>
+            <div className="ed-fg"><label>{t.fields.name.label}</label><input name="name" placeholder={t.fields.name.placeholder} required /></div>
+            <div className="ed-fg"><label>{t.fields.email.label}</label><input type="email" name="email" placeholder={t.fields.email.placeholder} required /></div>
           </div>
-          <div className="ed-fg"><label>Subject</label><input name="subject" placeholder="What's this about?" required /></div>
-          <div className="ed-fg"><label>Message</label><textarea name="message" rows="5" placeholder="Tell me more…" required /></div>
+          <div className="ed-fg"><label>{t.fields.subject.label}</label><input name="subject" placeholder={t.fields.subject.placeholder} required /></div>
+          <div className="ed-fg"><label>{t.fields.message.label}</label><textarea name="message" rows="5" placeholder={t.fields.message.placeholder} required /></div>
           <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending…' : status === 'success' ? '✓ Message sent' : status === 'error' ? '✗ Failed — retry' : 'Send message'}
+            {t.submit[status]}
           </button>
         </form>
       </div>
