@@ -9,6 +9,10 @@ import { services } from './services.js'
 import { faqs } from './faqs.js'
 import { steps } from './process.js'
 import { productProof, proofItems, siteProof } from './proof.js'
+import { services as frServices } from './fr/services.js'
+import { faqs as frFaqs } from './fr/faqs.js'
+import { steps as frSteps } from './fr/process.js'
+import { productProof as frProductProof, proofItems as frProofItems, siteProof as frSiteProof } from './fr/proof.js'
 
 const build = (locale, m) => ({
   locale,
@@ -23,6 +27,10 @@ const build = (locale, m) => ({
 
 const CONTENT = {
   en: build('en', { services, faqs, steps, productProof, siteProof, proofItems }),
+  fr: build('fr', {
+    services: frServices, faqs: frFaqs, steps: frSteps,
+    productProof: frProductProof, siteProof: frSiteProof, proofItems: frProofItems,
+  }),
 }
 
 export function contentFor(locale) {

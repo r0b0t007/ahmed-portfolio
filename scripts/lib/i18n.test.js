@@ -7,6 +7,14 @@ import {
 import { contentFor } from '../../src/content/locale.js'
 import { uiFor } from '../../src/content/i18n.js'
 import { ui } from '../../src/content/ui.js'
+import { services } from '../../src/content/services.js'
+import { steps } from '../../src/content/process.js'
+import { ui as frUi } from '../../src/content/fr/ui.js'
+import { services as frServices } from '../../src/content/fr/services.js'
+import { faqs as frFaqs } from '../../src/content/fr/faqs.js'
+import { steps as frSteps } from '../../src/content/fr/process.js'
+import { proofItems as frProof } from '../../src/content/fr/proof.js'
+import { home as frHome } from '../../src/content/fr/home.js'
 
 test('typo puts a no-break space before French double punctuation and inside guillemets', () => {
   assert.equal(
@@ -48,4 +56,55 @@ test('contentFor(en) serves the English content, by id', () => {
 test('an unknown locale fails loudly', () => {
   assert.throws(() => contentFor('de'), /no content for "de"/)
   assert.throws(() => uiFor('de'), /no interface strings for locale "de"/)
+})
+
+test('French services mirror the English ones: same ids, order, price, weeks and proof group', () => {
+  assert.deepEqual(frServices.map(s => s.id), services.map(s => s.id))
+  frServices.forEach((s, i) => {
+    for (const k of ['priceFrom', 'weeks', 'proof']) assert.equal(s[k], services[i][k], `${s.id}.${k}`)
+    assert.equal(s.included.length, services[i].included.length, `${s.id}.included`)
+  })
+})
+
+test('every FAQ id a French page asks for exists in French', () => {
+  const ids = new Set(frFaqs.map(f => f.id))
+  assert.deepEqual(frHome.faq.ids, ['what', 'speed', 'cost', 'ownership', 'slip', 'location'])
+  for (const id of [...frHome.faq.ids, ...frServices.flatMap(s => s.faqIds)]) assert.ok(ids.has(id), id)
+})
+
+test('the French process has the same four steps', () => {
+  assert.equal(frSteps.length, steps.length)
+})
+
+test('French interface strings have the same shape as the English ones', () => {
+  const shape = v => typeof v === 'function' ? 'fn'
+    : Array.isArray(v) ? v.map(shape)
+      : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map(k => [k, shape(v[k])]))
+        : typeof v
+  // The navs differ in length (About is English-only), and only French sets validation messages.
+  const comparable = u => ({ ...u, nav: undefined, contact: { ...u.contact, invalid: undefined } })
+  assert.deepEqual(shape(comparable(frUi)), shape(comparable(ui)))
+})
+
+test('the French nav stays on the French homepage, except the contact anchor every page has', () => {
+  for (const l of frUi.nav) assert.match(l.href, /^(\/fr#[a-z]+|#contact)$/, l.name)
+})
+
+test('contentFor and uiFor serve French', () => {
+  const c = contentFor('fr')
+  assert.equal(c.ui, frUi)
+  assert.equal(uiFor('fr'), frUi)
+  assert.equal(c.findService('saas').slug, 'developpement-saas')
+  assert.equal(c.proof.all, frProof)
+})
+
+test('no French string has an ordinary space before : ; ? or !', () => {
+  const strings = v => typeof v === 'string' ? [v]
+    : typeof v === 'function' ? strings(v('X'))
+      : Array.isArray(v) ? v.flatMap(strings)
+        : v && typeof v === 'object' ? Object.values(v).flatMap(strings)
+          : []
+  for (const s of strings([frUi, frServices, frFaqs, frSteps, frProof, frHome])) {
+    assert.doesNotMatch(s, / [:;?!]/, s)
+  }
 })

@@ -4,8 +4,9 @@
  * whereas locale.js pulls in every content module of both languages.
  */
 import { ui as en } from './ui.js'
+import { ui as fr } from './fr/ui.js'
 
-const UI = { en }
+const UI = { en, fr }
 
 export const LOCALES = Object.keys(UI)
 

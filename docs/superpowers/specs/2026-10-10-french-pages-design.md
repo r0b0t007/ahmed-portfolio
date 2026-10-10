@@ -25,7 +25,7 @@ and `llms.txt` prose; any change to English copy; prices in dirhams.
 
 | Path | Twin | Contents |
 |---|---|---|
-| `/fr` | `/` | Hero + facts strip, the two services, process, price, proof, FAQ (6 entries), contact |
+| `/fr` | `/` | Hero + facts strip, the two services, process, proof, price, FAQ (6 entries), contact |
 | `/fr/services/creation-site-web` | `/services/website-development` | Same sections as the English service page |
 | `/fr/services/developpement-saas` | `/services/saas-mvp-development` | Same sections as the English service page |
 
@@ -42,15 +42,20 @@ pre-filled message (`WHATSAPP_URL_FR`). The proof link to the build log reads
 - Existing English modules stay where they are and keep working unchanged.
 - New French modules mirror them under `src/content/fr/`, keyed by the same ids:
   - `services.js`: same service ids, French slug, copy and card
-  - `faqs.js`: French `q`/`a` for the six ids used
+  - `faqs.js`: French `q`/`a` for eight ids: the homepage's six, plus `ai-quality` and `after`,
+    which the service pages ask for
   - `process.js`: the four steps
   - `proof.js`: product and site items
   - `ui.js`: interface strings (nav, breadcrumb, section titles, contact form, footer)
   - `home.js`: French homepage hero and section copy
+  - `products.js`: French product cards and the French "two products" phrase (kept apart from
+    `proof.js`, which imports `routes.js`, to avoid an import cycle)
+  - `typo.js`: French typography; every French module exports through it
 - English interface strings move out of Header, Footer, Contact, Breadcrumb and ServicePage into
   `src/content/ui.js`, so both languages read from the same shape.
-- `src/content/locale.js` exports `contentFor(locale)`, returning
-  `{ services, faqs, process, proof, ui }` for `en` or `fr`.
+- `src/content/locale.js` exports `contentFor(locale)`; `src/content/i18n.js` exports
+  `uiFor(locale)` (interface strings only), which is all the islands import, so the client
+  bundle carries no page copy.
 - `site.js` adds `WHATSAPP_URL_FR` and French price labels (`PRICE_SITE_LABEL_FR` and the SaaS
   equivalent, via `toLocaleString('fr-FR')`). Every number still comes from `site.js`.
 
