@@ -77,6 +77,9 @@ pre-filled message (`WHATSAPP_URL_FR`). The proof link to the build log reads
   - Header also gains `switchHref`: the other language's twin path, or that language's homepage.
   - `hydrate.jsx` already passes `data-props` through, so hydration matches the server render.
   - The EN/FR switch link sits in the header.
+  - The French nav links to the French homepage's sections (`/fr#services`, `/fr#process`,
+    `/fr#proof`, `/fr#pricing`, `/fr#faq`, plus the CTA `#contact`). The English nav is
+    unchanged. About only exists in English, so it isn't in the French nav.
 
 ### Head
 
