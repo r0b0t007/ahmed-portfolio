@@ -13,6 +13,7 @@ import {
   FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_FROM, PRICE_SAAS_LABEL, PRICE_SITE_FROM,
   PRICE_SITE_LABEL, SAAS_WEEKS, SITE_WEEKS, weeksRange, weeksText,
 } from './site.js'
+import { productsPhrase } from './products.js'
 
 // NEW
 const handOff = {
@@ -95,7 +96,7 @@ export const services = [
     proof: 'products',
     proofTitle: 'Products I build',
     proofTitleEm: 'and run.',
-    proofLead: 'I won’t show you client logos I haven’t earned. These are two products I built and run.',
+    proofLead: `I won’t show you client logos I haven’t earned. These are ${productsPhrase}.`,
     faqIds: ['speed', 'cost', 'slip', 'ownership', 'after'],
   },
 ]
