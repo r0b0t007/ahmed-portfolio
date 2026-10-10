@@ -1,12 +1,13 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects, fillErrorPage } from './pages.js'
+import { injectMarkup, rewriteHead, addAlternates, assertPage, buildSitemap, buildRedirects, fillErrorPage } from './pages.js'
 
 const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
 <meta name="description" content="home description" />
 <link rel="canonical" href="https://ahmedchioua.com/" />
 <meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://ahmedchioua.com/" />
 <meta property="og:title" content="Home" />
 <meta property="og:description" content="home description" />
@@ -101,10 +102,15 @@ test('buildRedirects sends each page’s slash form to the page, and nothing els
 })
 
 test('fillErrorPage lists every route by name, escaped, in place of the placeholder', () => {
-  const routes = [{ path: '/', kind: 'home' }, { path: '/services/a', kind: 'service', name: 'SaaS & MVP' }]
+  const routes = [
+    { path: '/', kind: 'home' },
+    { path: '/services/a', kind: 'service', name: 'SaaS & MVP' },
+    { path: '/fr', kind: 'home', name: 'Version française' },
+  ]
   const html = fillErrorPage('<nav>\n        <!--PAGE_LINKS-->\n      </nav>', routes)
   assert.match(html, /<a href="\/">Homepage<\/a>/)
   assert.match(html, /<a href="\/services\/a">SaaS &amp; MVP<\/a>/)
+  assert.match(html, /<a href="\/fr">Version française<\/a>/)
   assert.doesNotMatch(html, /PAGE_LINKS/)
 })
 
@@ -120,4 +126,30 @@ test('rewriteHead marks articles for link previews, and leaves other pages as we
   const page = rewriteHead(TEMPLATE, PAGE)
   assert.match(page, /<meta property="og:type" content="website" \/>/)
   assert.doesNotMatch(page, /article:published_time/)
+})
+
+test('rewriteHead sets the page language, its og:locale and its hreflang links', () => {
+  const alternates = { en: 'https://ahmedchioua.com/services/x', fr: 'https://ahmedchioua.com/fr/services/y' }
+  const html = rewriteHead(TEMPLATE, { ...PAGE, url: alternates.fr, lang: 'fr', ogLocale: 'fr_FR', alternates })
+  assert.match(html, /^<!doctype html><html lang="fr">/)
+  assert.match(html, /<meta property="og:locale" content="fr_FR" \/>/)
+  const links = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g)].map(m => [m[1], m[2]])
+  assert.deepEqual(links, [['en', alternates.en], ['fr', alternates.fr], ['x-default', alternates.en]])
+  assert.ok(html.lastIndexOf('hreflang') < html.indexOf('</head>'))
+})
+
+test('rewriteHead leaves language and hreflang alone when not asked', () => {
+  const html = rewriteHead(TEMPLATE, PAGE)
+  assert.match(html, /<html lang="en">/)
+  assert.match(html, /<meta property="og:locale" content="en_US" \/>/)
+  assert.doesNotMatch(html, /hreflang/)
+})
+
+test('addAlternates adds one set, needs an English page for x-default, and skips pages without twins', () => {
+  const alt = { en: 'https://ahmedchioua.com/', fr: 'https://ahmedchioua.com/fr' }
+  const once = addAlternates(TEMPLATE, alt)
+  assert.equal(once.match(/hreflang=/g).length, 3)
+  assert.throws(() => addAlternates(once, alt), /already/)
+  assert.throws(() => addAlternates(TEMPLATE, { fr: alt.fr }), /x-default/)
+  assert.equal(addAlternates(TEMPLATE, undefined), TEMPLATE)
 })
