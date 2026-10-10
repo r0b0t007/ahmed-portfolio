@@ -2,12 +2,13 @@ import Header from './components/Header'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Home from './pages/Home'
+import HomeFr from './pages/HomeFr'
 import ServicePage from './pages/ServicePage'
 import WorkPage from './pages/WorkPage'
 import { findRoute } from './content/routes'
 import { contentFor } from './content/locale'
 import { LocaleContext } from './lib/content-context'
-import { sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/sections'
+import { homeFrSectionIndex, sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/sections'
 
 /**
  * Each page is rendered once, at build time, into static HTML (scripts/prerender.js renders one
@@ -26,16 +27,17 @@ import { sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/secti
 import { ISLAND } from './islands'
 
 // Each route kind's page and section numbering, in one place so a new kind can't get one without
-// the other.
+// the other. "kind:locale" entries override a kind for one language.
 const PAGE_TYPES = {
   home: { render: () => <Home />, index: sectionIndex },
+  'home:fr': { render: () => <HomeFr />, index: homeFrSectionIndex },
   service: { render: r => <ServicePage id={r.id} />, index: serviceSectionIndex },
   work: { render: r => <WorkPage slug={r.slug} name={r.name} />, index: workSectionIndex },
 }
 
 function App({ path = '/' }) {
   const route = findRoute(path)
-  const type = PAGE_TYPES[route.kind]
+  const type = PAGE_TYPES[`${route.kind}:${route.locale}`] ?? PAGE_TYPES[route.kind]
   if (!type) throw new Error(`App: no page type "${route.kind}" for ${path}`)
   // Contact closes every page; its eyebrow number continues the page type's own section order.
   const contactProps = { index: type.index('contact') }
