@@ -10,16 +10,18 @@
  * paint waits on the bundle parsing, and non-JS crawlers see nothing. Injecting the markup means
  * the page paints from HTML and React hydrates over it.
  *
- * The homepage keeps index.html's hand-written head. Every other route starts from the same
- * built template, so it inherits the inlined CSS, font preloads and entry script, and gets its
- * own title, description, canonical and JSON-LD (scripts/lib/pages.js). Routes are written as
+ * The English homepage keeps index.html's hand-written head (plus its hreflang links). Every
+ * other route, the French homepage included, starts from the same built template, so it inherits
+ * the inlined CSS, font preloads and entry script, and gets its own title, description,
+ * canonical, JSON-LD, language and hreflang links (scripts/lib/pages.js). Routes are written as
  * <path>.html, which Cloudflare Pages serves at the extensionless URL.
  */
 import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
-import { injectMarkup, rewriteHead, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
+import { home as frHome } from '../src/content/fr/home.js'
+import { injectMarkup, rewriteHead, addAlternates, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = file => resolve(root, 'dist', file)
@@ -34,15 +36,31 @@ const { render } = await import(pathToFileURL(ssrEntry).href)
 const template = readFileSync(dist('index.html'), 'utf8')
 const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 const paths = routes.map(r => r.path)
+// og:locale per language; index.html declares en_US.
+const OG_LOCALE = { en: 'en_US', fr: 'fr_FR' }
+// The preview image's description per language; index.html's is the English one.
+const IMAGE_ALT = { fr: frHome.meta.imageAlt }
+const absolute = alternates => alternates && Object.fromEntries(Object.entries(alternates).map(([l, p]) => [l, absoluteUrl(p)]))
 
 for (const route of routes) {
   try {
     const url = absoluteUrl(route.path)
     // Head first, on the bare template: the "exactly once" checks must only ever see the head,
     // not a <title> inside an SVG icon or JSON-LD that a component renders in the body.
-    const head = route.kind === 'home'
-      ? template
-      : rewriteHead(template, { url, title: route.title, description: route.description, jsonLd: route.jsonLd, og: route.og })
+    // The English homepage keeps index.html's hand-written head and only gains its hreflang links.
+    const head = route.path === '/'
+      ? addAlternates(template, absolute(route.alternates))
+      : rewriteHead(template, {
+        url,
+        title: route.title,
+        description: route.description,
+        jsonLd: route.jsonLd,
+        og: route.og,
+        lang: route.locale,
+        ogLocale: OG_LOCALE[route.locale],
+        imageAlt: IMAGE_ALT[route.locale],
+        alternates: absolute(route.alternates),
+      })
     const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
     // 404.html's "Get in touch" is a fixed /#contact link (src/404.html); the homepage must keep

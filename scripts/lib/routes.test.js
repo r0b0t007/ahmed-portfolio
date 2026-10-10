@@ -2,6 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { routes, absoluteUrl, findRoute, servicePath, workPath } from '../../src/content/routes.js'
 import { services } from '../../src/content/services.js'
+import { services as frServices } from '../../src/content/fr/services.js'
 import { faqById } from '../../src/content/faqs.js'
 import { buildRedirects } from './pages.js'
 
@@ -10,12 +11,14 @@ test('the homepage is the first route and paths are unique', () => {
   assert.equal(new Set(routes.map(r => r.path)).size, routes.length)
 })
 
-test('service paths have no trailing slash', () => {
-  for (const r of routes.filter(r => r.kind === 'service')) assert.match(r.path, /^\/services\/[a-z0-9-]+$/)
+test('service paths have no trailing slash; French ones live under /fr', () => {
+  for (const r of routes.filter(r => r.kind === 'service')) {
+    assert.match(r.path, r.locale === 'fr' ? /^\/fr\/services\/[a-z0-9-]+$/ : /^\/services\/[a-z0-9-]+$/)
+  }
 })
 
 test('titles fit in 60 characters and descriptions in 160', () => {
-  for (const r of routes.filter(r => r.kind !== 'home')) {
+  for (const r of routes.filter(r => r.path !== '/')) {
     assert.ok(r.title.length <= 60, `${r.path} title is ${r.title.length} chars`)
     assert.ok(r.description.length <= 160, `${r.path} description is ${r.description.length} chars`)
   }
@@ -74,4 +77,38 @@ test('work JSON-LD is a dated TechArticle by the Person, with a breadcrumb endin
     assert.match(article.datePublished, /^\d{4}-\d{2}-\d{2}$/)
     assert.equal(crumbs.itemListElement.at(-1).item, absoluteUrl(r.path))
   }
+})
+
+test('the French pages are the homepage and both services, at French slugs', () => {
+  const fr = routes.filter(r => r.locale === 'fr')
+  assert.deepEqual(fr.map(r => r.path), ['/fr', '/fr/services/creation-site-web', '/fr/services/developpement-saas'])
+  for (const r of fr) assert.match(r.path, /^\/fr(\/services\/[a-z0-9-]+)?$/)
+  assert.equal(servicePath('developpement-saas', 'fr'), '/fr/services/developpement-saas')
+})
+
+test('twin pages name each other, and every alternate exists', () => {
+  const paired = routes.filter(r => r.alternates)
+  assert.equal(paired.length, 6)
+  for (const r of paired) {
+    assert.equal(r.alternates[r.locale], r.path, `${r.path} lists itself`)
+    for (const path of Object.values(r.alternates)) assert.deepEqual(findRoute(path).alternates, r.alternates, `${r.path} -> ${path}`)
+  }
+  assert.deepEqual(findRoute('/').alternates, { en: '/', fr: '/fr' })
+  assert.equal(findRoute('/work/this-site').alternates, undefined)
+})
+
+test('French structured data: French breadcrumbs, and the homepage FAQ matches the visible answers', () => {
+  const svc = findRoute('/fr/services/creation-site-web').jsonLd['@graph']
+  assert.deepEqual(svc[1].itemListElement[0], { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://ahmedchioua.com/fr' })
+  const [page, faq] = findRoute('/fr').jsonLd['@graph']
+  assert.equal(page.inLanguage, 'fr')
+  assert.equal(faq['@type'], 'FAQPage')
+  assert.equal(faq.mainEntity.length, 6)
+  assert.equal(faq.mainEntity[0].name, 'Que construisez-vous exactement\u00a0?')
+})
+
+test('English and French routes cover the same services', () => {
+  const ids = l => routes.filter(r => r.kind === 'service' && r.locale === l).map(r => r.id)
+  assert.deepEqual(ids('fr'), ids('en'))
+  assert.deepEqual(ids('fr'), frServices.map(s => s.id))
 })
