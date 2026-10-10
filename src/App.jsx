@@ -7,6 +7,7 @@ import ServicePage from './pages/ServicePage'
 import WorkPage from './pages/WorkPage'
 import { findRoute } from './content/routes'
 import { contentFor } from './content/locale'
+import { uiFor } from './content/i18n'
 import { LocaleContext } from './lib/content-context'
 import { homeFrSectionIndex, sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/sections'
 
@@ -18,7 +19,8 @@ import { homeFrSectionIndex, sectionIndex, serviceSectionIndex, workSectionIndex
  * island wrappers use display: contents so they add no box (the header must stay
  * position: sticky against <body>).
  *
- * Contact's props differ per page (its eyebrow index), so they are serialised into data-props:
+ * Both islands' props differ per page (the language, the switch target, Contact's eyebrow index),
+ * so they are serialised into data-props:
  * src/hydrate.jsx reads them back, and the client render matches the server's. Every other
  * component reads the page's language content from LocaleContext (src/lib/content-context.js).
  *
@@ -35,16 +37,24 @@ const PAGE_TYPES = {
   work: { render: r => <WorkPage slug={r.slug} name={r.name} />, index: workSectionIndex },
 }
 
+// The header's language switch goes to this page in the other language, or to that language's
+// homepage when the page has no twin (a build log).
+const OTHER = { en: 'fr', fr: 'en' }
+
 function App({ path = '/' }) {
   const route = findRoute(path)
   const type = PAGE_TYPES[`${route.kind}:${route.locale}`] ?? PAGE_TYPES[route.kind]
   if (!type) throw new Error(`App: no page type "${route.kind}" for ${path}`)
+  const other = OTHER[route.locale]
+  const headerProps = { locale: route.locale, switchHref: route.alternates?.[other] ?? uiFor(other).home }
   // Contact closes every page; its eyebrow number continues the page type's own section order.
-  const contactProps = { index: type.index('contact') }
+  const contactProps = { index: type.index('contact'), locale: route.locale }
   return (
     <LocaleContext.Provider value={contentFor(route.locale)}>
       <div className="app">
-        <div id={ISLAND.header} style={{ display: 'contents' }}><Header /></div>
+        <div id={ISLAND.header} data-props={JSON.stringify(headerProps)} style={{ display: 'contents' }}>
+          <Header {...headerProps} />
+        </div>
         <main>
           {type.render(route)}
           <div id={ISLAND.contact} data-props={JSON.stringify(contactProps)} style={{ display: 'contents' }}>

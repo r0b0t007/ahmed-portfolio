@@ -238,6 +238,15 @@ em { font-style: italic; }
 .ed-nav a { font-size: 0.82rem; font-weight: 500; color: var(--ink-2); transition: color var(--transition); }
 .ed-nav a:hover { color: var(--ink); }
 .ed-nav a.accent { color: var(--teal); border-bottom: 1px solid var(--teal); padding-bottom: 2px; }
+.ed-head-end { display: flex; align-items: center; gap: 26px; }
+/* The language switch: a small mono tag, sized as a 32px target. */
+.ed-lang {
+  display: inline-flex; align-items: center; min-height: 32px; padding: 0 10px;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: var(--ink-2); border: 1px solid var(--hair);
+  transition: color var(--transition), border-color var(--transition);
+}
+.ed-lang:hover { color: var(--ink); border-color: var(--ink-2); }
 .ed-burger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: none; padding: 6px;
@@ -253,6 +262,7 @@ em { font-style: italic; }
 @media (max-width: 860px) {
   .ed-nav { display: none; }
   .ed-burger { display: flex; }
+  .ed-head-end { gap: 14px; }
 }
 
 /* ── Hero (Hero.jsx) ── */

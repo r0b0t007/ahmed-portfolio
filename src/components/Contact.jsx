@@ -39,9 +39,21 @@ async function send(form, gotcha, subjectPrefix) {
  *
  * An island: its words come from the locale App.jsx serialises into data-props.
  */
+// The browser words its validation bubble in its own language, not the page's. Where the ui
+// strings set messages (the French pages), the form uses them instead. A custom message makes the
+// field invalid until it is cleared, so it is cleared on every input.
+const validity = invalid => invalid && {
+  onInvalid: e => {
+    const f = e.target
+    f.setCustomValidity(f.validity.typeMismatch ? invalid.email : invalid.required)
+  },
+  onInput: e => e.target.setCustomValidity(''),
+}
+
 const Contact = ({ index, locale = 'en' }) => {
   const ui = uiFor(locale)
   const t = ui.contact
+  const check = validity(t.invalid)
   const [status, setStatus] = useState('idle')
 
   const submit = async e => {
@@ -103,11 +115,11 @@ const Contact = ({ index, locale = 'en' }) => {
         <form className="fade-in ed-form" name="contact" onSubmit={submit}>
           <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
           <div className="ed-form-row">
-            <div className="ed-fg"><label>{t.fields.name.label}</label><input name="name" placeholder={t.fields.name.placeholder} required /></div>
-            <div className="ed-fg"><label>{t.fields.email.label}</label><input type="email" name="email" placeholder={t.fields.email.placeholder} required /></div>
+            <div className="ed-fg"><label>{t.fields.name.label}</label><input name="name" placeholder={t.fields.name.placeholder} required {...check} /></div>
+            <div className="ed-fg"><label>{t.fields.email.label}</label><input type="email" name="email" placeholder={t.fields.email.placeholder} required {...check} /></div>
           </div>
-          <div className="ed-fg"><label>{t.fields.subject.label}</label><input name="subject" placeholder={t.fields.subject.placeholder} required /></div>
-          <div className="ed-fg"><label>{t.fields.message.label}</label><textarea name="message" rows="5" placeholder={t.fields.message.placeholder} required /></div>
+          <div className="ed-fg"><label>{t.fields.subject.label}</label><input name="subject" placeholder={t.fields.subject.placeholder} required {...check} /></div>
+          <div className="ed-fg"><label>{t.fields.message.label}</label><textarea name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} /></div>
           <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
             {t.submit[status]}
           </button>
