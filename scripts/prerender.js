@@ -20,6 +20,7 @@ import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
+import { home as frHome } from '../src/content/fr/home.js'
 import { injectMarkup, rewriteHead, addAlternates, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -37,6 +38,8 @@ const outFile = path => (path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 const paths = routes.map(r => r.path)
 // og:locale per language; index.html declares en_US.
 const OG_LOCALE = { en: 'en_US', fr: 'fr_FR' }
+// The preview image's description per language; index.html's is the English one.
+const IMAGE_ALT = { fr: frHome.meta.imageAlt }
 const absolute = alternates => alternates && Object.fromEntries(Object.entries(alternates).map(([l, p]) => [l, absoluteUrl(p)]))
 
 for (const route of routes) {
@@ -55,6 +58,7 @@ for (const route of routes) {
         og: route.og,
         lang: route.locale,
         ogLocale: OG_LOCALE[route.locale],
+        imageAlt: IMAGE_ALT[route.locale],
         alternates: absolute(route.alternates),
       })
     const html = injectMarkup(head, render(route.path))

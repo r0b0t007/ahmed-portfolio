@@ -10,6 +10,7 @@
  * Google requires FAQPage answer text to match the answer visible on the page. Both consumers
  * read these exact strings, so they cannot drift. Edit the copy here and nowhere else.
  */
+import { byId } from './byId.js'
 import { products } from './products.js'
 import {
   FIRST_LINK_DAYS, FOUNDING_OFFER, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
@@ -77,8 +78,4 @@ export const faqs = [
 ]
 
 /** One entry by id. The service pages pick their FAQ subset this way; an unknown id fails the build. */
-export function faqById(id) {
-  const f = faqs.find(f => f.id === id)
-  if (!f) throw new Error(`faqs: no entry with id "${id}"`)
-  return f
-}
+export const faqById = byId(faqs, 'faqs')

@@ -78,8 +78,6 @@ export const ui = {
       message: { label: 'Message', placeholder: 'Tell me more…' },
     },
     submit: { idle: 'Send message', sending: 'Sending…', success: '✓ Message sent', error: '✗ Failed — retry' },
-    // Prefixes the subject of the email the form sends.
-    subjectPrefix: 'Portfolio contact: ',
     // Validation messages for the browser's bubble. null keeps the browser's own, which is in the
     // browser's language; the French pages set theirs.
     invalid: null,

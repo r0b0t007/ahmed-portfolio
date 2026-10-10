@@ -11,6 +11,7 @@ const TEMPLATE = `<!doctype html><html lang="en"><head>
 <meta property="og:url" content="https://ahmedchioua.com/" />
 <meta property="og:title" content="Home" />
 <meta property="og:description" content="home description" />
+<meta property="og:image:alt" content="Ahmed beside the headline" />
 <meta name="twitter:title" content="Home" />
 <meta name="twitter:description" content="home description" />
 <!-- below 900px the <h1> is the LCP -->
@@ -103,14 +104,14 @@ test('buildRedirects sends each page’s slash form to the page, and nothing els
 
 test('fillErrorPage lists every route by name, escaped, in place of the placeholder', () => {
   const routes = [
-    { path: '/', kind: 'home' },
-    { path: '/services/a', kind: 'service', name: 'SaaS & MVP' },
-    { path: '/fr', kind: 'home', name: 'Version française' },
+    { path: '/', kind: 'home', locale: 'en' },
+    { path: '/services/a', kind: 'service', locale: 'en', name: 'SaaS & MVP' },
+    { path: '/fr', kind: 'home', locale: 'fr', name: 'Version française' },
   ]
   const html = fillErrorPage('<nav>\n        <!--PAGE_LINKS-->\n      </nav>', routes)
   assert.match(html, /<a href="\/">Homepage<\/a>/)
   assert.match(html, /<a href="\/services\/a">SaaS &amp; MVP<\/a>/)
-  assert.match(html, /<a href="\/fr">Version française<\/a>/)
+  assert.match(html, /<a href="\/fr" lang="fr" hreflang="fr">Version française<\/a>/)
   assert.doesNotMatch(html, /PAGE_LINKS/)
 })
 
@@ -130,9 +131,10 @@ test('rewriteHead marks articles for link previews, and leaves other pages as we
 
 test('rewriteHead sets the page language, its og:locale and its hreflang links', () => {
   const alternates = { en: 'https://ahmedchioua.com/services/x', fr: 'https://ahmedchioua.com/fr/services/y' }
-  const html = rewriteHead(TEMPLATE, { ...PAGE, url: alternates.fr, lang: 'fr', ogLocale: 'fr_FR', alternates })
+  const html = rewriteHead(TEMPLATE, { ...PAGE, url: alternates.fr, lang: 'fr', ogLocale: 'fr_FR', imageAlt: 'Ahmed « titre »', alternates })
   assert.match(html, /^<!doctype html><html lang="fr">/)
   assert.match(html, /<meta property="og:locale" content="fr_FR" \/>/)
+  assert.match(html, /<meta property="og:image:alt" content="Ahmed « titre »" \/>/)
   const links = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g)].map(m => [m[1], m[2]])
   assert.deepEqual(links, [['en', alternates.en], ['fr', alternates.fr], ['x-default', alternates.en]])
   assert.ok(html.lastIndexOf('hreflang') < html.indexOf('</head>'))
@@ -142,6 +144,7 @@ test('rewriteHead leaves language and hreflang alone when not asked', () => {
   const html = rewriteHead(TEMPLATE, PAGE)
   assert.match(html, /<html lang="en">/)
   assert.match(html, /<meta property="og:locale" content="en_US" \/>/)
+  assert.match(html, /<meta property="og:image:alt" content="Ahmed beside the headline" \/>/)
   assert.doesNotMatch(html, /hreflang/)
 })
 

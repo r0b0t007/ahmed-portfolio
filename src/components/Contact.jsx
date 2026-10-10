@@ -20,11 +20,11 @@ const details = ui => [
  */
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || '/api/contact'
 
-async function send(form, gotcha, subjectPrefix) {
+async function send(form, gotcha, locale) {
   const res = await fetch(ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ ...form, _subject: `${subjectPrefix}${form.subject}`, _gotcha: gotcha }),
+    body: JSON.stringify({ ...form, locale, _gotcha: gotcha }),
   })
   // fetch only rejects on network failure; a 4xx/5xx must not read as "sent".
   if (!res.ok) throw new Error(`form endpoint responded ${res.status}`)
@@ -67,7 +67,7 @@ const Contact = ({ index, locale = 'en' }) => {
         email: fields.email.value,
         subject: fields.subject.value,
         message: fields.message.value,
-      }, fields['bot-field']?.value ?? '', t.subjectPrefix)
+      }, fields['bot-field']?.value ?? '', locale)
       setStatus('success')
       form.reset()
     } catch {

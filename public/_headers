@@ -18,3 +18,12 @@
 # Every prerendered page references hashed /assets/ chunks, so it must revalidate after a deploy.
 /services/*
   Cache-Control: public, max-age=0, must-revalidate
+
+/work/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/fr
+  Cache-Control: public, max-age=0, must-revalidate
+
+/fr/*
+  Cache-Control: public, max-age=0, must-revalidate

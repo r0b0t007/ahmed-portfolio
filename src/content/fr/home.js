@@ -12,6 +12,9 @@ export const home = typo({
     // How the page is listed on the (English) 404 page.
     name: 'Version française',
     title: 'Développeur web et SaaS au Maroc, prix fixe | Ahmed Chioua',
+    // The link-preview image (og-image.png) is shared with the English pages, and its headline is
+    // in English, so the French description says so.
+    imageAlt: 'Ahmed Chioua à côté du titre, en anglais : « Your site or SaaS, live in weeks. Fixed price. Date in writing. »',
     description: `Sites web et SaaS en quelques semaines, à prix fixe : un premier lien fonctionnel en ${FIRST_LINK_DAYS} jours, un prix et une date de lancement par écrit. Basé à Tétouan.`,
   },
   hero: {

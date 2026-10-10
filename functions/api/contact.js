@@ -2,7 +2,8 @@
  * Cloudflare Pages Function: POST /api/contact
  *
  * Receives the contact form's JSON (src/components/Contact.jsx with
- * VITE_FORM_ENDPOINT=/api/contact) and forwards it as an email via Resend.
+ * VITE_FORM_ENDPOINT=/api/contact) and forwards it as an email via Resend. A message sent from a
+ * French page (locale "fr") is tagged "(FR)" in the subject, so the inbox shows its language.
  *
  * Environment (Pages project settings → Variables and secrets):
  *   RESEND_API_KEY  (secret, required)  resend.com API key
@@ -44,7 +45,7 @@ export async function onRequestPost({ request, env }) {
       from: env.CONTACT_FROM || 'Portfolio contact <onboarding@resend.dev>',
       to: [env.CONTACT_TO || 'ahmedchioua@gmail.com'],
       reply_to: form.email,
-      subject: `Portfolio contact: ${form.subject}`,
+      subject: `Portfolio contact${form.locale === 'fr' ? ' (FR)' : ''}: ${form.subject}`,
       text: `From: ${form.name} <${form.email}>\n\n${form.message}`,
     }),
   })

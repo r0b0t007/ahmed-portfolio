@@ -74,8 +74,6 @@ export const ui = typo({
       message: { label: 'Message', placeholder: 'Dites-m’en plus…' },
     },
     submit: { idle: 'Envoyer le message', sending: 'Envoi…', success: '✓ Message envoyé', error: '✗ Échec, réessayer' },
-    // Tells Ahmed's inbox which page the message came from.
-    subjectPrefix: 'Portfolio contact (FR): ',
     invalid: { required: 'Veuillez remplir ce champ.', email: 'Veuillez saisir une adresse e-mail valide.' },
   },
   footer: {

@@ -49,7 +49,7 @@ function replaceOnce(html, pattern, replacement, label) {
 const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*"\\s*/?>`)
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
 
-export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, alternates }) {
+export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates }) {
   // index.html's head comments explain the homepage (the hero preload, the critical CSS). On any
   // other page they describe tags that are gone and cost first-wave bytes, so they go, before the
   // exactly-once checks below can count a tag that is only mentioned in their prose.
@@ -86,6 +86,8 @@ export function rewriteHead(html, { url, title, description, jsonLd, og, lang, o
   // (<html lang>) and to link-preview crawlers (og:locale).
   if (lang) fields.push([/<html lang="[^"]*">/, `<html lang="${escapeAttr(lang)}">`, '<html lang>'])
   if (ogLocale) fields.push([metaTag('property', 'og:locale'), `<meta property="og:locale" content="${escapeAttr(ogLocale)}" />`, 'og:locale'])
+  // The preview image is shared by every page; its description is read in the page's language.
+  if (imageAlt) fields.push([metaTag('property', 'og:image:alt'), `<meta property="og:image:alt" content="${escapeAttr(imageAlt)}" />`, 'og:image:alt'])
   for (const [pattern, replacement, label] of fields) html = replaceOnce(html, pattern, replacement, label)
 
   // The homepage graph (Person, FAQPage, products) describes the homepage. Each route brings its own.
@@ -160,8 +162,11 @@ export function fillErrorPage(template, routes) {
   if (found !== 1) throw new Error(`[404] expected one ${PAGE_LINKS} in src/404.html, found ${found}`)
   // The placeholder's own indentation, so the generated lines line up with the hand-written ones.
   const indent = template.match(new RegExp(`([ \\t]*)${PAGE_LINKS}`))[1]
+  // The 404 page is English; a link to a page in another language says so, to screen readers
+  // (lang, for the link text) and to anyone reading the markup (hreflang, for the target).
+  const lang = r => (r.locale && r.locale !== 'en' ? ` lang="${escapeAttr(r.locale)}" hreflang="${escapeAttr(r.locale)}"` : '')
   const links = routes
-    .map(r => `<a href="${escapeAttr(r.path)}">${escapeHtml(r.path === '/' ? 'Homepage' : r.name)}</a>`)
+    .map(r => `<a href="${escapeAttr(r.path)}"${lang(r)}>${escapeHtml(r.path === '/' ? 'Homepage' : r.name)}</a>`)
     .join(`\n${indent}`)
   return template.replace(PAGE_LINKS, () => links)
 }

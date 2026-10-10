@@ -34,10 +34,12 @@ function contentSchema({ emitLlms }) {
     SITE_WEEKS: () => weeksText(SITE_WEEKS),
     SAAS_WEEKS: () => weeksText(SAAS_WEEKS),
     BUILD_WEEKS: () => weeksText({ from: SITE_WEEKS.from, to: SAAS_WEEKS.to }),
-    PAGES: () => routes
-      .filter(r => r.kind !== 'home')
-      .map(r => `- [${r.name}](${absoluteUrl(r.path)}) — ${r.summary}`)
-      .join('\n'),
+    PAGES: () => [
+      ...routes
+        .filter(r => r.locale === 'en' && r.kind !== 'home')
+        .map(r => `- [${r.name}](${absoluteUrl(r.path)}) — ${r.summary}`),
+      `- In French: ${routes.filter(r => r.locale === 'fr').map(r => `[${r.name}](${absoluteUrl(r.path)})`).join(', ')}`,
+    ].join('\n'),
   }
 
   // Replacer functions, not strings: a `$1` or `$&` typed into a FAQ answer must land literally.

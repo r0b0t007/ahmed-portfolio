@@ -103,9 +103,3 @@ export const services = [
     faqIds: ['speed', 'cost', 'slip', 'ownership', 'after'],
   },
 ]
-
-export function findService(slug) {
-  const s = services.find(s => s.slug === slug)
-  if (!s) throw new Error(`services: no service with slug "${slug}"`)
-  return s
-}
