@@ -51,7 +51,8 @@ export const home = typo({
     title: 'Fixe. Haut de gamme.',
     em: 'Chiffré une fois.',
     lead: 'Les montants ci-dessous sont des points de départ.',
-    head: { scope: 'Prestation', from: 'À partir de' },
+    // No-break spaces: the column is narrow on phones, and the header must not wrap.
+    head: { scope: 'Prestation', from: 'À\u00a0partir\u00a0de' },
     rows: [
       { scope: 'Site vitrine ou landing page', from: PRICE_SITE_LABEL_FR },
       { scope: 'Produit SaaS ou MVP', from: PRICE_SAAS_LABEL_FR },

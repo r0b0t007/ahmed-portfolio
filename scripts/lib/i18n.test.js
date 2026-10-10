@@ -23,6 +23,11 @@ test('typo puts a no-break space before French double punctuation and inside gui
   )
 })
 
+test('typo keeps a number with the word after it, and leaves other numbers alone', () => {
+  assert.equal(typo('en 10 jours, de 5 à 40 clients'), 'en 10\u00a0jours, de 5\u00a0à 40\u00a0clients')
+  assert.equal(typo('100 / 100 / 100'), '100 / 100 / 100')
+})
+
 test('typo leaves URLs and non-strings alone, and reaches into arrays, objects and functions', () => {
   const v = typo({ href: 'https://wa.me/1?text=a', n: 3, list: ['a : b'], f: x => `${x} ?` })
   assert.equal(v.href, 'https://wa.me/1?text=a')
