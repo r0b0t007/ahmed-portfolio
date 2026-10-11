@@ -7,7 +7,7 @@ ahmedchioua.com is deployed twice from every push to `main`, both on Cloudflare:
 | Cloudflare project | Workers & Pages → `ahmed-portfolio` (Worker) | Workers & Pages → `ahmed-portfolio` (Pages) |
 | Config | `wrangler.jsonc`, code in `worker/index.js` | dashboard build settings, `functions/` |
 | Build | `npm run build`, then `npx wrangler deploy` | `npm run build`, output `dist` |
-| Address | `ahmedchioua.com` (custom domain) | `ahmed-portfolio-a76.pages.dev` |
+| Address | `ahmedchioua.com` (custom domain, set in `wrangler.jsonc`) | `ahmed-portfolio-a76.pages.dev` |
 | Contact form | `worker/index.js` → `functions/api/contact.js` | `functions/api/contact.js` |
 | Secret | `RESEND_API_KEY` on the Worker | `RESEND_API_KEY` on the Pages project |
 
@@ -20,13 +20,25 @@ A failed Worker build does not take the site down: the last good version stays l
 when the live Worker itself misbehaves.
 
 1. Check that the standby is healthy: `https://ahmed-portfolio-a76.pages.dev/` and `/fr` answer 200.
-2. Worker → **Settings → Domains & Routes**: remove `ahmedchioua.com`.
-3. Pages project → **Custom domains**: add `ahmedchioua.com` (Cloudflare creates the DNS record).
-4. Wait for the domain to show **Active**, then check `https://ahmedchioua.com/`, `/fr` and a
-   form submission.
+2. Worker → **Settings → Domains & Routes**: remove `ahmedchioua.com`. Also remove the `routes`
+   entry from `wrangler.jsonc` on `main`, or the next Worker deploy takes the domain back.
+3. Give the apex back to Pages, with the `cf` CLI:
 
-To move back, run the same steps the other way round: remove the domain from Pages, then add it
-on the Worker (**Settings → Domains & Routes → Add → Custom domain**).
+   ```sh
+   cf dns records create -z ahmedchioua.com --body '{"type":"CNAME","name":"ahmedchioua.com","content":"ahmed-portfolio-a76.pages.dev","proxied":true}'
+   cf pages domains create ahmed-portfolio --name ahmedchioua.com
+   ```
+
+4. Wait for `cf pages domains list --project-name ahmed-portfolio` to show the domain **active**,
+   then check `https://ahmedchioua.com/`, `/fr` and a form submission.
+
+To move back to the Worker: `cf pages domains delete ahmedchioua.com --project-name ahmed-portfolio`,
+delete the apex CNAME (`cf dns records list -z ahmedchioua.com` shows its id, then
+`cf dns records delete <id> -z ahmedchioua.com`), restore the `routes` entry and deploy. A Worker
+custom domain can't be attached while another DNS record holds the name.
+
+`www.ahmedchioua.com` stays on the Pages project either way. A zone redirect rule answers it with a
+301 to the apex before it reaches either deploy.
 
 ## Why not automatic failover
 
