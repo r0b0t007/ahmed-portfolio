@@ -24,6 +24,10 @@ export const WHATSAPP_DISPLAY = '+212 626-410-690'
 export const WHATSAPP_URL =
   `https://wa.me/${WHATSAPP_NUMBER}?text=` +
   encodeURIComponent("Hi Ahmed, I found your site and I'd like to talk about a project.")
+/** The same invitation in French, for the French pages (src/content/fr/). */
+export const WHATSAPP_URL_FR =
+  `https://wa.me/${WHATSAPP_NUMBER}?text=` +
+  encodeURIComponent('Bonjour Ahmed, j’ai trouvé votre site et j’aimerais parler d’un projet.')
 /**
  * The offer's numbers. They appear in the hero, Process, Handoff, Pricing, the FAQ, llms.txt and
  * the meta descriptions; a change here is one line, not a hunt. index.html cannot import, so the
@@ -50,6 +54,12 @@ export const PRICE_SAAS_FROM = 12000
 const money = n => `${CURRENCY}${n.toLocaleString('en-US')}`
 export const PRICE_SITE_LABEL = money(PRICE_SITE_FROM)
 export const PRICE_SAAS_LABEL = money(PRICE_SAAS_FROM)
+
+// The same floors written the French way ("3 000 €"). fr-FR groups with a narrow no-break space,
+// and the space before the currency is a no-break one, so a figure never wraps away from it.
+const moneyFr = n => `${n.toLocaleString('fr-FR')}\u00a0${CURRENCY}`
+export const PRICE_SITE_LABEL_FR = moneyFr(PRICE_SITE_FROM)
+export const PRICE_SAAS_LABEL_FR = moneyFr(PRICE_SAAS_FROM)
 
 /**
  * What makes a quote land above the floor. Shown under the price band on the homepage and on
@@ -85,3 +95,4 @@ export const SITE_WEEKS = { from: 2, to: 3 }
 export const SAAS_WEEKS = { from: 4, to: 6 }
 export const weeksRange = w => `${w.from}–${w.to}`
 export const weeksText = w => `${w.from} to ${w.to}`
+export const weeksTextFr = w => `${w.from} à ${w.to}`

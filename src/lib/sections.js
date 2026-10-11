@@ -26,3 +26,8 @@ export const serviceSectionIndex = indexIn(SERVICE_SECTION_ORDER, 'serviceSectio
 export const WORK_SECTION_ORDER = ['decisions', 'failures', 'method', 'check', 'contact']
 
 export const workSectionIndex = indexIn(WORK_SECTION_ORDER, 'workSectionIndex')
+
+/** The numbered sections of the French homepage (src/pages/HomeFr.jsx), in render order. */
+export const HOME_FR_SECTION_ORDER = ['services', 'process', 'proof', 'pricing', 'faq', 'contact']
+
+export const homeFrSectionIndex = indexIn(HOME_FR_SECTION_ORDER, 'homeFrSectionIndex')

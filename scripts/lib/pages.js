@@ -49,7 +49,7 @@ function replaceOnce(html, pattern, replacement, label) {
 const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*"\\s*/?>`)
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
 
-export function rewriteHead(html, { url, title, description, jsonLd, og }) {
+export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates }) {
   // index.html's head comments explain the homepage (the hero preload, the critical CSS). On any
   // other page they describe tags that are gone and cost first-wave bytes, so they go, before the
   // exactly-once checks below can count a tag that is only mentioned in their prose.
@@ -82,14 +82,37 @@ export function rewriteHead(html, { url, title, description, jsonLd, og }) {
       'og:type',
     ])
   }
+  // A page in another language than the template says so twice: to browsers and screen readers
+  // (<html lang>) and to link-preview crawlers (og:locale).
+  if (lang) fields.push([/<html lang="[^"]*">/, `<html lang="${escapeAttr(lang)}">`, '<html lang>'])
+  if (ogLocale) fields.push([metaTag('property', 'og:locale'), `<meta property="og:locale" content="${escapeAttr(ogLocale)}" />`, 'og:locale'])
+  // The preview image is shared by every page; its description is read in the page's language.
+  if (imageAlt) fields.push([metaTag('property', 'og:image:alt'), `<meta property="og:image:alt" content="${escapeAttr(imageAlt)}" />`, 'og:image:alt'])
   for (const [pattern, replacement, label] of fields) html = replaceOnce(html, pattern, replacement, label)
 
   // The homepage graph (Person, FAQPage, products) describes the homepage. Each route brings its own.
   if (!(html.match(JSON_LD) || []).length) throw new Error('[prerender] expected JSON-LD in the template, found none')
   html = html.replace(JSON_LD, '')
+  html = addAlternates(html, alternates)
   // "<" escaped so a string in the data can never close the <script> element early.
   const json = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
   return replaceOnce(html, /<\/head>/, `<script type="application/ld+json">${json}</script>\n</head>`, '</head>')
+}
+
+/**
+ * hreflang links for a page that exists in more than one language: one per language, plus
+ * x-default, which is the English page (the version for a reader whose language has none).
+ * Every page of a pair must carry the same set, or search engines ignore it; src/content/routes.js
+ * builds the set once per pair, and scripts/lib/routes.test.js checks it is reciprocal.
+ */
+export function addAlternates(html, alternates) {
+  if (!alternates) return html
+  const end = html.indexOf('</head>')
+  if (/hreflang=/.test(html.slice(0, end))) throw new Error('[prerender] the template already has hreflang links')
+  if (!alternates.en) throw new Error('[prerender] alternates need an English page for x-default')
+  const links = [...Object.entries(alternates), ['x-default', alternates.en]]
+    .map(([lang, href]) => `<link rel="alternate" hreflang="${escapeAttr(lang)}" href="${escapeAttr(href)}" />`)
+  return replaceOnce(html, /<\/head>/, `${links.join('\n')}\n</head>`, '</head>')
 }
 
 export function assertPage(html, url) {
@@ -139,8 +162,11 @@ export function fillErrorPage(template, routes) {
   if (found !== 1) throw new Error(`[404] expected one ${PAGE_LINKS} in src/404.html, found ${found}`)
   // The placeholder's own indentation, so the generated lines line up with the hand-written ones.
   const indent = template.match(new RegExp(`([ \\t]*)${PAGE_LINKS}`))[1]
+  // The 404 page is English; a link to a page in another language says so, to screen readers
+  // (lang, for the link text) and to anyone reading the markup (hreflang, for the target).
+  const lang = r => (r.locale && r.locale !== 'en' ? ` lang="${escapeAttr(r.locale)}" hreflang="${escapeAttr(r.locale)}"` : '')
   const links = routes
-    .map(r => `<a href="${escapeAttr(r.path)}">${escapeHtml(r.kind === 'home' ? 'Homepage' : r.name)}</a>`)
+    .map(r => `<a href="${escapeAttr(r.path)}"${lang(r)}>${escapeHtml(r.path === '/' ? 'Homepage' : r.name)}</a>`)
     .join(`\n${indent}`)
   return template.replace(PAGE_LINKS, () => links)
 }

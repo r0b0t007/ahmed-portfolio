@@ -5,6 +5,7 @@
  * sentences. Unmarked prose restates copy already published on the homepage.
  *
  * `card` is the homepage Services card for the same service (src/components/Services.jsx).
+ * `id` pairs a service with its French twin in src/content/fr/services.js.
  *
  * Also read by src/content/routes.js (titles, descriptions, structured data) and, through it,
  * by vite.config.js (llms.txt) and scripts/prerender.js. Keep it JSX-free.
@@ -23,6 +24,7 @@ const handOff = {
 
 export const services = [
   {
+    id: 'website',
     slug: 'website-development',
     name: 'Website development',
     card: {
@@ -62,6 +64,7 @@ export const services = [
     faqIds: ['speed', 'cost', 'ai-quality', 'ownership', 'after'],
   },
   {
+    id: 'saas',
     slug: 'saas-mvp-development',
     name: 'SaaS & MVP development',
     card: {
@@ -100,9 +103,3 @@ export const services = [
     faqIds: ['speed', 'cost', 'slip', 'ownership', 'after'],
   },
 ]
-
-export function findService(slug) {
-  const s = services.find(s => s.slug === slug)
-  if (!s) throw new Error(`services: no service with slug "${slug}"`)
-  return s
-}
