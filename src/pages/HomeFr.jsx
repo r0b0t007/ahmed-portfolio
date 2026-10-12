@@ -6,6 +6,7 @@ import { ProofItem } from '../components/Proof'
 import { PriceTable } from '../components/Pricing'
 import { FaqRow } from '../components/Faq'
 import { WhatsAppIcon } from '../components/WhatsAppIcon'
+import HeroPortrait from '../components/HeroPortrait'
 import { home } from '../content/fr/home'
 import { servicePath } from '../content/routes'
 import { BOOKING_URL } from '../content/site'
@@ -18,8 +19,8 @@ const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} 
 /**
  * The French homepage, for buyers in Morocco who search in French. Shorter than the English one
  * (no Experience, About or hand-off) and built from the same row components and classes, so the
- * two read as one site. The hero has no portrait: its preload belongs to the English homepage's
- * head. Copy is in src/content/fr/home.js; Contact closes the page via App.jsx. Section order is
+ * two read as one site. The hero is the English one's two columns: the offer, then the same
+ * portrait (HeroPortrait, preloaded in this page's head too). Copy is in src/content/fr/home.js; Contact closes the page via App.jsx. Section order is
  * declared in src/lib/sections.js (HOME_FR_SECTION_ORDER); keep both in step.
  */
 const HomeFr = () => {
@@ -29,28 +30,31 @@ const HomeFr = () => {
 
   return (
     <>
-      <section id="hero" className="section svc-hero">
-        <p className="ed-kicker">{hero.kicker}</p>
-        <h1 className="ed-h1">
-          {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
-          <em>{hero.em}</em>
-        </h1>
-        <p className="ed-lead">{hero.lead}</p>
-        <div className="ed-cta-row">
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{ui.cta.long}</a>
-          <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-wa">
-            <WhatsAppIcon />
-            {hero.whatsapp}
-          </a>
+      <section id="hero" className="ed-hero">
+        <div className="ed-hero-text">
+          <p className="ed-kicker">{hero.kicker}</p>
+          <h1 className="ed-h1">
+            {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
+            <em>{hero.em}</em>
+          </h1>
+          <p className="ed-lead">{hero.lead}</p>
+          <div className="ed-cta-row">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{ui.cta.long}</a>
+            <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-wa">
+              <WhatsAppIcon />
+              {hero.whatsapp}
+            </a>
+          </div>
+          <dl className="svc-facts">
+            {hero.facts.map(f => (
+              <div key={f.l}>
+                <dt>{f.l}</dt>
+                <dd>{f.n}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-        <dl className="svc-facts">
-          {hero.facts.map(f => (
-            <div key={f.l}>
-              <dt>{f.l}</dt>
-              <dd>{f.n}</dd>
-            </div>
-          ))}
-        </dl>
+        <HeroPortrait byline={hero.byline} />
       </section>
 
       <section id="services" className="section">

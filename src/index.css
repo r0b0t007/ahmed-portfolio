@@ -715,6 +715,13 @@ em { font-style: italic; }
 .svc-price-cta { margin-top: 32px; }
 .ed-svc-more { display: inline-block; margin-top: 22px; }
 @media (max-width: 720px) { .svc-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* In the two-column hero (the French homepage) the facts share their column with the portrait,
+   so they take .ed-stats's spacing and wrap to 2 x 2 at the same width it does. */
+.ed-hero-text .svc-facts { max-width: 620px; margin-top: 64px; }
+@media (max-width: 1270px) {
+  .ed-hero-text .svc-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 420px; }
+}
+@media (max-width: 900px) { .ed-hero-text .svc-facts { margin-top: 40px; padding-top: 22px; } }
 
 /* ── Build logs (src/pages/work/) ── */
 .log-facts {

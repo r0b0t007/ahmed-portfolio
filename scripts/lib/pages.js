@@ -48,8 +48,9 @@ function replaceOnce(html, pattern, replacement, label) {
 
 const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*"\\s*/?>`)
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
+const HERO_PRELOAD = /\s*<link rel="preload" as="image"[^>]*>/
 
-export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates }) {
+export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates, heroImage = false }) {
   // index.html's head comments explain the homepage (the hero preload, the critical CSS). On any
   // other page they describe tags that are gone and cost first-wave bytes, so they go, before the
   // exactly-once checks below can count a tag that is only mentioned in their prose.
@@ -69,9 +70,10 @@ export function rewriteHead(html, { url, title, description, jsonLd, og, lang, o
     [metaTag('property', 'og:description'), `<meta property="og:description" content="${d}" />`, 'og:description'],
     [metaTag('name', 'twitter:title'), `<meta name="twitter:title" content="${t}" />`, 'twitter:title'],
     [metaTag('name', 'twitter:description'), `<meta name="twitter:description" content="${d}" />`, 'twitter:description'],
-    // The desktop hero portrait is the homepage's LCP. No other page renders it, so preloading
-    // it there would spend 34 KB of first-wave bandwidth on an image nobody sees.
-    [/\s*<link rel="preload" as="image"[^>]*>/, '', 'hero image preload'],
+    // The desktop hero portrait is the LCP of the pages that render it (heroImage: the English
+    // and French homepages). Anywhere else the preload would spend 34 KB of first-wave bandwidth
+    // on an image nobody sees, so it goes.
+    [HERO_PRELOAD, heroImage ? (html.match(HERO_PRELOAD)?.[0] ?? '') : '', 'hero image preload'],
   ]
   // Articles (build logs) say so to link-preview crawlers, matching their TechArticle JSON-LD;
   // every other page keeps index.html's og:type of "website".

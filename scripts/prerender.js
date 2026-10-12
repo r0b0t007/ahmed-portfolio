@@ -69,6 +69,8 @@ for (const route of routes) {
         ogLocale: OG_LOCALE[route.locale],
         imageAlt: IMAGE_ALT[route.locale],
         alternates: absolute(route.alternates),
+        // Both homepages render the hero portrait (src/components/HeroPortrait.jsx).
+        heroImage: route.kind === 'home',
       })
     const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
