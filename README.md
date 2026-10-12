@@ -52,24 +52,24 @@ below the fold split into its own chunk — ~14 kB more across all nine, loaded 
 
 ## Design system
 
-Editorial, warm-paper light theme. Tokens live in `src/index.css`:
+Grid: a Swiss systems sheet. The full system, with exports, is in [`DESIGN.md`](DESIGN.md); the
+tokens live in `src/index.css`:
 
 | Token | Value | Use |
 |---|---|---|
-| `--paper` | `#faf7f2` | page background |
-| `--paper-card` | `#fffdf9` | card surface |
-| `--paper-raised` | `#f1ece2` | raised panel |
-| `--ink` | `#1a1c1a` | primary text, heavy rules |
-| `--ink-2` | `#4a4d49` | secondary text |
-| `--ink-muted` | `#64665f` | mono meta — WCAG AA on every surface used |
-| `--teal` | `#0e5f55` | accent |
-| `--hair` | `#e2ddd3` | hairline borders |
+| `--color-paper` | `oklch(99% 0.003 255)` | the sheet |
+| `--color-rail` | `oklch(93% 0.006 255)` | the exposed 12-column grid |
+| `--color-rule` | `oklch(88% 0.008 255)` | hairlines between cells and rows |
+| `--color-ink` | `oklch(16% 0.010 255)` | text, ink rules, buttons |
+| `--color-ink-2` | `oklch(33% 0.012 255)` | body copy |
+| `--color-muted` | `oklch(47% 0.012 255)` | label voice, WCAG AA on every surface used |
+| `--color-signal` | `oklch(45% 0.19 264)` | ultramarine, the one signal ink |
 
-Type: **Newsreader** (serif display) · **Archivo** (sans) · **IBM Plex Mono** (labels and meta).
-Fonts load async and non-render-blocking, with critical CSS inlined in `index.html`.
+Type: **Archivo** only, one variable file (400–800): lowercase 800 heads, 12px caps label voice,
+tabular figures. The stylesheet is inlined into each page's `<head>` and the font is preloaded.
 
-Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — the grid gaps are 1px
-`background` bleed via `.hair-grid` rather than borders.
+Every page is a stack of full-bleed bands, each with a 12-column shell that paints the column rails,
+so the grid lines up across the whole page. No cards: units are ruled cells.
 
 ## Structure
 
@@ -83,12 +83,11 @@ functions/_middleware.js runs it on every request public/_routes.json sends to F
 src/content/faqs.js     FAQ copy — single source for the section and the FAQPage schema
 src/content/products.js shipped products — single source for Proof cards, schema nodes and llms.txt
 src/content/llms.txt    llms.txt template (product and FAQ placeholders filled at build)
-src/index.css           design tokens + shared editorial primitives
+src/index.css           design tokens + the Grid system (DESIGN.md)
 src/App.jsx             section composition
 src/main.jsx            client entry — hydrates the prerendered markup
 src/entry-server.jsx    build-time server entry (renderToString)
 src/content/faqs.js     single source of truth for FAQ copy (page + schema)
-src/hooks/useFadeIn.js  IntersectionObserver scroll reveal
 src/components/
   Header · Hero · TrustStrip · Services · Process · Proof
   Experience · Summary (About) · Faq · Contact · Footer
