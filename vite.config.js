@@ -108,12 +108,12 @@ function contentSchema({ emitLlms }) {
 /**
  * Post-build head rewrites, done here (with the bundle in hand) rather than by regex in prerender:
  *   - inline the single stylesheet and drop its <link> — no render-blocking CSS request
- *   - preload the faces the hero text paints with: both Newsreader files (heading, logo, em) and
- *     Archivo (lead paragraph). Without the Archivo preload it arrives after first paint and the
- *     swap re-wraps the lead — Lighthouse reported CLS 0.018 for exactly that. Plex Mono (kicker,
- *     5 KB) is left to be discovered at first layout from the inline CSS.
+ *   - preload both faces the hero paints with: Big Shoulders Display (the <h1>, the schedule's
+ *     stations) and Public Sans (lead, labels, buttons). The site ships only these two files; a
+ *     face left to be discovered at first layout arrives after first paint, and its swap re-wraps
+ *     the text it sets (Lighthouse reported CLS 0.018 for exactly that with the old body face).
  */
-const PRELOAD_FONTS = ['newsreader', 'newsreader-400-italic', 'archivo']
+const PRELOAD_FONTS = ['big-shoulders-800', 'public-sans']
 
 function criticalHead() {
   return {
