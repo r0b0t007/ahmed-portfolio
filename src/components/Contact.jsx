@@ -50,7 +50,9 @@ const validity = invalid => invalid && {
   onInput: e => e.target.setCustomValidity(''),
 }
 
-const Contact = ({ index, locale = 'en' }) => {
+// App.jsx also passes `index` (the section's old eyebrow number); it is part of the island's
+// serialised props, but nothing renders it any more.
+const Contact = ({ locale = 'en' }) => {
   const ui = uiFor(locale)
   const t = ui.contact
   const check = validity(t.invalid)
@@ -80,13 +82,9 @@ const Contact = ({ index, locale = 'en' }) => {
     <section id="contact" className="section">
       <div className="ed-contact">
         <div className="fade-in ed-contact-left">
-          <div className="eyebrow-block" style={{ marginBottom: 0 }}>
-            <div className="eyebrow-row">
-              <span className="eyebrow">{t.eyebrow}</span>
-              <span className="eyebrow-index">( {index} )</span>
-            </div>
+          <div className="eyebrow-block ed-contact-head">
             <h2 className="sec-title">{t.title} <em>{t.em}</em></h2>
-            <p className="sec-lead" style={{ marginBottom: '28px' }}>{t.lead}</p>
+            <p className="sec-lead">{t.lead}</p>
             <div className="ed-contact-btns">
               <a className="btn-ink" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 {ui.cta.short}
@@ -113,16 +111,21 @@ const Contact = ({ index, locale = 'en' }) => {
         </div>
 
         <form className="fade-in ed-form" name="contact" onSubmit={submit}>
-          <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
+          <div style={{ display: 'none' }} aria-hidden="true"><label>Skip: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></div>
+          {/* Each label names its field (htmlFor/id), so assistive tech and a click on the label
+              both reach the input. */}
           <div className="ed-form-row">
-            <div className="ed-fg"><label>{t.fields.name.label}</label><input name="name" placeholder={t.fields.name.placeholder} required {...check} /></div>
-            <div className="ed-fg"><label>{t.fields.email.label}</label><input type="email" name="email" placeholder={t.fields.email.placeholder} required {...check} /></div>
+            <div className="ed-fg"><label htmlFor="cf-name">{t.fields.name.label}</label><input id="cf-name" name="name" autoComplete="name" placeholder={t.fields.name.placeholder} required {...check} /></div>
+            <div className="ed-fg"><label htmlFor="cf-email">{t.fields.email.label}</label><input id="cf-email" type="email" name="email" autoComplete="email" placeholder={t.fields.email.placeholder} required {...check} /></div>
           </div>
-          <div className="ed-fg"><label>{t.fields.subject.label}</label><input name="subject" placeholder={t.fields.subject.placeholder} required {...check} /></div>
-          <div className="ed-fg"><label>{t.fields.message.label}</label><textarea name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} /></div>
+          <div className="ed-fg"><label htmlFor="cf-subject">{t.fields.subject.label}</label><input id="cf-subject" name="subject" placeholder={t.fields.subject.placeholder} required {...check} /></div>
+          <div className="ed-fg"><label htmlFor="cf-message">{t.fields.message.label}</label><textarea id="cf-message" name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} /></div>
           <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
             {t.submit[status]}
           </button>
+          {/* The button's label changes with the outcome, but a label change is not announced.
+              This line is: success and failure reach screen readers too. */}
+          <p className="sr-only" role="status">{status === 'success' || status === 'error' ? t.submit[status] : ''}</p>
         </form>
       </div>
 

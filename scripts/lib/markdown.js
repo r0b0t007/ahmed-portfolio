@@ -74,8 +74,10 @@ export function parseHtml(html) {
 
 const isElement = (node, tag) => node?.tag !== undefined && (tag === undefined || node.tag === tag)
 
+// data-alt marks an alternate rendering of text that is already there (a short label shown on
+// phones in place of the long one, src/components/CtaLabel.jsx): one copy is enough.
 const hidden = ({ attrs }) =>
-  'hidden' in attrs || attrs['aria-hidden'] === 'true' || /display\s*:\s*none/i.test(attrs.style ?? '')
+  'hidden' in attrs || 'data-alt' in attrs || attrs['aria-hidden'] === 'true' || /display\s*:\s*none/i.test(attrs.style ?? '')
 
 const skipped = node => isElement(node) && (SKIP.has(node.tag) || hidden(node))
 

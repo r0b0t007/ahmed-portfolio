@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 const roles = [
   {
     date: ['Jun 2024 —', 'Present'], kind: 'Delivery',
@@ -74,10 +73,6 @@ const Row = ({ r }) => {
 const Experience = () => (
   <section id="experience" className="section">
     <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Background</span>
-        <span className="eyebrow-index">( {sectionIndex('experience')} )</span>
-      </div>
       <h2 className="sec-title">Where the <em>standards</em> come from</h2>
       <p className="sec-lead">
         Nine years inside enterprise software: about four building it, and five leading the

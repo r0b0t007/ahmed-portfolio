@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
 import { servicePath } from '../content/routes'
 import { services } from '../content/services'
@@ -9,7 +8,7 @@ import { services } from '../content/services'
 export const ServiceCard = ({ s, i, href, more }) => {
   return (
     <div className="fade-in ed-svc">
-      <div className="ed-svc-n">( {ordinal(i, 2)} )</div>
+      <div className="ed-svc-n">{ordinal(i, 2)}</div>
       <h3 className="ed-svc-t">{s.card.title}</h3>
       <div className="ed-svc-tag">{s.card.tagline}</div>
       <p className="ed-svc-desc">{s.card.desc}</p>
@@ -24,10 +23,6 @@ export const ServiceCard = ({ s, i, href, more }) => {
 const Services = () => (
   <section id="services" className="section">
     <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Services</span>
-        <span className="eyebrow-index">( {sectionIndex('services')} )</span>
-      </div>
       <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">
         Two things, done end to end. Scoped up front, shipped on an agreed date, and handed

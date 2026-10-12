@@ -6,7 +6,7 @@ import { ordinal } from '../lib/ordinal'
  */
 export const BenefitCard = ({ b, i }) => (
   <div className="fade-in ed-ben">
-    <div className="ed-ben-n">( {ordinal(i, 2)} )</div>
+    <div className="ed-ben-n">{ordinal(i, 2)}</div>
     <h3 className="ed-ben-t">{b.title}</h3>
     {b.lines.map(l => <p key={l} className="ed-ben-l">{l}</p>)}
   </div>

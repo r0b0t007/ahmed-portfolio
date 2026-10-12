@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import {
   BOOKING_URL, PRICE_MOVERS, PRICE_PROMISE, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
 } from '../content/site'
@@ -43,10 +42,6 @@ export const PriceTable = ({ head, rows }) => (
 const Pricing = () => (
   <section id="pricing" className="section">
     <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Pricing</span>
-        <span className="eyebrow-index">( {sectionIndex('pricing')} )</span>
-      </div>
       <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
         The figures below are starting points. {PRICE_PROMISE} No change-order ambush.

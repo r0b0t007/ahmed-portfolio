@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { ordinal } from '../lib/ordinal'
 
 const panels = [
@@ -34,10 +33,6 @@ const About = () => {
   return (
     <section id="about" className="section">
       <div className="eyebrow-block">
-        <div className="eyebrow-row">
-          <span className="eyebrow">About</span>
-          <span className="eyebrow-index">( {sectionIndex('about')} )</span>
-        </div>
         <h2 className="sec-title">What I work <em>with</em></h2>
         <p className="fade-in sec-lead">
           I use AI every day in the build, and it’s the difference between quoting six weeks and

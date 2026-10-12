@@ -40,6 +40,11 @@ test('forms, buttons, SVG, hidden and aria-hidden content are left out', () => {
   assert.equal(out, '# T\n\nkept')
 })
 
+test('an alternate rendering (data-alt) is left out, so a two-length label appears once', () => {
+  assert.equal(body('<h1>T</h1><p><a href="/b"><span class="cta-long">Claim a slot now</span><span class="cta-short" data-alt="">Claim</span></a></p>'),
+    '# T\n\n[Claim a slot now](https://ahmedchioua.com/b)')
+})
+
 test('sibling spans are separated, and elements do not run into each other or into words', () => {
   assert.equal(body('<h1>T</h1><div><span>Design &amp; build</span><span>SEO</span></div>'), '# T\n\nDesign & build · SEO')
   assert.equal(body('<h1>T</h1><div><a href="/a">A</a><a href="/b">B</a></div>'), '# T\n\n[A](https://ahmedchioua.com/a) [B](https://ahmedchioua.com/b)')

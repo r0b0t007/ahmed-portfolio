@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { faqs } from '../content/faqs'
 
 export const FaqRow = ({ f }) => {
@@ -13,10 +12,6 @@ export const FaqRow = ({ f }) => {
 const Faq = () => (
   <section id="faq" className="section">
     <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Questions</span>
-        <span className="eyebrow-index">( {sectionIndex('faq')} )</span>
-      </div>
       <h2 className="sec-title">Straight <em>answers</em></h2>
     </div>
 

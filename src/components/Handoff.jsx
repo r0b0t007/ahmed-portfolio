@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { BenefitCard } from './BenefitCard'
 import { LAUNCH_COVER_DAYS } from '../content/site'
 
@@ -37,10 +36,6 @@ const stack = [
 const Handoff = () => (
   <section id="handoff" className="section">
     <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">What you walk away with</span>
-        <span className="eyebrow-index">( {sectionIndex('handoff')} )</span>
-      </div>
       <h2 className="sec-title">You lift zero technical fingers. <em>You own everything.</em></h2>
       <p className="sec-lead">
         Most hand-offs are a zip file and a goodbye. This one is a stack.

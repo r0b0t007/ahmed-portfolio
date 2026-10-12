@@ -3,7 +3,9 @@
  * English homepage: no Experience, About or hand-off sections. The section order is declared in
  * src/lib/sections.js (HOME_FR_SECTION_ORDER).
  */
-import { FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL_FR, PRICE_SITE_LABEL_FR } from '../site.js'
+import {
+  FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL_FR, PRICE_SITE_LABEL_FR, SAAS_WEEKS, SITE_WEEKS, weeksTextFr,
+} from '../site.js'
 import { productsPhrase } from './products.js'
 import { typo } from './typo.js'
 
@@ -25,12 +27,17 @@ export const home = typo({
     whatsapp: 'Écrivez-moi sur WhatsApp',
     // Beside the portrait below 900px (HeroPortrait), as on the English homepage.
     byline: 'Développeur web et SaaS. Vous travaillez directement avec moi, du début à la fin.',
-    facts: [
-      { n: PRICE_SITE_LABEL_FR, l: 'Prix de départ d’un site vitrine, fixé par écrit' },
-      { n: String(FIRST_LINK_DAYS), l: 'Jours jusqu’à votre premier lien fonctionnel' },
-      { n: String(LAUNCH_COVER_DAYS), l: 'Jours de corrections après le lancement, inclus' },
-      { n: '9+', l: 'Années de logiciels en production pour Bell, BMW et Bayer' },
-    ],
+    // The schedule drawn under the hero (src/components/Schedule.jsx), as the English one.
+    schedule: {
+      caption: 'Calendrier habituel. Vos propres dates figurent dans le cadrage écrit.',
+      stops: [
+        { at: 'Jour 0', what: 'Lancement, après un appel de cadrage gratuit' },
+        { at: `Jour ${FIRST_LINK_DAYS}`, what: 'Votre premier lien fonctionnel', key: true },
+        { at: `Semaines ${weeksTextFr(SITE_WEEKS)}`, what: 'Un site vitrine, en ligne' },
+        { at: `Semaines ${weeksTextFr(SAAS_WEEKS)}`, what: 'Un MVP, en ligne' },
+        { at: `+${LAUNCH_COVER_DAYS} jours`, what: 'Corrections après le lancement, incluses' },
+      ],
+    },
   },
   services: {
     eyebrow: 'Services',
