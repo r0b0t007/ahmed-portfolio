@@ -52,24 +52,22 @@ below the fold split into its own chunk — ~14 kB more across all nine, loaded 
 
 ## Design system
 
-Editorial, warm-paper light theme. Tokens live in `src/index.css`:
+"Signal": a colour-led system where every hue has one job (DESIGN.md has the full system, the
+measured contrast of every pair and how it was built with the `ui-skills` CLI). OKLCH tokens live
+in `src/index.css`:
 
-| Token | Value | Use |
-|---|---|---|
-| `--paper` | `#faf7f2` | page background |
-| `--paper-card` | `#fffdf9` | card surface |
-| `--paper-raised` | `#f1ece2` | raised panel |
-| `--ink` | `#1a1c1a` | primary text, heavy rules |
-| `--ink-2` | `#4a4d49` | secondary text |
-| `--ink-muted` | `#64665f` | mono meta — WCAG AA on every surface used |
-| `--teal` | `#0e5f55` | accent |
-| `--hair` | `#e2ddd3` | hairline borders |
+| Token | Job |
+|---|---|
+| `--signal` | the offer: hero and price bands |
+| `--oxblood` | the commitment: the process / weeks band |
+| `--ink` | act: trust strip, contact band, footer; primary text |
+| `--paper`, `--paper-2` | read: every other band, alternating |
+| `--rust` | links and heading emphasis on cream |
 
-Type: **Newsreader** (serif display) · **Archivo** (sans) · **IBM Plex Mono** (labels and meta).
-Fonts load async and non-render-blocking, with critical CSS inlined in `index.html`.
+Type: **Archivo Expanded 800** (headings, figures) · **Archivo 400–700** (everything else). Two
+self-hosted files, both preloaded, critical CSS inlined in `index.html`.
 
-Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — the grid gaps are 1px
-`background` bleed via `.hair-grid` rather than borders.
+Bands are separated by colour, not rules; there are no section counters.
 
 ## Structure
 
