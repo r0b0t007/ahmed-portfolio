@@ -1,0 +1,15 @@
+[
+  {
+    "date": "2026-10-12",
+    "scope": "app",
+    "macrostructure": "Scope Document (bespoke)",
+    "theme": "custom",
+    "theme_axes": "light / display-heavy / chromatic-other (teal ~182°)",
+    "vibe": "contract, spec sheet, ruled, plain-spoken",
+    "enrichment": "none",
+    "nav": "N9 edge-aligned + contents toggle",
+    "footer": "Ft4 dense colophon",
+    "pages": ["/", "/fr", "/services/*", "/fr/services/*", "/work/this-site", "404"],
+    "brief": "ahmedchioua.com · Option A, the scope sheet: the site set as the contract the buyer receives"
+  }
+]
