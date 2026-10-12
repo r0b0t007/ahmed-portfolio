@@ -27,3 +27,8 @@
 
 /fr/*
   Cache-Control: public, max-age=0, must-revalidate
+
+# The Markdown body of a 404 for agents (edge/negotiate.js). Reachable at its own URL, which is
+# not a page; the Markdown twins of real pages name their page with a canonical Link instead.
+/404.md
+  X-Robots-Tag: noindex

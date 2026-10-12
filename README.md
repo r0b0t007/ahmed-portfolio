@@ -74,9 +74,12 @@ Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — th
 ## Structure
 
 ```
-index.html              meta + JSON-LD (Person/Service/WebSite)
+index.html              meta + JSON-LD (business/Person/Service/WebSite)
 vite.config.js          build config + generated JSON-LD (FAQPage, product nodes) and llms.txt
-scripts/prerender.js    injects rendered markup into dist/index.html
+scripts/prerender.js    injects rendered markup into dist/index.html; writes each page's .md twin
+scripts/lib/markdown.js page HTML -> Markdown, for agents (and 404.md)
+edge/negotiate.js       Accept: text/markdown -> the .md twin, Vary/Link/406/404 handling
+functions/_middleware.js runs it on every request public/_routes.json sends to Functions
 src/content/faqs.js     FAQ copy — single source for the section and the FAQPage schema
 src/content/products.js shipped products — single source for Proof cards, schema nodes and llms.txt
 src/content/llms.txt    llms.txt template (product and FAQ placeholders filled at build)
