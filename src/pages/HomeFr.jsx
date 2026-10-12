@@ -33,7 +33,8 @@ const HomeFr = () => {
       <section id="hero" className="ed-hero">
         <div className="ed-hero-text">
           <p className="ed-kicker">{hero.kicker}</p>
-          <h1 className="ed-h1">
+          {/* --long: the French headline runs ~1.6× the English one's length; see index.css. */}
+          <h1 className="ed-h1 ed-h1--long">
             {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
             <em>{hero.em}</em>
           </h1>

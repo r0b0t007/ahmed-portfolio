@@ -58,7 +58,7 @@ const ServicePage = ({ id }) => {
           <p className="sec-lead">{s.framing}</p>
         </div>
         <div className="hair-grid ed-ben-grid">
-          {s.included.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+          {s.included.map(b => <BenefitCard key={b.title} b={b} />)}
         </div>
       </section>
 

@@ -1,13 +1,10 @@
-import { sectionIndex } from '../lib/sections'
-import { ordinal } from '../lib/ordinal'
 import { FIRST_LINK_DAYS } from '../content/site'
 import { steps } from '../content/process'
 
-export const Step = ({ s, i }) => {
+export const Step = ({ s }) => {
   return (
     <div className="fade-in ed-step">
       <div className="ed-step-side">
-        <div className="ed-step-n">( {ordinal(i, 2)} )</div>
         <div className="ed-step-meta">{s.meta}</div>
       </div>
       <div>
@@ -23,7 +20,6 @@ const Process = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Process</span>
-        <span className="eyebrow-index">( {sectionIndex('process')} )</span>
       </div>
       <h2 className="sec-title">A working link in {FIRST_LINK_DAYS} days. <em>Then every week after.</em></h2>
       <p className="sec-lead">
@@ -34,7 +30,7 @@ const Process = () => (
     </div>
 
     <div className="ed-steps">
-      {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
+      {steps.map(s => <Step key={s.title} s={s} />)}
     </div>
 
     <div className="ed-promise">

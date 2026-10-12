@@ -1,5 +1,3 @@
-import { sectionIndex } from '../lib/sections'
-import { ordinal } from '../lib/ordinal'
 
 const panels = [
   { title: 'Build', tags: ['React', 'TypeScript', 'Node.js', 'Java/Spring', 'Angular', 'REST APIs', 'SQL'] },
@@ -16,12 +14,11 @@ const certs = [
 
 const languages = 'Arabic (Native) · English (C2 / C1) · French (C1 / B2)'
 
-const Panel = ({ p, i }) => {
+const Panel = ({ p }) => {
   return (
     <div className="fade-in ed-panel">
       <div className="ed-panel-head">
         <h3>{p.title}</h3>
-        <span className="ed-panel-i">{ordinal(i)}</span>
       </div>
       <div className="ed-panel-tags">
         {p.tags.map(t => <span key={t} className="ed-pill">{t}</span>)}
@@ -36,7 +33,6 @@ const About = () => {
       <div className="eyebrow-block">
         <div className="eyebrow-row">
           <span className="eyebrow">About</span>
-          <span className="eyebrow-index">( {sectionIndex('about')} )</span>
         </div>
         <h2 className="sec-title">What I work <em>with</em></h2>
         <p className="fade-in sec-lead">
@@ -48,7 +44,7 @@ const About = () => {
       </div>
 
       <div className="hair-grid ed-about-grid">
-        {panels.map((p, i) => <Panel key={p.title} p={p} i={i} />)}
+        {panels.map(p => <Panel key={p.title} p={p} />)}
 
         <div className="ed-cert-strip">
           {certs.map(c => (

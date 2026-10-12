@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { BenefitCard } from './BenefitCard'
 
 /**
@@ -37,7 +36,6 @@ const Benefits = () => (
     <div className="eyebrow-block">
       <div className="eyebrow-row">
         <span className="eyebrow">Why it won&rsquo;t break on launch day</span>
-        <span className="eyebrow-index">( {sectionIndex('benefits')} )</span>
       </div>
       <h2 className="sec-title">The cheapest developer is the one you <em>pay twice</em></h2>
       <p className="sec-lead">
@@ -55,7 +53,7 @@ const Benefits = () => (
     </div>
 
     <div className="hair-grid ed-ben-grid">
-      {standards.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+      {standards.map(b => <BenefitCard key={b.title} b={b} />)}
     </div>
 
   </section>
