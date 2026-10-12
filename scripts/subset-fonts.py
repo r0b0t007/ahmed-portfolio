@@ -1,29 +1,26 @@
 """
-Rebuilds src/fonts/*.woff2 and src/fonts/fonts.css — the four font files the site ships.
+Rebuilds src/fonts/*.woff2 and src/fonts/fonts.css: the two font files the site ships.
 
     python scripts/subset-fonts.py        (needs: pip install fonttools brotli; run `npm run build` first)
 
-Why not Google Fonts: even when you ask for `wght@400`, Google serves the full variable file
-(Archivo 400/500/600 were three downloads of the same 34 KiB font) and the request costs two
-cross-origin connections plus a render-blocking stylesheet.
+Why not Google Fonts: even when you ask for one weight, Google serves the full variable file and
+the request costs two cross-origin connections plus a render-blocking stylesheet.
 
-Why four files, not eight: every @font-face the page uses is requested at first layout, before
-first paint, so under Lighthouse's simulated 1.5 Mbps link all font bytes delay FCP. The two
-upright Newsreader weights (300 hero / 400 headings) and the three Archivo weights (400 body /
-500 nav / 600 emphasis) are each cut as ONE variable-font file restricted to just that weight
-range, which is smaller than two or three static instances and renders identically. Newsreader
-italic and IBM Plex Mono are static (no variable source). Plex Mono 400 is dropped: the 500 file
-serves both weights (400 → 500 is the nearest available face; nothing is synthesised).
+Why two files, one family: the Colour system (DESIGN.md) sets everything in Archivo. Body 400,
+labels and emphasis 600-700 at normal width; headings at 800 in Archivo's Expanded width (wdth 125).
+Every @font-face the page uses is requested at first layout, before first paint, so under
+Lighthouse's simulated 1.5 Mbps link all font bytes delay FCP. Keeping the width axis in one
+variable file cost 45 KiB; a normal-width 400-700 variable file plus one static Expanded 800 is
+33 KiB and renders the same.
 
 Glyph coverage:
-  - Archivo (used in form inputs)      -> printable ASCII + Latin-1 + everything on the page
-  - Newsreader, IBM Plex Mono          -> only the characters that appear in the rendered page
-                                          or anywhere in src/ (JSX strings, placeholders, runtime
-                                          status text); they never render user input
-Layout features are trimmed to `kern` and `tnum` (the site uses no ligatures, small caps or
-marks; tnum is what makes the price table's tabular-nums do anything).
+  - Archivo (body; also form inputs)  -> printable ASCII + Latin-1 + everything on the page
+  - Archivo Expanded (headings only)  -> only the characters that appear in the rendered page or
+                                         anywhere in src/; it never renders user input
+Layout features are trimmed to `kern` and `tnum` (the site uses no ligatures, small caps or marks;
+tnum is what makes the price and fact figures' tabular-nums do anything).
 
-fonts.css is generated so each @font-face carries the exact unicode-range its file covers;
+fonts.css is generated so the @font-face carries the exact unicode-range its file covers;
 src/index.css imports it. Re-run after copy changes that introduce a new character; the build
 does not do this for you.
 """
@@ -42,14 +39,11 @@ UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 # a (min, max) tuple keeps a variable axis restricted to that range, a number pins it. `css`
 # is the font-weight the @font-face declares.
 FACES = [
-    dict(file='newsreader', family='Newsreader', css_family='Newsreader', style='normal',
-         query='ital,wght@0,300..400', axes={'wght': (300, 400)}, css='300 400'),
-    dict(file='newsreader-400-italic', family='Newsreader', css_family='Newsreader', style='italic',
-         query='ital,wght@1,400', axes={}, css='400'),
     dict(file='archivo', family='Archivo', css_family='Archivo', style='normal',
-         query='wght@400..600', axes={'wght': (400, 600)}, css='400 600'),
-    dict(file='plexmono-500', family='IBM Plex Mono', css_family='IBM Plex Mono', style='normal',
-         query='wght@500', axes={}, css='500'),
+         query='wdth,wght@100,400..700', axes={'wght': (400, 700)}, css='400 700'),
+    # Google pins a single-value axis itself, so this one arrives static: Expanded width, 800.
+    dict(file='archivo-expanded', family='Archivo', css_family='Archivo Expanded', style='normal',
+         query='wdth,wght@125,800', axes={}, css='800'),
 ]
 
 
@@ -100,10 +94,9 @@ def build(face, cps, outdir):
         sys.exit(f"{face['file']}: static source but axes requested")
     opts = Options()
     opts.flavor, opts.hinting, opts.desubroutinize, opts.notdef_outline = 'woff2', False, True, True
-    # kern everywhere, plus tnum on Archivo only: the price table sets font-variant-numeric on
-    # .ed-price-figure, and trimming the feature out of the emitted file makes that CSS inert.
-    # Newsreader and Plex Mono set no numeric variant, so tnum would be bytes nobody reads.
-    opts.layout_features = ['kern', 'tnum'] if face['family'] == 'Archivo' else ['kern']
+    # kern, plus tnum: the price table and the fact figures set font-variant-numeric, and trimming
+    # the feature out of the emitted file makes that CSS inert.
+    opts.layout_features = ['kern', 'tnum']
     sub = Subsetter(opts)
     sub.populate(unicodes=cps & set(font.getBestCmap()))
     sub.subset(font)
@@ -127,7 +120,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         staged = Path(tmp)
         for face in FACES:
-            size, cmap = build(face, full if face['family'] == 'Archivo' else site, staged)
+            size, cmap = build(face, full if face['css_family'] == 'Archivo' else site, staged)
             total += size
             print(f"{face['file']:24} {size / 1024:5.1f} KiB  {len(cmap)} glyphs")
             css.append(f"@font-face {{ font-family: '{face['css_family']}'; font-style: {face['style']}; font-weight: {face['css']}; "
