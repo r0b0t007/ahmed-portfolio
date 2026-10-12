@@ -52,24 +52,24 @@ below the fold split into its own chunk — ~14 kB more across all nine, loaded 
 
 ## Design system
 
-Editorial, warm-paper light theme. Tokens live in `src/index.css`:
+**Compact** (see `DESIGN.md`): a short, conversion-first page built with two skills from the
+`ui-skills` CLI (danilaa1/compact-landing and pbakaus/distill). Tokens live in `src/index.css`:
 
 | Token | Value | Use |
 |---|---|---|
-| `--paper` | `#faf7f2` | page background |
-| `--paper-card` | `#fffdf9` | card surface |
-| `--paper-raised` | `#f1ece2` | raised panel |
-| `--ink` | `#1a1c1a` | primary text, heavy rules |
-| `--ink-2` | `#4a4d49` | secondary text |
-| `--ink-muted` | `#64665f` | mono meta — WCAG AA on every surface used |
-| `--teal` | `#0e5f55` | accent |
-| `--hair` | `#e2ddd3` | hairline borders |
+| `--paper` | `#f5f2ed` | page (putty) |
+| `--surface` | `#fcfbf8` | the pitch card, inputs, the selected picker tab |
+| `--sunk` | `#ebe5dc` | picker track, code, hover wash |
+| `--ink` | `#211c19` | text |
+| `--ink-2` | `#4c4540` | body copy |
+| `--ink-muted` | `#6b625c` | labels, meta, headline second tone (5.3:1 on paper) |
+| `--accent` | `#8f2f25` | oxblood: actions only (buttons, links, focus, dots) |
+| `--hair` | `#e2dad0` | dividers |
 
-Type: **Newsreader** (serif display) · **Archivo** (sans) · **IBM Plex Mono** (labels and meta).
-Fonts load async and non-render-blocking, with critical CSS inlined in `index.html`.
-
-Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — the grid gaps are 1px
-`background` bleed via `.hair-grid` rather than borders.
+Type: **Schibsted Grotesk** only, 400 / 600 / 700, one self-hosted variable file (~33 KiB), four
+sizes. The page is a split pamphlet: on wide screens the pitch card (offer, scope picker, booking)
+stays in view while the reasons scroll beside it; on phones it is the first screen. Long
+explanations, the process steps, the FAQ and the career record are folded (`<details>`).
 
 ## Structure
 
@@ -83,15 +83,16 @@ functions/_middleware.js runs it on every request public/_routes.json sends to F
 src/content/faqs.js     FAQ copy — single source for the section and the FAQPage schema
 src/content/products.js shipped products — single source for Proof cards, schema nodes and llms.txt
 src/content/llms.txt    llms.txt template (product and FAQ placeholders filled at build)
-src/index.css           design tokens + shared editorial primitives
+src/index.css           design tokens + every component's styles (Compact system)
 src/App.jsx             section composition
 src/main.jsx            client entry — hydrates the prerendered markup
 src/entry-server.jsx    build-time server entry (renderToString)
 src/content/faqs.js     single source of truth for FAQ copy (page + schema)
 src/hooks/useFadeIn.js  IntersectionObserver scroll reveal
 src/components/
-  Header · Hero · TrustStrip · Services · Process · Proof
-  Experience · Summary (About) · Faq · Contact · Footer
+  Header · Hero (pitch card) · ScopePicker · Byline · Split (Split, Block, Fold)
+  Benefits · Proof · Services · Process · Handoff · Pricing · Faq
+  Background (Experience + Summary, folded) · Contact · Footer
 ```
 
 ### Prerendering
