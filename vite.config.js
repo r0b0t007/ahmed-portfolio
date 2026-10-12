@@ -108,12 +108,11 @@ function contentSchema({ emitLlms }) {
 /**
  * Post-build head rewrites, done here (with the bundle in hand) rather than by regex in prerender:
  *   - inline the single stylesheet and drop its <link> — no render-blocking CSS request
- *   - preload the faces the hero text paints with: both Newsreader files (heading, logo, em) and
- *     Archivo (lead paragraph). Without the Archivo preload it arrives after first paint and the
- *     swap re-wraps the lead — Lighthouse reported CLS 0.018 for exactly that. Plex Mono (kicker,
- *     5 KB) is left to be discovered at first layout from the inline CSS.
+ *   - preload the one font file (Archivo, 400-800): the whole page, display included, paints with
+ *     it. Without the preload it arrives after first paint and the swap re-wraps the hero —
+ *     Lighthouse reported CLS 0.018 for exactly that on the lead paragraph.
  */
-const PRELOAD_FONTS = ['newsreader', 'newsreader-400-italic', 'archivo']
+const PRELOAD_FONTS = ['archivo']
 
 function criticalHead() {
   return {
@@ -132,7 +131,7 @@ function criticalHead() {
         delete bundle[css[0].fileName]
 
         const tags = PRELOAD_FONTS.map(name => {
-          // {8}: exactly one Vite hash after the name, so 'newsreader' can't match 'newsreader-400-italic'
+          // {8}: exactly one Vite hash after the name, so a name can't match a longer one
           const a = assets.find(a => new RegExp(`^assets/${name}-[\\w-]{8}\\.woff2$`).test(a.fileName))
           if (!a) throw new Error(`critical-head: no emitted font matches ${name}`)
           return { tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/' + a.fileName, crossorigin: true }, injectTo: 'head-prepend' }
@@ -153,8 +152,9 @@ function criticalHead() {
  */
 function errorPage({ emit }) {
   const template = new URL('./src/404.html', import.meta.url)
+  // A colour token is a hex or an oklch() value (src/index.css declares OKLCH).
   const tokens = text => new Map(
-    [...text.matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8})\b/gi)].map(([, name, hex]) => [name, hex.toLowerCase()]),
+    [...text.matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8}\b|oklch\([^)]*\))/gi)].map(([, name, value]) => [name, value.toLowerCase().replace(/\s+/g, ' ')]),
   )
   return {
     name: 'error-page',
@@ -163,8 +163,8 @@ function errorPage({ emit }) {
       const site = tokens(readFileSync(new URL('./src/index.css', import.meta.url), 'utf8'))
       const page = tokens(readFileSync(template, 'utf8'))
       if (page.size === 0) throw new Error('404.html: no colour tokens found; expected a :root block copied from src/index.css')
-      for (const [name, hex] of page) {
-        if (site.get(name) !== hex) throw new Error(`404.html: ${name} is ${hex}, src/index.css has ${site.get(name) ?? 'no such token'}`)
+      for (const [name, value] of page) {
+        if (site.get(name) !== value) throw new Error(`404.html: ${name} is ${value}, src/index.css has ${site.get(name) ?? 'no such token'}`)
       }
     },
     generateBundle() {
