@@ -4,7 +4,8 @@
  * Runs after both Vite builds (see the "build" script in package.json):
  *   1. vite build                          -> dist/          (client bundle + index.html)
  *   2. vite build --ssr src/entry-server   -> dist-ssr/      (server bundle, build-time only)
- *   3. node scripts/prerender.js           -> one HTML file per route, plus sitemap.xml and _redirects
+ *   3. node scripts/prerender.js           -> one HTML file per route, its Markdown twin, plus
+ *                                             sitemap.xml, _redirects and 404.md
  *
  * Why: the site is client-rendered, so without this the served HTML has an empty #root. First
  * paint waits on the bundle parsing, and non-JS crawlers see nothing. Injecting the markup means
@@ -15,6 +16,11 @@
  * the inlined CSS, font preloads and entry script, and gets its own title, description,
  * canonical, JSON-LD, language and hreflang links (scripts/lib/pages.js). Routes are written as
  * <path>.html, which Cloudflare Pages serves at the extensionless URL.
+ *
+ * Each page also gets a Markdown twin, converted from its own HTML (scripts/lib/markdown.js), at
+ * the path the Pages middleware looks for it (markdownPath in edge/negotiate.js). An agent that sends
+ * Accept: text/markdown gets that file from the page's own URL; 404.md is what it gets instead of
+ * the 404 page.
  */
 import { readFileSync, writeFileSync, rmSync, existsSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
@@ -22,6 +28,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
 import { home as frHome } from '../src/content/fr/home.js'
 import { injectMarkup, rewriteHead, addAlternates, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
+import { pageToMarkdown, notFoundMarkdown } from './lib/markdown.js'
+import { markdownPath, NOT_FOUND_MARKDOWN } from '../edge/negotiate.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = file => resolve(root, 'dist', file)
@@ -40,6 +48,7 @@ const paths = routes.map(r => r.path)
 const OG_LOCALE = { en: 'en_US', fr: 'fr_FR' }
 // The preview image's description per language; index.html's is the English one.
 const IMAGE_ALT = { fr: frHome.meta.imageAlt }
+const LLMS_URL = absoluteUrl('/llms.txt')
 const absolute = alternates => alternates && Object.fromEntries(Object.entries(alternates).map(([l, p]) => [l, absoluteUrl(p)]))
 
 for (const route of routes) {
@@ -70,6 +79,9 @@ for (const route of routes) {
     mkdirSync(dirname(file), { recursive: true })
     writeFileSync(file, html)
     console.log(`[prerender] ${route.path} -> dist/${outFile(route.path)} (${(Buffer.byteLength(html) / 1024).toFixed(1)} kB)`)
+    const markdown = pageToMarkdown(html, { url, llmsUrl: LLMS_URL })
+    writeFileSync(dist(markdownPath(route.path).slice(1)), markdown)
+    console.log(`[prerender] ${route.path} -> dist${markdownPath(route.path)} (${(Buffer.byteLength(markdown) / 1024).toFixed(1)} kB)`)
   } catch (err) {
     // The stack, not just the message: a component that throws while rendering is only findable
     // by its file and line.
@@ -82,6 +94,8 @@ writeFileSync(dist('sitemap.xml'), buildSitemap(paths.map(absoluteUrl)))
 console.log(`[prerender] sitemap.xml: ${routes.length} URLs`)
 writeFileSync(dist('_redirects'), buildRedirects(paths))
 console.log(`[prerender] _redirects: ${routes.length - 1} trailing-slash rules`)
+writeFileSync(dist(NOT_FOUND_MARKDOWN.slice(1)), notFoundMarkdown(routes, { absoluteUrl, llmsUrl: LLMS_URL, sitemapUrl: absoluteUrl('/sitemap.xml') }))
+console.log(`[prerender] ${NOT_FOUND_MARKDOWN.slice(1)}: ${routes.length} pages listed`)
 
 // The SSR bundle is a build artefact; it must not be published.
 rmSync(resolve(root, 'dist-ssr'), { recursive: true, force: true })
