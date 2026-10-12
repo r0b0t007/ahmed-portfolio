@@ -27,7 +27,7 @@ export const faqs = [
   },
   {
     id: 'speed',
-    q: 'How fast is "fast"?',
+    q: 'How fast is “fast”?',
     a: `A marketing site is usually ${weeksText(SITE_WEEKS)} weeks. An MVP is usually ${weeksText(SAAS_WEEKS)}, depending on what goes in it. You get a date in the written scope before you commit, and a working link within the first ${FIRST_LINK_DAYS} days. Building with AI is what makes those numbers realistic.`,
   },
   {

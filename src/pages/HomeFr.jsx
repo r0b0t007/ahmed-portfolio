@@ -1,119 +1,72 @@
-import { Fragment } from 'react'
-import { Eyebrow as SharedEyebrow } from '../components/Eyebrow'
-import { ServiceCard } from '../components/Services'
-import { Step } from '../components/Process'
-import { ProofItem } from '../components/Proof'
+import { BookButton, DocCover, Clause, SpecList } from '../components/Doc'
+import { ScheduleTable } from '../components/Process'
+import { proofRows, serviceRows } from '../components/rows'
 import { PriceTable } from '../components/Pricing'
-import { FaqRow } from '../components/Faq'
+import { TermsList } from '../components/Faq'
 import { WhatsAppIcon } from '../components/WhatsAppIcon'
-import HeroPortrait from '../components/HeroPortrait'
 import { home } from '../content/fr/home'
 import { servicePath } from '../content/routes'
 import { BOOKING_URL } from '../content/site'
 import { useContent } from '../lib/content-context'
-import { homeFrSectionIndex as idx } from '../lib/sections'
-import { spansLastRow } from '../lib/grid'
+import { numberOf } from '../lib/sections'
 
-const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
+const TYPE = 'home:fr'
 
 /**
- * The French homepage, for buyers in Morocco who search in French. Shorter than the English one
- * (no Experience, About or hand-off) and built from the same row components and classes, so the
- * two read as one site. The hero is the English one's two columns: the offer, then the same
- * portrait (HeroPortrait, preloaded in this page's head too). Copy is in src/content/fr/home.js; Contact closes the page via App.jsx. Section order is
- * declared in src/lib/sections.js (HOME_FR_SECTION_ORDER); keep both in step.
+ * The French homepage, for buyers in Morocco who search in French. The same scope document as the
+ * English one, shorter (no preamble, hand-off clause or background annexes) and built from the
+ * same primitives (src/components/Doc.jsx), so the two read as one site. Copy is in
+ * src/content/fr/home.js; Contact closes the page via App.jsx. Clause numbering is declared in
+ * src/lib/sections.js; keep the render order in step with it.
  */
 const HomeFr = () => {
   const { ui, services, steps, proof, faqById } = useContent()
   const { hero } = home
-  const faqs = home.faq.ids.map(faqById)
 
   return (
     <>
-      <section id="hero" className="ed-hero">
-        <div className="ed-hero-text">
-          <p className="ed-kicker">{hero.kicker}</p>
-          <h1 className="ed-h1">
-            {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
-            <em>{hero.em}</em>
-          </h1>
-          <p className="ed-lead">{hero.lead}</p>
-          <div className="ed-cta-row">
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{ui.cta.long}</a>
-            <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-wa">
-              <WhatsAppIcon />
-              {hero.whatsapp}
-            </a>
-          </div>
-          <dl className="svc-facts">
-            {hero.facts.map(f => (
-              <div key={f.l}>
-                <dt>{f.l}</dt>
-                <dd>{f.n}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-        <HeroPortrait byline={hero.byline} />
-      </section>
+      <DocCover
+        title={hero.h1.join(' ')}
+        accent={hero.em}
+        lead={hero.lead}
+        actions={<>
+          <BookButton href={BOOKING_URL} />
+          <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-wa">
+            <WhatsAppIcon />
+            {hero.whatsapp}
+          </a>
+        </>}
+        preparedFor={hero.preparedFor}
+        byline={hero.byline}
+        terms={hero.facts}
+      />
 
-      <section id="services" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.services.eyebrow} id="services" />
-          <h2 className="sec-title">{home.services.title} <em>{home.services.em}</em></h2>
-          <p className="sec-lead">{home.services.lead}</p>
-        </div>
-        <div className="hair-grid ed-svc-grid">
-          {services.map((s, i) => (
-            <ServiceCard key={s.id} s={s} i={i} href={servicePath(s.slug, 'fr')} more={home.services.more(s.name)} />
-          ))}
-        </div>
-      </section>
+      <Clause type={TYPE} id="services" title={home.services.title} accent={home.services.em} lead={home.services.lead}>
+        <SpecList
+          prefix={numberOf(TYPE, 'services')}
+          rows={serviceRows(services, s => servicePath(s.slug, 'fr'), s => home.services.more(s.name))}
+        />
+      </Clause>
 
-      <section id="process" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.process.eyebrow} id="process" />
-          <h2 className="sec-title">{home.process.title} <em>{home.process.em}</em></h2>
-          <p className="sec-lead">{home.process.lead}</p>
-        </div>
-        <div className="ed-steps">
-          {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
-        </div>
-      </section>
+      <Clause type={TYPE} id="process" title={home.process.title} accent={home.process.em} lead={home.process.lead}>
+        <ScheduleTable steps={steps} caption={ui.doc.schedule.launch} />
+      </Clause>
 
-      <section id="proof" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.proof.eyebrow} id="proof" />
-          <h2 className="sec-title">{home.proof.title} <em>{home.proof.em}</em></h2>
-          <p className="fade-in sec-lead">{home.proof.lead}</p>
-        </div>
-        <div className="hair-grid ed-proof-grid">
-          {proof.all.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(proof.all, i)} />)}
-        </div>
-      </section>
-
-      <section id="pricing" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.pricing.eyebrow} id="pricing" />
-          <h2 className="sec-title">{home.pricing.title} <em>{home.pricing.em}</em></h2>
-          <p className="sec-lead">{home.pricing.lead} {ui.offer.promise}</p>
-        </div>
+      <Clause type={TYPE} id="pricing" title={home.pricing.title} accent={home.pricing.em} lead={`${home.pricing.lead} ${ui.offer.promise}`}>
         <PriceTable head={home.pricing.head} rows={home.pricing.rows} />
-        <p className="ed-price-note">{ui.offer.movers}</p>
-        <div className="ed-cta-row svc-price-cta">
+        <p className="clause-note">{ui.offer.movers}</p>
+        <div className="cta-row">
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{home.pricing.cta}</a>
         </div>
-      </section>
+      </Clause>
 
-      <section id="faq" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.faq.eyebrow} id="faq" />
-          <h2 className="sec-title">{home.faq.title} <em>{home.faq.em}</em></h2>
-        </div>
-        <div className="ed-faq-grid">
-          {faqs.map(f => <FaqRow key={f.id} f={f} />)}
-        </div>
-      </section>
+      <Clause type={TYPE} id="faq" title={home.faq.title} accent={home.faq.em}>
+        <TermsList prefix={numberOf(TYPE, 'faq')} items={home.faq.ids.map(faqById)} />
+      </Clause>
+
+      <Clause type={TYPE} id="proof" title={home.proof.title} accent={home.proof.em} lead={home.proof.lead}>
+        <SpecList prefix={numberOf(TYPE, 'proof')} rows={proofRows(proof.all)} />
+      </Clause>
     </>
   )
 }

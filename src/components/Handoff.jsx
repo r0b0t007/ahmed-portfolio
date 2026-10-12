@@ -1,11 +1,11 @@
-import { sectionIndex } from '../lib/sections'
-import { BenefitCard } from './BenefitCard'
 import { LAUNCH_COVER_DAYS } from '../content/site'
+import { numberOf } from '../lib/sections'
+import { Clause, SpecList } from './Doc'
+import { linesRows } from './rows'
 
 /**
  * The hand-off, unbundled. "You own the repo" is one line; the stack below is what a founder is
- * actually buying at the end of the build. Shares BenefitCard with Benefits so the two
- * three-column sections read as one system.
+ * actually buying at the end of the build, set as numbered sub-clauses.
  */
 const stack = [
   {
@@ -35,25 +35,14 @@ const stack = [
 ]
 
 const Handoff = () => (
-  <section id="handoff" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">What you walk away with</span>
-        <span className="eyebrow-index">( {sectionIndex('handoff')} )</span>
-      </div>
-      <h2 className="sec-title">You lift zero technical fingers. <em>You own everything.</em></h2>
-      <p className="sec-lead">
-        Most hand-offs are a zip file and a goodbye. This one is a stack.
-      </p>
-    </div>
-
-    <div className="hair-grid ed-ben-grid">
-      {stack.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
-    </div>
-
-    <div className="ed-promise">All of it inside the fixed price. Not an add-on. Not an upsell.</div>
-
-  </section>
+  <Clause
+    type="home" id="handoff"
+    title="You lift zero technical fingers." accent="You own everything."
+    lead="Most hand-offs are a zip file and a goodbye. This one is a stack."
+  >
+    <SpecList prefix={numberOf('home', 'handoff')} rows={linesRows(stack)} />
+    <p className="clause-note">All of it inside the fixed price. Not an add-on. Not an upsell.</p>
+  </Clause>
 )
 
 export default Handoff

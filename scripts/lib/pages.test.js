@@ -15,8 +15,6 @@ const TEMPLATE = `<!doctype html><html lang="en"><head>
 <meta name="twitter:title" content="Home" />
 <meta name="twitter:description" content="home description" />
 <!-- below 900px the <h1> is the LCP -->
-<link rel="preload" as="image" type="image/avif" href="/headshot-700.avif"
-  media="(min-width: 900.02px)" fetchpriority="high" />
 <link rel="preload" as="font" type="font/woff2" href="/assets/archivo.woff2" crossorigin />
 <script type="application/ld+json">{"@graph":[{"@type":"Person"}]}</script>
 <script type="application/ld+json">{"@graph":[{"@type":"FAQPage"}]}</script>
@@ -56,20 +54,13 @@ test('rewriteHead swaps every per-page field and escapes attribute values', () =
   assert.doesNotMatch(html, /home description/)
 })
 
-test('rewriteHead drops the hero preload and the homepage JSON-LD, keeps font preloads', () => {
+test('rewriteHead drops the homepage JSON-LD and keeps the font preloads', () => {
   const html = rewriteHead(TEMPLATE, PAGE)
-  assert.doesNotMatch(html, /as="image"/)
   assert.match(html, /as="font"/)
   const ld = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)
   assert.equal(ld.length, 1)
   assert.doesNotMatch(ld[0], /Person|FAQPage/)
   assert.match(ld[0], /\\u003c\/script>/) // a "</script>" inside the data cannot close the tag
-})
-
-test('rewriteHead keeps the hero preload, once, for a page that renders the portrait', () => {
-  const html = rewriteHead(TEMPLATE, { ...PAGE, heroImage: true })
-  assert.equal(html.match(/<link rel="preload" as="image"/g).length, 1)
-  assert.match(html, /href="\/headshot-700\.avif"/)
 })
 
 test('rewriteHead strips head comments, and only head comments', () => {

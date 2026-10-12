@@ -2,7 +2,7 @@
  * Interface strings in French: the same shape as src/content/ui.js (a test compares them).
  * Copy is Claude's translation of the English, awaiting Ahmed's approval.
  */
-import { FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, WHATSAPP_URL_FR } from '../site.js'
+import { FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, SAAS_WEEKS, SITE_WEEKS, WHATSAPP_URL_FR, weeksTextFr } from '../site.js'
 import { typo } from './typo.js'
 
 const CTA_LONG = `Réserver un créneau prototype de ${FIRST_LINK_DAYS} jours`
@@ -20,7 +20,7 @@ export const ui = typo({
     { name: 'FAQ', href: '/fr#faq' },
     { name: 'Réserver un créneau', href: '#contact', accent: true },
   ],
-  menu: 'Menu',
+  menu: 'Sommaire',
   switchTo: { label: 'EN', name: 'EN, English version', lang: 'en' },
   crumbHome: 'Accueil',
   crumbLabel: 'Fil d’Ariane',
@@ -79,5 +79,36 @@ export const ui = typo({
   footer: {
     tag: `Prix fixe. Date par écrit. Un lien fonctionnel en ${FIRST_LINK_DAYS} jours.`,
     rights: '© 2026 Ahmed Chioua. Tous droits réservés.',
+  },
+  doc: {
+    label: 'Document de cadrage',
+    revision: 'Révision',
+    clause: no => `§ ${no}`,
+    annex: letter => `Annexe ${letter}`,
+    preparedBy: 'Préparé par',
+    preparedFor: 'Préparé pour',
+    trackRecord: 'Parcours',
+    keyTerms: 'Conditions clés',
+    schedule: {
+      when: 'Quand',
+      step: 'Étape',
+      launch: `Un site vitrine est en général en ligne ${weeksTextFr(SITE_WEEKS)} semaines après le lancement du projet, un MVP en ${weeksTextFr(SAAS_WEEKS)}. Vous avez la date dans le cadrage écrit avant de vous engager.`,
+    },
+    sign: {
+      builder: 'Préparé par',
+      builderRole: 'Développeur web et SaaS',
+      client: 'Accepté par',
+      clientRole: 'Vous, pendant l’appel de cadrage gratuit',
+      write: 'Ou écrivez-moi',
+    },
+    colophon: {
+      label: 'Colophon',
+      revision: 'Révision',
+      source: 'Code source',
+      lighthouse: 'Lighthouse',
+      lighthouseText: 'Accessibilité 100 · Bonnes pratiques 100 · SEO 100 (mobile, mesuré le 8 septembre 2026).',
+      runIt: 'Vérifiez vous-même',
+      contact: 'Contact',
+    },
   },
 })

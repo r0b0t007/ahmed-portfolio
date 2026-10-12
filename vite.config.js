@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import { execSync } from 'node:child_process'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
@@ -108,12 +109,26 @@ function contentSchema({ emitLlms }) {
 /**
  * Post-build head rewrites, done here (with the bundle in hand) rather than by regex in prerender:
  *   - inline the single stylesheet and drop its <link> — no render-blocking CSS request
- *   - preload the faces the hero text paints with: both Newsreader files (heading, logo, em) and
- *     Archivo (lead paragraph). Without the Archivo preload it arrives after first paint and the
- *     swap re-wraps the lead — Lighthouse reported CLS 0.018 for exactly that. Plex Mono (kicker,
- *     5 KB) is left to be discovered at first layout from the inline CSS.
+ *   - preload the two faces the cover paints with: Archivo (title, lead, all the prose) and
+ *     JetBrains Mono (the document meta line, the clause numbers). Both are on the first screen,
+ *     so without the preload each arrives after first paint and its swap re-wraps the text it
+ *     sets (Lighthouse reported CLS 0.018 for exactly that with the lead paragraph).
  */
-const PRELOAD_FONTS = ['newsreader', 'newsreader-400-italic', 'archivo']
+const PRELOAD_FONTS = ['archivo', 'jetbrains-mono-500']
+
+/**
+ * The commit and date the build comes from, for the document's revision line and the colophon
+ * (src/lib/build.js). Cloudflare Pages sets CF_PAGES_COMMIT_SHA; a local build asks the checkout.
+ * Neither available (a source tarball) leaves both lines without a commit rather than failing.
+ */
+function buildInfo() {
+  let commit = process.env.CF_PAGES_COMMIT_SHA || ''
+  if (!commit) {
+    try { commit = execSync('git rev-parse HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim() } catch { commit = '' }
+  }
+  return { commit: commit.slice(0, 7), date: new Date().toISOString().slice(0, 10) }
+}
+const BUILD = buildInfo()
 
 function criticalHead() {
   return {
@@ -153,8 +168,10 @@ function criticalHead() {
  */
 function errorPage({ emit }) {
   const template = new URL('./src/404.html', import.meta.url)
+  // Colour tokens are OKLCH (hex in older copies), compared with case and spacing normalised.
   const tokens = text => new Map(
-    [...text.matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8})\b/gi)].map(([, name, hex]) => [name, hex.toLowerCase()]),
+    [...text.matchAll(/(--[\w-]+):\s*(#[0-9a-f]{3,8}\b|oklch\([^)]*\))/gi)]
+      .map(([, name, value]) => [name, value.toLowerCase().replace(/\s+/g, ' ')]),
   )
   return {
     name: 'error-page',
@@ -175,6 +192,10 @@ function errorPage({ emit }) {
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
+  define: {
+    'import.meta.env.BUILD_COMMIT': JSON.stringify(BUILD.commit),
+    'import.meta.env.BUILD_DATE': JSON.stringify(BUILD.date),
+  },
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
   plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead(), errorPage({ emit: !isSsrBuild })],
   build: {

@@ -1,48 +1,56 @@
-import { sectionIndex } from '../lib/sections'
-import { ordinal } from '../lib/ordinal'
 import { FIRST_LINK_DAYS } from '../content/site'
 import { steps } from '../content/process'
+import { useContent } from '../lib/content-context'
+import { Clause } from './Doc'
 
-export const Step = ({ s, i }) => {
+/**
+ * The four steps as a schedule: when each one happens, what it is, what happens in it. A real
+ * table (column headers, one row per step), because that is what a schedule in a contract is.
+ * The homepages and every service page render it from src/content/process.js, so the description
+ * of how the work goes can't drift between them. `caption` states the launch lengths where the
+ * page doesn't already (the service pages put theirs in the clause heading).
+ */
+export const ScheduleTable = ({ steps: rows, caption }) => {
+  const { ui } = useContent()
   return (
-    <div className="fade-in ed-step">
-      <div className="ed-step-side">
-        <div className="ed-step-n">( {ordinal(i, 2)} )</div>
-        <div className="ed-step-meta">{s.meta}</div>
-      </div>
-      <div>
-        <h3 className="ed-step-t">{s.title}</h3>
-        <p className="ed-step-desc">{s.desc}</p>
-      </div>
-    </div>
+    <table className="sheet-table schedule">
+      {caption && <caption>{caption}</caption>}
+      <thead>
+        <tr>
+          <th scope="col">{ui.doc.schedule.when}</th>
+          <th scope="col">{ui.doc.schedule.step}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(s => (
+          <tr key={s.title}>
+            <td className="schedule-when">{s.meta}</td>
+            <td>
+              <h3 className="schedule-step">{s.title}</h3>
+              <p>{s.desc}</p>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }
 
-const Process = () => (
-  <section id="process" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Process</span>
-        <span className="eyebrow-index">( {sectionIndex('process')} )</span>
-      </div>
-      <h2 className="sec-title">A working link in {FIRST_LINK_DAYS} days. <em>Then every week after.</em></h2>
-      <p className="sec-lead">
-        Agencies go quiet for six weeks and come back with a surprise. You don’t get to say
-        “that’s not what I meant” until it’s expensive to fix. Here, every project runs the same
-        four steps, and you can see it running from the first one.
+const Process = () => {
+  const { ui } = useContent()
+  return (
+    <Clause
+      type="home" id="process"
+      title={`A working link in ${FIRST_LINK_DAYS} days.`} accent="Then every week after."
+      lead="Agencies go quiet for six weeks and come back with a surprise. You don’t get to say “that’s not what I meant” until it’s expensive to fix. Here, every project runs the same four steps, and you can see it running from the first one."
+    >
+      <ScheduleTable steps={steps} caption={ui.doc.schedule.launch} />
+      <p className="clause-note">
+        Every week you can’t see it is a week it can’t earn. Fast feedback loops mean a faster
+        launch, and a faster launch means your asset starts working sooner.
       </p>
-    </div>
-
-    <div className="ed-steps">
-      {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
-    </div>
-
-    <div className="ed-promise">
-      Every week you can’t see it is a week it can’t earn. Fast feedback loops mean a faster
-      launch, and a faster launch means your asset starts working sooner.
-    </div>
-
-  </section>
-)
+    </Clause>
+  )
+}
 
 export default Process

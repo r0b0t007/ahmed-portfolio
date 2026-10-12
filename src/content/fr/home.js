@@ -18,12 +18,13 @@ export const home = typo({
     description: `Sites web et SaaS en quelques semaines, à prix fixe : un premier lien fonctionnel en ${FIRST_LINK_DAYS} jours, un prix et une date de lancement par écrit. Basé à Tétouan.`,
   },
   hero: {
-    kicker: 'Pour les fondateurs qui veulent un produit lancé, pas « en cours »',
+    // The cover's "Préparé pour" line (src/components/Doc.jsx).
+    preparedFor: 'Les fondateurs qui veulent un produit lancé, pas « en cours ».',
     h1: ['Votre site ou SaaS,', 'en ligne en quelques semaines.', 'Prix fixe.'],
     em: 'Date par écrit.',
     lead: `Un lien fonctionnel en ${FIRST_LINK_DAYS} jours. Une date de lancement sur laquelle vous pouvez compter. Un prix qui ne bouge pas. Développé par un ingénieur qui a passé neuf ans à livrer des logiciels en production pour Bell, BMW et Bayer.`,
     whatsapp: 'Écrivez-moi sur WhatsApp',
-    // Beside the portrait below 900px (HeroPortrait), as on the English homepage.
+    // Beside the ID photo in the cover's "Préparé par" line, as on the English homepage.
     byline: 'Développeur web et SaaS. Vous travaillez directement avec moi, du début à la fin.',
     facts: [
       { n: PRICE_SITE_LABEL_FR, l: 'Prix de départ d’un site vitrine, fixé par écrit' },

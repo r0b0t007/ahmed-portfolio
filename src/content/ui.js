@@ -9,7 +9,7 @@
  */
 import {
   CTA_LABEL, CTA_LABEL_LONG, CTA_LABEL_NAV, FIRST_LINK_DAYS, FOUNDING_OFFER, PRICE_MOVERS,
-  PRICE_PROMISE, WHATSAPP_URL,
+  PRICE_PROMISE, SAAS_WEEKS, SITE_WEEKS, WHATSAPP_URL, weeksText,
 } from './site.js'
 
 export const ui = {
@@ -27,7 +27,8 @@ export const ui = {
     { name: 'FAQ', href: '/#faq' },
     { name: CTA_LABEL_NAV, href: '#contact', accent: true },
   ],
-  menu: 'Menu',
+  // The header's table-of-contents toggle: every page is set as a scope document.
+  menu: 'Contents',
   // The header's link to the other language. Its accessible name contains the visible label.
   switchTo: { label: 'FR', name: 'FR, version française', lang: 'fr' },
   crumbHome: 'Home',
@@ -85,5 +86,38 @@ export const ui = {
   footer: {
     tag: `Fixed price. Date in writing. A working link in ${FIRST_LINK_DAYS} days.`,
     rights: '© 2026 Ahmed Chioua. All rights reserved.',
+  },
+  // The scope-document frame every page is set in: the cover's labels, the clause and annex
+  // numbering, the signature block and the colophon. Wording only; the facts stay in site.js.
+  doc: {
+    label: 'Scope of work',
+    revision: 'Revision',
+    clause: no => `§ ${no}`,
+    annex: letter => `Annex ${letter}`,
+    preparedBy: 'Prepared by',
+    preparedFor: 'Prepared for',
+    trackRecord: 'Track record',
+    keyTerms: 'Key terms',
+    schedule: {
+      when: 'When',
+      step: 'Step',
+      launch: `Marketing sites usually go live ${weeksText(SITE_WEEKS)} weeks after kickoff, MVPs usually ${weeksText(SAAS_WEEKS)}. You get the date in the written scope before you commit.`,
+    },
+    sign: {
+      builder: 'Prepared by',
+      builderRole: 'Web and SaaS developer',
+      client: 'Accepted by',
+      clientRole: 'You, on the free scope call',
+      write: 'Or write to me',
+    },
+    colophon: {
+      label: 'Colophon',
+      revision: 'Revision',
+      source: 'Source',
+      lighthouse: 'Lighthouse',
+      lighthouseText: 'Accessibility 100 · Best practices 100 · SEO 100 (mobile, measured 8 Sep 2026).',
+      runIt: 'Run it yourself',
+      contact: 'Contact',
+    },
   },
 }

@@ -1,8 +1,7 @@
 import { Breadcrumb } from '../../components/Breadcrumb'
-import { Eyebrow as SharedEyebrow } from '../../components/Eyebrow'
+import { Clause, PageCover } from '../../components/Doc'
 import { BOOKING_URL, REPO_URL } from '../../content/site'
 import { servicePath } from '../../content/routes'
-import { workSectionIndex as idx } from '../../lib/sections'
 
 /**
  * Build log for this site. Every figure links to the commit or pull request it came from, so a
@@ -15,10 +14,8 @@ const AsOf = () => <a href={`${REPO_URL}/commit/${AS_OF}`} target="_blank" rel="
 
 const PR = ({ n }) => <a href={`${REPO_URL}/pull/${n}`} target="_blank" rel="noopener noreferrer">PR #{n}</a>
 
-const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
-
 const Entry = ({ title, meta, children }) => (
-  <article className="fade-in log-entry">
+  <article className="log-entry">
     <h3 className="log-entry-t">{title}</h3>
     <p className="log-meta">{meta}</p>
     {children}
@@ -37,35 +34,27 @@ const facts = [
 
 const ThisSite = ({ name }) => (
   <div className="log">
-    <section id="hero" className="section svc-hero">
-      <Breadcrumb name={name} />
-      <h1 className="ed-h1">How this site <em>was built.</em></h1>
-      <p className="ed-lead">
-        The page you are reading is the sample. It sells a build with a fixed price and a date in
-        writing, so it has to be fast, accessible and easy to check, and the code behind it is
-        public. This is the log: what was built, what was measured, and what didn’t work.
-      </p>
-      <dl className="log-facts">
+    <PageCover
+      crumb={<Breadcrumb name={name} />}
+      title="How this site" accent="was built."
+      lead="The page you are reading is the sample. It sells a build with a fixed price and a date in writing, so it has to be fast, accessible and easy to check, and the code behind it is public. This is the log: what was built, what was measured, and what didn’t work."
+    >
+      <dl className="spec log-facts">
         {facts.map(([term, value]) => (
-          <div key={term}>
-            <dt>{term}</dt>
+          <div key={term} className="spec-row">
+            <dt><span className="spec-term">{term}</span></dt>
             <dd>{value}</dd>
           </div>
         ))}
       </dl>
-    </section>
+    </PageCover>
 
-    <section id="decisions" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="The decisions" id="decisions" />
-        <h2 className="sec-title">In order, <em>with the numbers.</em></h2>
-        <p className="sec-lead">
+    <Clause type="work" id="decisions" title="In order," accent="with the numbers." lead={<>
           The brief: one page whose job is to turn a stranger into a booked scope call. It is also
           the portfolio, so a slow or inaccessible page would contradict the offer it makes. Two
           rules followed from that: every claim has to be checkable in a few minutes, and every
           change has to be measured, not assumed.
-        </p>
-      </div>
+      </>}>
 
       <Entry title="Ship HTML, not an empty <div>" meta={<><PR n={4} /> · 23 Aug 2026</>}>
         <p>
@@ -130,13 +119,9 @@ const ThisSite = ({ name }) => (
           <li>The build fails if a page has more or fewer than one <code>{'<h1>'}</code>, or a canonical URL that isn’t its own.</li>
         </ul>
       </Entry>
-    </section>
+    </Clause>
 
-    <section id="failures" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="What didn’t work" id="failures" />
-        <h2 className="sec-title">Four things that <em>didn’t go to plan.</em></h2>
-      </div>
+    <Clause type="work" id="failures" title="Four things that" accent="didn’t go to plan.">
 
       <Entry title="A performance theory that measurement disproved" meta={<><PR n={5} /> · closed, not merged</>}>
         <p>
@@ -171,38 +156,29 @@ const ThisSite = ({ name }) => (
           checking the live site, and the build now writes those redirects itself.
         </p>
       </Entry>
-    </section>
+    </Clause>
 
-    <section id="method" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="How it’s built" id="method" />
-        <h2 className="sec-title">AI in the loop. <em>Decisions mine.</em></h2>
-        <p className="sec-lead">
+    <Clause type="work" id="method" title="AI in the loop." accent="Decisions mine." lead={<>
           Up to commit <AsOf />, 73 of the 109 commits carry a <code>Co-Authored-By: Claude</code>{' '}
           line, visible in the history. The AI writes a lot of the code. The decisions about what to build, what to
           measure and what to throw away are mine, and most changes go through a review pass before
           merging. Fifteen commits exist only to apply review findings.
-        </p>
-      </div>
-    </section>
+      </>}>
+    </Clause>
 
-    <section id="check" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="Check it yourself" id="check" />
-        <h2 className="sec-title">Don’t take the log’s word <em>for it either.</em></h2>
-      </div>
+    <Clause type="work" id="check" title="Don’t take the log’s word" accent="for it either.">
       <ul className="log-checks">
         <li>Run Lighthouse on any page.</li>
         <li>View the page source: the full text is in the HTML, before any JavaScript runs.</li>
         <li><code>curl -I https://ahmedchioua.com/services/website-development/</code> returns a 308 to the clean URL.</li>
         <li>Read the history: every PR above is in the repo, including the one that was closed.</li>
       </ul>
-      <div className="ed-cta-row log-cta">
+      <div className="cta-row log-cta">
         <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">Book a scope call</a>
         <a href={servicePath('website-development')} className="link-teal">Website development →</a>
         <a href={servicePath('saas-mvp-development')} className="link-teal">SaaS &amp; MVP development →</a>
       </div>
-    </section>
+    </Clause>
   </div>
 )
 

@@ -52,24 +52,24 @@ below the fold split into its own chunk — ~14 kB more across all nine, loaded 
 
 ## Design system
 
-Editorial, warm-paper light theme. Tokens live in `src/index.css`:
+The site is set as a **scope document**: the contract the buyer receives. A cover (parties,
+revision, key terms), a preamble, numbered clauses (§ 1–§ 6), lettered annexes (A–C) and a
+signature block. `DESIGN.md` is the locked system; every token lives in `src/index.css`
+(OKLCH, tinted toward the brand teal):
 
 | Token | Value | Use |
 |---|---|---|
-| `--paper` | `#faf7f2` | page background |
-| `--paper-card` | `#fffdf9` | card surface |
-| `--paper-raised` | `#f1ece2` | raised panel |
-| `--ink` | `#1a1c1a` | primary text, heavy rules |
-| `--ink-2` | `#4a4d49` | secondary text |
-| `--ink-muted` | `#64665f` | mono meta — WCAG AA on every surface used |
-| `--teal` | `#0e5f55` | accent |
-| `--hair` | `#e2ddd3` | hairline borders |
+| `--color-desk` | `oklch(94.6% 0.008 190)` | the ground around the sheet |
+| `--color-paper` | `oklch(98.8% 0.004 190)` | the sheet |
+| `--color-ink` | `oklch(19% 0.012 190)` | text, heavy rules |
+| `--color-ink-2` | `oklch(35% 0.012 190)` | secondary text, the soft half of headings |
+| `--color-muted` | `oklch(47% 0.012 190)` | mono labels and meta (6.6:1 on paper) |
+| `--color-rule` | `oklch(86% 0.008 190)` | hairlines between rows |
+| `--color-accent` | `oklch(43.8% 0.074 182)` | the brand teal (#0e5f55): numbers, links, states |
 
-Type: **Newsreader** (serif display) · **Archivo** (sans) · **IBM Plex Mono** (labels and meta).
-Fonts load async and non-render-blocking, with critical CSS inlined in `index.html`.
-
-Sections are numbered `( 01 )`–`( 07 )` and separated by hairline rules — the grid gaps are 1px
-`background` bleed via `.hair-grid` rather than borders.
+Type: **Archivo** (display 800/700, body 400; one variable file) · **JetBrains Mono** 500 (the
+reference voice: clause numbers, labels, the revision line). Two self-hosted files, ~31 KB.
+No scroll animation: only hover and focus states move.
 
 ## Structure
 
@@ -83,15 +83,18 @@ functions/_middleware.js runs it on every request public/_routes.json sends to F
 src/content/faqs.js     FAQ copy — single source for the section and the FAQPage schema
 src/content/products.js shipped products — single source for Proof cards, schema nodes and llms.txt
 src/content/llms.txt    llms.txt template (product and FAQ placeholders filled at build)
-src/index.css           design tokens + shared editorial primitives
+src/index.css           design tokens + the scope-document styles (see DESIGN.md)
 src/App.jsx             section composition
 src/main.jsx            client entry — hydrates the prerendered markup
 src/entry-server.jsx    build-time server entry (renderToString)
 src/content/faqs.js     single source of truth for FAQ copy (page + schema)
-src/hooks/useFadeIn.js  IntersectionObserver scroll reveal
 src/components/
-  Header · Hero · TrustStrip · Services · Process · Proof
-  Experience · Summary (About) · Faq · Contact · Footer
+  Doc.jsx                 the document primitives: cover, clause, spec list, key terms
+  rows.jsx                content → spec-list rows, shared by the pages
+  Header (running head) · Hero (cover) · Benefits (preamble) · Services · Process
+  Pricing · Handoff · Faq (§ 5–6) · Proof · Experience · Summary (annexes A–C)
+  Contact (signature block) · Footer (colophon)
+src/lib/sections.js     clause and annex numbering per page type
 ```
 
 ### Prerendering

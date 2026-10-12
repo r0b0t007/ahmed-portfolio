@@ -1,16 +1,13 @@
+/**
+ * The companies behind the nine years, as the cover's "Track record" line. A line of the parties
+ * block, not a logo strip: there are no client logos to show for this offer, only employers and
+ * the clients they placed the work with.
+ */
 const clients = ['Bell', 'BMW', 'Bayer', 'NTT DATA', 'Harman']
 
-const TrustStrip = () => (
-  <section className="ed-trust" aria-label="Companies delivered for">
-    <span className="ed-trust-label">Nine years delivering for</span>
-    <div className="ed-trust-row">
-      {clients.map(c => <span key={c} className="ed-trust-name">{c}</span>)}
-    </div>
-    <p className="ed-trust-note">
-      Telecom, automotive, life sciences and retail. First as an engineer, later as a delivery lead.
-    </p>
-
-  </section>
+export const TrackRecord = () => (
+  <>
+    <span className="track-names">{clients.join(' · ')}</span>{' '}
+    Telecom, automotive, life sciences and retail. First as an engineer, later as a delivery lead.
+  </>
 )
-
-export default TrustStrip

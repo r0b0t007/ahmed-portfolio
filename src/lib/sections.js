@@ -1,33 +1,36 @@
-import { ordinal } from './ordinal'
-
 /**
- * The order the sections mount in App.jsx, stated once. Each section's "( 0N )" eyebrow index is
- * derived from it, so adding or removing a section is one edit here rather than a renumbering
- * across ten files, which this repo has now done three times.
+ * The order each page type's sections render in, stated once. Every page is set as a scope
+ * document: its numbered clauses ("§ 1") and lettered annexes ("Annex A") are derived from these
+ * lists, so adding, removing or reordering a section is one edit here rather than a renumbering
+ * across components. Sections not listed (the document header, the preamble, the signature block)
+ * are unnumbered on purpose: a contract numbers its terms, not its cover page.
+ *
+ * Each order is { clauses, annexes }. The ids are the sections' DOM ids, which the navigation,
+ * llms.txt and the 404 page link to, so they never change when the numbering does.
  */
-export const SECTION_ORDER = [
-  'benefits', 'services', 'process', 'handoff', 'proof', 'pricing', 'experience', 'about', 'faq', 'contact',
-]
-
-const indexIn = (order, name) => id => {
-  const i = order.indexOf(id)
-  if (i < 0) throw new Error(`${name}: "${id}" is not in the section order`)
-  return ordinal(i, 2)
+const ORDERS = {
+  home: { clauses: ['services', 'process', 'pricing', 'handoff', 'date', 'faq'], annexes: ['proof', 'experience', 'about'] },
+  'home:fr': { clauses: ['services', 'process', 'pricing', 'faq'], annexes: ['proof'] },
+  service: { clauses: ['included', 'weeks', 'price', 'faq'], annexes: ['proof'] },
+  work: { clauses: ['decisions', 'failures', 'method', 'check'], annexes: [] },
 }
 
-export const sectionIndex = indexIn(SECTION_ORDER, 'sectionIndex')
+const LETTERS = 'ABCDEFGHIJ'
 
-/** The numbered sections of a service page (src/pages/ServicePage.jsx), in render order. */
-export const SERVICE_SECTION_ORDER = ['included', 'weeks', 'price', 'proof', 'faq', 'contact']
+/**
+ * The number a section carries in its page type: "1" for the first clause, "A" for the first
+ * annex. Throws for an id the order doesn't list, so a renamed section fails the build instead of
+ * rendering "§ 0".
+ */
+export function numberOf(type, id) {
+  const order = ORDERS[type]
+  if (!order) throw new Error(`sections: no order for page type "${type}"`)
+  const c = order.clauses.indexOf(id)
+  if (c >= 0) return String(c + 1)
+  const a = order.annexes.indexOf(id)
+  if (a >= 0) return LETTERS[a]
+  throw new Error(`sections: "${id}" is not in the ${type} order`)
+}
 
-export const serviceSectionIndex = indexIn(SERVICE_SECTION_ORDER, 'serviceSectionIndex')
-
-/** The numbered sections of a build log (src/pages/work/), in render order. */
-export const WORK_SECTION_ORDER = ['decisions', 'failures', 'method', 'check', 'contact']
-
-export const workSectionIndex = indexIn(WORK_SECTION_ORDER, 'workSectionIndex')
-
-/** The numbered sections of the French homepage (src/pages/HomeFr.jsx), in render order. */
-export const HOME_FR_SECTION_ORDER = ['services', 'process', 'proof', 'pricing', 'faq', 'contact']
-
-export const homeFrSectionIndex = indexIn(HOME_FR_SECTION_ORDER, 'homeFrSectionIndex')
+/** Whether a section is an annex (lettered) rather than a clause (numbered). */
+export const isAnnex = (type, id) => ORDERS[type]?.annexes.includes(id) ?? false
