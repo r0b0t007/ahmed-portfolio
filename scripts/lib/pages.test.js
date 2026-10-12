@@ -66,6 +66,12 @@ test('rewriteHead drops the hero preload and the homepage JSON-LD, keeps font pr
   assert.match(ld[0], /\\u003c\/script>/) // a "</script>" inside the data cannot close the tag
 })
 
+test('rewriteHead keeps the hero preload, once, for a page that renders the portrait', () => {
+  const html = rewriteHead(TEMPLATE, { ...PAGE, heroImage: true })
+  assert.equal(html.match(/<link rel="preload" as="image"/g).length, 1)
+  assert.match(html, /href="\/headshot-700\.avif"/)
+})
+
 test('rewriteHead strips head comments, and only head comments', () => {
   const html = rewriteHead(TEMPLATE.replace('<div id="root">', '<!--body note--><div id="root">'), PAGE)
   assert.doesNotMatch(html.slice(0, html.indexOf('</head>')), /<!--/)

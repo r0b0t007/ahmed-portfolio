@@ -23,6 +23,8 @@ export const home = typo({
     em: 'Date par écrit.',
     lead: `Un lien fonctionnel en ${FIRST_LINK_DAYS} jours. Une date de lancement sur laquelle vous pouvez compter. Un prix qui ne bouge pas. Développé par un ingénieur qui a passé neuf ans à livrer des logiciels en production pour Bell, BMW et Bayer.`,
     whatsapp: 'Écrivez-moi sur WhatsApp',
+    // Beside the portrait below 900px (HeroPortrait), as on the English homepage.
+    byline: 'Développeur web et SaaS. Vous travaillez directement avec moi, du début à la fin.',
     facts: [
       { n: PRICE_SITE_LABEL_FR, l: 'Prix de départ d’un site vitrine, fixé par écrit' },
       { n: String(FIRST_LINK_DAYS), l: 'Jours jusqu’à votre premier lien fonctionnel' },

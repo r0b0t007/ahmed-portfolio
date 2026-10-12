@@ -39,20 +39,23 @@ export function injectMarkup(template, markup) {
 const escapeAttr = s =>
   String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
+// `replacement` is a string, or a function of the matched text (to keep or adapt the tag).
 function replaceOnce(html, pattern, replacement, label) {
   const all = new RegExp(pattern.source, pattern.flags.replace('g', '') + 'g')
   const found = (html.match(all) || []).length
   if (found !== 1) throw new Error(`[prerender] expected one ${label} in the template, found ${found}`)
-  return html.replace(pattern, () => replacement)
+  return html.replace(pattern, typeof replacement === 'function' ? replacement : () => replacement)
 }
 
 const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*"\\s*/?>`)
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
+const HERO_PRELOAD = /\s*<link rel="preload" as="image"[^>]*>/
 
-export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates }) {
-  // index.html's head comments explain the homepage (the hero preload, the critical CSS). On any
-  // other page they describe tags that are gone and cost first-wave bytes, so they go, before the
-  // exactly-once checks below can count a tag that is only mentioned in their prose.
+export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates, heroImage = false }) {
+  // index.html's head comments explain the homepage (the hero preload, the critical CSS). Every
+  // other page drops them: they cost first-wave bytes, mostly describe tags that are gone (/fr
+  // keeps the preload, not its comment; the reasoning lives once, in index.html), and they must
+  // go before the exactly-once checks below can count a tag that is only mentioned in their prose.
   const end = html.indexOf('</head>')
   if (end < 0) throw new Error('[prerender] expected one </head> in the template, found 0')
   html = html.slice(0, end).replace(/<!--[\s\S]*?-->\n?/g, '') + html.slice(end)
@@ -69,9 +72,10 @@ export function rewriteHead(html, { url, title, description, jsonLd, og, lang, o
     [metaTag('property', 'og:description'), `<meta property="og:description" content="${d}" />`, 'og:description'],
     [metaTag('name', 'twitter:title'), `<meta name="twitter:title" content="${t}" />`, 'twitter:title'],
     [metaTag('name', 'twitter:description'), `<meta name="twitter:description" content="${d}" />`, 'twitter:description'],
-    // The desktop hero portrait is the homepage's LCP. No other page renders it, so preloading
-    // it there would spend 34 KB of first-wave bandwidth on an image nobody sees.
-    [/\s*<link rel="preload" as="image"[^>]*>/, '', 'hero image preload'],
+    // The desktop hero portrait is the LCP of the pages that render it (heroImage: the English
+    // and French homepages). Anywhere else the preload would spend 34 KB of first-wave bandwidth
+    // on an image nobody sees, so it goes.
+    [HERO_PRELOAD, heroImage ? tag => tag : '', 'hero image preload'],
   ]
   // Articles (build logs) say so to link-preview crawlers, matching their TechArticle JSON-LD;
   // every other page keeps index.html's og:type of "website".
