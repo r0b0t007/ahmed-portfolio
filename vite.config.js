@@ -108,12 +108,11 @@ function contentSchema({ emitLlms }) {
 /**
  * Post-build head rewrites, done here (with the bundle in hand) rather than by regex in prerender:
  *   - inline the single stylesheet and drop its <link> — no render-blocking CSS request
- *   - preload the faces the hero text paints with: both Newsreader files (heading, logo, em) and
- *     Archivo (lead paragraph). Without the Archivo preload it arrives after first paint and the
- *     swap re-wraps the lead — Lighthouse reported CLS 0.018 for exactly that. Plex Mono (kicker,
- *     5 KB) is left to be discovered at first layout from the inline CSS.
+ *   - preload the one face the page paints with (Schibsted Grotesk 400–700, one variable file).
+ *     Without the preload it arrives after first paint and the swap re-wraps the hero text;
+ *     Lighthouse reported CLS 0.018 for exactly that with the previous fonts.
  */
-const PRELOAD_FONTS = ['newsreader', 'newsreader-400-italic', 'archivo']
+const PRELOAD_FONTS = ['schibsted']
 
 function criticalHead() {
   return {

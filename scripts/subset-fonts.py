@@ -1,29 +1,22 @@
 """
-Rebuilds src/fonts/*.woff2 and src/fonts/fonts.css — the four font files the site ships.
+Rebuilds src/fonts/*.woff2 and src/fonts/fonts.css: the one font file the site ships.
 
     python scripts/subset-fonts.py        (needs: pip install fonttools brotli; run `npm run build` first)
 
-Why not Google Fonts: even when you ask for `wght@400`, Google serves the full variable file
-(Archivo 400/500/600 were three downloads of the same 34 KiB font) and the request costs two
-cross-origin connections plus a render-blocking stylesheet.
+Why not Google Fonts: even when you ask for one weight, Google serves the full variable file, and
+the request costs two cross-origin connections plus a render-blocking stylesheet.
 
-Why four files, not eight: every @font-face the page uses is requested at first layout, before
-first paint, so under Lighthouse's simulated 1.5 Mbps link all font bytes delay FCP. The two
-upright Newsreader weights (300 hero / 400 headings) and the three Archivo weights (400 body /
-500 nav / 600 emphasis) are each cut as ONE variable-font file restricted to just that weight
-range, which is smaller than two or three static instances and renders identically. Newsreader
-italic and IBM Plex Mono are static (no variable source). Plex Mono 400 is dropped: the 500 file
-serves both weights (400 → 500 is the nearest available face; nothing is synthesised).
+Why one file: every @font-face the page uses is requested at first layout, before first paint,
+so under Lighthouse's simulated 1.5 Mbps link all font bytes delay FCP. The Compact system
+(DESIGN.md) sets everything in Schibsted Grotesk at 400, 600 and 700, cut as ONE variable-font
+file restricted to that weight range, which is smaller than three static instances and renders
+identically. There is no second family and no italic.
 
-Glyph coverage:
-  - Archivo (used in form inputs)      -> printable ASCII + Latin-1 + everything on the page
-  - Newsreader, IBM Plex Mono          -> only the characters that appear in the rendered page
-                                          or anywhere in src/ (JSX strings, placeholders, runtime
-                                          status text); they never render user input
-Layout features are trimmed to `kern` and `tnum` (the site uses no ligatures, small caps or
-marks; tnum is what makes the price table's tabular-nums do anything).
+Glyph coverage: printable ASCII + Latin-1 + everything on the page (form inputs render user text).
+Layout features are trimmed to `kern` and `tnum` (tnum is what makes the step numbers' and the
+role dates' tabular-nums do anything).
 
-fonts.css is generated so each @font-face carries the exact unicode-range its file covers;
+fonts.css is generated so the @font-face carries the exact unicode-range its file covers;
 src/index.css imports it. Re-run after copy changes that introduce a new character; the build
 does not do this for you.
 """
@@ -42,14 +35,8 @@ UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 # a (min, max) tuple keeps a variable axis restricted to that range, a number pins it. `css`
 # is the font-weight the @font-face declares.
 FACES = [
-    dict(file='newsreader', family='Newsreader', css_family='Newsreader', style='normal',
-         query='ital,wght@0,300..400', axes={'wght': (300, 400)}, css='300 400'),
-    dict(file='newsreader-400-italic', family='Newsreader', css_family='Newsreader', style='italic',
-         query='ital,wght@1,400', axes={}, css='400'),
-    dict(file='archivo', family='Archivo', css_family='Archivo', style='normal',
-         query='wght@400..600', axes={'wght': (400, 600)}, css='400 600'),
-    dict(file='plexmono-500', family='IBM Plex Mono', css_family='IBM Plex Mono', style='normal',
-         query='wght@500', axes={}, css='500'),
+    dict(file='schibsted', family='Schibsted Grotesk', css_family='Schibsted Grotesk', style='normal',
+         query='wght@400..700', axes={'wght': (400, 700)}, css='400 700', full=True),
 ]
 
 
@@ -100,10 +87,10 @@ def build(face, cps, outdir):
         sys.exit(f"{face['file']}: static source but axes requested")
     opts = Options()
     opts.flavor, opts.hinting, opts.desubroutinize, opts.notdef_outline = 'woff2', False, True, True
-    # kern everywhere, plus tnum on Archivo only: the price table sets font-variant-numeric on
-    # .ed-price-figure, and trimming the feature out of the emitted file makes that CSS inert.
-    # Newsreader and Plex Mono set no numeric variant, so tnum would be bytes nobody reads.
-    opts.layout_features = ['kern', 'tnum'] if face['family'] == 'Archivo' else ['kern']
+    # kern, plus tnum: the step numbers and the role dates set font-variant-numeric:
+    # tabular-nums, and trimming the feature out of the emitted file makes that CSS inert. (The
+    # prices don't: Schibsted's tabular set gives the thousands comma a full figure width.)
+    opts.layout_features = ['kern', 'tnum']
     sub = Subsetter(opts)
     sub.populate(unicodes=cps & set(font.getBestCmap()))
     sub.subset(font)
@@ -116,6 +103,8 @@ def build(face, cps, outdir):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     site = site_glyphs()
+    # Schibsted has no U+202F (narrow no-break space), which the French prices get at runtime from
+    # toLocaleString('fr-FR'); the browser draws that one character from the fallback font.
     full = site | set(range(0x20, 0x7F)) | set(range(0xA0, 0x100))
     css = ['/* Generated by scripts/subset-fonts.py — do not edit. Vite hashes the files into /assets/;',
            '   vite.config.js preloads the faces the hero paints with. */']
@@ -127,7 +116,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         staged = Path(tmp)
         for face in FACES:
-            size, cmap = build(face, full if face['family'] == 'Archivo' else site, staged)
+            size, cmap = build(face, full if face.get('full') else site, staged)
             total += size
             print(f"{face['file']:24} {size / 1024:5.1f} KiB  {len(cmap)} glyphs")
             css.append(f"@font-face {{ font-family: '{face['css_family']}'; font-style: {face['style']}; font-weight: {face['css']}; "
