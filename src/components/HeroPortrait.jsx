@@ -41,7 +41,8 @@ const HeroPortrait = ({ byline }) => (
         900px the column collapses to a 76px square under the offer, and this byline is what gives
         that square a reason to be there. */}
     <p className="ed-hero-byline">
-      <b>Ahmed Chioua</b>
+      {/* The space keeps name and byline apart in extracted text; on screen <b> is a block. */}
+      <b>Ahmed Chioua</b>{' '}
       {byline}
     </p>
   </div>

@@ -41,7 +41,7 @@
          Above 900px the hero portrait is the LCP element. The markup is prerendered, but it sits
          ~25 KB into the document; preloading from <head> starts the fetch with the first bytes of
          HTML. `type` makes browsers without AVIF ignore the hint and fall through to the WebP in
-         the <picture>. imagesrcset/imagesizes must stay in sync with src/components/Hero.jsx.
+         the <picture>. imagesrcset/imagesizes must stay in sync with src/components/HeroPortrait.jsx.
 
          `media` gates the hint to the layout where it is true. Below 900px the portrait is a 76px
          byline rendered after the CTA, so it is not the LCP (the <h1> is). It also keeps `href`
@@ -53,7 +53,7 @@
          the (900, 901) band matching neither rule. Browser zoom and fractional display scaling
          land there, and the desktop hero would render with no preload at all.
 
-         The `type` on this hint is why Hero.jsx still sets fetchPriority on the <img>: browsers
+         The `type` on this hint is why HeroPortrait.jsx still sets fetchPriority on the <img>: browsers
          without AVIF (desktop Safari 16.0-16.3) drop this tag entirely, fall through to the WebP
          in the <picture>, and would otherwise fetch the desktop LCP at default priority. The cost
          is that below 900px the byline square is requested high too, ahead of the fonts. It is
