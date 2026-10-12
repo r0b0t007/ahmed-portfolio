@@ -1,15 +1,17 @@
 const clients = ['Bell', 'BMW', 'Bayer', 'NTT DATA', 'Harman']
 
+// A ruled matrix of five equal cells: the names set as type, not as borrowed logos.
 const TrustStrip = () => (
-  <section className="ed-trust" aria-label="Companies delivered for">
-    <span className="ed-trust-label">Nine years delivering for</span>
-    <div className="ed-trust-row">
-      {clients.map(c => <span key={c} className="ed-trust-name">{c}</span>)}
+  <section className="band trust" aria-label="Companies delivered for">
+    <div className="shell">
+      <p className="label">Nine years delivering for</p>
+      <ul className="trust-cells">
+        {clients.map(c => <li key={c}>{c}</li>)}
+      </ul>
+      <p className="trust-note">
+        Telecom, automotive, life sciences and retail. First as an engineer, later as a delivery lead.
+      </p>
     </div>
-    <p className="ed-trust-note">
-      Telecom, automotive, life sciences and retail. First as an engineer, later as a delivery lead.
-    </p>
-
   </section>
 )
 

@@ -1,9 +1,8 @@
 /**
  * The French homepage (src/pages/HomeFr.jsx): its head, hero and section copy. Shorter than the
- * English homepage: no Experience, About or hand-off sections. The section order is declared in
- * src/lib/sections.js (HOME_FR_SECTION_ORDER).
+ * English homepage: no Experience, About or hand-off sections.
  */
-import { FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL_FR, PRICE_SITE_LABEL_FR } from '../site.js'
+import { FIRST_LINK_DAYS, PRICE_SAAS_FROM, PRICE_SAAS_LABEL_FR, PRICE_SITE_FROM, PRICE_SITE_LABEL_FR } from '../site.js'
 import { productsPhrase } from './products.js'
 import { typo } from './typo.js'
 
@@ -23,14 +22,8 @@ export const home = typo({
     em: 'Date par écrit.',
     lead: `Un lien fonctionnel en ${FIRST_LINK_DAYS} jours. Une date de lancement sur laquelle vous pouvez compter. Un prix qui ne bouge pas. Développé par un ingénieur qui a passé neuf ans à livrer des logiciels en production pour Bell, BMW et Bayer.`,
     whatsapp: 'Écrivez-moi sur WhatsApp',
-    // Beside the portrait below 900px (HeroPortrait), as on the English homepage.
+    // Beside the portrait below 60rem (HeroPortrait), as on the English homepage.
     byline: 'Développeur web et SaaS. Vous travaillez directement avec moi, du début à la fin.',
-    facts: [
-      { n: PRICE_SITE_LABEL_FR, l: 'Prix de départ d’un site vitrine, fixé par écrit' },
-      { n: String(FIRST_LINK_DAYS), l: 'Jours jusqu’à votre premier lien fonctionnel' },
-      { n: String(LAUNCH_COVER_DAYS), l: 'Jours de corrections après le lancement, inclus' },
-      { n: '9+', l: 'Années de logiciels en production pour Bell, BMW et Bayer' },
-    ],
   },
   services: {
     eyebrow: 'Services',
@@ -59,8 +52,9 @@ export const home = typo({
     // No-break spaces: the column is narrow on phones, and the header must not wrap.
     head: { scope: 'Prestation', from: 'À\u00a0partir\u00a0de' },
     rows: [
-      { scope: 'Site vitrine ou landing page', from: PRICE_SITE_LABEL_FR },
-      { scope: 'Produit SaaS ou MVP', from: PRICE_SAAS_LABEL_FR },
+      // value: the floor as a number, for the table's stepped bar.
+      { scope: 'Site vitrine ou landing page', from: PRICE_SITE_LABEL_FR, value: PRICE_SITE_FROM },
+      { scope: 'Produit SaaS ou MVP', from: PRICE_SAAS_LABEL_FR, value: PRICE_SAAS_FROM },
     ],
     cta: 'Fixer un prix et une date',
   },

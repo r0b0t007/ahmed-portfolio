@@ -22,31 +22,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page not found | Ahmed Chioua</title>
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#faf7f2" />
+    <meta name="theme-color" content="#fcfcfe" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <style>
-      :root{--paper:#faf7f2;--ink:#1a1c1a;--ink-muted:#64665f;--teal:#0e5f55;--hair:#e2ddd3}
+      :root{--color-paper:oklch(99% 0.003 255);--color-ink:oklch(16% 0.010 255);--color-muted:oklch(47% 0.012 255);
+        --color-signal:oklch(45% 0.19 264);--color-rule:oklch(88% 0.008 255);--color-rail:oklch(93% 0.006 255)}
       *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-      body{min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:var(--paper);color:var(--ink);
+      html,body{overflow-x:clip}
+      body{min-height:100dvh;display:grid;place-items:center;padding:24px 16px;color:var(--color-ink);
+        background:var(--color-paper) repeating-linear-gradient(to right,var(--color-rail) 0 1px,transparent 1px 8.3333%);
         font-family:system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.5}
-      main{max-width:34rem;width:100%;border-top:2px solid var(--ink);padding-top:20px}
-      p{color:var(--ink-muted)}
-      .code{font-family:ui-monospace,'SFMono-Regular',monospace;font-size:.8125rem;letter-spacing:.06em;
-        text-transform:uppercase}
-      h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(2rem,6vw,2.75rem);
-        line-height:1.1;margin:12px 0 16px}
+      main{max-width:36rem;width:100%;border-top:1px solid var(--color-ink);padding-top:20px;background:var(--color-paper)}
+      p{color:var(--color-muted)}
+      .code{font-size:.75rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+      h1{font-weight:800;font-size:clamp(2.25rem,8vw,3.5rem);letter-spacing:-.04em;text-transform:lowercase;
+        line-height:.95;margin:12px 0 16px}
+      h1::after{content:'';display:inline-block;width:.2em;height:.2em;margin-left:.06em;background:var(--color-signal)}
       .lead{margin-bottom:28px}
-      a{color:var(--teal);font-weight:600;text-underline-offset:3px}
-      a:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
-      nav{display:flex;flex-wrap:wrap;gap:12px 24px;border-top:1px solid var(--hair);padding-top:16px}
+      a{color:var(--color-ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--color-signal);
+        text-decoration-thickness:2px;text-underline-offset:.3em;white-space:nowrap}
+      a:hover{color:var(--color-signal)}
+      a:focus-visible{outline:2px solid var(--color-signal);outline-offset:3px}
+      nav{display:flex;flex-wrap:wrap;gap:12px 24px;border-top:1px solid var(--color-rule);padding-top:16px}
     </style>
   </head>
   <body>
     <main>
       <p class="code">Error 404</p>
-      <h1>This page doesn’t exist.</h1>
+      <h1>This page doesn’t exist</h1>
       <p class="lead">The link may be out of date, or the address mistyped. These are the pages that exist:</p>
       <nav aria-label="Where to go instead">
         <!--PAGE_LINKS-->

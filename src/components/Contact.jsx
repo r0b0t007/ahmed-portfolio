@@ -50,7 +50,7 @@ const validity = invalid => invalid && {
   onInput: e => e.target.setCustomValidity(''),
 }
 
-const Contact = ({ index, locale = 'en' }) => {
+const Contact = ({ locale = 'en' }) => {
   const ui = uiFor(locale)
   const t = ui.contact
   const check = validity(t.invalid)
@@ -76,56 +76,53 @@ const Contact = ({ index, locale = 'en' }) => {
     setTimeout(() => setStatus('idle'), 5000)
   }
 
+  const done = status === 'success' || status === 'error'
+
   return (
-    <section id="contact" className="section">
-      <div className="ed-contact">
-        <div className="fade-in ed-contact-left">
-          <div className="eyebrow-block" style={{ marginBottom: 0 }}>
-            <div className="eyebrow-row">
-              <span className="eyebrow">{t.eyebrow}</span>
-              <span className="eyebrow-index">( {index} )</span>
-            </div>
-            <h2 className="sec-title">{t.title} <em>{t.em}</em></h2>
-            <p className="sec-lead" style={{ marginBottom: '28px' }}>{t.lead}</p>
-            <div className="ed-contact-btns">
-              <a className="btn-ink" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
-                {ui.cta.short}
-              </a>
-              <a className="btn-wa" href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer">
-                <WhatsAppIcon />
-                {t.whatsapp}
-              </a>
-            </div>
-            <dl className="ed-details">
-              {details(ui).map(d => (
-                <div key={d.label} className="ed-detail">
-                  <dt>{d.label}</dt>
-                  <dd>{d.href ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">{d.value}</a> : d.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="ed-alt-cta">{t.terms}</p>
-            <p className="ed-alt-cta">
-              {t.notReady}{' '}
-              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">{t.readCode}</a>
-            </p>
+    <section id="contact" className="band band--contact">
+      <div className="shell">
+        <div className="contact-text">
+          <h2 className="head">{t.title} <em className="sq">{t.em}</em></h2>
+          <p className="lead">{t.lead}</p>
+          <div className="cta-row">
+            <a className="btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+              {ui.cta.short}
+            </a>
+            <a className="btn btn--ghost" href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon />
+              {t.whatsapp}
+            </a>
           </div>
+          <dl className="details">
+            {details(ui).map(d => (
+              <div key={d.label} className="detail">
+                <dt className="label">{d.label}</dt>
+                <dd>{d.href ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">{d.value}</a> : d.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="contact-alt">{t.terms}</p>
+          <p className="contact-alt">
+            {t.notReady}{' '}
+            <a className="link" href={REPO_URL} target="_blank" rel="noopener noreferrer">{t.readCode}</a>
+          </p>
         </div>
 
-        <form className="fade-in ed-form" name="contact" onSubmit={submit}>
-          <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
-          <div className="ed-form-row">
-            <div className="ed-fg"><label>{t.fields.name.label}</label><input name="name" placeholder={t.fields.name.placeholder} required {...check} /></div>
-            <div className="ed-fg"><label>{t.fields.email.label}</label><input type="email" name="email" placeholder={t.fields.email.placeholder} required {...check} /></div>
+        <form className="form" name="contact" onSubmit={submit}>
+          <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></div>
+          <div className="form-row">
+            <div className="field"><label className="label" htmlFor="contact-name">{t.fields.name.label}</label><input id="contact-name" name="name" autoComplete="name" placeholder={t.fields.name.placeholder} required {...check} /></div>
+            <div className="field"><label className="label" htmlFor="contact-email">{t.fields.email.label}</label><input id="contact-email" type="email" name="email" autoComplete="email" placeholder={t.fields.email.placeholder} required {...check} /></div>
           </div>
-          <div className="ed-fg"><label>{t.fields.subject.label}</label><input name="subject" placeholder={t.fields.subject.placeholder} required {...check} /></div>
-          <div className="ed-fg"><label>{t.fields.message.label}</label><textarea name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} /></div>
-          <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
+          <div className="field"><label className="label" htmlFor="contact-subject">{t.fields.subject.label}</label><input id="contact-subject" name="subject" placeholder={t.fields.subject.placeholder} required {...check} /></div>
+          <div className="field"><label className="label" htmlFor="contact-message">{t.fields.message.label}</label><textarea id="contact-message" name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} /></div>
+          <button type="submit" className={`btn submit ${status}`} disabled={status === 'sending'}>
             {t.submit[status]}
           </button>
+          {/* The button's label is the visible state; this announces the outcome. */}
+          <p className="sr-only" role="status">{done ? t.submit[status] : ''}</p>
         </form>
       </div>
-
     </section>
   )
 }

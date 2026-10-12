@@ -1,13 +1,12 @@
-import { ordinal } from '../lib/ordinal'
-
 /**
- * One card of a three-column hair-grid: a mono index, a serif title and a few short lines.
- * Benefits and Handoff both render it, so the two sections stay one system.
+ * One cell of a ruled matrix: a title and a few short lines. Benefits (on the plate), Handoff and
+ * the service pages' "what you get" all render it, so the three read as one system. `mark` adds
+ * the quarter-disc in the cell's corner; the plate leaves it off.
  */
-export const BenefitCard = ({ b, i }) => (
-  <div className="fade-in ed-ben">
-    <div className="ed-ben-n">( {ordinal(i, 2)} )</div>
-    <h3 className="ed-ben-t">{b.title}</h3>
-    {b.lines.map(l => <p key={l} className="ed-ben-l">{l}</p>)}
-  </div>
+export const BenefitCard = ({ b, mark = true }) => (
+  <li>
+    {mark && <span className="qdisc" aria-hidden="true" />}
+    <h3 className="title">{b.title}</h3>
+    {b.lines.map(l => <p key={l}>{l}</p>)}
+  </li>
 )

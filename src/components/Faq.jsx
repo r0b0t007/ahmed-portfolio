@@ -1,29 +1,27 @@
-import { sectionIndex } from '../lib/sections'
 import { faqs } from '../content/faqs'
 
-export const FaqRow = ({ f }) => {
-  return (
-    <div className="fade-in ed-faq-item">
-      <h3 className="ed-faq-q">{f.q}</h3>
-      <p className="ed-faq-a">{f.a}</p>
-    </div>
-  )
-}
+/** One question and its answer, side by side on the grid. */
+export const FaqRow = ({ f }) => (
+  <div className="row row--faq">
+    <h3 className="title">{f.q}</h3>
+    <div className="row-body"><p>{f.a}</p></div>
+  </div>
+)
+
+export const FaqRows = ({ list }) => (
+  <div className="rows">
+    {list.map(f => <FaqRow key={f.q} f={f} />)}
+  </div>
+)
 
 const Faq = () => (
-  <section id="faq" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Questions</span>
-        <span className="eyebrow-index">( {sectionIndex('faq')} )</span>
+  <section id="faq" className="band">
+    <div className="shell">
+      <div className="sec-head">
+        <h2 className="head">Straight answers</h2>
       </div>
-      <h2 className="sec-title">Straight <em>answers</em></h2>
+      <FaqRows list={faqs} />
     </div>
-
-    <div className="ed-faq-grid">
-      {faqs.map(f => <FaqRow key={f.q} f={f} />)}
-    </div>
-
   </section>
 )
 

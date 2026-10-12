@@ -1,117 +1,108 @@
 import { Fragment } from 'react'
-import { Eyebrow as SharedEyebrow } from '../components/Eyebrow'
 import { ServiceCard } from '../components/Services'
-import { Step } from '../components/Process'
-import { ProofItem } from '../components/Proof'
+import { scale } from '../lib/scale'
+import { Steps } from '../components/Process'
+import { ProofRows } from '../components/Proof'
 import { PriceTable } from '../components/Pricing'
-import { FaqRow } from '../components/Faq'
+import { FaqRows } from '../components/Faq'
 import { WhatsAppIcon } from '../components/WhatsAppIcon'
 import HeroPortrait from '../components/HeroPortrait'
 import { home } from '../content/fr/home'
 import { servicePath } from '../content/routes'
 import { BOOKING_URL } from '../content/site'
 import { useContent } from '../lib/content-context'
-import { homeFrSectionIndex as idx } from '../lib/sections'
-import { spansLastRow } from '../lib/grid'
-
-const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 /**
  * The French homepage, for buyers in Morocco who search in French. Shorter than the English one
- * (no Experience, About or hand-off) and built from the same row components and classes, so the
- * two read as one site. The hero is the English one's two columns: the offer, then the same
- * portrait (HeroPortrait, preloaded in this page's head too). Copy is in src/content/fr/home.js; Contact closes the page via App.jsx. Section order is
- * declared in src/lib/sections.js (HOME_FR_SECTION_ORDER); keep both in step.
+ * (no Experience, About or hand-off) and built from the same components and classes, so the two
+ * read as one sheet. The hero is the English one's split: the offer, then the same portrait
+ * (HeroPortrait, preloaded in this page's head too). Copy is in src/content/fr/home.js; Contact
+ * closes the page via App.jsx.
  */
 const HomeFr = () => {
   const { ui, services, steps, proof, faqById } = useContent()
   const { hero } = home
   const faqs = home.faq.ids.map(faqById)
+  const max = scale(services)
 
   return (
     <>
-      <section id="hero" className="ed-hero">
-        <div className="ed-hero-text">
-          <p className="ed-kicker">{hero.kicker}</p>
-          <h1 className="ed-h1">
-            {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
-            <em>{hero.em}</em>
-          </h1>
-          <p className="ed-lead">{hero.lead}</p>
-          <div className="ed-cta-row">
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{ui.cta.long}</a>
-            <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-wa">
-              <WhatsAppIcon />
-              {hero.whatsapp}
-            </a>
+      <section id="hero" className="band hero">
+        <div className="shell">
+          <div className="hero-text">
+            {/* The last clause carries the period square in place of its full stop. */}
+            <h1 className="display">
+              {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
+              <em className="sq">{hero.em.replace(/\.$/, '')}</em>
+            </h1>
+            <p className="label">{hero.kicker}</p>
+            <p className="lead">{hero.lead}</p>
+            <div className="cta-row">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn">{ui.cta.short}</a>
+              <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn--ghost">
+                <WhatsAppIcon />
+                {hero.whatsapp}
+              </a>
+            </div>
           </div>
-          <dl className="svc-facts">
-            {hero.facts.map(f => (
-              <div key={f.l}>
-                <dt>{f.l}</dt>
-                <dd>{f.n}</dd>
-              </div>
+          <HeroPortrait byline={hero.byline} place={ui.contact.details.place} />
+        </div>
+      </section>
+
+      <section id="services" className="band">
+        <div className="shell">
+          <div className="sec-head sec-head--narrow">
+            <h2 className="head">{home.services.title} <em>{home.services.em}</em></h2>
+            <p className="lead">{home.services.lead}</p>
+          </div>
+          <ul className="svc-cells">
+            {services.map(s => (
+              <ServiceCard key={s.id} s={s} href={servicePath(s.slug, 'fr')} more={home.services.more(s.name)} max={max} />
             ))}
-          </dl>
-        </div>
-        <HeroPortrait byline={hero.byline} />
-      </section>
-
-      <section id="services" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.services.eyebrow} id="services" />
-          <h2 className="sec-title">{home.services.title} <em>{home.services.em}</em></h2>
-          <p className="sec-lead">{home.services.lead}</p>
-        </div>
-        <div className="hair-grid ed-svc-grid">
-          {services.map((s, i) => (
-            <ServiceCard key={s.id} s={s} i={i} href={servicePath(s.slug, 'fr')} more={home.services.more(s.name)} />
-          ))}
+          </ul>
         </div>
       </section>
 
-      <section id="process" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.process.eyebrow} id="process" />
-          <h2 className="sec-title">{home.process.title} <em>{home.process.em}</em></h2>
-          <p className="sec-lead">{home.process.lead}</p>
-        </div>
-        <div className="ed-steps">
-          {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
-        </div>
-      </section>
-
-      <section id="proof" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.proof.eyebrow} id="proof" />
-          <h2 className="sec-title">{home.proof.title} <em>{home.proof.em}</em></h2>
-          <p className="fade-in sec-lead">{home.proof.lead}</p>
-        </div>
-        <div className="hair-grid ed-proof-grid">
-          {proof.all.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(proof.all, i)} />)}
+      <section id="process" className="band">
+        <div className="shell">
+          <div className="sec-head">
+            <h2 className="head">{home.process.title} <em>{home.process.em}</em></h2>
+            <p className="lead">{home.process.lead}</p>
+          </div>
+          <Steps list={steps} />
         </div>
       </section>
 
-      <section id="pricing" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.pricing.eyebrow} id="pricing" />
-          <h2 className="sec-title">{home.pricing.title} <em>{home.pricing.em}</em></h2>
-          <p className="sec-lead">{home.pricing.lead} {ui.offer.promise}</p>
-        </div>
-        <PriceTable head={home.pricing.head} rows={home.pricing.rows} />
-        <p className="ed-price-note">{ui.offer.movers}</p>
-        <div className="ed-cta-row svc-price-cta">
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{home.pricing.cta}</a>
+      <section id="proof" className="band">
+        <div className="shell">
+          <div className="sec-head">
+            <h2 className="head">{home.proof.title} <em>{home.proof.em}</em></h2>
+            <p className="lead">{home.proof.lead}</p>
+          </div>
+          <ProofRows list={proof.all} />
         </div>
       </section>
 
-      <section id="faq" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.faq.eyebrow} id="faq" />
-          <h2 className="sec-title">{home.faq.title} <em>{home.faq.em}</em></h2>
+      <section id="pricing" className="band">
+        <div className="shell">
+          <div className="sec-head">
+            <h2 className="head">{home.pricing.title} <em>{home.pricing.em}</em></h2>
+            <p className="lead">{home.pricing.lead} {ui.offer.promise}</p>
+          </div>
+          <PriceTable head={home.pricing.head} rows={home.pricing.rows} />
+          <p className="price-note">{ui.offer.movers}</p>
+          <div className="cta-row price-cta">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn">{home.pricing.cta}</a>
+          </div>
         </div>
-        <div className="ed-faq-grid">
-          {faqs.map(f => <FaqRow key={f.id} f={f} />)}
+      </section>
+
+      <section id="faq" className="band">
+        <div className="shell">
+          <div className="sec-head">
+            <h2 className="head">{home.faq.title} <em>{home.faq.em}</em></h2>
+          </div>
+          <FaqRows list={faqs} />
         </div>
       </section>
     </>

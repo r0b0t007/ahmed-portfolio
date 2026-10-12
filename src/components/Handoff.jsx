@@ -1,11 +1,10 @@
-import { sectionIndex } from '../lib/sections'
 import { BenefitCard } from './BenefitCard'
 import { LAUNCH_COVER_DAYS } from '../content/site'
 
 /**
  * The hand-off, unbundled. "You own the repo" is one line; the stack below is what a founder is
  * actually buying at the end of the build. Shares BenefitCard with Benefits so the two
- * three-column sections read as one system.
+ * three-cell sections read as one system.
  */
 const stack = [
   {
@@ -35,24 +34,19 @@ const stack = [
 ]
 
 const Handoff = () => (
-  <section id="handoff" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">What you walk away with</span>
-        <span className="eyebrow-index">( {sectionIndex('handoff')} )</span>
+  <section id="handoff" className="band">
+    <div className="shell">
+      <div className="sec-head sec-head--narrow">
+        <h2 className="head">You lift zero technical fingers. <em>You own everything.</em></h2>
+        <p className="lead">Most hand-offs are a zip file and a goodbye. This one is a stack.</p>
       </div>
-      <h2 className="sec-title">You lift zero technical fingers. <em>You own everything.</em></h2>
-      <p className="sec-lead">
-        Most hand-offs are a zip file and a goodbye. This one is a stack.
-      </p>
+
+      <ul className="matrix matrix--3">
+        {stack.map(b => <BenefitCard key={b.title} b={b} />)}
+      </ul>
+
+      <p className="label matrix-note">All of it inside the fixed price. Not an add-on. Not an upsell.</p>
     </div>
-
-    <div className="hair-grid ed-ben-grid">
-      {stack.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
-    </div>
-
-    <div className="ed-promise">All of it inside the fixed price. Not an add-on. Not an upsell.</div>
-
   </section>
 )
 

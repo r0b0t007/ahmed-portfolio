@@ -1,4 +1,5 @@
-import { sectionIndex } from '../lib/sections'
+import { Numeral } from './Process'
+
 const roles = [
   {
     date: ['Jun 2024 —', 'Present'], kind: 'Delivery',
@@ -49,46 +50,42 @@ const roles = [
   },
 ]
 
-const Row = ({ r }) => {
-  return (
-    <div className="fade-in ed-row">
-      <div className="ed-row-date">
-        {r.date[0]}<br />{r.date[1]}
-        <span className="ed-kind">{r.kind}</span>
-      </div>
-      <div>
-        <h3 className="ed-role">{r.role}</h3>
-        <div className="ed-org">{r.org}</div>
-        <div className="ed-project">{r.project}</div>
-        <div className="ed-bullets">
-          {r.bullets.map((b, i) => <div key={i} className="ed-bullet"><span>—</span>{b}</div>)}
-        </div>
-        <div className="ed-tools">
-          {r.tools.map(t => <span key={t} className="tag">{t}</span>)}
-        </div>
-      </div>
+// One role as an index row: when, who, and what it taught.
+const Row = ({ r }) => (
+  <li className="row row--role">
+    <p className="label row-when">{r.date[0]} {r.date[1]} · {r.kind}</p>
+    <div className="row-who">
+      <h3 className="title">{r.role}</h3>
+      <p className="row-org">{r.org}</p>
+      <p className="label">{r.project}</p>
     </div>
-  )
-}
+    <div className="row-body">
+      <ul className="bullets">
+        {r.bullets.map(b => <li key={b}>{b}</li>)}
+      </ul>
+      <ul className="chips row-tools">
+        {r.tools.map(t => <li key={t}>{t}</li>)}
+      </ul>
+    </div>
+  </li>
+)
 
 const Experience = () => (
-  <section id="experience" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Background</span>
-        <span className="eyebrow-index">( {sectionIndex('experience')} )</span>
+  <section id="experience" className="band">
+    <div className="shell">
+      <Numeral n={9} />
+      <div className="sec-head sec-head--narrow">
+        <h2 className="head">Where the standards come from</h2>
+        <p className="lead">
+          Nine years inside enterprise software: about four building it, and five leading the
+          teams that shipped it. Both halves show up in how I work now.
+        </p>
       </div>
-      <h2 className="sec-title">Where the <em>standards</em> come from</h2>
-      <p className="sec-lead">
-        Nine years inside enterprise software: about four building it, and five leading the
-        teams that shipped it. Both halves show up in how I work now.
-      </p>
-    </div>
 
-    <div className="ed-timeline">
-      {roles.map((r, i) => <Row key={i} r={r} />)}
+      <ol className="rows">
+        {roles.map(r => <Row key={r.date.join() + r.role} r={r} />)}
+      </ol>
     </div>
-
   </section>
 )
 

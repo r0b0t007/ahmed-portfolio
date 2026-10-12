@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { BenefitCard } from './BenefitCard'
 
 /**
@@ -32,32 +31,33 @@ const standards = [
   },
 ]
 
+// The page's one plate: the claim the whole offer rests on, flooded in the signal ink. The grid's
+// rails continue across it at low opacity, so it reads as a poster inside the same sheet.
 const Benefits = () => (
-  <section id="benefits" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Why it won&rsquo;t break on launch day</span>
-        <span className="eyebrow-index">( {sectionIndex('benefits')} )</span>
+  <section id="benefits" className="band plate">
+    <div className="shell">
+      <div className="sec-head">
+        <h2 className="head">The cheapest developer is the one you <em className="sq">pay twice</em></h2>
+        <div>
+          <p className="lead">
+            Here&rsquo;s how most founder builds go. You hire fast and cheap. The demo looks fine. Then
+            users arrive, something breaks, and nobody can find why. The fix is a rebuild, at full
+            price, plus the months you lost. That isn&rsquo;t a developer problem. It&rsquo;s a
+            standards problem.
+          </p>
+          <p className="lead">
+            I spent nine years building and running delivery on platforms for Bell, BMW and Bayer,
+            through NTT DATA and a consulting engagement. Programmes where every vendor gets audited
+            and &ldquo;we&rsquo;ll fix it after launch&rdquo; isn&rsquo;t allowed. Those standards
+            ship with your build. They&rsquo;re the insurance policy on your capital.
+          </p>
+        </div>
       </div>
-      <h2 className="sec-title">The cheapest developer is the one you <em>pay twice</em></h2>
-      <p className="sec-lead">
-        Here&rsquo;s how most founder builds go. You hire fast and cheap. The demo looks fine. Then
-        users arrive, something breaks, and nobody can find why. The fix is a rebuild, at full
-        price, plus the months you lost. That isn&rsquo;t a developer problem. It&rsquo;s a
-        standards problem.
-      </p>
-      <p className="sec-lead">
-        I spent nine years building and running delivery on platforms for Bell, BMW and Bayer,
-        through NTT DATA and a consulting engagement. Programmes where every vendor gets audited
-        and &ldquo;we&rsquo;ll fix it after launch&rdquo; isn&rsquo;t allowed. Those standards
-        ship with your build. They&rsquo;re the insurance policy on your capital.
-      </p>
-    </div>
 
-    <div className="hair-grid ed-ben-grid">
-      {standards.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+      <ul className="plate-cells">
+        {standards.map(b => <BenefitCard key={b.title} b={b} mark={false} />)}
+      </ul>
     </div>
-
   </section>
 )
 
