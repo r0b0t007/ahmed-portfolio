@@ -53,3 +53,19 @@ test('the homepage JSON-LD leads with the business, an Organization with an addr
   assert.equal(contact.email, business.email)
   assert.equal(contact.telephone, business.telephone)
 })
+
+test('robots.txt lets ClaudeBot crawl, and still refuses the other training crawlers', () => {
+  const robots = readFileSync(new URL('../../public/robots.txt', import.meta.url), 'utf8').replace(/\r\n/g, '\n')
+  // Each group: its User-agent lines and its rules (comments and blank lines dropped).
+  const groups = robots.replace(/#.*$/gm, '').split(/\n\s*\n/).map(block => {
+    const lines = block.split('\n').map(l => l.trim()).filter(Boolean)
+    return {
+      agents: lines.filter(l => /^user-agent:/i.test(l)).map(l => l.split(':')[1].trim().toLowerCase()),
+      refusesAll: lines.some(l => /^disallow:\s*\/$/i.test(l)),
+    }
+  })
+  const groupFor = agent => groups.find(g => g.agents.includes(agent)) ?? groups.find(g => g.agents.includes('*'))
+  assert.equal(groupFor('claudebot').refusesAll, false)
+  assert.ok(groupFor('claudebot').agents.includes('*'), 'ClaudeBot follows the * group, not a group of its own')
+  for (const agent of ['gptbot', 'ccbot', 'anthropic-ai', 'google-extended']) assert.equal(groupFor(agent).refusesAll, true, agent)
+})
