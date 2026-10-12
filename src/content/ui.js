@@ -23,7 +23,6 @@ export const ui = {
     { name: 'Process', href: '/#process' },
     { name: 'Proof', href: '/#proof' },
     { name: 'Pricing', href: '/#pricing' },
-    { name: 'About', href: '/#about' },
     { name: 'FAQ', href: '/#faq' },
     { name: CTA_LABEL_NAV, href: '#contact', accent: true },
   ],
@@ -35,6 +34,15 @@ export const ui = {
   cta: { long: CTA_LABEL_LONG, short: CTA_LABEL },
   whatsappUrl: WHATSAPP_URL,
   offer: { promise: PRICE_PROMISE, movers: PRICE_MOVERS, founding: FOUNDING_OFFER },
+  // The homepage's scope picker (src/components/ScopePicker.jsx): one tab per service, keyed by id.
+  picker: {
+    legend: 'Pick a build',
+    tabs: { website: 'Website', saas: 'SaaS or MVP' },
+    rows: { price: 'From', weeks: 'Live in', link: 'First working link', cover: 'Post-launch fixes' },
+    weeks: weeks => `${weeks} weeks`,
+    day: n => `Day ${n}`,
+    cover: n => `${n} days, included`,
+  },
   service: {
     facts: {
       price: 'Starting price, fixed per project in writing',
@@ -71,6 +79,7 @@ export const ui = {
     terms: 'No retainer. No deposit to talk. A written scope within a week, or a straight “not me”.',
     notReady: 'Not ready to talk?',
     readCode: 'Read the code first →',
+    formToggle: 'Prefer to write? Send a message',
     fields: {
       name: { label: 'Name', placeholder: 'Your name' },
       email: { label: 'Email', placeholder: 'your@email.com' },

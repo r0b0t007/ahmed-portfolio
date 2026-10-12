@@ -18,7 +18,7 @@ const PR = ({ n }) => <a href={`${REPO_URL}/pull/${n}`} target="_blank" rel="noo
 const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 const Entry = ({ title, meta, children }) => (
-  <article className="fade-in log-entry">
+  <article className="log-entry">
     <h3 className="log-entry-t">{title}</h3>
     <p className="log-meta">{meta}</p>
     {children}
@@ -37,10 +37,10 @@ const facts = [
 
 const ThisSite = ({ name }) => (
   <div className="log">
-    <section id="hero" className="section svc-hero">
+    <section id="hero" className="log-hero">
       <Breadcrumb name={name} />
-      <h1 className="ed-h1">How this site <em>was built.</em></h1>
-      <p className="ed-lead">
+      <h1 className="pitch-h1 pitch-h1--page">How this site <em>was built.</em></h1>
+      <p className="pitch-lead">
         The page you are reading is the sample. It sells a build with a fixed price and a date in
         writing, so it has to be fast, accessible and easy to check, and the code behind it is
         public. This is the log: what was built, what was measured, and what didn’t work.
@@ -55,11 +55,11 @@ const ThisSite = ({ name }) => (
       </dl>
     </section>
 
-    <section id="decisions" className="section">
-      <div className="eyebrow-block">
+    <section id="decisions" className="log-section">
+      <div className="log-head">
         <Eyebrow label="The decisions" id="decisions" />
-        <h2 className="sec-title">In order, <em>with the numbers.</em></h2>
-        <p className="sec-lead">
+        <h2 className="block-title">In order, <em>with the numbers.</em></h2>
+        <p className="block-lead">
           The brief: one page whose job is to turn a stranger into a booked scope call. It is also
           the portfolio, so a slow or inaccessible page would contradict the offer it makes. Two
           rules followed from that: every claim has to be checkable in a few minutes, and every
@@ -132,10 +132,10 @@ const ThisSite = ({ name }) => (
       </Entry>
     </section>
 
-    <section id="failures" className="section">
-      <div className="eyebrow-block">
+    <section id="failures" className="log-section">
+      <div className="log-head">
         <Eyebrow label="What didn’t work" id="failures" />
-        <h2 className="sec-title">Four things that <em>didn’t go to plan.</em></h2>
+        <h2 className="block-title">Four things that <em>didn’t go to plan.</em></h2>
       </div>
 
       <Entry title="A performance theory that measurement disproved" meta={<><PR n={5} /> · closed, not merged</>}>
@@ -173,11 +173,11 @@ const ThisSite = ({ name }) => (
       </Entry>
     </section>
 
-    <section id="method" className="section">
-      <div className="eyebrow-block">
+    <section id="method" className="log-section">
+      <div className="log-head">
         <Eyebrow label="How it’s built" id="method" />
-        <h2 className="sec-title">AI in the loop. <em>Decisions mine.</em></h2>
-        <p className="sec-lead">
+        <h2 className="block-title">AI in the loop. <em>Decisions mine.</em></h2>
+        <p className="block-lead">
           Up to commit <AsOf />, 73 of the 109 commits carry a <code>Co-Authored-By: Claude</code>{' '}
           line, visible in the history. The AI writes a lot of the code. The decisions about what to build, what to
           measure and what to throw away are mine, and most changes go through a review pass before
@@ -186,10 +186,10 @@ const ThisSite = ({ name }) => (
       </div>
     </section>
 
-    <section id="check" className="section">
-      <div className="eyebrow-block">
+    <section id="check" className="log-section">
+      <div className="log-head">
         <Eyebrow label="Check it yourself" id="check" />
-        <h2 className="sec-title">Don’t take the log’s word <em>for it either.</em></h2>
+        <h2 className="block-title">Don’t take the log’s word <em>for it either.</em></h2>
       </div>
       <ul className="log-checks">
         <li>Run Lighthouse on any page.</li>
@@ -197,10 +197,10 @@ const ThisSite = ({ name }) => (
         <li><code>curl -I https://ahmedchioua.com/services/website-development/</code> returns a 308 to the clean URL.</li>
         <li>Read the history: every PR above is in the repo, including the one that was closed.</li>
       </ul>
-      <div className="ed-cta-row log-cta">
-        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">Book a scope call</a>
-        <a href={servicePath('website-development')} className="link-teal">Website development →</a>
-        <a href={servicePath('saas-mvp-development')} className="link-teal">SaaS &amp; MVP development →</a>
+      <div className="log-cta">
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn">Book a scope call</a>
+        <a href={servicePath('website-development')} className="link">Website development →</a>
+        <a href={servicePath('saas-mvp-development')} className="link">SaaS &amp; MVP development →</a>
       </div>
     </section>
   </div>

@@ -1,12 +1,11 @@
-import { sectionIndex } from '../lib/sections'
 import { BenefitCard } from './BenefitCard'
+import { Block, Fold } from './Split'
 
 /**
  * The "why it won't break" section. Founders can't judge code quality, so the argument is made
- * in money: cheap builds get paid for twice. The three cards are the standards that ship with
- * every build, and the Proof section further down is where the visitor checks them.
- *
- * Lines are deliberately short. This section is read on a phone more often than not.
+ * in money: cheap builds get paid for twice. The three rows are the standards that ship with
+ * every build; the two paragraphs that tell the story behind them wait behind "The longer
+ * version", so the section reads in one screen on a phone.
  */
 const standards = [
   {
@@ -33,32 +32,25 @@ const standards = [
 ]
 
 const Benefits = () => (
-  <section id="benefits" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Why it won&rsquo;t break on launch day</span>
-        <span className="eyebrow-index">( {sectionIndex('benefits')} )</span>
-      </div>
-      <h2 className="sec-title">The cheapest developer is the one you <em>pay twice</em></h2>
-      <p className="sec-lead">
+  <Block id="benefits" title="The cheapest developer is the one you" em="pay twice">
+    <ul className="rows">
+      {standards.map(b => <BenefitCard key={b.title} b={b} />)}
+    </ul>
+    <Fold summary="The longer version">
+      <p>
         Here&rsquo;s how most founder builds go. You hire fast and cheap. The demo looks fine. Then
         users arrive, something breaks, and nobody can find why. The fix is a rebuild, at full
         price, plus the months you lost. That isn&rsquo;t a developer problem. It&rsquo;s a
         standards problem.
       </p>
-      <p className="sec-lead">
+      <p>
         I spent nine years building and running delivery on platforms for Bell, BMW and Bayer,
         through NTT DATA and a consulting engagement. Programmes where every vendor gets audited
         and &ldquo;we&rsquo;ll fix it after launch&rdquo; isn&rsquo;t allowed. Those standards
         ship with your build. They&rsquo;re the insurance policy on your capital.
       </p>
-    </div>
-
-    <div className="hair-grid ed-ben-grid">
-      {standards.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
-    </div>
-
-  </section>
+    </Fold>
+  </Block>
 )
 
 export default Benefits

@@ -1,4 +1,4 @@
-import { sectionIndex } from '../lib/sections'
+/** Nine years of roles, newest first. Rendered inside Background.jsx, below the pitch. */
 const roles = [
   {
     date: ['Jun 2024 —', 'Present'], kind: 'Delivery',
@@ -49,47 +49,21 @@ const roles = [
   },
 ]
 
-const Row = ({ r }) => {
-  return (
-    <div className="fade-in ed-row">
-      <div className="ed-row-date">
-        {r.date[0]}<br />{r.date[1]}
-        <span className="ed-kind">{r.kind}</span>
-      </div>
-      <div>
-        <h3 className="ed-role">{r.role}</h3>
-        <div className="ed-org">{r.org}</div>
-        <div className="ed-project">{r.project}</div>
-        <div className="ed-bullets">
-          {r.bullets.map((b, i) => <div key={i} className="ed-bullet"><span>—</span>{b}</div>)}
-        </div>
-        <div className="ed-tools">
-          {r.tools.map(t => <span key={t} className="tag">{t}</span>)}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const Experience = () => (
-  <section id="experience" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Background</span>
-        <span className="eyebrow-index">( {sectionIndex('experience')} )</span>
-      </div>
-      <h2 className="sec-title">Where the <em>standards</em> come from</h2>
-      <p className="sec-lead">
-        Nine years inside enterprise software: about four building it, and five leading the
-        teams that shipped it. Both halves show up in how I work now.
-      </p>
-    </div>
-
-    <div className="ed-timeline">
-      {roles.map((r, i) => <Row key={i} r={r} />)}
-    </div>
-
-  </section>
+const Row = ({ r }) => (
+  <li className="role">
+    <p className="role-when">{r.date[0]} {r.date[1]} · {r.kind}</p>
+    <h4 className="role-t">{r.role}</h4>
+    <p className="role-org">{r.org}</p>
+    <p className="role-project">{r.project}</p>
+    <ul className="role-points">
+      {r.bullets.map((b, i) => <li key={i}>{b}</li>)}
+    </ul>
+    <p className="role-tools">{r.tools.join(' · ')}</p>
+  </li>
 )
 
-export default Experience
+export const Roles = () => (
+  <ol className="roles">
+    {roles.map((r, i) => <Row key={i} r={r} />)}
+  </ol>
+)

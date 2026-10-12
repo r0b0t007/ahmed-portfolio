@@ -50,7 +50,12 @@ const validity = invalid => invalid && {
   onInput: e => e.target.setCustomValidity(''),
 }
 
-const Contact = ({ index, locale = 'en' }) => {
+/**
+ * Contact closes every page: book first, WhatsApp second, and the form, the slowest of the three
+ * routes, behind its own label. `index` (its place in the page's section order) is still
+ * serialised by App.jsx but not shown: the Compact system has no section numbers.
+ */
+const Contact = ({ locale = 'en' }) => {
   const ui = uiFor(locale)
   const t = ui.contact
   const check = validity(t.invalid)
@@ -76,56 +81,63 @@ const Contact = ({ index, locale = 'en' }) => {
     setTimeout(() => setStatus('idle'), 5000)
   }
 
+  // Each label is tied to its control by id, so the field has an accessible name.
+  const field = (key, control) => (
+    <div className="field">
+      <label htmlFor={`cf-${key}`}>{t.fields[key].label}</label>
+      {control}
+    </div>
+  )
+
   return (
-    <section id="contact" className="section">
-      <div className="ed-contact">
-        <div className="fade-in ed-contact-left">
-          <div className="eyebrow-block" style={{ marginBottom: 0 }}>
-            <div className="eyebrow-row">
-              <span className="eyebrow">{t.eyebrow}</span>
-              <span className="eyebrow-index">( {index} )</span>
-            </div>
-            <h2 className="sec-title">{t.title} <em>{t.em}</em></h2>
-            <p className="sec-lead" style={{ marginBottom: '28px' }}>{t.lead}</p>
-            <div className="ed-contact-btns">
-              <a className="btn-ink" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
-                {ui.cta.short}
-              </a>
-              <a className="btn-wa" href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer">
-                <WhatsAppIcon />
-                {t.whatsapp}
-              </a>
-            </div>
-            <dl className="ed-details">
-              {details(ui).map(d => (
-                <div key={d.label} className="ed-detail">
-                  <dt>{d.label}</dt>
-                  <dd>{d.href ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">{d.value}</a> : d.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="ed-alt-cta">{t.terms}</p>
-            <p className="ed-alt-cta">
-              {t.notReady}{' '}
-              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">{t.readCode}</a>
-            </p>
-          </div>
+    <section id="contact" className="contact">
+      <div className="contact-in">
+        <div className="contact-main">
+          <h2 className="block-title">{t.title} <em>{t.em}</em></h2>
+          <p className="block-lead">{t.lead}</p>
+          <p className="contact-actions">
+            <a className="btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">{ui.cta.short}</a>
+            <a className="link-quiet" href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon />
+              {t.whatsapp}
+            </a>
+          </p>
+          <p className="note">{t.terms}</p>
+          <p className="note">
+            {t.notReady}{' '}
+            <a className="link" href={REPO_URL} target="_blank" rel="noopener noreferrer">{t.readCode}</a>
+          </p>
         </div>
 
-        <form className="fade-in ed-form" name="contact" onSubmit={submit}>
-          <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" /></label></div>
-          <div className="ed-form-row">
-            <div className="ed-fg"><label>{t.fields.name.label}</label><input name="name" placeholder={t.fields.name.placeholder} required {...check} /></div>
-            <div className="ed-fg"><label>{t.fields.email.label}</label><input type="email" name="email" placeholder={t.fields.email.placeholder} required {...check} /></div>
-          </div>
-          <div className="ed-fg"><label>{t.fields.subject.label}</label><input name="subject" placeholder={t.fields.subject.placeholder} required {...check} /></div>
-          <div className="ed-fg"><label>{t.fields.message.label}</label><textarea name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} /></div>
-          <button type="submit" className={`ed-submit ${status}`} disabled={status === 'sending'}>
-            {t.submit[status]}
-          </button>
-        </form>
-      </div>
+        <div className="contact-side">
+          <dl className="details">
+            {details(ui).map(d => (
+              <div key={d.label}>
+                <dt>{d.label}</dt>
+                <dd>{d.href ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">{d.value}</a> : d.value}</dd>
+              </div>
+            ))}
+          </dl>
 
+          <details className="fold form-fold">
+            <summary>{t.formToggle}</summary>
+            <form className="form" name="contact" onSubmit={submit}>
+              <div style={{ display: 'none' }}><label>Skip: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></div>
+              <div className="form-row">
+                {field('name', <input id="cf-name" name="name" autoComplete="name" placeholder={t.fields.name.placeholder} required {...check} />)}
+                {field('email', <input id="cf-email" type="email" name="email" autoComplete="email" placeholder={t.fields.email.placeholder} required {...check} />)}
+              </div>
+              {field('subject', <input id="cf-subject" name="subject" placeholder={t.fields.subject.placeholder} required {...check} />)}
+              {field('message', <textarea id="cf-message" name="message" rows="5" placeholder={t.fields.message.placeholder} required {...check} />)}
+              <button type="submit" className={`btn form-submit is-${status}`} disabled={status === 'sending'}>
+                {t.submit[status]}
+              </button>
+              {/* Announced to assistive tech: the button label alone changes silently. */}
+              <p className="form-status" role="status">{status === 'success' || status === 'error' ? t.submit[status] : ''}</p>
+            </form>
+          </details>
+        </div>
+      </div>
     </section>
   )
 }

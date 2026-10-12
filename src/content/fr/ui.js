@@ -31,6 +31,14 @@ export const ui = typo({
     movers: 'Ce qui fait varier le montant : la part de neuf par rapport à l’existant adapté, et la présence ou non d’authentification, de paiements ou d’intégrations tierces.',
     founding: `pour les ${FOUNDING_SLOTS} prochains projets, et ce n’est pas une remise. Vous échangez une étude de cas écrite et une recommandation contre le tarif fondateur. Même périmètre, même date, même passation. Dites « fondateur » pendant l’appel de cadrage.`,
   },
+  picker: {
+    legend: 'Choisissez une prestation',
+    tabs: { website: 'Site web', saas: 'SaaS ou MVP' },
+    rows: { price: 'À partir de', weeks: 'En ligne en', link: 'Premier lien fonctionnel', cover: 'Corrections après lancement' },
+    weeks: weeks => `${weeks} semaines`,
+    day: n => `Jour ${n}`,
+    cover: n => `${n} jours, inclus`,
+  },
   service: {
     facts: {
       price: 'Prix de départ, fixé par écrit pour chaque projet',
@@ -67,6 +75,7 @@ export const ui = typo({
     terms: 'Pas d’abonnement. Pas d’acompte pour discuter. Un cadrage écrit sous une semaine, ou un « ce n’est pas pour moi » franc.',
     notReady: 'Pas encore prêt à en parler ?',
     readCode: 'Lisez d’abord le code →',
+    formToggle: 'Vous préférez écrire ? Envoyez un message',
     fields: {
       name: { label: 'Nom', placeholder: 'Votre nom' },
       email: { label: 'E-mail', placeholder: 'vous@exemple.com' },

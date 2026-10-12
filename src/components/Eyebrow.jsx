@@ -1,10 +1,7 @@
 /**
- * A section's mono label and its "( 0N )" number. The number is passed in already formatted,
- * because each page type numbers its sections from its own order in src/lib/sections.js.
+ * A build-log section's short label, above its heading. Plain sentence case and no "( 0N )"
+ * number: the log is the one long read on the site, and the label is a signpost, not decoration.
+ * `index` is still passed by the log (its section order lives in src/lib/sections.js) but is not
+ * shown.
  */
-export const Eyebrow = ({ label, index }) => (
-  <div className="eyebrow-row">
-    <span className="eyebrow">{label}</span>
-    <span className="eyebrow-index">( {index} )</span>
-  </div>
-)
+export const Eyebrow = ({ label }) => <p className="kicker">{label}</p>

@@ -49,9 +49,11 @@ function replaceOnce(html, pattern, replacement, label) {
 
 const metaTag = (attr, key) => new RegExp(`<meta ${attr}="${key}" content="[^"]*"\\s*/?>`)
 const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g
-const HERO_PRELOAD = /\s*<link rel="preload" as="image"[^>]*>/
+// index.html carries no image preload in the Compact system (the portrait is a 48px avatar,
+// not the LCP). Stripped if one ever comes back, so no derived page inherits it by accident.
+const IMAGE_PRELOAD = /\s*<link rel="preload" as="image"[^>]*>/g
 
-export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates, heroImage = false }) {
+export function rewriteHead(html, { url, title, description, jsonLd, og, lang, ogLocale, imageAlt, alternates }) {
   // index.html's head comments explain the homepage (the hero preload, the critical CSS). Every
   // other page drops them: they cost first-wave bytes, mostly describe tags that are gone (/fr
   // keeps the preload, not its comment; the reasoning lives once, in index.html), and they must
@@ -72,10 +74,6 @@ export function rewriteHead(html, { url, title, description, jsonLd, og, lang, o
     [metaTag('property', 'og:description'), `<meta property="og:description" content="${d}" />`, 'og:description'],
     [metaTag('name', 'twitter:title'), `<meta name="twitter:title" content="${t}" />`, 'twitter:title'],
     [metaTag('name', 'twitter:description'), `<meta name="twitter:description" content="${d}" />`, 'twitter:description'],
-    // The desktop hero portrait is the LCP of the pages that render it (heroImage: the English
-    // and French homepages). Anywhere else the preload would spend 34 KB of first-wave bandwidth
-    // on an image nobody sees, so it goes.
-    [HERO_PRELOAD, heroImage ? tag => tag : '', 'hero image preload'],
   ]
   // Articles (build logs) say so to link-preview crawlers, matching their TechArticle JSON-LD;
   // every other page keeps index.html's og:type of "website".
@@ -93,6 +91,7 @@ export function rewriteHead(html, { url, title, description, jsonLd, og, lang, o
   // The preview image is shared by every page; its description is read in the page's language.
   if (imageAlt) fields.push([metaTag('property', 'og:image:alt'), `<meta property="og:image:alt" content="${escapeAttr(imageAlt)}" />`, 'og:image:alt'])
   for (const [pattern, replacement, label] of fields) html = replaceOnce(html, pattern, replacement, label)
+  html = html.replace(IMAGE_PRELOAD, '')
 
   // The homepage graph (Person, FAQPage, products) describes the homepage. Each route brings its own.
   if (!(html.match(JSON_LD) || []).length) throw new Error('[prerender] expected JSON-LD in the template, found none')

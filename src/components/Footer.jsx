@@ -8,30 +8,27 @@ const socials = whatsappUrl => [
   { label: 'GitHub', href: 'https://github.com/r0b0t007', path: 'M12 2A10 10 0 002 12a10 10 0 006.84 9.5c.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10 10 0 0012 2z', fill: true },
 ]
 
+// One quiet band: the name and the offer in a line, the four routes as icons, the booking link.
 const Footer = () => {
   const { ui } = useContent()
   return (
-    <footer className="ed-footer">
-      <div className="ed-foot-top">
-        <div>
-          <div className="ed-foot-name">Ahmed Chioua</div>
-          <p className="ed-foot-tag">{ui.footer.tag}</p>
-        </div>
-        <div className="ed-foot-socials">
+    <footer className="site-footer">
+      <div className="site-footer-in">
+        <p className="foot-line"><b>Ahmed Chioua</b> · {ui.footer.tag}</p>
+        <div className="foot-socials">
           {socials(ui.whatsappUrl).map(s => (
             <a key={s.label} href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" aria-label={s.label}>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill={s.fill ? 'currentColor' : 'none'} stroke={s.fill ? 'none' : 'currentColor'} strokeWidth="2">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill={s.fill ? 'currentColor' : 'none'} stroke={s.fill ? 'none' : 'currentColor'} strokeWidth="2" aria-hidden="true" focusable="false">
                 <path d={s.path} />
               </svg>
             </a>
           ))}
         </div>
+        <p className="foot-small">
+          <span>{ui.footer.rights}</span>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="link">{ui.cta.short} ↗</a>
+        </p>
       </div>
-      <div className="ed-foot-bottom">
-        <span>{ui.footer.rights}</span>
-        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">{ui.cta.short} ↗</a>
-      </div>
-
     </footer>
   )
 }

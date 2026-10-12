@@ -8,24 +8,12 @@ import { ISLAND } from './islands'
  * the page has painted (see schedule below), so ~60 KB of runtime leaves the first wave.
  */
 
-// Every .fade-in / .fade-fill element on the page, islands included: classList changes survive
-// hydration, so one observer owns the reveal effect and no component needs a hook for it.
-function revealOnScroll() {
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target) }
-    }
-  }, { threshold: 0.1 })
-  document.querySelectorAll('.fade-in, .fade-fill, .fade-fill-var').forEach(el => observer.observe(el))
-}
-
 // The build prerenders the whole page (scripts/prerender.js). Only the two components with
-// state hydrate; the rest is static HTML and never enters this bundle.
+// state hydrate; the rest is static HTML and never enters this bundle. There is no scroll reveal:
+// the Compact system (DESIGN.md) moves nothing on scroll, so the page is just there.
 const prerendered = document.getElementById(ISLAND.header)?.hasChildNodes()
 
 if (prerendered) {
-  revealOnScroll() // before hydration, so a failed island can't leave the page invisible
-
   // Hydrate at the first sign the user wants to interact, or shortly after load — whichever
   // comes first. Nothing above the fold needs React to be readable; only the menu button, the
   // header's scrolled state and the contact form do.
@@ -60,9 +48,6 @@ if (prerendered) {
   else addEventListener('load', soon, { once: true })
 } else if (import.meta.env.DEV) {
   // The dev server has no prerendered markup: render the full app client-side. Guarded so the
-  // production bundle contains neither this branch nor an App chunk. revealOnScroll must wait
-  // for the render to resolve — it observes elements that do not exist until then.
-  import('./hydrate.jsx')
-    .then(({ renderDev }) => renderDev())
-    .then(() => requestAnimationFrame(() => requestAnimationFrame(revealOnScroll)))
+  // production bundle contains neither this branch nor an App chunk.
+  import('./hydrate.jsx').then(({ renderDev }) => renderDev())
 }
