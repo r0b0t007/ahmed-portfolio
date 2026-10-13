@@ -14,8 +14,8 @@ Built with two skills fetched through the `ui-skills` CLI (`npx ui-skills@0.2.4 
   graphics clarify structure. Its four decisions, as taken here:
   - **Mode:** hybrid. A type-led hero, then instrumental modules.
   - **Dominant gesture:** the schedule drawn as a dimension line across the hero.
-  - **Grid:** full-bleed bands on a `--pad` gutter; the hero is offer | portrait (a third,
-    capped at 440px) over a full-width band; modules are rows on a heavy top rule.
+  - **Grid:** full-bleed bands on a `--pad` gutter; the hero is offer | portrait (40%, capped
+    at 640px) over a full-width band; modules are rows on a heavy top rule.
   - **Signal:** one accent, safety orange, with one job: action and position.
 - **jakubkrehel/better-typography** — the type rules: a small semantic scale, unitless
   line-heights, `em` tracking, a 60–75ch measure, `balance` on headings and `pretty` on
@@ -98,16 +98,17 @@ second line.
     when a link is followed, blurring the link first so focus lands on the chosen section, not
     back on the key. Where popovers are missing (Safari before 17) it also toggles `.is-open` and
     `aria-expanded`, and handles Escape and an outside press. `Header.jsx` holds no state.
-- **Hero:** offer | portrait (a third of the width, capped at 440px), schedule below at full width;
-  padding 44 top / 60 bottom. The hero row has a floor of min(34rem, 100svh − 340px), so the photo
-  box stays portrait-shaped and the crop shows the head down to the crossed arms on every desktop
-  size (object-position 50% 33%): about 6–87% of the photo’s height from 1000 to 1920 wide.
-  At 1280×800 the whole English schedule is on the first screen (it ends at 771px). `/fr` doesn't
-  fit yet: its longer headline and lead end the schedule at 800px at 1280×800 and 838px at
-  1000×800 (935 and 919 before the narrower portrait column). Shortening the French hero copy is
-  the open fix. Below 900px: offer, then the schedule as
-  a vertical rule, then the portrait as a 76px signature row. The offer and the primary key sit
-  inside the first 390×844 screen on every page.
+- **Hero:** offer | portrait, schedule below at full width; padding 44 top / 60 bottom. The offer
+  and the photo carry close to equal weight: the portrait column is 40% of the width, capped at
+  640px (40% up to ~1600px wide, 33% at 1920), and the hero row is at least 1.25 times that
+  width, capped at the screen's height less 120px. The photo box stays portrait-shaped, and the
+  crop (object-position 50% 33%) shows the head down to the crossed arms, about 6–88% of the
+  photo's height, at every desktop size. The trade: the offer and its key are always on the
+  first screen (the key ends between 489 and 651px), but the schedule sits lower: at 1280×800 it
+  starts at 710px and runs past the bottom edge, and it is fully in view from about 1080px of
+  screen height. Below 900px: offer, then the schedule as a vertical rule, then the portrait as a
+  76px signature row. The offer and the primary key sit inside the first 390×844 screen on every
+  page.
 - **Schedule** (`Schedule.jsx`): an ordered list on a graphite rule, a tick per station; the first
   working link carries the signal (tick and filled value; its edge stays 2px, no stripe). Five
   stations hold on one rule down to 900px, then the line turns vertical. The two launch stations
