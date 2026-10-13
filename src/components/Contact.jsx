@@ -50,8 +50,6 @@ const validity = invalid => invalid && {
   onInput: e => e.target.setCustomValidity(''),
 }
 
-// App.jsx also passes `index` (the section's old eyebrow number); it is part of the island's
-// serialised props, but nothing renders it any more.
 const Contact = ({ locale = 'en' }) => {
   const ui = uiFor(locale)
   const t = ui.contact
@@ -81,8 +79,8 @@ const Contact = ({ locale = 'en' }) => {
   return (
     <section id="contact" className="section">
       <div className="ed-contact">
-        <div className="fade-in ed-contact-left">
-          <div className="eyebrow-block ed-contact-head">
+        <div className="ed-contact-left">
+          <div className="sec-head ed-contact-head">
             <h2 className="sec-title">{t.title} <em>{t.em}</em></h2>
             <p className="sec-lead">{t.lead}</p>
             <div className="ed-contact-btns">
@@ -110,7 +108,7 @@ const Contact = ({ locale = 'en' }) => {
           </div>
         </div>
 
-        <form className="fade-in ed-form" name="contact" onSubmit={submit}>
+        <form className="ed-form" name="contact" onSubmit={submit}>
           <div style={{ display: 'none' }} aria-hidden="true"><label>Skip: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></div>
           {/* Each label names its field (htmlFor/id), so assistive tech and a click on the label
               both reach the input. */}

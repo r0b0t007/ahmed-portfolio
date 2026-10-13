@@ -113,3 +113,13 @@ test('no French string has an ordinary space before : ; ? or !', () => {
     assert.doesNotMatch(s, / [:;?!]/, s)
   }
 })
+
+test('each language’s nav has one booking key, to #contact, and only section links besides', () => {
+  // Header.jsx puts the accent entry on the nameplate and the rest in the section index.
+  for (const u of [ui, frUi]) {
+    const keys = u.nav.filter(l => l.accent)
+    assert.equal(keys.length, 1, `${u.lang}: one accent entry`)
+    assert.equal(keys[0].href, '#contact')
+    for (const l of u.nav.filter(n => !n.accent)) assert.match(l.href, new RegExp(`^${u.home}#[a-z]+$`), `${u.lang}: ${l.name}`)
+  }
+})

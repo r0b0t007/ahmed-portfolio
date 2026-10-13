@@ -15,7 +15,7 @@ export const siteProof = typo([
   {
     title: 'Ce site',
     body: 'Conçu, développé et déployé par moi, en React avec du CSS écrit à la main. Pas de template, pas de constructeur de pages. Il obtient 100 / 100 / 100 sur Lighthouse en accessibilité, bonnes pratiques et SEO. Lancez-le vous-même pour vérifier.',
-    link: { label: 'Lire le journal de construction (en anglais)', href: workPath('this-site') },
+    link: { label: 'Journal de construction (en anglais)', href: workPath('this-site') },
   },
   {
     title: 'Le code source',

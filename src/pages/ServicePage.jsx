@@ -6,8 +6,6 @@ import { ProofItem } from '../components/Proof'
 import { FaqRow } from '../components/Faq'
 import { BOOKING_URL, FIRST_LINK_DAYS, LAUNCH_COVER_DAYS } from '../content/site'
 import { useContent } from '../lib/content-context'
-import { spansLastRow } from '../lib/grid'
-
 
 /**
  * One service, end to end: what it is, what's in it, how the weeks go, what it costs, what to
@@ -50,17 +48,17 @@ const ServicePage = ({ id }) => {
       </section>
 
       <section id="included" className="section">
-        <div className="eyebrow-block">
+        <div className="sec-head">
           <h2 className="sec-title">{t.included.title} <em>{t.included.em}</em></h2>
           <p className="sec-lead">{s.framing}</p>
         </div>
-        <div className="hair-grid ed-ben-grid">
-          {s.included.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+        <div className="ed-ben-grid">
+          {s.included.map(b => <BenefitCard key={b.title} b={b} />)}
         </div>
       </section>
 
       <section id="weeks" className="section">
-        <div className="eyebrow-block">
+        <div className="sec-head">
           <h2 className="sec-title">{t.weeks.title(s.weeks)} <em>{t.weeks.em}</em></h2>
           <p className="sec-lead">{t.weeks.lead}</p>
         </div>
@@ -70,7 +68,7 @@ const ServicePage = ({ id }) => {
       </section>
 
       <section id="price" className="section">
-        <div className="eyebrow-block">
+        <div className="sec-head">
           <h2 className="sec-title">{t.price.title(s.priceLabel)} <em>{t.price.em}</em></h2>
           <p className="sec-lead">{t.price.lead(s.priceLabel)}</p>
         </div>
@@ -82,17 +80,17 @@ const ServicePage = ({ id }) => {
       </section>
 
       <section id="proof" className="section">
-        <div className="eyebrow-block">
+        <div className="sec-head">
           <h2 className="sec-title">{s.proofTitle} <em>{s.proofTitleEm}</em></h2>
           <p className="sec-lead">{s.proofLead}</p>
         </div>
-        <div className="hair-grid ed-proof-grid">
-          {proof.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(proof, i)} />)}
+        <div className="ed-proof-grid">
+          {proof.map(it => <ProofItem key={it.title} it={it} />)}
         </div>
       </section>
 
       <section id="faq" className="section">
-        <div className="eyebrow-block">
+        <div className="sec-head">
           <h2 className="sec-title">{t.faq.title} <em>{t.faq.em}</em></h2>
         </div>
         <div className="ed-faq-grid">

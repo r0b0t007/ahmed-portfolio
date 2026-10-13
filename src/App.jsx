@@ -9,7 +9,6 @@ import { findRoute } from './content/routes'
 import { contentFor } from './content/locale'
 import { uiFor } from './content/i18n'
 import { LocaleContext } from './lib/content-context'
-import { homeFrSectionIndex, sectionIndex, serviceSectionIndex, workSectionIndex } from './lib/sections'
 
 /**
  * Each page is rendered once, at build time, into static HTML (scripts/prerender.js renders one
@@ -19,8 +18,8 @@ import { homeFrSectionIndex, sectionIndex, serviceSectionIndex, workSectionIndex
  * island wrappers use display: contents so they add no box (the header must stay
  * position: sticky against <body>).
  *
- * Both islands' props differ per page (the language, the switch target, Contact's eyebrow index),
- * so they are serialised into data-props:
+ * Both islands' props differ per page (the language, the header's switch target), so they are
+ * serialised into data-props:
  * src/hydrate.jsx reads them back, and the client render matches the server's. Every other
  * component reads the page's language content from LocaleContext (src/lib/content-context.js).
  *
@@ -28,13 +27,12 @@ import { homeFrSectionIndex, sectionIndex, serviceSectionIndex, workSectionIndex
  */
 import { ISLAND } from './islands'
 
-// Each route kind's page and section numbering, in one place so a new kind can't get one without
-// the other. "kind:locale" entries override a kind for one language.
+// Each route kind's page. "kind:locale" entries override a kind for one language.
 const PAGE_TYPES = {
-  home: { render: () => <Home />, index: sectionIndex },
-  'home:fr': { render: () => <HomeFr />, index: homeFrSectionIndex },
-  service: { render: r => <ServicePage id={r.id} />, index: serviceSectionIndex },
-  work: { render: r => <WorkPage slug={r.slug} name={r.name} />, index: workSectionIndex },
+  home: { render: () => <Home /> },
+  'home:fr': { render: () => <HomeFr /> },
+  service: { render: r => <ServicePage id={r.id} /> },
+  work: { render: r => <WorkPage slug={r.slug} name={r.name} /> },
 }
 
 // The header's language switch goes to this page in the other language, or to that language's
@@ -47,8 +45,8 @@ function App({ path = '/' }) {
   if (!type) throw new Error(`App: no page type "${route.kind}" for ${path}`)
   const other = OTHER[route.locale]
   const headerProps = { locale: route.locale, switchHref: route.alternates?.[other] ?? uiFor(other).home }
-  // Contact closes every page; its eyebrow number continues the page type's own section order.
-  const contactProps = { index: type.index('contact'), locale: route.locale }
+  // Contact closes every page.
+  const contactProps = { locale: route.locale }
   return (
     <LocaleContext.Provider value={contentFor(route.locale)}>
       <div className="app">

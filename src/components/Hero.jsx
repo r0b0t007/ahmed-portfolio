@@ -7,18 +7,19 @@ import { Schedule } from './Schedule'
 
 // The usual timeline, as the FAQ states it ("a marketing site is usually 2 to 3 weeks, an MVP 4 to
 // 6, a working link within the first 10 days"). The dates themselves go in each written scope.
+// The two launch stations are alternatives (one or the other, by project), and the cover counts
+// from launch, so each says which it is rather than reading as one sequence.
 const stops = [
   { at: 'Day 0', what: 'Kickoff, after a free scope call' },
   { at: `Day ${FIRST_LINK_DAYS}`, what: 'Your first working link', key: true },
-  { at: `Weeks ${weeksRange(SITE_WEEKS)}`, what: 'A marketing site, live' },
-  { at: `Weeks ${weeksRange(SAAS_WEEKS)}`, what: 'An MVP, live' },
-  { at: `+${LAUNCH_COVER_DAYS} days`, what: 'Post-launch fixes, included' },
+  { at: `Weeks ${weeksRange(SITE_WEEKS)}`, what: 'Launch, for a marketing site' },
+  { at: `Weeks ${weeksRange(SAAS_WEEKS)}`, what: 'Or launch, for an MVP' },
+  { at: `+${LAUNCH_COVER_DAYS} days`, what: 'After launch: fixes included' },
 ]
 
 const Hero = () => (
   <section id="hero" className="ed-hero">
     <div className="ed-hero-text">
-      <p className="ed-kicker">For founders who need it launched, not &ldquo;in progress&rdquo;</p>
       <h1 className="ed-h1">Your site or SaaS, live in weeks. Fixed price. <em>Date in writing.</em></h1>
       <p className="ed-lead">
         A working link in <strong>{FIRST_LINK_DAYS} days</strong>. A launch date you can plan around. A price

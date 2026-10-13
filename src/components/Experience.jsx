@@ -50,7 +50,7 @@ const roles = [
 
 const Row = ({ r }) => {
   return (
-    <div className="fade-in ed-row">
+    <div className="ed-row">
       <div className="ed-row-date">
         {r.date[0]}<br />{r.date[1]}
         <span className="ed-kind">{r.kind}</span>
@@ -72,7 +72,7 @@ const Row = ({ r }) => {
 
 const Experience = () => (
   <section id="experience" className="section">
-    <div className="eyebrow-block">
+    <div className="sec-head">
       <h2 className="sec-title">Where the <em>standards</em> come from</h2>
       <p className="sec-lead">
         Nine years inside enterprise software: about four building it, and five leading the

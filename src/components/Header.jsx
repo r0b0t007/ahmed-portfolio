@@ -4,49 +4,51 @@ import { uiFor } from '../content/i18n'
 // An island: it hydrates with the props App.jsx serialised (src/hydrate.jsx), not from the URL or
 // the page's context, so everything it renders depends only on those props. The links' words and
 // targets live in src/content/ui.js.
+//
+// An edge-aligned nameplate, not a row of links: the wordmark on one edge, three keys on the other
+// (the section index, the other language, the booking key). The section links live in the index
+// panel at every width, so desktop and phone share one header.
 const Header = ({ locale = 'en', switchHref }) => {
   const ui = uiFor(locale)
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const sections = ui.nav.filter(l => !l.accent)
+  const action = ui.nav.find(l => l.accent)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    if (!open) return
+    const onKey = e => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
 
   return (
-    <header className={`ed-header ${scrolled ? 'scrolled' : ''}`}>
+    <header className="ed-header">
       <a href={`${ui.home}#hero`} className="ed-logo">Ahmed Chioua</a>
 
       <div className="ed-head-end">
-        <nav className="ed-nav">
-          {ui.nav.map(l => (
-            <a key={l.name} href={l.href} className={l.accent ? 'accent' : ''}>{l.name}</a>
-          ))}
-        </nav>
+        <button className="ed-index-key" aria-expanded={open} aria-controls="site-index" onClick={() => setOpen(!open)}>
+          <span className="ed-index-icon" aria-hidden="true"><span /><span /><span /></span>
+          <span className="ed-index-label">{ui.menu}</span>
+        </button>
 
-        {/* Outside the nav, so it stays visible on phones, where the nav collapses into the menu. */}
         {switchHref && (
           <a href={switchHref} hrefLang={ui.switchTo.lang} lang={ui.switchTo.lang} aria-label={ui.switchTo.name} className="ed-lang">
             {ui.switchTo.label}
           </a>
         )}
 
-        <button className="ed-burger" aria-label={ui.menu} aria-expanded={open} onClick={() => setOpen(!open)}>
-          <span /><span /><span />
-        </button>
+        {/* The hero carries the booking key on a phone's first screen, so this one steps aside
+            below 480px, where the nameplate has room for the wordmark and two keys only. */}
+        <a href={action.href} className="ed-head-cta">{action.name}</a>
       </div>
 
-      {open && (
-        <div className="ed-mobile" onClick={() => setOpen(false)}>
-          {ui.nav.map(l => (
-            <a key={l.name} href={l.href} className={l.accent ? 'accent' : ''}>{l.name}</a>
-          ))}
-        </div>
-      )}
-
+      {/* Always in the markup, hidden while closed: the prerendered page still lists every
+          section for crawlers and agents before (or without) hydration. */}
+      <nav id="site-index" className="ed-index" aria-label={ui.menu} hidden={!open} onClick={() => setOpen(false)}>
+        <ul>
+          {sections.map(l => <li key={l.name}><a href={l.href}>{l.name}</a></li>)}
+        </ul>
+      </nav>
     </header>
   )
 }

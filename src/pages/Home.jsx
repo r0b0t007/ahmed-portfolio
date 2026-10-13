@@ -10,7 +10,6 @@ import Experience from '../components/Experience'
 import About from '../components/Summary'
 import Faq from '../components/Faq'
 
-// Section order is also declared in src/lib/sections.js, which numbers the eyebrows; keep both in step.
 // Contact closes the page but is rendered by App.jsx, inside its hydration island.
 const Home = () => (
   <>
