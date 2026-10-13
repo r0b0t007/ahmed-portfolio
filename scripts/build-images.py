@@ -9,10 +9,10 @@ everyone else kept the old one, with nothing to warn you. headshot-700.webp is t
 for browsers without AVIF and the image the JSON-LD Person node points at, so it has to stay in
 step with the AVIF set. (Open Graph uses og-image.png, which this script does not touch.)
 
-Widths: the portrait box is a 76px square on phones and min(42.5vw, 812px) on desktop (see the
+Widths: the portrait box is a 76px square on phones and min(40vw, 640px) on desktop (see the
 `sizes` attribute in src/components/HeroPortrait.jsx). 320 serves every phone (76px at up to
-DPR 4); 412/440 serve DPR-1 desktops between 900 and ~1035px; 700 serves wider DPR-1 desktops
-and every DPR-2 one. Do not add a larger candidate: a DPR-2 desktop wants up to 1624px and
+DPR 4); 412/440 serve DPR-1 desktops between 900 and ~1100px; 700 serves wider DPR-1 desktops
+and every DPR-2 one. Do not add a larger candidate: a DPR-2 desktop wants up to 1280px and
 would pick it.
 
 AVIF quality 55 at the slowest encoder speed lands within 1 dB PSNR of the existing q80 WebP

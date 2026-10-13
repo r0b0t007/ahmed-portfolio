@@ -349,21 +349,22 @@ p { text-wrap: pretty; }
 }
 
 /* ── Hero (Hero.jsx, src/pages/HomeFr.jsx; portrait: HeroPortrait.jsx; schedule: Schedule.jsx) ──
-   Two fields over one band: the offer and the portrait (42.5% of the width, shown whole), then
+   Two fields over one band: the offer and the portrait (40% of the width, capped at 640px), then
    the schedule drawn across the full width underneath. */
 .ed-hero {
   display: grid;
-  /* The portrait is shown whole, as in the editorial design before the Industrial one: a column
-     of 42.5% of the width (that design's 1.15fr / 0.85fr), and a hero row at least as tall as the
-     photo's own proportions make that column (1077 / 700 = 1.54), so the box has the photo's
-     shape and the cover crop removes nothing, head to the crossed hands. 42.5vw stands in for
-     42.5% of the grid, which a row size can't name. The column stops at 812px, its width at
-     1920 in that design. `sizes` in HeroPortrait.jsx and the preload's imagesizes in index.html
-     use the same values; keep the three in step.
-     The trade, as before: the hero is taller than most laptop screens, so the schedule starts
-     below the first screen. The offer stays centred in the row, so its key is still on it. */
-  grid-template-columns: minmax(0, 1fr) minmax(0, min(42.5%, 812px));
-  grid-template-rows: minmax(calc(min(42.5vw, 812px) * 1.54), auto) auto;
+  /* Offer and portrait carry close to equal weight: the portrait column is 40% of the width,
+     capped at 640px (the same px value as `sizes` in HeroPortrait.jsx and the preload's
+     imagesizes in index.html; keep all three in step). The hero row is at least 1.25 times that
+     column's width, so the photo box stays portrait-shaped and the crop shows the head down to
+     the crossed arms; 40vw stands in for 40% of the grid, which a row size can't name. The cap
+     keeps the 40% split up to ~1600px wide; past it the 700w file would be stretched further on
+     a DPR-2 screen (at 1440 it already fills 576px, as the old 42vw column did). The floor
+     is also capped at the screen's height less 120px, so on a short screen the hero never fills
+     the whole first view. The trade: below ~920px of screen height the schedule starts below
+     the first view; the offer and its key never do. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(40%, 640px));
+  grid-template-rows: minmax(min(calc(min(40vw, 640px) * 1.25), calc(100svh - 120px)), auto) auto;
   grid-template-areas: "text photo" "sched sched";
 }
 /* Bottom padding is 1.3x the top. When the row's floor makes it taller than the offer, the offer
@@ -394,7 +395,7 @@ p { text-wrap: pretty; }
 .ed-hero-portrait picture { display: contents; } /* <picture> must not add an inline box */
 .ed-hero-portrait img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%;
   filter: grayscale(100%) contrast(1.06);
 }
 /* Only ever visible below 900px; see the mobile block. */

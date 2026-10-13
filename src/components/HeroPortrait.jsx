@@ -7,8 +7,8 @@ const HeroPortrait = ({ byline }) => (
   <div className="ed-hero-portrait">
     {/* AVIF first, WebP fallback. Candidates, `sizes` and the AVIF set must stay in sync with the
         <link rel="preload"> in index.html; files come from scripts/build-images.py. Never add a
-        candidate above 700w: a DPR-2 desktop (a column up to 812px, 1624px wanted) would fetch it. Phones
-        can't, at 76px. The 812px cap in `sizes` matches the CSS column cap in src/index.css.
+        candidate above 700w: a DPR-2 desktop (640px column, 1280px wanted) would fetch it. Phones
+        can't, at 76px. The 640px cap in `sizes` matches the CSS column cap in src/index.css.
 
         `sizes` says 76px below 900px because that is the byline square, not a full-bleed cover:
         a DPR-3 phone now resolves to the 320w candidate instead of the 700w one.
@@ -26,12 +26,12 @@ const HeroPortrait = ({ byline }) => (
       <source
         type="image/avif"
         srcSet="/headshot-320.avif 320w, /headshot-412.avif 412w, /headshot-440.avif 440w, /headshot-700.avif 700w"
-        sizes="(max-width: 900px) 76px, min(42.5vw, 812px)"
+        sizes="(max-width: 900px) 76px, min(40vw, 640px)"
       />
       <img
         src="/headshot-700.webp"
         srcSet="/headshot-320.webp 320w, /headshot-412.webp 412w, /headshot-440.webp 440w, /headshot-700.webp 700w"
-        sizes="(max-width: 900px) 76px, min(42.5vw, 812px)"
+        sizes="(max-width: 900px) 76px, min(40vw, 640px)"
         width="440" height="677"
         alt=""
         fetchPriority="high"
