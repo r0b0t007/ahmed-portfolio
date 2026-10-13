@@ -15,7 +15,7 @@ export const ServiceCard = ({ s, href, more }) => {
       <div className="ed-svc-tags">
         {s.card.tags.map(t => <span key={t} className="tag">{t}</span>)}
       </div>
-      <a href={href} className="link-teal ed-svc-more">{more}<span className="sr-only">: {s.name}</span> →</a>
+      <a href={href} className="link-teal ed-svc-more">{more}<span className="sr-only"> ({s.name})</span> →</a>
     </div>
   )
 }

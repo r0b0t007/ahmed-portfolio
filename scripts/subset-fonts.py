@@ -75,7 +75,9 @@ def site_glyphs():
     chars = {c for c in text if not c.isspace()}
     # Their uppercase forms too: headings are set with text-transform: uppercase.
     chars |= {c.upper() for c in chars if len(c.upper()) == 1}
-    return {ord(c) for c in chars} | {0x20}
+    # Spaces are dropped above, so the ones the copy uses are added back: the no-break and narrow
+    # no-break spaces sit inside French figures (3 000 €, +30 jours) set in the display face.
+    return {ord(c) for c in chars} | {0x20, 0xA0, 0x202F}
 
 
 def unicode_range(codepoints):

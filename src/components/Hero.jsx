@@ -32,9 +32,11 @@ const Hero = () => (
       </div>
     </div>
 
-    <HeroPortrait byline="Web and SaaS developer. You work with me directly, start to finish." />
-
+    {/* The schedule comes before the portrait in the HTML because a phone shows it first; the
+        desktop grid places both by area, so the order there is unchanged. */}
     <Schedule caption="Usual schedule. Your own dates go in the written scope." stops={stops} />
+
+    <HeroPortrait byline="Web and SaaS developer. You work with me directly, start to finish." />
   </section>
 )
 

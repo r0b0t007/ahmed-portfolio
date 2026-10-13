@@ -6,7 +6,9 @@ export const Step = ({ s, i }) => {
   return (
     <div className="ed-step">
       <div className="ed-step-side">
-        <div className="ed-step-n">{ordinal(i, 2)}</div>
+        {/* Visual only: the order of the steps already says it, and Markdown twins and screen
+            readers would otherwise get a bare "01" line. */}
+        <div className="ed-step-n" aria-hidden="true">{ordinal(i, 2)}</div>
         <div className="ed-step-meta">{s.meta}</div>
       </div>
       <div>

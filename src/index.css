@@ -103,6 +103,9 @@ body {
   background: var(--paper);
   color: var(--ink);
   line-height: 1.6;
+  /* hidden first: Safari before 16 has no clip and keeps the hidden; everyone else takes clip,
+     which (unlike hidden) does not make body a scroll container. */
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
@@ -294,17 +297,28 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   .ed-index-key:active, .ed-lang:active, .ed-head-cta:active, .ed-logo:active .ed-logo-key { transform: none; }
 }
+/* Open: the key goes graphite. Two rules, because a browser without popovers drops a whole rule
+   that names :popover-open; the attribute form covers its fallback. */
 .ed-index-key[aria-expanded="true"] { background: var(--ink); color: var(--on-ink); }
+.ed-header:has(.ed-index:popover-open) .ed-index-key { background: var(--ink); color: var(--on-ink); }
 .ed-index-icon { display: flex; flex-direction: column; gap: var(--space-1); width: 16px; }
 .ed-index-icon span { display: block; height: 2px; background: currentColor; }
 
-/* The index: the sections as a row of plates under the nameplate. */
+/* The index: the sections as a row of plates under the nameplate. It is a popover, so it sits in
+   the top layer, fixed below the header (12px padding twice, a 44px key, a 2px rule: 70px). The
+   UA's popover box (centred, bordered, fit-content) is reset. Shown by :popover-open, or by
+   .is-open where the browser has no popovers; each in its own rule, for the reason above. */
 .ed-index {
-  position: absolute; top: 100%; left: 0; right: 0;
-  background: var(--paper); border-bottom: 2px solid var(--ink);
+  display: none;
+  position: fixed; inset: 70px 0 auto 0;
+  width: auto; height: auto; margin: 0;
+  max-height: calc(100dvh - 70px); overflow: auto;
+  border: 0; border-bottom: 2px solid var(--ink);
+  background: var(--paper); color: var(--ink);
   padding: var(--space-4) var(--pad) var(--space-6);
 }
-.ed-index[hidden] { display: none; }
+.ed-index.is-open { display: block; }
+.ed-index:popover-open { display: block; }
 .ed-index ul {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   border-top: 2px solid var(--ink); border-left: 1px solid var(--rule);
@@ -317,14 +331,19 @@ p { text-wrap: pretty; }
 }
 .ed-index a:hover { background: var(--plate-light); }
 .ed-index a:active { background: var(--plate); }
+/* The booking entry: only below 480px, where the header's booking key is hidden. */
+.ed-index-cta { display: none; }
+.ed-index .ed-index-cta a { background: var(--signal); }
+.ed-index .ed-index-cta a:hover { background: var(--signal-hi); }
 @media (max-width: 640px) {
-  /* Hidden from view, not from screen readers: it is the button's name. */
-  .ed-index-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* The key keeps its name in aria-label. */
+  .ed-index-label { display: none; }
   .ed-index ul { grid-template-columns: minmax(0, 1fr); }
   .ed-index a { padding: var(--space-3) var(--space-4); }
 }
 @media (max-width: 480px) {
   .ed-head-cta { display: none; }
+  .ed-index-cta { display: block; }
 }
 
 /* ── Hero (Hero.jsx, src/pages/HomeFr.jsx; portrait: HeroPortrait.jsx; schedule: Schedule.jsx) ──

@@ -42,8 +42,9 @@ const HomeFr = () => {
             </a>
           </div>
         </div>
-        <HeroPortrait byline={hero.byline} />
+        {/* Schedule first, as on the English homepage (Hero.jsx): the order a phone shows. */}
         <Schedule caption={hero.schedule.caption} stops={hero.schedule.stops} />
+        <HeroPortrait byline={hero.byline} />
       </section>
 
       <section id="services" className="section">
