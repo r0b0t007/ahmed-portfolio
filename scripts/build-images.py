@@ -9,8 +9,8 @@ everyone else kept the old one, with nothing to warn you. headshot-700.webp is t
 for browsers without AVIF and the image the JSON-LD Person node points at, so it has to stay in
 step with the AVIF set. (Open Graph uses og-image.png, which this script does not touch.)
 
-Widths: the portrait box is 100vw on phones and 42vw on desktop (see the `sizes` attribute in
-src/components/Hero.jsx). 320/412 serve DPR-1 phones and the desktop column; 700 is the ceiling
+Widths: the portrait box is a 76px square on phones and min(33vw, 448px) on desktop (see the
+`sizes` attribute in src/components/HeroPortrait.jsx). 320/412 serve DPR-1 phones and the desktop column; 700 is the ceiling
 so a high-DPR phone never fetches more than it does today. Do not add a larger candidate — a
 412px-wide DPR-2 viewport would then pick it.
 

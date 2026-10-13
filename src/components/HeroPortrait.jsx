@@ -25,12 +25,12 @@ const HeroPortrait = ({ byline }) => (
       <source
         type="image/avif"
         srcSet="/headshot-320.avif 320w, /headshot-412.avif 412w, /headshot-440.avif 440w, /headshot-700.avif 700w"
-        sizes="(max-width: 900px) 76px, 42vw"
+        sizes="(max-width: 900px) 76px, min(33vw, 448px)"
       />
       <img
         src="/headshot-700.webp"
         srcSet="/headshot-320.webp 320w, /headshot-412.webp 412w, /headshot-440.webp 440w, /headshot-700.webp 700w"
-        sizes="(max-width: 900px) 76px, 42vw"
+        sizes="(max-width: 900px) 76px, min(33vw, 448px)"
         width="440" height="677"
         alt=""
         fetchPriority="high"

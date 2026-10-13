@@ -353,7 +353,12 @@ p { text-wrap: pretty; }
    drawn across the full width underneath. */
 .ed-hero {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  /* The portrait column is a third of the width, capped at 28rem, and the hero row has a floor
+     that grows with the screen's height (capped so the schedule still ends on the first screen).
+     Together they keep the photo box portrait-shaped, so the crop shows the head down to the
+     crossed arms at every desktop size instead of a wide box that cuts at the chest. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(33.3333%, 28rem));
+  grid-template-rows: minmax(min(34rem, calc(100svh - 300px)), auto) auto;
   grid-template-areas: "text photo" "sched sched";
 }
 /* Bottom padding is 1.3x the top, so the offer sits on the schedule rather than floating. */
@@ -382,7 +387,7 @@ p { text-wrap: pretty; }
 .ed-hero-portrait picture { display: contents; } /* <picture> must not add an inline box */
 .ed-hero-portrait img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%;
   filter: grayscale(100%) contrast(1.06);
 }
 /* Only ever visible below 900px; see the mobile block. */
@@ -439,7 +444,7 @@ p { text-wrap: pretty; }
    the hero as a signature row (a 76px square beside the byline): a skimming founder sees the
    offer and the booking key on the first screen, not a photograph. */
 @media (max-width: 900px) {
-  .ed-hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "sched" "photo"; }
+  .ed-hero { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "text" "sched" "photo"; }
   .ed-hero-text { padding: var(--space-7) var(--pad) var(--space-10); }
   .ed-h1 { margin-bottom: var(--space-5); }
   .ed-lead { margin-bottom: var(--space-7); }

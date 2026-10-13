@@ -12,7 +12,7 @@ Built with two skills fetched through the `ui-skills` CLI (`npx ui-skills@0.2.4 
   graphics clarify structure. Its four decisions, as taken here:
   - **Mode:** hybrid. A type-led hero, then instrumental modules.
   - **Dominant gesture:** the schedule drawn as a dimension line across the hero.
-  - **Grid:** full-bleed bands on a `--pad` gutter; the hero is 7 : 5 (offer : portrait) over a
+  - **Grid:** full-bleed bands on a `--pad` gutter; the hero is offer | portrait (a third, capped at 28rem) over a
     full-width band; modules are rows on a heavy top rule.
   - **Signal:** one accent, safety orange, with one job: action and position.
 - **jakubkrehel/better-typography** — the type rules: a small semantic scale, unitless
@@ -87,7 +87,10 @@ second line.
   the hero's key is on the first screen). The section links live in the index panel at every
   width, as a row of display-face plates; the panel is always in the markup (`hidden` while
   closed) so crawlers and agents see the links. Escape closes it.
-- **Hero:** offer (7) | portrait (5), schedule below at full width; padding 44 top / 60 bottom.
+- **Hero:** offer | portrait (a third of the width, capped at 28rem), schedule below at full width;
+  padding 44 top / 60 bottom. The hero row has a floor of min(34rem, 100svh − 300px), so the photo
+  box stays portrait-shaped and the crop shows the head down to the crossed arms on every desktop
+  size (object-position 50% 33%).
   At 1280×800 the whole schedule is on the first screen. Below 900px: offer, then the schedule as
   a vertical rule, then the portrait as a 76px signature row. The offer and the primary key sit
   inside the first 390×844 screen on every page.
