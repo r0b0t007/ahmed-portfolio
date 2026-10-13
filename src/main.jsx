@@ -14,12 +14,12 @@ const prerendered = document.getElementById(ISLAND.header)?.hasChildNodes()
 
 if (prerendered) {
   // Hydrate at the first sign the user wants to interact, or shortly after load — whichever
-  // comes first. Nothing above the fold needs React to be readable; only the header's index key
-  // and the contact form do.
+  // comes first. Nothing above the fold needs React: only the contact form does.
   //
-  // The idle timeout is deliberately short. Between first paint and hydration a tap on the menu
-  // button does nothing, so that window has to be bounded by the runtime download rather than by
-  // how long the browser feels like staying idle. `load` already fires after the LCP image, so
+  // The idle timeout is deliberately short. Between first paint and hydration the contact form
+  // can't send (the header's index works without React: it is a popover driven by a script in
+  // index.html), so that window has to be bounded by the runtime download rather than by how long
+  // the browser feels like staying idle. `load` already fires after the LCP image, so
   // starting the fetch there costs no metric.
   const triggers = ['pointerdown', 'touchstart', 'keydown', 'focusin', 'scroll', 'mousemove']
   const listen = fn => { for (const type of triggers) fn(type, hydrate, { capture: true, passive: true }) }

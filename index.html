@@ -266,27 +266,67 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- The header's index panel (Header.jsx) is a native popover, so it opens from the
-         prerendered HTML, but React hydrates only after first paint. Until then, and if the
-         hydration chunk never loads, this keeps the two things the browser doesn't do itself:
-         the panel opens under the header's real bottom edge (a raised minimum font size makes
-         the header taller than the 70px the CSS falls back to), and following one of its links
-         closes it rather than leaving it over the section it scrolled to. On document, so it
-         works whether the header is prerendered or rendered later (dev). Browsers without
-         popovers are left to Header.jsx's fallback. -->
+    <!-- The header's index panel (Header.jsx). Everything it does that the markup can't is here,
+         in one plain script, so it works from first paint, without the hydration chunk, and in
+         browsers with or without popovers; Header.jsx holds no state for it.
+         Where popovers exist, the browser opens and closes the panel (Escape, an outside click)
+         and hands focus back to the key. This script adds what it doesn't do:
+           - place the panel under the header's real bottom edge (a raised minimum font size makes
+             the header taller than the 70px the CSS falls back to), on open and on resize;
+           - close the panel when one of its links is followed. The link is blurred first: hiding
+             a popover that holds focus sends focus back to the key, and the reader should land
+             on the section they picked, not on the menu.
+         Where they don't (Safari before 17), it does the rest too: toggles .is-open and
+         aria-expanded on the key, closes on Escape (returning focus to the key if it was in the
+         panel) and on a press outside. Listeners sit on document, so they work whether the
+         header is prerendered or rendered later (dev). -->
     <script>
-      if (HTMLElement.prototype.showPopover) {
-        document.addEventListener('beforetoggle', function (e) {
-          var n = e.target
-          if (n.id === 'site-index' && e.newState === 'open') {
-            n.style.setProperty('--index-top', n.parentElement.getBoundingClientRect().bottom + 'px')
-          }
-        }, true)
+      (function () {
+        var native = typeof HTMLElement.prototype.showPopover === 'function'
+        function panel() { return document.getElementById('site-index') }
+        function key() { return document.querySelector('.ed-index-key') }
+        function isOpen(n) { return native ? n.matches(':popover-open') : n.classList.contains('is-open') }
+        function place(n) { n.style.setProperty('--index-top', n.parentElement.getBoundingClientRect().bottom + 'px') }
+        function setOpen(n, open) {
+          if (native) { if (!open) n.hidePopover(); return }
+          if (open) place(n)
+          n.classList.toggle('is-open', open)
+          var k = key()
+          if (k) k.setAttribute('aria-expanded', String(open))
+        }
+
+        if (native) {
+          document.addEventListener('beforetoggle', function (e) {
+            if (e.target.id === 'site-index' && e.newState === 'open') place(e.target)
+          }, true)
+        } else {
+          var k = key()
+          if (k) k.setAttribute('aria-expanded', 'false')
+          document.addEventListener('keydown', function (e) {
+            var n = panel()
+            if (e.key !== 'Escape' || !n || !isOpen(n)) return
+            var inside = n.contains(document.activeElement)
+            setOpen(n, false)
+            if (inside) key().focus()
+          })
+          document.addEventListener('pointerdown', function (e) {
+            var n = panel()
+            if (n && isOpen(n) && !n.contains(e.target) && !e.target.closest('.ed-index-key')) setOpen(n, false)
+          })
+        }
+
         document.addEventListener('click', function (e) {
-          var n = document.getElementById('site-index')
-          if (n && e.target.closest('#site-index a') && n.matches(':popover-open')) n.hidePopover()
+          var n = panel()
+          if (!n) return
+          if (!native && e.target.closest('.ed-index-key')) return setOpen(n, !isOpen(n))
+          var link = e.target.closest('#site-index a')
+          if (link && isOpen(n)) { link.blur(); setOpen(n, false) }
         })
-      }
+        addEventListener('resize', function () {
+          var n = panel()
+          if (n && isOpen(n)) place(n)
+        })
+      })()
     </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>

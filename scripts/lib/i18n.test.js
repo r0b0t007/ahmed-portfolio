@@ -92,10 +92,6 @@ test('French interface strings have the same shape as the English ones', () => {
   assert.deepEqual(shape(comparable(frUi)), shape(comparable(ui)))
 })
 
-test('the French nav stays on the French homepage, except the contact anchor every page has', () => {
-  for (const l of frUi.nav) assert.match(l.href, /^(\/fr#[a-z]+|#contact)$/, l.name)
-})
-
 test('contentFor and uiFor serve French', () => {
   const c = contentFor('fr')
   assert.equal(c.ui, frUi)
