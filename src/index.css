@@ -305,14 +305,16 @@ p { text-wrap: pretty; }
 .ed-index-icon span { display: block; height: 2px; background: currentColor; }
 
 /* The index: the sections as a row of plates under the nameplate. It is a popover, so it sits in
-   the top layer, fixed below the header (12px padding twice, a 44px key, a 2px rule: 70px). The
-   UA's popover box (centred, bordered, fit-content) is reset. Shown by :popover-open, or by
+   the top layer, fixed below the header. --index-top is the header's bottom edge, measured as the
+   panel opens (index.html's script, or Header.jsx's fallback); 70px (12px padding twice, a 44px
+   key, a 2px rule) stands in when no script ran. The UA's popover box (centred, bordered,
+   fit-content) is reset. Shown by :popover-open, or by
    .is-open where the browser has no popovers; each in its own rule, for the reason above. */
 .ed-index {
   display: none;
-  position: fixed; inset: 70px 0 auto 0;
+  position: fixed; inset: var(--index-top, 70px) 0 auto 0;
   width: auto; height: auto; margin: 0;
-  max-height: calc(100dvh - 70px); overflow: auto;
+  max-height: calc(100dvh - var(--index-top, 70px)); overflow: auto;
   border: 0; border-bottom: 2px solid var(--ink);
   background: var(--paper); color: var(--ink);
   padding: var(--space-4) var(--pad) var(--space-6);

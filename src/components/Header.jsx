@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { uiFor } from '../content/i18n'
 
 // An island: it hydrates with the props App.jsx serialised (src/hydrate.jsx), not from the URL or
@@ -11,8 +11,10 @@ import { uiFor } from '../content/i18n'
 //
 // The index is a native popover (popovertarget on the key), so it opens from the prerendered HTML
 // before hydration and without JavaScript, and the browser closes it on Escape or an outside
-// click and hands focus back to the key. Browsers without popovers (Safari before 17) fall back
-// to React state once the island hydrates.
+// click and hands focus back to the key. Placing it under the header and closing it when one of
+// its links is followed are not the browser's job: a script in index.html does both, from before
+// hydration. Browsers without popovers (Safari before 17) fall back to React state once the island
+// hydrates, and this component does all of that itself.
 const Header = ({ locale = 'en', switchHref }) => {
   const ui = uiFor(locale)
   const sections = ui.nav.filter(l => !l.accent)
@@ -21,22 +23,37 @@ const Header = ({ locale = 'en', switchHref }) => {
   // client render agree.
   const [fallback, setFallback] = useState(false)
   const [open, setOpen] = useState(false)
+  // Where the open panel starts: the header's bottom edge, measured as it opens.
+  const [top, setTop] = useState(null)
+  const headerRef = useRef(null)
+  const keyRef = useRef(null)
+  const indexRef = useRef(null)
 
+  // The fallback stands in for what a popover does natively: Escape closes it and, if focus was
+  // in the panel, hands it back to the key; a press outside the panel and the key closes it.
   useEffect(() => {
     if (!open) return
-    const onKey = e => { if (e.key === 'Escape') setOpen(false) }
+    const onKey = e => {
+      if (e.key !== 'Escape') return
+      if (indexRef.current.contains(document.activeElement)) keyRef.current.focus()
+      setOpen(false)
+    }
+    const onPointer = e => {
+      if (!indexRef.current.contains(e.target) && !keyRef.current.contains(e.target)) setOpen(false)
+    }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+    }
   }, [open])
 
   // A link in the index scrolls the page under the panel, so following one closes it.
-  const close = e => {
-    if (fallback) setOpen(false)
-    else if (e.target.closest('a')) e.currentTarget.hidePopover?.()
-  }
+  const onIndexClick = e => { if (fallback && e.target.closest('a')) setOpen(false) }
 
   return (
-    <header className="ed-header">
+    <header className="ed-header" ref={headerRef}>
       {/* The mark is the booking key: a signal face, a graphite edge, a hard offset. The kit and
           its source are in brand/logo-kit. Drawn on a 256 grid; the offset is 24 units, so a
           press moves the key onto it, as the site's keys do. */}
@@ -56,12 +73,14 @@ const Header = ({ locale = 'en', switchHref }) => {
         <button
           type="button"
           className="ed-index-key"
+          ref={keyRef}
           aria-label={ui.menu}
           popoverTarget="site-index"
           aria-expanded={fallback ? open : undefined}
           onClick={() => {
             if ('popover' in HTMLElement.prototype) return
             setFallback(true)
+            if (!open) setTop(headerRef.current.getBoundingClientRect().bottom)
             setOpen(!open)
           }}
         >
@@ -82,7 +101,15 @@ const Header = ({ locale = 'en', switchHref }) => {
       </div>
 
       {/* Always in the markup: the prerendered page lists every section for crawlers and agents. */}
-      <nav id="site-index" popover="auto" className={`ed-index${open ? ' is-open' : ''}`} aria-label={ui.menu} onClick={close}>
+      <nav
+        id="site-index"
+        ref={indexRef}
+        popover="auto"
+        className={`ed-index${open ? ' is-open' : ''}`}
+        style={top === null ? undefined : { '--index-top': `${top}px` }}
+        aria-label={ui.menu}
+        onClick={onIndexClick}
+      >
         <ul>
           {sections.map(l => <li key={l.name}><a href={l.href}>{l.name}</a></li>)}
           <li className="ed-index-cta"><a href={action.href}>{action.name}</a></li>

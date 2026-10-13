@@ -266,6 +266,28 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- The header's index panel (Header.jsx) is a native popover, so it opens from the
+         prerendered HTML, but React hydrates only after first paint. Until then, and if the
+         hydration chunk never loads, this keeps the two things the browser doesn't do itself:
+         the panel opens under the header's real bottom edge (a raised minimum font size makes
+         the header taller than the 70px the CSS falls back to), and following one of its links
+         closes it rather than leaving it over the section it scrolled to. On document, so it
+         works whether the header is prerendered or rendered later (dev). Browsers without
+         popovers are left to Header.jsx's fallback. -->
+    <script>
+      if (HTMLElement.prototype.showPopover) {
+        document.addEventListener('beforetoggle', function (e) {
+          var n = e.target
+          if (n.id === 'site-index' && e.newState === 'open') {
+            n.style.setProperty('--index-top', n.parentElement.getBoundingClientRect().bottom + 'px')
+          }
+        }, true)
+        document.addEventListener('click', function (e) {
+          var n = document.getElementById('site-index')
+          if (n && e.target.closest('#site-index a') && n.matches(':popover-open')) n.hidePopover()
+        })
+      }
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
