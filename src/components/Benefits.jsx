@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import { BenefitCard } from './BenefitCard'
 
 /**
@@ -34,11 +33,7 @@ const standards = [
 
 const Benefits = () => (
   <section id="benefits" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Why it won&rsquo;t break on launch day</span>
-        <span className="eyebrow-index">( {sectionIndex('benefits')} )</span>
-      </div>
+    <div className="sec-head">
       <h2 className="sec-title">The cheapest developer is the one you <em>pay twice</em></h2>
       <p className="sec-lead">
         Here&rsquo;s how most founder builds go. You hire fast and cheap. The demo looks fine. Then
@@ -54,8 +49,8 @@ const Benefits = () => (
       </p>
     </div>
 
-    <div className="hair-grid ed-ben-grid">
-      {standards.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+    <div className="ed-ben-grid">
+      {standards.map(b => <BenefitCard key={b.title} b={b} />)}
     </div>
 
   </section>

@@ -1,8 +1,6 @@
 import { Breadcrumb } from '../../components/Breadcrumb'
-import { Eyebrow as SharedEyebrow } from '../../components/Eyebrow'
 import { BOOKING_URL, REPO_URL } from '../../content/site'
 import { servicePath } from '../../content/routes'
-import { workSectionIndex as idx } from '../../lib/sections'
 
 /**
  * Build log for this site. Every figure links to the commit or pull request it came from, so a
@@ -15,10 +13,9 @@ const AsOf = () => <a href={`${REPO_URL}/commit/${AS_OF}`} target="_blank" rel="
 
 const PR = ({ n }) => <a href={`${REPO_URL}/pull/${n}`} target="_blank" rel="noopener noreferrer">PR #{n}</a>
 
-const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 const Entry = ({ title, meta, children }) => (
-  <article className="fade-in log-entry">
+  <article className="log-entry">
     <h3 className="log-entry-t">{title}</h3>
     <p className="log-meta">{meta}</p>
     {children}
@@ -27,7 +24,7 @@ const Entry = ({ title, meta, children }) => (
 
 const facts = [
   ['Live', 'ahmedchioua.com'],
-  ['Source', <a key="src" href={REPO_URL} target="_blank" rel="noopener noreferrer">github.com/r0b0t007/ahmed-portfolio ↗</a>],
+  ['Source', <a key="src" href={REPO_URL} target="_blank" rel="noopener noreferrer">ahmed-portfolio on GitHub ↗</a>],
   ['Started', '5 May 2026'],
   ['History', <span key="hist">109 commits · pull requests #1 to #32 (31 merged, 1 closed after measurement), as of commit <AsOf /></span>],
   ['Stack', 'React 19 and Vite 7, hand-written CSS, two runtime dependencies (react, react-dom)'],
@@ -56,8 +53,7 @@ const ThisSite = ({ name }) => (
     </section>
 
     <section id="decisions" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="The decisions" id="decisions" />
+      <div className="sec-head">
         <h2 className="sec-title">In order, <em>with the numbers.</em></h2>
         <p className="sec-lead">
           The brief: one page whose job is to turn a stranger into a booked scope call. It is also
@@ -133,8 +129,7 @@ const ThisSite = ({ name }) => (
     </section>
 
     <section id="failures" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="What didn’t work" id="failures" />
+      <div className="sec-head">
         <h2 className="sec-title">Four things that <em>didn’t go to plan.</em></h2>
       </div>
 
@@ -174,8 +169,7 @@ const ThisSite = ({ name }) => (
     </section>
 
     <section id="method" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="How it’s built" id="method" />
+      <div className="sec-head">
         <h2 className="sec-title">AI in the loop. <em>Decisions mine.</em></h2>
         <p className="sec-lead">
           Up to commit <AsOf />, 73 of the 109 commits carry a <code>Co-Authored-By: Claude</code>{' '}
@@ -187,8 +181,7 @@ const ThisSite = ({ name }) => (
     </section>
 
     <section id="check" className="section">
-      <div className="eyebrow-block">
-        <Eyebrow label="Check it yourself" id="check" />
+      <div className="sec-head">
         <h2 className="sec-title">Don’t take the log’s word <em>for it either.</em></h2>
       </div>
       <ul className="log-checks">

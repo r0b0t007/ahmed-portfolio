@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import { Eyebrow as SharedEyebrow } from '../components/Eyebrow'
 import { ServiceCard } from '../components/Services'
 import { Step } from '../components/Process'
 import { ProofItem } from '../components/Proof'
@@ -7,21 +6,19 @@ import { PriceTable } from '../components/Pricing'
 import { FaqRow } from '../components/Faq'
 import { WhatsAppIcon } from '../components/WhatsAppIcon'
 import HeroPortrait from '../components/HeroPortrait'
+import { CtaLabel } from '../components/CtaLabel'
+import { Schedule } from '../components/Schedule'
 import { home } from '../content/fr/home'
 import { servicePath } from '../content/routes'
 import { BOOKING_URL } from '../content/site'
 import { useContent } from '../lib/content-context'
-import { homeFrSectionIndex as idx } from '../lib/sections'
-import { spansLastRow } from '../lib/grid'
-
-const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 /**
  * The French homepage, for buyers in Morocco who search in French. Shorter than the English one
  * (no Experience, About or hand-off) and built from the same row components and classes, so the
- * two read as one site. The hero is the English one's two columns: the offer, then the same
- * portrait (HeroPortrait, preloaded in this page's head too). Copy is in src/content/fr/home.js; Contact closes the page via App.jsx. Section order is
- * declared in src/lib/sections.js (HOME_FR_SECTION_ORDER); keep both in step.
+ * two read as one site. The hero is the English one's: the offer, the same portrait (HeroPortrait,
+ * preloaded in this page's head too) and the schedule drawn underneath. Copy is in
+ * src/content/fr/home.js; Contact closes the page via App.jsx.
  */
 const HomeFr = () => {
   const { ui, services, steps, proof, faqById } = useContent()
@@ -32,47 +29,38 @@ const HomeFr = () => {
     <>
       <section id="hero" className="ed-hero">
         <div className="ed-hero-text">
-          <p className="ed-kicker">{hero.kicker}</p>
           <h1 className="ed-h1">
-            {hero.h1.map(line => <Fragment key={line}>{line}<br /></Fragment>)}
+            {hero.h1.map(line => <Fragment key={line}>{line} </Fragment>)}
             <em>{hero.em}</em>
           </h1>
           <p className="ed-lead">{hero.lead}</p>
           <div className="ed-cta-row">
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{ui.cta.long}</a>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink"><CtaLabel long={ui.cta.long} short={ui.cta.short} /></a>
             <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-wa">
               <WhatsAppIcon />
               {hero.whatsapp}
             </a>
           </div>
-          <dl className="svc-facts">
-            {hero.facts.map(f => (
-              <div key={f.l}>
-                <dt>{f.l}</dt>
-                <dd>{f.n}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
+        {/* Schedule first, as on the English homepage (Hero.jsx): the order a phone shows. */}
+        <Schedule caption={hero.schedule.caption} stops={hero.schedule.stops} />
         <HeroPortrait byline={hero.byline} />
       </section>
 
       <section id="services" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.services.eyebrow} id="services" />
+        <div className="sec-head">
           <h2 className="sec-title">{home.services.title} <em>{home.services.em}</em></h2>
           <p className="sec-lead">{home.services.lead}</p>
         </div>
-        <div className="hair-grid ed-svc-grid">
-          {services.map((s, i) => (
-            <ServiceCard key={s.id} s={s} i={i} href={servicePath(s.slug, 'fr')} more={home.services.more(s.name)} />
+        <div className="ed-svc-grid">
+          {services.map(s => (
+            <ServiceCard key={s.id} s={s} href={servicePath(s.slug, 'fr')} more={home.services.more} />
           ))}
         </div>
       </section>
 
       <section id="process" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.process.eyebrow} id="process" />
+        <div className="sec-head">
           <h2 className="sec-title">{home.process.title} <em>{home.process.em}</em></h2>
           <p className="sec-lead">{home.process.lead}</p>
         </div>
@@ -82,19 +70,17 @@ const HomeFr = () => {
       </section>
 
       <section id="proof" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.proof.eyebrow} id="proof" />
+        <div className="sec-head">
           <h2 className="sec-title">{home.proof.title} <em>{home.proof.em}</em></h2>
-          <p className="fade-in sec-lead">{home.proof.lead}</p>
+          <p className="sec-lead">{home.proof.lead}</p>
         </div>
-        <div className="hair-grid ed-proof-grid">
-          {proof.all.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(proof.all, i)} />)}
+        <div className="ed-proof-grid">
+          {proof.all.map(it => <ProofItem key={it.title} it={it} />)}
         </div>
       </section>
 
       <section id="pricing" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.pricing.eyebrow} id="pricing" />
+        <div className="sec-head">
           <h2 className="sec-title">{home.pricing.title} <em>{home.pricing.em}</em></h2>
           <p className="sec-lead">{home.pricing.lead} {ui.offer.promise}</p>
         </div>
@@ -106,8 +92,7 @@ const HomeFr = () => {
       </section>
 
       <section id="faq" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={home.faq.eyebrow} id="faq" />
+        <div className="sec-head">
           <h2 className="sec-title">{home.faq.title} <em>{home.faq.em}</em></h2>
         </div>
         <div className="ed-faq-grid">

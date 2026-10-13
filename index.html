@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://ahmedchioua.com/og-image.png" />
 
     <!-- ── Theme / PWA ── -->
-    <meta name="theme-color" content="#faf7f2" />
+    <meta name="theme-color" content="#edece7" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -69,7 +69,8 @@
     <!-- ── Inline critical CSS — prevents render-blocking on hero paint ── -->
     <style>
       *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-      body{background:#faf7f2;color:#1a1c1a;font-family:'Archivo',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden}
+      html{overflow-x:clip}body{overflow-x:hidden;overflow-x:clip}
+      body{background:#edece7;color:#1d1b17;font-family:'Public Sans',system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
       #root{min-height:100vh}
     </style>
 
@@ -265,6 +266,68 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- The header's index panel (Header.jsx). Everything it does that the markup can't is here,
+         in one plain script, so it works from first paint, without the hydration chunk, and in
+         browsers with or without popovers; Header.jsx holds no state for it.
+         Where popovers exist, the browser opens and closes the panel (Escape, an outside click)
+         and hands focus back to the key. This script adds what it doesn't do:
+           - place the panel under the header's real bottom edge (a raised minimum font size makes
+             the header taller than the 70px the CSS falls back to), on open and on resize;
+           - close the panel when one of its links is followed. The link is blurred first: hiding
+             a popover that holds focus sends focus back to the key, and the reader should land
+             on the section they picked, not on the menu.
+         Where they don't (Safari before 17), it does the rest too: toggles .is-open and
+         aria-expanded on the key, closes on Escape (returning focus to the key if it was in the
+         panel) and on a press outside. Listeners sit on document, so they work whether the
+         header is prerendered or rendered later (dev). -->
+    <script>
+      (function () {
+        var native = typeof HTMLElement.prototype.showPopover === 'function'
+        function panel() { return document.getElementById('site-index') }
+        function key() { return document.querySelector('.ed-index-key') }
+        function isOpen(n) { return native ? n.matches(':popover-open') : n.classList.contains('is-open') }
+        function place(n) { n.style.setProperty('--index-top', n.parentElement.getBoundingClientRect().bottom + 'px') }
+        function setOpen(n, open) {
+          if (native) { if (!open) n.hidePopover(); return }
+          if (open) place(n)
+          n.classList.toggle('is-open', open)
+          var k = key()
+          if (k) k.setAttribute('aria-expanded', String(open))
+        }
+
+        if (native) {
+          document.addEventListener('beforetoggle', function (e) {
+            if (e.target.id === 'site-index' && e.newState === 'open') place(e.target)
+          }, true)
+        } else {
+          var k = key()
+          if (k) k.setAttribute('aria-expanded', 'false')
+          document.addEventListener('keydown', function (e) {
+            var n = panel()
+            if (e.key !== 'Escape' || !n || !isOpen(n)) return
+            var inside = n.contains(document.activeElement)
+            setOpen(n, false)
+            if (inside) key().focus()
+          })
+          document.addEventListener('pointerdown', function (e) {
+            var n = panel()
+            if (n && isOpen(n) && !n.contains(e.target) && !e.target.closest('.ed-index-key')) setOpen(n, false)
+          })
+        }
+
+        document.addEventListener('click', function (e) {
+          var n = panel()
+          if (!n) return
+          if (!native && e.target.closest('.ed-index-key')) return setOpen(n, !isOpen(n))
+          var link = e.target.closest('#site-index a')
+          if (link && isOpen(n)) { link.blur(); setOpen(n, false) }
+        })
+        addEventListener('resize', function () {
+          var n = panel()
+          if (n && isOpen(n)) place(n)
+        })
+      })()
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

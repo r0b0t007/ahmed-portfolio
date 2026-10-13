@@ -1,0 +1,59 @@
+<!doctype html>
+<!--
+  Source of public/og-image.png (1200×630, the size index.html declares). The headline matches the
+  hero's and the og:image:alt text in index.html and src/content/fr/home.js; change all three
+  together. Render with headless Chrome from the repo root:
+
+    chrome --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 \
+      --screenshot=public/og-image.png file:///<repo>/brand/og-image/og-image.html
+
+  Chrome may add a few rows of window chrome to the height; crop the PNG to 1200×630 if it does.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG image</title>
+<style>
+  @font-face { font-family: 'Big Shoulders Display'; font-weight: 800; src: url('../../src/fonts/big-shoulders-800.woff2') format('woff2'); }
+  @font-face { font-family: 'Public Sans'; font-weight: 400 700; src: url('../../src/fonts/public-sans.woff2') format('woff2'); }
+  :root { --paper: #edece7; --ink: #1d1b17; --ink-2: #3b3d39; --ink-muted: #595b56; --signal: #ee6a1b; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--paper); }
+  body {
+    display: grid; grid-template-columns: 760px 440px;
+    font-family: 'Public Sans', Arial, sans-serif; color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .text { display: flex; flex-direction: column; padding: 52px 56px 48px 64px; }
+  .logo { height: 56px; width: auto; align-self: flex-start; }
+  /* The section head's machined edge: a 6px graphite bar the heading sits on. */
+  h1 {
+    margin-top: 32px; padding-top: 18px; border-top: 6px solid var(--ink);
+    font-family: 'Big Shoulders Display', 'Arial Narrow', sans-serif; font-weight: 800;
+    text-transform: uppercase; font-size: 70px; line-height: 0.98; letter-spacing: -0.01em;
+  }
+  /* Heading emphasis is never italic: it is underscored with the signal. */
+  h1 em {
+    font-style: normal; white-space: nowrap; text-decoration: underline; text-decoration-color: var(--signal);
+    text-decoration-thickness: 6px; text-underline-offset: 8px;
+  }
+  .lead { margin-top: 26px; font-size: 22px; line-height: 1.45; color: var(--ink-2); max-width: 30ch; }
+  .lead strong { color: var(--ink); font-weight: 700; }
+  .url {
+    margin-top: auto; font-size: 17px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-muted);
+  }
+  .photo { border-left: 2px solid var(--ink); overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; filter: grayscale(1); display: block; }
+</style>
+</head>
+<body>
+  <div class="text">
+    <img class="logo" src="../logo-kit/master/ahmed-chioua-horizontal-colour.svg" alt="Ahmed Chioua">
+    <h1>Your site or SaaS,<br>live in weeks.<br>Fixed price.<br><em>Date in writing.</em></h1>
+    <p class="lead">A working link in <strong>10 days</strong>, a fixed price, and a launch date in writing.</p>
+    <p class="url">ahmedchioua.com</p>
+  </div>
+  <div class="photo"><img src="../../public/headshot-700.webp" alt=""></div>
+</body>
+</html>

@@ -40,6 +40,11 @@ test('forms, buttons, SVG, hidden and aria-hidden content are left out', () => {
   assert.equal(out, '# T\n\nkept')
 })
 
+test('an alternate rendering (data-alt) is left out, so a two-length label appears once', () => {
+  assert.equal(body('<h1>T</h1><p><a href="/b"><span class="cta-long">Claim a slot now</span><span class="cta-short" data-alt="">Claim</span></a></p>'),
+    '# T\n\n[Claim a slot now](https://ahmedchioua.com/b)')
+})
+
 test('sibling spans are separated, and elements do not run into each other or into words', () => {
   assert.equal(body('<h1>T</h1><div><span>Design &amp; build</span><span>SEO</span></div>'), '# T\n\nDesign & build · SEO')
   assert.equal(body('<h1>T</h1><div><a href="/a">A</a><a href="/b">B</a></div>'), '# T\n\n[A](https://ahmedchioua.com/a) [B](https://ahmedchioua.com/b)')
@@ -48,9 +53,8 @@ test('sibling spans are separated, and elements do not run into each other or in
   assert.equal(body('<h1>T</h1><p>9<!-- -->0 days, <strong>10</strong>.</p>'), '# T\n\n90 days, **10**.')
 })
 
-test('the design’s ( 01 ) counters are dropped, as a block and inside an eyebrow', () => {
-  assert.equal(body('<div><span>Services</span><span>( <!-- -->02<!-- --> )</span></div><h1>T</h1><div>( 01 )</div><p>x</p>'),
-    'Services\n\n# T\n\nx')
+test('a bracketed number is content, kept as a block and inside a run', () => {
+  assert.equal(body('<h1>T</h1><div>(12)</div><p>Clients <span>(3)</span></p>'), '# T\n\n(12)\n\nClients (3)')
 })
 
 test('block-level divs each become a paragraph', () => {

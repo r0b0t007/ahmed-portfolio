@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="ed-foot-socials">
           {socials(ui.whatsappUrl).map(s => (
             <a key={s.label} href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" aria-label={s.label}>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill={s.fill ? 'currentColor' : 'none'} stroke={s.fill ? 'none' : 'currentColor'} strokeWidth="2">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="16" height="16" fill={s.fill ? 'currentColor' : 'none'} stroke={s.fill ? 'none' : 'currentColor'} strokeWidth="2">
                 <path d={s.path} />
               </svg>
             </a>

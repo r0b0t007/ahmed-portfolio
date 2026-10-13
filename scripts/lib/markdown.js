@@ -74,8 +74,10 @@ export function parseHtml(html) {
 
 const isElement = (node, tag) => node?.tag !== undefined && (tag === undefined || node.tag === tag)
 
+// data-alt marks an alternate rendering of text that is already there (a short label shown on
+// phones in place of the long one, src/components/CtaLabel.jsx): one copy is enough.
 const hidden = ({ attrs }) =>
-  'hidden' in attrs || attrs['aria-hidden'] === 'true' || /display\s*:\s*none/i.test(attrs.style ?? '')
+  'hidden' in attrs || 'data-alt' in attrs || attrs['aria-hidden'] === 'true' || /display\s*:\s*none/i.test(attrs.style ?? '')
 
 const skipped = node => isElement(node) && (SKIP.has(node.tag) || hidden(node))
 
@@ -116,9 +118,6 @@ function inline(node, ctx) {
   }
 }
 
-// The section and card counters the design sets beside headings: "( 01 )". Ornament, not content.
-const COUNTER = /^\(\s*\d+\s*\)$/
-
 /**
  * Joins inline siblings. React puts no whitespace between adjacent elements that CSS lays out
  * apart, so they would run together: tags rendered as sibling <span>s ("Design & build",
@@ -130,7 +129,7 @@ function inlineRun(nodes, ctx) {
   let prev = null
   for (const node of nodes) {
     const piece = inline(node, ctx)
-    if (!piece || (isElement(node) && COUNTER.test(piece.trim()))) continue
+    if (!piece) continue
     if (prev && out && !/[ \t\n]$/.test(out) && !/^[ \t\n]/.test(piece)) {
       if (isElement(prev, 'span') && isElement(node, 'span')) out += ' · '
       else if (isElement(node) ? isElement(prev) || isElement(node, 'span') : isElement(prev) && /^[\p{L}\p{N}]/u.test(piece)) out += ' '
@@ -154,7 +153,7 @@ function blocks(nodes, ctx) {
   let run = []
   const flush = () => {
     const p = paragraph(run, ctx)
-    if (p && !COUNTER.test(p)) out.push(p)
+    if (p) out.push(p)
     run = []
   }
   for (const node of nodes) {

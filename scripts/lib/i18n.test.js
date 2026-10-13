@@ -15,6 +15,7 @@ import { faqs as frFaqs } from '../../src/content/fr/faqs.js'
 import { steps as frSteps } from '../../src/content/fr/process.js'
 import { proofItems as frProof } from '../../src/content/fr/proof.js'
 import { home as frHome } from '../../src/content/fr/home.js'
+import { schedule } from '../../src/content/schedule.js'
 
 test('typo puts a no-break space before French double punctuation and inside guillemets', () => {
   assert.equal(
@@ -91,10 +92,6 @@ test('French interface strings have the same shape as the English ones', () => {
   assert.deepEqual(shape(comparable(frUi)), shape(comparable(ui)))
 })
 
-test('the French nav stays on the French homepage, except the contact anchor every page has', () => {
-  for (const l of frUi.nav) assert.match(l.href, /^(\/fr#[a-z]+|#contact)$/, l.name)
-})
-
 test('contentFor and uiFor serve French', () => {
   const c = contentFor('fr')
   assert.equal(c.ui, frUi)
@@ -112,4 +109,22 @@ test('no French string has an ordinary space before : ; ? or !', () => {
   for (const s of strings([frUi, frServices, frFaqs, frSteps, frProof, frHome])) {
     assert.doesNotMatch(s, / [:;?!]/, s)
   }
+})
+
+test('each language’s nav has one booking key, to #contact, and only section links besides', () => {
+  // Header.jsx puts the accent entry on the nameplate and the rest in the section index.
+  for (const u of [ui, frUi]) {
+    const keys = u.nav.filter(l => l.accent)
+    assert.equal(keys.length, 1, `${u.lang}: one accent entry`)
+    assert.equal(keys[0].href, '#contact')
+    for (const l of u.nav.filter(n => !n.accent)) assert.match(l.href, new RegExp(`^${u.home}#[a-z]+$`), `${u.lang}: ${l.name}`)
+  }
+})
+
+test('the hero schedule has the same stations and the same key station in both languages', () => {
+  const fr = frHome.hero.schedule
+  assert.ok(schedule.caption && fr.caption)
+  assert.equal(fr.stops.length, schedule.stops.length)
+  assert.deepEqual(fr.stops.map(s => Boolean(s.key)), schedule.stops.map(s => Boolean(s.key)))
+  assert.equal(schedule.stops.filter(s => s.key).length, 1)
 })

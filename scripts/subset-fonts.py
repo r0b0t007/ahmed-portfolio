@@ -1,5 +1,5 @@
 """
-Rebuilds src/fonts/*.woff2 and src/fonts/fonts.css — the four font files the site ships.
+Rebuilds src/fonts/*.woff2 and src/fonts/fonts.css — the two font files the site ships.
 
     python scripts/subset-fonts.py        (needs: pip install fonttools brotli; run `npm run build` first)
 
@@ -7,21 +7,21 @@ Why not Google Fonts: even when you ask for `wght@400`, Google serves the full v
 (Archivo 400/500/600 were three downloads of the same 34 KiB font) and the request costs two
 cross-origin connections plus a render-blocking stylesheet.
 
-Why four files, not eight: every @font-face the page uses is requested at first layout, before
-first paint, so under Lighthouse's simulated 1.5 Mbps link all font bytes delay FCP. The two
-upright Newsreader weights (300 hero / 400 headings) and the three Archivo weights (400 body /
-500 nav / 600 emphasis) are each cut as ONE variable-font file restricted to just that weight
-range, which is smaller than two or three static instances and renders identically. Newsreader
-italic and IBM Plex Mono are static (no variable source). Plex Mono 400 is dropped: the 500 file
-serves both weights (400 → 500 is the nearest available face; nothing is synthesised).
+Why two files: every @font-face the page uses is requested at first layout, before first paint,
+so under Lighthouse's simulated 1.5 Mbps link all font bytes delay FCP. The industrial system
+(DESIGN.md) needs only two faces:
+  - Big Shoulders Display, pinned to weight 800: the condensed signage face for headings, set in
+    uppercase. One static instance; nothing else uses it.
+  - Public Sans 400-700: body, labels, numbers and form inputs, cut as ONE variable file
+    restricted to that weight range, which is smaller than three static instances.
 
 Glyph coverage:
-  - Archivo (used in form inputs)      -> printable ASCII + Latin-1 + everything on the page
-  - Newsreader, IBM Plex Mono          -> only the characters that appear in the rendered page
-                                          or anywhere in src/ (JSX strings, placeholders, runtime
-                                          status text); they never render user input
-Layout features are trimmed to `kern` and `tnum` (the site uses no ligatures, small caps or
-marks; tnum is what makes the price table's tabular-nums do anything).
+  - Public Sans (used in form inputs)  -> printable ASCII + Latin-1 + everything on the page
+  - Big Shoulders Display              -> the characters in the rendered page or anywhere in src/,
+                                          plus their uppercase forms: headings are set with
+                                          text-transform: uppercase, so an "é" in the copy renders "É"
+Layout features are trimmed to `kern` and `tnum` (tnum is what makes tabular-nums on the price
+table and the schedule do anything).
 
 fonts.css is generated so each @font-face carries the exact unicode-range its file covers;
 src/index.css imports it. Re-run after copy changes that introduce a new character; the build
@@ -42,15 +42,13 @@ UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 # a (min, max) tuple keeps a variable axis restricted to that range, a number pins it. `css`
 # is the font-weight the @font-face declares.
 FACES = [
-    dict(file='newsreader', family='Newsreader', css_family='Newsreader', style='normal',
-         query='ital,wght@0,300..400', axes={'wght': (300, 400)}, css='300 400'),
-    dict(file='newsreader-400-italic', family='Newsreader', css_family='Newsreader', style='italic',
-         query='ital,wght@1,400', axes={}, css='400'),
-    dict(file='archivo', family='Archivo', css_family='Archivo', style='normal',
-         query='wght@400..600', axes={'wght': (400, 600)}, css='400 600'),
-    dict(file='plexmono-500', family='IBM Plex Mono', css_family='IBM Plex Mono', style='normal',
-         query='wght@500', axes={}, css='500'),
+    dict(file='big-shoulders-800', family='Big Shoulders Display', css_family='Big Shoulders Display', style='normal',
+         query='wght@800', axes={}, css='800'),  # Google serves a single weight as a static file
+    dict(file='public-sans', family='Public Sans', css_family='Public Sans', style='normal',
+         query='wght@400..700', axes={'wght': (400, 700)}, css='400 700'),
 ]
+# The face that renders user input (the form fields), so it gets full Latin-1.
+BODY_FAMILY = 'Public Sans'
 
 
 def fetch(url):
@@ -74,7 +72,14 @@ def site_glyphs():
     text = html.unescape(re.sub(r'<[^>]+>', ' ', doc))
     for f in (ROOT / 'src').rglob('*.js*'):
         text += f.read_text('utf-8')
-    return {ord(c) for c in text if not c.isspace()} | {0x20}
+    chars = {c for c in text if not c.isspace()}
+    # Their uppercase forms too: headings are set with text-transform: uppercase.
+    chars |= {c.upper() for c in chars if len(c.upper()) == 1}
+    # Spaces are dropped above, so the ones the copy uses are added back: the no-break space sits
+    # inside French figures set in the display face (+30 jours). The narrow no-break space in
+    # French thousands (3 000 €) is not added: neither source font has a glyph for U+202F, so it
+    # always comes from the system fallback.
+    return {ord(c) for c in chars} | {0x20, 0xA0}
 
 
 def unicode_range(codepoints):
@@ -100,10 +105,9 @@ def build(face, cps, outdir):
         sys.exit(f"{face['file']}: static source but axes requested")
     opts = Options()
     opts.flavor, opts.hinting, opts.desubroutinize, opts.notdef_outline = 'woff2', False, True, True
-    # kern everywhere, plus tnum on Archivo only: the price table sets font-variant-numeric on
-    # .ed-price-figure, and trimming the feature out of the emitted file makes that CSS inert.
-    # Newsreader and Plex Mono set no numeric variant, so tnum would be bytes nobody reads.
-    opts.layout_features = ['kern', 'tnum'] if face['family'] == 'Archivo' else ['kern']
+    # kern and tnum on both faces: the price table and the schedule set
+    # font-variant-numeric: tabular-nums, and trimming the feature out makes that CSS inert.
+    opts.layout_features = ['kern', 'tnum']
     sub = Subsetter(opts)
     sub.populate(unicodes=cps & set(font.getBestCmap()))
     sub.subset(font)
@@ -127,7 +131,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         staged = Path(tmp)
         for face in FACES:
-            size, cmap = build(face, full if face['family'] == 'Archivo' else site, staged)
+            size, cmap = build(face, full if face['family'] == BODY_FAMILY else site, staged)
             total += size
             print(f"{face['file']:24} {size / 1024:5.1f} KiB  {len(cmap)} glyphs")
             css.append(f"@font-face {{ font-family: '{face['css_family']}'; font-style: {face['style']}; font-weight: {face['css']}; "

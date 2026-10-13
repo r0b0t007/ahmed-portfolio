@@ -1,4 +1,3 @@
-import { sectionIndex } from '../lib/sections'
 import {
   BOOKING_URL, PRICE_MOVERS, PRICE_PROMISE, PRICE_SAAS_LABEL, PRICE_SITE_LABEL,
 } from '../content/site'
@@ -42,11 +41,7 @@ export const PriceTable = ({ head, rows }) => (
  */
 const Pricing = () => (
   <section id="pricing" className="section">
-    <div className="eyebrow-block">
-      <div className="eyebrow-row">
-        <span className="eyebrow">Pricing</span>
-        <span className="eyebrow-index">( {sectionIndex('pricing')} )</span>
-      </div>
+    <div className="sec-head">
       <h2 className="sec-title">Fixed. Premium. <em>Quoted once.</em></h2>
       <p className="sec-lead">
         The figures below are starting points. {PRICE_PROMISE} No change-order ambush.
@@ -63,13 +58,13 @@ const Pricing = () => (
     <div className="ed-price">
       <span className="ed-price-label">The question everyone asks</span>
       <div>
-        <p className="fade-in ed-price-q">&ldquo;AI writes the code. Why isn&rsquo;t it cheaper?&rdquo;</p>
-        <p className="fade-in ed-price-a">
+        <p className="ed-price-q">&ldquo;AI writes the code. Why isn&rsquo;t it cheaper?&rdquo;</p>
+        <p className="ed-price-a">
           AI makes me faster. It doesn&rsquo;t make the decisions that keep your product alive:
           what to build, what to leave out, and who answers when it breaks at an awkward hour.
           You&rsquo;re paying for those.
         </p>
-        <p className="fade-in ed-price-a">
+        <p className="ed-price-a">
           Cheap development is the expensive option. You just pay for it later, as a rebuild.
         </p>
         <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink ed-price-cta">

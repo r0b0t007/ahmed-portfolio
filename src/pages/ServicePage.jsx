@@ -1,15 +1,11 @@
 import { BenefitCard } from '../components/BenefitCard'
 import { Breadcrumb } from '../components/Breadcrumb'
-import { Eyebrow as SharedEyebrow } from '../components/Eyebrow'
+import { CtaLabel } from '../components/CtaLabel'
 import { Step } from '../components/Process'
 import { ProofItem } from '../components/Proof'
 import { FaqRow } from '../components/Faq'
 import { BOOKING_URL, FIRST_LINK_DAYS, LAUNCH_COVER_DAYS } from '../content/site'
 import { useContent } from '../lib/content-context'
-import { serviceSectionIndex as idx } from '../lib/sections'
-import { spansLastRow } from '../lib/grid'
-
-const Eyebrow = ({ label, id }) => <SharedEyebrow label={label} index={idx(id)} />
 
 /**
  * One service, end to end: what it is, what's in it, how the weeks go, what it costs, what to
@@ -36,7 +32,7 @@ const ServicePage = ({ id }) => {
         <h1 className="ed-h1">{s.h1} <em>{s.h1Em}</em></h1>
         <p className="ed-lead">{s.lead}</p>
         <div className="ed-cta-row">
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{ui.cta.long}</a>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink"><CtaLabel long={ui.cta.long} short={ui.cta.short} /></a>
           <a href="#price" className="link-teal">{t.seePrice}</a>
         </div>
         {/* A <dl>: each figure is the value of the label above it. dt comes first in the DOM, as
@@ -52,19 +48,17 @@ const ServicePage = ({ id }) => {
       </section>
 
       <section id="included" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={t.included.eyebrow} id="included" />
+        <div className="sec-head">
           <h2 className="sec-title">{t.included.title} <em>{t.included.em}</em></h2>
           <p className="sec-lead">{s.framing}</p>
         </div>
-        <div className="hair-grid ed-ben-grid">
-          {s.included.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
+        <div className="ed-ben-grid">
+          {s.included.map(b => <BenefitCard key={b.title} b={b} />)}
         </div>
       </section>
 
       <section id="weeks" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={t.weeks.eyebrow} id="weeks" />
+        <div className="sec-head">
           <h2 className="sec-title">{t.weeks.title(s.weeks)} <em>{t.weeks.em}</em></h2>
           <p className="sec-lead">{t.weeks.lead}</p>
         </div>
@@ -74,8 +68,7 @@ const ServicePage = ({ id }) => {
       </section>
 
       <section id="price" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={t.price.eyebrow} id="price" />
+        <div className="sec-head">
           <h2 className="sec-title">{t.price.title(s.priceLabel)} <em>{t.price.em}</em></h2>
           <p className="sec-lead">{t.price.lead(s.priceLabel)}</p>
         </div>
@@ -87,19 +80,17 @@ const ServicePage = ({ id }) => {
       </section>
 
       <section id="proof" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={t.proof.eyebrow} id="proof" />
+        <div className="sec-head">
           <h2 className="sec-title">{s.proofTitle} <em>{s.proofTitleEm}</em></h2>
           <p className="sec-lead">{s.proofLead}</p>
         </div>
-        <div className="hair-grid ed-proof-grid">
-          {proof.map((it, i) => <ProofItem key={it.title} it={it} i={i} wide={spansLastRow(proof, i)} />)}
+        <div className="ed-proof-grid">
+          {proof.map(it => <ProofItem key={it.title} it={it} />)}
         </div>
       </section>
 
       <section id="faq" className="section">
-        <div className="eyebrow-block">
-          <Eyebrow label={t.faq.eyebrow} id="faq" />
+        <div className="sec-head">
           <h2 className="sec-title">{t.faq.title} <em>{t.faq.em}</em></h2>
         </div>
         <div className="ed-faq-grid">

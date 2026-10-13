@@ -1,12 +1,10 @@
-import { ordinal } from '../lib/ordinal'
-
 /**
- * One card of a three-column hair-grid: a mono index, a serif title and a few short lines.
- * Benefits and Handoff both render it, so the two sections stay one system.
+ * One row of an inspection checklist: the standard, then what it means. Benefits, Handoff and a
+ * service page's "included" all render it, so the three stay one system. The rows are not a
+ * sequence, so they carry no number.
  */
-export const BenefitCard = ({ b, i }) => (
-  <div className="fade-in ed-ben">
-    <div className="ed-ben-n">( {ordinal(i, 2)} )</div>
+export const BenefitCard = ({ b }) => (
+  <div className="ed-ben">
     <h3 className="ed-ben-t">{b.title}</h3>
     {b.lines.map(l => <p key={l} className="ed-ben-l">{l}</p>)}
   </div>

@@ -1,0 +1,33 @@
+{
+  "brand": "Ahmed Chioua",
+  "tagline": "A working link in 10 days. A fixed price. A date in writing.",
+  "brief": "A one-person build practice selling a productised offer to non-technical founders. The site is set as a well-built instrument: concrete and graphite, one safety-orange signal that marks action. The mark replaces the plain-text name in the header.",
+  "adjectives": ["exacting", "plain-spoken", "accountable"],
+  "criteria": "Success: comes out of the site's own system, reads at 16 px, works in one colour, avoids the developer clichés (</>, >_, rockets).",
+  "mockups": ["website", "favicon-tab", "readme", "business-card", "social", "app-icon"],
+  "nav": ["Services", "Pricing", "Book a call"],
+  "brand_color": "#ee6a1b",
+  "tile_color": "#1d1b17",
+  "greyscale": false,
+  "designer": "Claude, with the logo-design skill",
+  "round": 3,
+  "concepts": [
+    {
+      "name": "Key",
+      "symbol": "../master/ahmed-chioua-symbol-colour.svg",
+      "lockup": "../master/ahmed-chioua-horizontal-colour.svg",
+      "symbol_on_tile": "../master/ahmed-chioua-symbol-on-dark.svg",
+      "symbol_on_dark": "../master/ahmed-chioua-symbol-on-dark.svg",
+      "lockup_on_dark": "../master/ahmed-chioua-horizontal-on-dark.svg",
+      "stacked_on_tile": "../master/ahmed-chioua-stacked-on-dark.svg",
+      "idea": "The site's booking key: an A on the signal face, with the graphite edge and hard offset every key on the site has.",
+      "rationale": [
+        "The mark and the one call to action are the same object",
+        "Orange keeps its single job on the site: it marks action",
+        "A heavier small-size drawing keeps the A legible at 16 px"
+      ]
+    }
+  ],
+  "recommendation": "Key: built from the site's own component, legible at favicon size, and it works in one colour.",
+  "next_steps": ["Swap the header wordmark for the mark", "Replace the favicon set", "Regenerate the OG image with the lockup"]
+}

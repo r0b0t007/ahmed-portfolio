@@ -1,9 +1,10 @@
 /**
  * The French homepage (src/pages/HomeFr.jsx): its head, hero and section copy. Shorter than the
- * English homepage: no Experience, About or hand-off sections. The section order is declared in
- * src/lib/sections.js (HOME_FR_SECTION_ORDER).
+ * English homepage: no Experience, About or hand-off sections.
  */
-import { FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL_FR, PRICE_SITE_LABEL_FR } from '../site.js'
+import {
+  FIRST_LINK_DAYS, LAUNCH_COVER_DAYS, PRICE_SAAS_LABEL_FR, PRICE_SITE_LABEL_FR, SAAS_WEEKS, SITE_WEEKS, weeksTextFr,
+} from '../site.js'
 import { productsPhrase } from './products.js'
 import { typo } from './typo.js'
 
@@ -18,41 +19,41 @@ export const home = typo({
     description: `Sites web et SaaS en quelques semaines, à prix fixe : un premier lien fonctionnel en ${FIRST_LINK_DAYS} jours, un prix et une date de lancement par écrit. Basé à Tétouan.`,
   },
   hero: {
-    kicker: 'Pour les fondateurs qui veulent un produit lancé, pas « en cours »',
     h1: ['Votre site ou SaaS,', 'en ligne en quelques semaines.', 'Prix fixe.'],
     em: 'Date par écrit.',
     lead: `Un lien fonctionnel en ${FIRST_LINK_DAYS} jours. Une date de lancement sur laquelle vous pouvez compter. Un prix qui ne bouge pas. Développé par un ingénieur qui a passé neuf ans à livrer des logiciels en production pour Bell, BMW et Bayer.`,
     whatsapp: 'Écrivez-moi sur WhatsApp',
     // Beside the portrait below 900px (HeroPortrait), as on the English homepage.
     byline: 'Développeur web et SaaS. Vous travaillez directement avec moi, du début à la fin.',
-    facts: [
-      { n: PRICE_SITE_LABEL_FR, l: 'Prix de départ d’un site vitrine, fixé par écrit' },
-      { n: String(FIRST_LINK_DAYS), l: 'Jours jusqu’à votre premier lien fonctionnel' },
-      { n: String(LAUNCH_COVER_DAYS), l: 'Jours de corrections après le lancement, inclus' },
-      { n: '9+', l: 'Années de logiciels en production pour Bell, BMW et Bayer' },
-    ],
+    // The schedule drawn under the hero (src/components/Schedule.jsx), as the English one.
+    schedule: {
+      caption: 'Calendrier habituel. Vos propres dates figurent dans le cadrage écrit.',
+      stops: [
+        { at: 'Jour 0', what: 'Lancement, après un appel de cadrage gratuit' },
+        { at: `Jour ${FIRST_LINK_DAYS}`, what: 'Votre premier lien fonctionnel', key: true },
+        { at: `Semaines ${weeksTextFr(SITE_WEEKS)}`, what: 'Mise en ligne, pour un site vitrine' },
+        { at: `Semaines ${weeksTextFr(SAAS_WEEKS)}`, what: 'Ou mise en ligne, pour un MVP' },
+        { at: `+${LAUNCH_COVER_DAYS} jours`, what: 'Après le lancement : corrections incluses' },
+      ],
+    },
   },
   services: {
-    eyebrow: 'Services',
     title: 'Ce que je',
     em: 'construis',
     lead: 'Deux choses, faites de bout en bout. Cadrées dès le départ, livrées à une date convenue, et remises de façon à ce que vous puissiez les maintenir sans moi.',
-    more: name => `${name} en détail`,
+    more: 'Tous les détails',
   },
   process: {
-    eyebrow: 'Méthode',
     title: `Un lien fonctionnel en ${FIRST_LINK_DAYS} jours.`,
     em: 'Puis chaque semaine.',
     lead: 'Les agences disparaissent six semaines et reviennent avec une surprise. Vous ne pouvez pas dire « ce n’est pas ce que je voulais » avant que ce soit coûteux à corriger. Ici, chaque projet suit les mêmes quatre étapes, et vous le voyez avancer dès la première.',
   },
   proof: {
-    eyebrow: 'Preuves',
     title: 'Ne me croyez pas sur parole.',
     em: 'Prenez deux minutes.',
     lead: `Je ne vous montrerai pas de logos clients que je n’ai pas mérités. Je vous montre ce que vous pouvez vérifier : ${productsPhrase}, ce site, son code source, et le parcours derrière.`,
   },
   pricing: {
-    eyebrow: 'Tarifs',
     title: 'Fixe. Haut de gamme.',
     em: 'Chiffré une fois.',
     lead: 'Les montants ci-dessous sont des points de départ.',
@@ -65,7 +66,6 @@ export const home = typo({
     cta: 'Fixer un prix et une date',
   },
   faq: {
-    eyebrow: 'Questions',
     title: 'Des réponses',
     em: 'directes',
     ids: ['what', 'speed', 'cost', 'ownership', 'slip', 'location'],
