@@ -1,7 +1,9 @@
-# DESIGN.md — Industrial (Option E)
+# DESIGN.md — Industrial
 
-The visual system for ahmedchioua.com on the `redesign/option-e-industrial` branch. It is one of
-several redesign proposals; nothing here is live until Ahmed picks it.
+The visual system for ahmedchioua.com, live since 2026-10-13 (PR #40). It was Option E of five
+redesign proposals (the other four stay on their `redesign/option-*` branches, unmerged). This
+file is the locked system: new pages and changes follow it rather than picking their own look,
+and a change to the system is made here as well as in `src/index.css`.
 
 ## Where it came from
 
@@ -12,8 +14,8 @@ Built with two skills fetched through the `ui-skills` CLI (`npx ui-skills@0.2.4 
   graphics clarify structure. Its four decisions, as taken here:
   - **Mode:** hybrid. A type-led hero, then instrumental modules.
   - **Dominant gesture:** the schedule drawn as a dimension line across the hero.
-  - **Grid:** full-bleed bands on a `--pad` gutter; the hero is offer | portrait (a third, capped at 28rem) over a
-    full-width band; modules are rows on a heavy top rule.
+  - **Grid:** full-bleed bands on a `--pad` gutter; the hero is offer | portrait (a third,
+    capped at 28rem) over a full-width band; modules are rows on a heavy top rule.
   - **Signal:** one accent, safety orange, with one job: action and position.
 - **jakubkrehel/better-typography** — the type rules: a small semantic scale, unitless
   line-heights, `em` tracking, a 60–75ch measure, `balance` on headings and `pretty` on
@@ -67,7 +69,9 @@ price figures (5.4:1). Heading emphasis (`<em>`) is an orange underscore, never 
 
 Two self-hosted files, 27.6 KiB total (was four, 55.5 KiB), both preloaded. `scripts/subset-fonts.py`
 cuts them; the display subset includes the uppercase form of every character in the copy, since
-headings are set with `text-transform: uppercase`. Metric-matched local fallbacks (measured in
+headings are set with `text-transform: uppercase`, plus the no-break space (U+00A0) that French
+figures use. The narrow no-break space (U+202F, French thousands) is in neither source font, so
+it always comes from the system fallback. Metric-matched local fallbacks (measured in
 Chrome) keep the font swap from reflowing; the condensed face falls back to Arial Bold squeezed to
 68.2%, because Arial Narrow only ships with Office on Windows.
 
@@ -82,23 +86,33 @@ second line.
 ## Layout and components
 
 - **Section head:** a 6px graphite bar the heading sits on, then the lead (max 62ch).
-- **Header:** an edge-aligned nameplate. The mark (the Key, see Logo below) on the left; on the right three 44px keys:
-  the section index ("Menu"), the other language and the booking key (hidden below 480px, where
-  the hero's key is on the first screen). The section links live in the index panel at every
-  width, as a row of display-face plates; the panel is always in the markup (`hidden` while
-  closed) so crawlers and agents see the links. Escape closes it.
+- **Header:** an edge-aligned nameplate. The mark (the Key, see Logo below) on the left; on the
+  right three 44px keys: the section index ("Menu"), the other language and the booking key
+  (hidden below 480px, where the hero's key is on the first screen, and listed in the index
+  instead). The section links live in the index panel at every width, as display-face plates.
+  - The panel is a native popover (`popovertarget` on the key), always in the markup, so it opens
+    from the prerendered HTML before hydration and without JavaScript, and crawlers and agents
+    see the links. The browser closes it on Escape or an outside click and returns focus to the key.
+  - One plain script in `index.html` does the rest, for every browser: places the panel under the
+    header's real bottom edge (on open and on resize; the CSS falls back to 70px), and closes it
+    when a link is followed, blurring the link first so focus lands on the chosen section, not
+    back on the key. Where popovers are missing (Safari before 17) it also toggles `.is-open` and
+    `aria-expanded`, and handles Escape and an outside press. `Header.jsx` holds no state.
 - **Hero:** offer | portrait (a third of the width, capped at 28rem), schedule below at full width;
   padding 44 top / 60 bottom. The hero row has a floor of min(34rem, 100svh − 300px), so the photo
   box stays portrait-shaped and the crop shows the head down to the crossed arms on every desktop
-  size (object-position 50% 33%).
-  At 1280×800 the whole schedule is on the first screen. Below 900px: offer, then the schedule as
+  size (object-position 50% 33%): roughly 7–86% of the photo’s height from 1280 to 1920 wide.
+  At 1280×800 the whole schedule is on the first screen (on `/fr`, whose headline is longer, it
+  ends exactly at the bottom edge). Below 900px: offer, then the schedule as
   a vertical rule, then the portrait as a 76px signature row. The offer and the primary key sit
   inside the first 390×844 screen on every page.
 - **Schedule** (`Schedule.jsx`): an ordered list on a graphite rule, a tick per station; the first
   working link carries the signal (tick and filled value; its edge stays 2px, no stripe). Five
   stations hold on one rule down to 900px, then the line turns vertical. The two launch stations
-  are labelled as alternatives (site or MVP) and the cover as "after launch". Values come from
-  `site.js`.
+  are labelled as alternatives (site or MVP) and the cover as "after launch". The stops live in
+  `src/content/schedule.js` (English) and `src/content/fr/home.js` (French), built from the
+  figures in `site.js`; a test holds the two languages to the same stations and key station.
+  In the HTML the schedule comes before the portrait, the order a phone shows them.
 - **Keys:** `.btn-ink` is signal fill, 2px graphite edge, a 4px hard offset the press removes.
   Keys never wrap; long labels have a short twin shown below 480px (`CtaLabel.jsx`).
 - **Checklist rows** (Benefits, Handoff, service "included"): standard | what it means.
@@ -139,8 +153,9 @@ Files, rules and the source that regenerates them: `brand/logo-kit/` (GUIDELINES
 
 Hover and press only, 0.18s `cubic-bezier(0.2, 0.7, 0.2, 1)`: key fill shifts, the key's press
 offset, underline colour. Every key and link has a press state: keys translate, text links
-thicken their underline to graphite. No scroll reveals. `prefers-reduced-motion` removes transitions and the
-press translate.
+thicken their underline to graphite. No scroll reveals. `prefers-reduced-motion` removes
+transitions and the press translate (the header's overrides sit after its press rules, so they
+win).
 
 ## Accessibility
 
@@ -150,7 +165,8 @@ the build log, re-measured 2026-10-13 after the Hallmark audit fixes. Focus ring
 
 ## Audit
 
-A `hallmark audit` on 2026-10-13 found 1 critical, 7 major and 16 minor issues; all are fixed on
-this branch. The critical one was the inherited nav (wordmark plus a row of six links and a
-filled key), replaced by the nameplate header above. `src/index.css` opens with a Hallmark stamp
-that names this file as the system.
+A `hallmark audit` on 2026-10-13 found 1 critical, 7 major and 16 minor issues; all were fixed
+before the merge. The critical one was the inherited nav (wordmark plus a row of six links and a
+filled key), replaced by the nameplate header above. Two `/code-review` rounds on PR #40 then
+reworked the index panel into the popover and script described under Header. `src/index.css`
+opens with a Hallmark stamp that names this file as the system.
