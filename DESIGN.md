@@ -82,7 +82,7 @@ second line.
 ## Layout and components
 
 - **Section head:** a 6px graphite bar the heading sits on, then the lead (max 62ch).
-- **Header:** an edge-aligned nameplate. The wordmark on the left; on the right three 44px keys:
+- **Header:** an edge-aligned nameplate. The mark (the Key, see Logo below) on the left; on the right three 44px keys:
   the section index ("Menu"), the other language and the booking key (hidden below 480px, where
   the hero's key is on the first screen). The section links live in the index panel at every
   width, as a row of display-face plates; the panel is always in the markup (`hidden` while
@@ -113,6 +113,24 @@ and gap uses it. Section rhythm varies: 88px for modules, 112px around the price
 the FAQ (64 / 80 / 48 on phones).
 
 Breakpoints: 900, 860, 820, 760, 720, 640, 480, 360. Root `overflow-x: clip`, on the 404 too.
+
+## Logo
+
+**The Key:** the booking key drawn as a mark. A flat-apex A in graphite on a signal face, a
+graphite edge and a hard offset, the same three parts as every key on the site. Orange keeps its
+one job: the mark is the action.
+
+- The header shows the mark alone, at 44px, the height of the three keys beside it. Its link is
+  named "Ahmed Chioua". Hover shifts the face to `--signal-hi`; the press moves the key onto its
+  offset (as a key's press removes its shadow).
+- On graphite, the edge goes `--on-ink` and the offset `--on-ink-muted`, as the keys do in the
+  price band.
+- Below 32px use the small drawing (heavier edge, longer offset, bigger counter): it is the
+  favicon.
+- The name, when it appears with the mark, is Big Shoulders 800 at the A's cap height, on the A's
+  baseline.
+
+Files, rules and the source that regenerates them: `brand/logo-kit/` (GUIDELINES.md).
 
 ## Motion
 

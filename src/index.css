@@ -242,7 +242,7 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
-  .btn-ink:active, .ed-submit:active, .btn-wa:active, .ed-head-cta:active, .ed-lang:active, .ed-index-key:active { transform: none; }
+  .btn-ink:active, .ed-submit:active, .btn-wa:active { transform: none; }
 }
 
 @media (max-width: 720px) {
@@ -254,7 +254,7 @@ p { text-wrap: pretty; }
    Components, in render order.
    =================================================================== */
 
-/* ── Header (Header.jsx): an edge-aligned nameplate. The wordmark on the left edge; on the
+/* ── Header (Header.jsx): an edge-aligned nameplate. The mark on the left edge; on the
    right, three keys (the section index, the other language, the booking key). The section links
    live in the index panel at every width, so there is no row of links to collapse. ── */
 .ed-header {
@@ -264,11 +264,15 @@ p { text-wrap: pretty; }
   background: var(--paper);
   border-bottom: 2px solid var(--ink);
 }
-.ed-logo {
-  font-family: var(--display); font-weight: 800; text-transform: uppercase;
-  font-size: 1.5rem; line-height: 1; letter-spacing: 0.01em;
-  color: var(--ink); white-space: nowrap;
-}
+/* The mark: the booking key at the keys' height. Hover shifts the face like a key's fill; the
+   press moves the key onto its offset (24 grid units), where a key's press removes its shadow. */
+.ed-logo { display: block; flex: none; line-height: 0; }
+.ed-logo svg { display: block; width: 44px; height: 44px; overflow: visible; }
+.ed-logo-off, .ed-logo-edge, .ed-logo-a { fill: var(--ink); }
+.ed-logo-face { fill: var(--signal); transition: fill var(--dur) var(--ease); }
+.ed-logo-key { transition: transform var(--dur) var(--ease); }
+.ed-logo:hover .ed-logo-face { fill: var(--signal-hi); }
+.ed-logo:active .ed-logo-key { transform: translate(24px, 24px); }
 .ed-head-end { display: flex; align-items: center; gap: var(--space-2); }
 /* The three keys share one height and one edge. */
 .ed-index-key, .ed-lang, .ed-head-cta {
@@ -285,6 +289,11 @@ p { text-wrap: pretty; }
 .ed-head-cta { background: var(--signal); }
 .ed-head-cta:hover { background: var(--signal-hi); }
 .ed-index-key:active, .ed-lang:active, .ed-head-cta:active { transform: translate(2px, 2px); }
+/* After the press rules above, not in the global block earlier in the file: a media query adds no
+   specificity, so an earlier override loses to these. */
+@media (prefers-reduced-motion: reduce) {
+  .ed-index-key:active, .ed-lang:active, .ed-head-cta:active, .ed-logo:active .ed-logo-key { transform: none; }
+}
 .ed-index-key[aria-expanded="true"] { background: var(--ink); color: var(--on-ink); }
 .ed-index-icon { display: flex; flex-direction: column; gap: var(--space-1); width: 16px; }
 .ed-index-icon span { display: block; height: 2px; background: currentColor; }

@@ -5,7 +5,7 @@ import { uiFor } from '../content/i18n'
 // the page's context, so everything it renders depends only on those props. The links' words and
 // targets live in src/content/ui.js.
 //
-// An edge-aligned nameplate, not a row of links: the wordmark on one edge, three keys on the other
+// An edge-aligned nameplate, not a row of links: the mark on one edge, three keys on the other
 // (the section index, the other language, the booking key). The section links live in the index
 // panel at every width, so desktop and phone share one header.
 const Header = ({ locale = 'en', switchHref }) => {
@@ -23,7 +23,19 @@ const Header = ({ locale = 'en', switchHref }) => {
 
   return (
     <header className="ed-header">
-      <a href={`${ui.home}#hero`} className="ed-logo">Ahmed Chioua</a>
+      {/* The mark is the booking key: a signal face, a graphite edge, a hard offset. The kit and
+          its source are in brand/logo-kit. Drawn on a 256 grid; the offset is 24 units, so a
+          press moves the key onto it, as the site's keys do. */}
+      <a href={`${ui.home}#hero`} className="ed-logo" aria-label="Ahmed Chioua">
+        <svg viewBox="20 20 216 216" width="44" height="44" aria-hidden="true" focusable="false">
+          <path className="ed-logo-off" d="M44 44H236V236H44Z" />
+          <g className="ed-logo-key">
+            <path className="ed-logo-edge" d="M20 20H212V212H20Z" />
+            <path className="ed-logo-face" d="M34 34H198V198H34Z" />
+            <path className="ed-logo-a" fillRule="evenodd" d="M92 56H140L172.15 176H138.15L130.65 148H101.35L93.85 176H59.85ZM116 93.32L125.29 128H106.71Z" />
+          </g>
+        </svg>
+      </a>
 
       <div className="ed-head-end">
         <button className="ed-index-key" aria-expanded={open} aria-controls="site-index" onClick={() => setOpen(!open)}>
@@ -38,7 +50,7 @@ const Header = ({ locale = 'en', switchHref }) => {
         )}
 
         {/* The hero carries the booking key on a phone's first screen, so this one steps aside
-            below 480px, where the nameplate has room for the wordmark and two keys only. */}
+            below 480px, where the nameplate has room for the mark and two keys only. */}
         <a href={action.href} className="ed-head-cta">{action.name}</a>
       </div>
 
