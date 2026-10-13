@@ -52,7 +52,7 @@ export const ui = typo({
       founding: 'Tarif client fondateur :',
       cta: 'Fixer un prix et une date',
     },
-        faq: { title: 'Des réponses', em: 'directes' },
+    faq: { title: 'Des réponses', em: 'directes' },
   },
   contact: {
     title: 'Réservez votre',

@@ -15,6 +15,7 @@ import { faqs as frFaqs } from '../../src/content/fr/faqs.js'
 import { steps as frSteps } from '../../src/content/fr/process.js'
 import { proofItems as frProof } from '../../src/content/fr/proof.js'
 import { home as frHome } from '../../src/content/fr/home.js'
+import { schedule } from '../../src/content/schedule.js'
 
 test('typo puts a no-break space before French double punctuation and inside guillemets', () => {
   assert.equal(
@@ -122,4 +123,12 @@ test('each language’s nav has one booking key, to #contact, and only section l
     assert.equal(keys[0].href, '#contact')
     for (const l of u.nav.filter(n => !n.accent)) assert.match(l.href, new RegExp(`^${u.home}#[a-z]+$`), `${u.lang}: ${l.name}`)
   }
+})
+
+test('the hero schedule has the same stations and the same key station in both languages', () => {
+  const fr = frHome.hero.schedule
+  assert.ok(schedule.caption && fr.caption)
+  assert.equal(fr.stops.length, schedule.stops.length)
+  assert.deepEqual(fr.stops.map(s => Boolean(s.key)), schedule.stops.map(s => Boolean(s.key)))
+  assert.equal(schedule.stops.filter(s => s.key).length, 1)
 })

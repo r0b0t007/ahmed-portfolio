@@ -132,7 +132,8 @@ function criticalHead() {
         delete bundle[css[0].fileName]
 
         const tags = PRELOAD_FONTS.map(name => {
-          // {8}: exactly one Vite hash after the name, so 'newsreader' can't match 'newsreader-400-italic'
+          // {8}: exactly one Vite hash after the name, so a face can't match a longer file that
+          // starts with its name (a 'public-sans' preload must not pick up a 'public-sans-italic').
           const a = assets.find(a => new RegExp(`^assets/${name}-[\\w-]{8}\\.woff2$`).test(a.fileName))
           if (!a) throw new Error(`critical-head: no emitted font matches ${name}`)
           return { tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/' + a.fileName, crossorigin: true }, injectTo: 'head-prepend' }

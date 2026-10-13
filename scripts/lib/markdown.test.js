@@ -53,9 +53,8 @@ test('sibling spans are separated, and elements do not run into each other or in
   assert.equal(body('<h1>T</h1><p>9<!-- -->0 days, <strong>10</strong>.</p>'), '# T\n\n90 days, **10**.')
 })
 
-test('the design’s ( 01 ) counters are dropped, as a block and inside an eyebrow', () => {
-  assert.equal(body('<div><span>Services</span><span>( <!-- -->02<!-- --> )</span></div><h1>T</h1><div>( 01 )</div><p>x</p>'),
-    'Services\n\n# T\n\nx')
+test('a bracketed number is content, kept as a block and inside a run', () => {
+  assert.equal(body('<h1>T</h1><div>(12)</div><p>Clients <span>(3)</span></p>'), '# T\n\n(12)\n\nClients (3)')
 })
 
 test('block-level divs each become a paragraph', () => {

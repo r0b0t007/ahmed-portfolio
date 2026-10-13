@@ -118,7 +118,7 @@ def svg(w, h, body, title, vb_x=0, vb_y=0):
 # ── build ─────────────────────────────────────────────────────────────────────────────────────
 
 SCHEMES = {
-    # name: (symbol body fn, wordmark colour, preview ground or None)
+    # name: (paints the symbol for a Key, colour of the name beside it)
     'colour': (lambda k: k.colour(), INK),
     'on-dark': (lambda k: k.colour(edge=ON_INK, shadow=ON_INK_MUTED), ON_INK),
     'graphite': (lambda k: k.one(INK), INK),

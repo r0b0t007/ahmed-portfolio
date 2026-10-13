@@ -56,7 +56,7 @@ export const ui = {
       founding: 'Founding-client rate:',
       cta: 'Lock in a price and a date',
     },
-        faq: { title: 'Straight', em: 'answers' },
+    faq: { title: 'Straight', em: 'answers' },
   },
   contact: {
     title: 'Claim your',

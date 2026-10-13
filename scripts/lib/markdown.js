@@ -118,9 +118,6 @@ function inline(node, ctx) {
   }
 }
 
-// The section and card counters the design sets beside headings: "( 01 )". Ornament, not content.
-const COUNTER = /^\(\s*\d+\s*\)$/
-
 /**
  * Joins inline siblings. React puts no whitespace between adjacent elements that CSS lays out
  * apart, so they would run together: tags rendered as sibling <span>s ("Design & build",
@@ -132,7 +129,7 @@ function inlineRun(nodes, ctx) {
   let prev = null
   for (const node of nodes) {
     const piece = inline(node, ctx)
-    if (!piece || (isElement(node) && COUNTER.test(piece.trim()))) continue
+    if (!piece) continue
     if (prev && out && !/[ \t\n]$/.test(out) && !/^[ \t\n]/.test(piece)) {
       if (isElement(prev, 'span') && isElement(node, 'span')) out += ' · '
       else if (isElement(node) ? isElement(prev) || isElement(node, 'span') : isElement(prev) && /^[\p{L}\p{N}]/u.test(piece)) out += ' '
@@ -156,7 +153,7 @@ function blocks(nodes, ctx) {
   let run = []
   const flush = () => {
     const p = paragraph(run, ctx)
-    if (p && !COUNTER.test(p)) out.push(p)
+    if (p) out.push(p)
     run = []
   }
   for (const node of nodes) {
