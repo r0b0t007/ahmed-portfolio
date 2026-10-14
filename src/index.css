@@ -129,6 +129,18 @@ p { text-wrap: pretty; }
   border-top: 1px solid var(--rule);
 }
 
+/* Off-screen sections skip style, layout and paint until they near the viewport. The whole page
+   is prerendered, so without this the first frame lays out every section, and Lighthouse's mobile
+   run charges that main-thread time (x4 CPU) straight to FCP and LCP. `auto` in the intrinsic
+   size makes the browser remember each section's real height once it has rendered, so the
+   scrollbar settles after one pass. Find-in-page, anchors and the accessibility tree all still
+   see the content (that is what `auto` keeps, unlike `hidden`).
+   An anchor jump is the exception: sections between here and the target would render on the way
+   and grow past their estimate, and the (smooth) scroll would land short. Once a fragment is the
+   target, everything renders, so the jump measures real heights. */
+.section, .ed-footer { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+html:has(:target) :is(.section, .ed-footer) { content-visibility: visible; }
+
 /* Section head. The machined edge: a 6px graphite bar the heading sits on. No eyebrow label, no
    section number: the heading names the section. */
 .sec-head {

@@ -43,8 +43,23 @@ if (prerendered) {
 
   listen(addEventListener)
   const soon = () => ('requestIdleCallback' in window ? requestIdleCallback(hydrate, { timeout: 200 }) : setTimeout(hydrate, 0))
-  if (document.readyState === 'complete') soon()
-  else addEventListener('load', soon, { once: true })
+  // `load` is not enough on its own: with everything inlined, load can fire before the first
+  // frame is painted, and Lighthouse charges every request started before the observed LCP to
+  // LCP. Waiting for the browser to report its largest paint keeps the ~67 KB runtime out of that
+  // window. The timer covers browsers without the entry type (Safari before 26 has no LCP).
+  const afterPaint = fn => {
+    const types = window.PerformanceObserver?.supportedEntryTypes || []
+    const type = ['largest-contentful-paint', 'paint'].find(t => types.includes(t))
+    if (!type) return fn()
+    let done = false
+    const once = () => { if (!done) { done = true; observer.disconnect(); fn() } }
+    const observer = new PerformanceObserver(once)
+    observer.observe({ type, buffered: true })
+    setTimeout(once, 3000)
+  }
+  const start = () => afterPaint(soon)
+  if (document.readyState === 'complete') start()
+  else addEventListener('load', start, { once: true })
 } else if (import.meta.env.DEV) {
   // The dev server has no prerendered markup: render the full app client-side. Guarded so the
   // production bundle contains neither this branch nor an App chunk.
