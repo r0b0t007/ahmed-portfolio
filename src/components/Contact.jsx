@@ -108,7 +108,9 @@ const Contact = ({ locale = 'en' }) => {
           </div>
         </div>
 
-        <form className="ed-form" name="contact" onSubmit={submit}>
+        {/* method="post": a submit in the window before hydration goes out natively, and a GET
+            would put the visitor's name, email and message in the URL, history and logs. */}
+        <form className="ed-form" name="contact" method="post" onSubmit={submit}>
           <div style={{ display: 'none' }} aria-hidden="true"><label>Skip: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></div>
           {/* Each label names its field (htmlFor/id), so assistive tech and a click on the label
               both reach the input. */}
