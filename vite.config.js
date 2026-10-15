@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
 import {
-  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_URL, SITE_WEEKS, weeksText,
+  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_URL, SITE_WEEKS, ANALYTICS_TOKEN, weeksText,
 } from './src/content/site.js'
 import { routes, absoluteUrl } from './src/content/routes.js'
 import { fillErrorPage } from './scripts/lib/pages.js'
@@ -150,8 +150,14 @@ function criticalHead() {
  * by React; this plugin does the two things that would otherwise be copied by hand:
  *   - fails the build when a colour token it declares no longer matches index.css
  *   - fills its page list from the route table (fillErrorPage in scripts/lib/pages.js)
+ *   - fills the analytics host and token (BUILD_CONSTANTS), as define does for src/main.jsx
  * Emitted from generateBundle, so `vite build` alone (build:client) produces it too.
  */
+const BUILD_CONSTANTS = {
+  __SITE_HOST__: JSON.stringify(new URL(SITE_URL).hostname),
+  __ANALYTICS_TOKEN__: JSON.stringify(ANALYTICS_TOKEN),
+}
+
 function errorPage({ emit }) {
   const template = new URL('./src/404.html', import.meta.url)
   const tokens = text => new Map(
@@ -170,15 +176,21 @@ function errorPage({ emit }) {
     },
     generateBundle() {
       if (!emit) return
-      this.emitFile({ type: 'asset', fileName: '404.html', source: fillErrorPage(readFileSync(template, 'utf8'), routes) })
+      let html = fillErrorPage(readFileSync(template, 'utf8'), routes)
+      for (const [name, value] of Object.entries(BUILD_CONSTANTS)) {
+        if (!html.includes(name)) throw new Error(`404.html: expected ${name} in its analytics script`)
+        html = html.replaceAll(name, () => JSON.parse(value))
+      }
+      this.emitFile({ type: 'asset', fileName: '404.html', source: html })
     },
   }
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
-  // The production hostname for src/main.jsx (it loads the analytics beacon only there). Defined
-  // here so the entry chunk doesn't import content/site.js, whose other constants would come with it.
-  define: { 'import.meta.env.VITE_SITE_HOST': JSON.stringify(new URL(SITE_URL).hostname) },
+  // The analytics host and token for src/main.jsx, which loads the beacon only on the production
+  // host. Defined here so the entry chunk doesn't import content/site.js, whose other constants
+  // would come with it. Plain identifiers, not import.meta.env.*: these are not settable from .env.
+  define: BUILD_CONSTANTS,
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
   plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead(), errorPage({ emit: !isSsrBuild })],
   build: {

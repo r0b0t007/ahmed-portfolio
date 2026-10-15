@@ -20,6 +20,9 @@ import { CONTACT_READY, ISLAND } from './islands'
  * when the frame reaches the screen, and a fetch queued behind requestAnimationFrame was measured
  * starting 30-40 ms before that.
  */
+/** requestIdleCallback with a timeout, or the next task where there is none (Safari). */
+const idle = (fn, timeout) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout }) : setTimeout(fn, 0))
+
 let painted
 function whenPainted(fn) {
   painted ??= new Promise(resolve => {
@@ -40,8 +43,13 @@ function whenPainted(fn) {
     if (document.readyState === 'complete') afterPaint()
     else addEventListener('load', afterPaint, { once: true })
   })
-  painted.then(fn)
+  // As a task, not a promise reaction: an error thrown in `fn` surfaces as an ordinary uncaught
+  // error rather than an unhandled rejection.
+  painted.then(() => setTimeout(fn, 0))
 }
+
+// The hydration chunk's download, once it has started (hydrate below). The beacon waits for it.
+let runtime
 
 // The build prerenders the whole page (scripts/prerender.js). Only the two components with
 // state hydrate; the rest is static HTML and never enters this bundle.
@@ -84,7 +92,7 @@ if (prerendered) {
     if (hydrating) return
     hydrating = true
     listen(removeEventListener)
-    import('./hydrate.jsx')
+    runtime = import('./hydrate.jsx')
       .then(({ hydrateIslands }) => hydrateIslands())
       .catch(err => {
         // The chunk can fail to load: a tab left open across a deploy no longer has its hashed
@@ -97,8 +105,7 @@ if (prerendered) {
   }
 
   listen(addEventListener)
-  const soon = () => ('requestIdleCallback' in window ? requestIdleCallback(hydrate, { timeout: 200 }) : setTimeout(hydrate, 0))
-  whenPainted(soon)
+  whenPainted(() => idle(hydrate, 200))
 } else if (import.meta.env.DEV) {
   // The dev server has no prerendered markup: render the full app client-side. Guarded so the
   // production bundle contains neither this branch nor an App chunk.
@@ -111,25 +118,24 @@ if (prerendered) {
 // ~0.6 s of FCP. Loaded after paint, it reports after it. The cost: a visit that leaves before
 // then is not counted.
 //
-// It waits for an idle period after paint, and is scheduled after hydration's own idle callback
-// (callbacks run in order), so the runtime download starts first and the beacon does not stretch
-// the window in which the contact form has no handler.
+// It waits for an idle period after paint and then for the hydration chunk's download to settle
+// (scheduled after hydration's own idle callback, which runs first), so the beacon's new-origin
+// connection and download don't compete with the runtime and stretch the window in which the
+// contact form has no handler. 404.html carries its own copy: it never loads this file.
 //
-// Only on the production host (VITE_SITE_HOST, from SITE_URL in vite.config.js), so preview
+// Only on the production host (__SITE_HOST__, from SITE_URL in vite.config.js), so preview
 // deploys and local runs don't report into the site's analytics. Edge injection must be off in the
 // Cloudflare dashboard (Web Analytics -> site -> automatic setup). If it is back on, its tag is
 // already in the page: this adds nothing and says so, since the FCP cost returns with it.
-const BEACON_TOKEN = 'bf6b6e685f124401b038cd3d47040a76'
-if (location.hostname === import.meta.env.VITE_SITE_HOST) {
-  const idle = fn => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 0))
-  whenPainted(() => idle(() => {
+if (location.hostname === __SITE_HOST__) {
+  whenPainted(() => idle(() => Promise.resolve(runtime).then(() => {
     if (document.querySelector('script[data-cf-beacon]')) {
       console.warn('[analytics] Cloudflare edge-injected beacon found: turn off automatic setup in Web Analytics, it costs ~0.6 s of FCP')
       return
     }
     const beacon = document.createElement('script')
     beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js'
-    beacon.dataset.cfBeacon = JSON.stringify({ token: BEACON_TOKEN })
+    beacon.dataset.cfBeacon = JSON.stringify({ token: __ANALYTICS_TOKEN__ })
     document.body.append(beacon)
-  }))
+  }), 2000))
 }
