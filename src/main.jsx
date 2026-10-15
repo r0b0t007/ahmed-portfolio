@@ -1,5 +1,5 @@
 import './index.css' // the entry owns the stylesheet: vite.config.js inlines it into <head>
-import { ISLAND } from './islands'
+import { CONTACT_READY, ISLAND } from './islands'
 
 /**
  * Entry chunk. Deliberately tiny and React-free: it is the only script fetched before first
@@ -26,12 +26,32 @@ if (prerendered) {
   // measured starting 30-40 ms before that.
   //
   // The idle timeout after that is deliberately short. Between first paint and hydration the
-  // contact form can't send (the header's index works without React: it is a popover driven by a
-  // script in index.html), so that window has to be bounded by the runtime download rather than
-  // by how long the browser feels like staying idle.
+  // contact form has no handler (the header's index works without React: it is a popover driven
+  // by a script in index.html), so that window has to be bounded by the runtime download rather
+  // than by how long the browser feels like staying idle. A submit inside it is held, not lost:
+  // see `held` below.
   const triggers = ['pointerdown', 'touchstart', 'keydown', 'focusin', 'scroll', 'mousemove']
   const listen = fn => { for (const type of triggers) fn(type, hydrate, { capture: true, passive: true }) }
   let hydrating = false
+  let ready = false
+  let held = null
+
+  // A submit before React attaches would go out natively: a GET to this page with the visitor's
+  // details in the URL, and nothing sent. Hold it instead, hydrate, and submit again once the
+  // contact island says its handlers are attached. Not when hydrateRoot returns: hydration
+  // finishes asynchronously, and a submit resent then was measured going unhandled.
+  addEventListener('submit', e => {
+    if (ready || !e.target.closest?.(`#${ISLAND.contact}`)) return
+    e.preventDefault()
+    held = e.target
+    hydrate()
+  }, { capture: true })
+  addEventListener(CONTACT_READY, () => {
+    ready = true
+    const form = held
+    held = null
+    form?.requestSubmit()
+  }, { once: true })
 
   function hydrate() {
     if (hydrating) return
@@ -56,7 +76,12 @@ if (prerendered) {
     const type = ['largest-contentful-paint', 'paint'].find(t => types.includes(t))
     if (!type) return fn()
     const done = () => { observer.disconnect(); clearTimeout(timer); fn() }
-    const observer = new PerformanceObserver(done)
+    // A `paint` observer also delivers first-paint (background only), which can come before any
+    // content is on screen; Firefox before 122 takes this path. Wait for the contentful one.
+    const observer = new PerformanceObserver(list => {
+      if (type === 'paint' && !list.getEntries().some(e => e.name === 'first-contentful-paint')) return
+      done()
+    })
     const timer = setTimeout(done, 3000)
     observer.observe({ type, buffered: true })
   }

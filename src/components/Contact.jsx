@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BOOKING_URL, REPO_URL, WHATSAPP_DISPLAY } from '../content/site'
 import { uiFor } from '../content/i18n'
 import { WhatsAppIcon } from './WhatsAppIcon'
+import { CONTACT_READY } from '../islands'
 
 const EMAIL = 'ahmedchioua@gmail.com'
 const LINKEDIN = 'https://linkedin.com/in/ahmedchioua'
@@ -55,6 +56,9 @@ const Contact = ({ locale = 'en' }) => {
   const t = ui.contact
   const check = validity(t.invalid)
   const [status, setStatus] = useState('idle')
+  // Effects run once the form's handlers are attached: the moment main.jsx can resend a submit
+  // it held during hydration.
+  useEffect(() => { dispatchEvent(new Event(CONTACT_READY)) }, [])
 
   const submit = async e => {
     e.preventDefault()
@@ -108,9 +112,7 @@ const Contact = ({ locale = 'en' }) => {
           </div>
         </div>
 
-        {/* method="post": a submit in the window before hydration goes out natively, and a GET
-            would put the visitor's name, email and message in the URL, history and logs. */}
-        <form className="ed-form" name="contact" method="post" onSubmit={submit}>
+        <form className="ed-form" name="contact" onSubmit={submit}>
           <div style={{ display: 'none' }} aria-hidden="true"><label>Skip: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></div>
           {/* Each label names its field (htmlFor/id), so assistive tech and a click on the label
               both reach the input. */}
