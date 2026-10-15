@@ -5,6 +5,13 @@
  */
 export const SITE_URL = 'https://ahmedchioua.com/'
 
+/**
+ * Cloudflare Web Analytics site token (public: it ships in every page). The pages load the beacon
+ * themselves, after paint, instead of Cloudflare injecting it at the edge: see src/main.jsx.
+ * vite.config.js passes it to main.jsx and src/404.html, which can't import this module.
+ */
+export const ANALYTICS_TOKEN = 'bf6b6e685f124401b038cd3d47040a76'
+
 /** The public source of this site. The Proof section and the build log both link into it. */
 export const REPO_URL = 'https://github.com/r0b0t007/ahmed-portfolio'
 

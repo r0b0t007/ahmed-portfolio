@@ -57,5 +57,18 @@
         <a href="/#contact">Get in touch</a>
       </nav>
     </main>
+    <!-- Cloudflare Web Analytics. Every other page loads the beacon from src/main.jsx, which this
+         standalone page never loads, so it carries its own. Production host only; vite.config.js
+         fills in the host and token. Speed doesn't matter here, so no after-paint wait, but it
+         still steps aside if Cloudflare is injecting its own copy. -->
+    <script>
+      if (location.hostname === '__SITE_HOST__') addEventListener('DOMContentLoaded', function () {
+        if (document.querySelector('script[data-cf-beacon]')) return
+        var beacon = document.createElement('script')
+        beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js'
+        beacon.setAttribute('data-cf-beacon', JSON.stringify({ token: '__ANALYTICS_TOKEN__' }))
+        document.body.appendChild(beacon)
+      })
+    </script>
   </body>
 </html>

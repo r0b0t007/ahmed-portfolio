@@ -16,7 +16,8 @@ export default defineConfig([
     ],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      // __SITE_HOST__ and __ANALYTICS_TOKEN__ are replaced at build time (define in vite.config.js).
+      globals: { ...globals.browser, __SITE_HOST__: 'readonly', __ANALYTICS_TOKEN__: 'readonly' },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
