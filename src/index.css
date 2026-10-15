@@ -129,6 +129,28 @@ p { text-wrap: pretty; }
   border-top: 1px solid var(--rule);
 }
 
+/* Off-screen sections skip style, layout and paint until they near the viewport. The whole page
+   is prerendered, so without this the first frame lays out every section, and Lighthouse's mobile
+   run charges that main-thread time (x4 CPU) straight to FCP and LCP. `auto` in the intrinsic
+   size makes the browser remember each section's real height once it has rendered, so the
+   scrollbar settles after one pass. Find-in-page, anchors and the accessibility tree all still
+   see the content (that is what `auto` keeps, unlike `hidden`). Left out: the footer (a few
+   hundred pixels; an estimate that size buys nothing) and the service pages' hero, which is
+   always on screen and holds the LCP.
+   Two cases render everything instead, because they scroll to a position computed from real
+   heights and would land short of it over sections still at their estimate:
+     - an anchor jump: once a fragment below the hero is the target, the (smooth) scroll measures
+       real heights. #hero is the top of the page, so the logo's /#hero link keeps the skipping;
+     - a reload or back/forward visit restoring its scroll offset: .cv-off, set before first
+       layout by the inline script in index.html's <head>.
+   Gated on :has(), which the anchor case needs (Chromium 85-104 has content-visibility without
+   it), and on scroll anchoring: when a section above the viewport renders and grows, the browser
+   has to hold the reader's place, and engines without overflow-anchor would jump instead. */
+@supports selector(:has(*)) and (overflow-anchor: auto) {
+  .section:not(.svc-hero) { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+  html:is(.cv-off, :has(:target:not(#hero))) .section { content-visibility: visible; }
+}
+
 /* Section head. The machined edge: a 6px graphite bar the heading sits on. No eyebrow label, no
    section number: the heading names the section. */
 .sec-head {

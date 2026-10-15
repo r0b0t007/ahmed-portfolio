@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BOOKING_URL, REPO_URL, WHATSAPP_DISPLAY } from '../content/site'
 import { uiFor } from '../content/i18n'
 import { WhatsAppIcon } from './WhatsAppIcon'
+import { CONTACT_READY } from '../islands'
 
 const EMAIL = 'ahmedchioua@gmail.com'
 const LINKEDIN = 'https://linkedin.com/in/ahmedchioua'
@@ -55,6 +56,9 @@ const Contact = ({ locale = 'en' }) => {
   const t = ui.contact
   const check = validity(t.invalid)
   const [status, setStatus] = useState('idle')
+  // Effects run once the form's handlers are attached: the moment main.jsx can resend a submit
+  // it held during hydration.
+  useEffect(() => { dispatchEvent(new Event(CONTACT_READY)) }, [])
 
   const submit = async e => {
     e.preventDefault()
