@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import { faqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
 import {
-  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_WEEKS, weeksText,
+  BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_URL, SITE_WEEKS, weeksText,
 } from './src/content/site.js'
 import { routes, absoluteUrl } from './src/content/routes.js'
 import { fillErrorPage } from './scripts/lib/pages.js'
@@ -176,6 +176,9 @@ function errorPage({ emit }) {
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
+  // The production hostname for src/main.jsx (it loads the analytics beacon only there). Defined
+  // here so the entry chunk doesn't import content/site.js, whose other constants would come with it.
+  define: { 'import.meta.env.VITE_SITE_HOST': JSON.stringify(new URL(SITE_URL).hostname) },
   // The SSR build only exists to feed scripts/prerender.js; llms.txt belongs to the client output.
   plugins: [react(), contentSchema({ emitLlms: !isSsrBuild }), criticalHead(), errorPage({ emit: !isSsrBuild })],
   build: {
