@@ -8,6 +8,12 @@ the build config, the commit history.
 
 **Live:** [ahmedchioua.com](https://ahmedchioua.com)
 
+What the site sells, in full:
+
+- [Website development](https://ahmedchioua.com/services/website-development): marketing sites and landing pages
+- [SaaS & MVP development](https://ahmedchioua.com/services/saas-mvp-development): from an idea to a product people can sign into
+- [How this site was built](https://ahmedchioua.com/work/this-site): the build log
+
 ## Lighthouse
 
 Measured on the production build, mobile emulation:
