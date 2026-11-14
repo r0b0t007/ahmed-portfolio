@@ -13,8 +13,10 @@ import { fillErrorPage } from './scripts/lib/pages.js'
  * Derives the content that must stay in sync with the visible page from the same modules the
  * page renders from — src/content/faqs.js and src/content/products.js — and:
  *
- *   - injects a JSON-LD graph (FAQPage + one node per product) into index.html
- *   - generates llms.txt from src/content/llms.txt, filling {{FAQ}} and the product placeholders
+ *   - injects a JSON-LD graph into index.html: FAQPage for the six questions the homepage
+ *     shows (homeFaqs), plus one node per product
+ *   - generates llms.txt from src/content/llms.txt, filling {{FAQ}} with every FAQ entry, and
+ *     the product placeholders
  *
  * Google requires FAQPage answer text to match what's visible on the page, and hand-maintained
  * copies of product facts drifted across four files. Deriving them removes the second copy.

@@ -80,7 +80,7 @@ scripts/prerender.js    injects rendered markup into dist/index.html; writes eac
 scripts/lib/markdown.js page HTML -> Markdown, for agents (and 404.md)
 edge/negotiate.js       Accept: text/markdown -> the .md twin, Vary/Link/406/404 handling
 functions/_middleware.js runs it on every request public/_routes.json sends to Functions
-src/content/faqs.js     FAQ copy — single source for the section and the FAQPage schema
+src/content/faqs.js     FAQ copy — single source for the FAQ sections, the homepage FAQPage schema and llms.txt
 src/content/products.js shipped products — single source for Proof cards, schema nodes and llms.txt
 src/content/llms.txt    llms.txt template (product and FAQ placeholders filled at build)
 src/index.css           design tokens + shared editorial primitives
@@ -113,9 +113,10 @@ which would prerender empty fallbacks and mismatch on hydration.
 ### FAQ copy
 
 Google requires `FAQPage` answer text to match the answer visible on the page. Rather than
-maintain two copies, `src/content/faqs.js` is the only source: `Faq.jsx` renders from it, and a
-small Vite plugin generates the JSON-LD from the same strings at build time. Edit the copy there
-and both stay in sync by construction.
+maintain two copies, `src/content/faqs.js` is the only source. The homepage shows a subset
+(`homeFaqs`): `Faq.jsx` renders it, and a small Vite plugin generates the JSON-LD from the same
+list at build time. `scripts/prerender.js` fails the build if a page's `FAQPage` and its visible
+questions ever differ. The remaining entries appear on the service pages and in `llms.txt` only.
 
 ## Accessibility
 

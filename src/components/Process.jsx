@@ -1,6 +1,6 @@
 import { ordinal } from '../lib/ordinal'
 import { FIRST_LINK_DAYS } from '../content/site'
-import { steps } from '../content/process'
+import { homeSteps as steps } from '../content/process'
 
 export const Step = ({ s, i }) => {
   return (
@@ -30,7 +30,7 @@ const Process = () => (
     </div>
 
     <div className="ed-steps">
-      {steps.map((s, i) => <Step key={s.title} s={{ ...s, desc: s.short }} i={i} />)}
+      {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
     </div>
 
   </section>

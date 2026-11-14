@@ -49,8 +49,8 @@ export const FOUNDING_SLOTS = 3
  * call, but the buyer can qualify themselves before booking one. Two of the three offer pillars
  * (days, cover) were already published as numbers; this is the third.
  *
- * Read by the Pricing section, the "What does it cost?" FAQ answer (and therefore the FAQPage
- * JSON-LD derived from it) and llms.txt, so the three cannot drift.
+ * Read by the Pricing section, the "What does it cost?" FAQ answer (shown on the service pages
+ * and in llms.txt) and llms.txt's own pricing lines, so they cannot drift.
  */
 const CURRENCY = '€'
 // ISO 4217 code for the same currency, for structured data (Offer.priceCurrency).

@@ -21,7 +21,7 @@ const Proof = () => {
         <h2 className="sec-title">Don&rsquo;t take my word for it. <em>Take two minutes.</em></h2>
         <p className="sec-lead">
           I won&rsquo;t show you client logos I haven&rsquo;t earned. I&rsquo;ll show you things you
-          can look up: {productsPhrase}, this site and its source.
+          can look up: {productsPhrase}, this site, its source, and the track record behind it.
         </p>
       </div>
 
