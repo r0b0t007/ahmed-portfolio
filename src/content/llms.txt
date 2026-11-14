@@ -40,7 +40,7 @@
 - [Pricing](https://ahmedchioua.com/#pricing) — published floors ({{PRICE_SITE_LABEL}} sites, {{PRICE_SAAS_LABEL}} SaaS/MVP), fixed per project in a free scope call
 {{PAGES}}
 - [Proof](https://ahmedchioua.com/#proof) — what's verifiable today, and what isn't
-- [FAQ](https://ahmedchioua.com/#faq) — cost, timelines, code ownership, working with existing teams
+- [FAQ](https://ahmedchioua.com/#faq) — client work, the founding rate, a slipped date, after the 30 days, existing teams, location
 - [Contact](https://ahmedchioua.com/#contact) — free scope call
 - [Source code for this site](https://github.com/r0b0t007/ahmed-portfolio)
 - [Homepage as Markdown](https://ahmedchioua.com/index.html.md) — every page above also answers `Accept: text/markdown` with a Markdown version of itself, and has one at its own URL plus `.md`

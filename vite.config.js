@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { faqs } from './src/content/faqs.js'
+import { faqs, homeFaqs } from './src/content/faqs.js'
 import { products } from './src/content/products.js'
 import {
   BOOKING_URL, FAQ_ID, FIRST_LINK_DAYS, FOUNDING_SLOTS, LAUNCH_COVER_DAYS, PERSON_ID, PRICE_SAAS_LABEL, PRICE_SITE_LABEL, SAAS_WEEKS, SITE_URL, SITE_WEEKS, ANALYTICS_TOKEN, weeksText,
@@ -72,7 +72,7 @@ function contentSchema({ emitLlms }) {
           {
             '@type': 'FAQPage',
             '@id': FAQ_ID,
-            mainEntity: faqs.map(({ q, a }) => ({
+            mainEntity: homeFaqs.map(({ q, a }) => ({
               '@type': 'Question',
               name: q,
               acceptedAnswer: { '@type': 'Answer', text: a },

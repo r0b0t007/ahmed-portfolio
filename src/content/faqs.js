@@ -77,5 +77,12 @@ export const faqs = [
   },
 ]
 
+/**
+ * The homepage's subset. The other five (what, speed, ai-quality, cost, ownership) are answered
+ * by a section of their own on that page; the service pages still show them.
+ */
+export const HOME_FAQ_IDS = ['client-work', 'founding', 'slip', 'after', 'existing-code', 'location']
+export const homeFaqs = HOME_FAQ_IDS.map(byId(faqs, 'faqs'))
+
 /** One entry by id. The service pages pick their FAQ subset this way; an unknown id fails the build. */
 export const faqById = byId(faqs, 'faqs')

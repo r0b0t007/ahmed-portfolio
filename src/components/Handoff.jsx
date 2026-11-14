@@ -11,16 +11,14 @@ const stack = [
     title: 'Pure asset ownership',
     lines: [
       'Your GitHub repo, in your name, from day one.',
-      'Written documentation plus a recorded walkthrough.',
-      'Any developer can pick it up tomorrow. You are never locked in, including to me.',
+      'Written documentation plus a recorded walkthrough. You are never locked in, including to me.',
     ],
   },
   {
     title: 'Infrastructure, configured and transferred',
     lines: [
       'Hosting, domain, database, auth, payments: set up on your accounts (Vercel, AWS, Supabase, Cloudflare).',
-      'Deploy pipeline live. Push code, it ships.',
-      'Analytics wired before launch, not after. Nobody “holds the keys for you”. You hold them.',
+      'Deploy pipeline live. Analytics wired before launch, not after.',
     ],
   },
   {
@@ -28,7 +26,6 @@ const stack = [
     lines: [
       `Bugs surfaced in the first ${LAUNCH_COVER_DAYS} days: fixed, included.`,
       'Small tweaks as real users hit it: included. The direct channel stays open.',
-      'The first month is when things break. I stay for it.',
     ],
   },
 ]

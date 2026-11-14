@@ -30,10 +30,9 @@ const About = () => {
       <div className="sec-head">
         <h2 className="sec-title">What I work <em>with</em></h2>
         <p className="sec-lead">
-          I use AI every day in the build, and it’s the difference between quoting six weeks and
-          quoting six months. What it hasn’t changed is the part that decides whether software
-          survives real users: the data model, the architecture, the tests, and knowing what to
-          leave out. That half came from nine years of enterprise delivery.
+          I use AI every day in the build. What it hasn’t changed is the part that decides whether
+          software survives real users: the data model, the architecture, the tests, and knowing
+          what to leave out.
         </p>
       </div>
 

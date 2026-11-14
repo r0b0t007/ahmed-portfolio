@@ -1,4 +1,4 @@
-import { faqs } from '../content/faqs'
+import { homeFaqs as faqs } from '../content/faqs'
 
 export const FaqRow = ({ f }) => {
   return (

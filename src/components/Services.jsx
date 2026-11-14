@@ -25,8 +25,7 @@ const Services = () => (
     <div className="sec-head">
       <h2 className="sec-title">What I <em>build</em></h2>
       <p className="sec-lead">
-        Two things, done end to end. Scoped up front, shipped on an agreed date, and handed
-        over so you can maintain them without me.
+        Two things, done end to end, and handed over so you can maintain them without me.
       </p>
     </div>
 
@@ -35,9 +34,8 @@ const Services = () => (
     </div>
 
     <p className="ed-svc-also">
-      <b>Already have a codebase that won&rsquo;t move, or a process eating hours a week?</b>{' '}
-      Architecture rescues and AI automation are services too. Mention it in the scope call and
-      we&rsquo;ll price it the same way.
+      <b>A codebase that won&rsquo;t move, or a process eating hours a week?</b>{' '}
+      Architecture rescues and AI automation are priced the same way.
     </p>
 
   </section>
