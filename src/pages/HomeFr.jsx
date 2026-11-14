@@ -86,6 +86,10 @@ const HomeFr = () => {
         </div>
         <PriceTable head={home.pricing.head} rows={home.pricing.rows} />
         <p className="ed-price-note">{ui.offer.movers}</p>
+        <p className="ed-price-note">
+          <b>{home.pricing.local.who}</b>{' '}
+          <a href={ui.whatsappUrl} target="_blank" rel="noopener noreferrer">{home.pricing.local.invite}</a>{home.pricing.local.rest}
+        </p>
         <div className="ed-cta-row svc-price-cta">
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink">{home.pricing.cta}</a>
         </div>

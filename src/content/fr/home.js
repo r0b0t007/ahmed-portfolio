@@ -64,6 +64,9 @@ export const home = typo({
       { scope: 'Produit SaaS ou MVP', from: PRICE_SAAS_LABEL_FR },
     ],
     cta: 'Fixer un prix et une date',
+    // Morocco is a contact-me market: the page states no local price and no local scope, only
+    // that a Moroccan business is welcome to write. `invite` is the link text.
+    local: { who: 'Entreprise au Maroc ?', invite: 'Écrivez-moi sur WhatsApp', rest: ', on en parle.' },
   },
   faq: {
     title: 'Des réponses',
