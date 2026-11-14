@@ -2,13 +2,15 @@
  * Single source of truth for the FAQ.
  *
  * Consumed by:
- *   - src/components/Faq.jsx   — renders the visible section
- *   - src/pages/ServicePage.jsx — renders a per-service subset, picked by id
- *   - vite.config.js           — generates the FAQPage JSON-LD injected into index.html and the
- *                                FAQ section of llms.txt
+ *   - src/components/Faq.jsx    — the homepage section: the six entries in `homeFaqs`
+ *   - src/pages/ServicePage.jsx — a per-service subset, picked by id
+ *   - vite.config.js            — the homepage's FAQPage JSON-LD (`homeFaqs` again) and the FAQ
+ *                                 section of llms.txt (every entry)
  *
- * Google requires FAQPage answer text to match the answer visible on the page. Both consumers
- * read these exact strings, so they cannot drift. Edit the copy here and nowhere else.
+ * Google requires FAQPage text to match what is visible on the same page, so the JSON-LD lists
+ * only the homepage's six; scripts/prerender.js fails the build if the two differ. An entry
+ * outside `homeFaqs` is shown on service pages and in llms.txt, and is in no structured data.
+ * Edit the copy here and nowhere else.
  */
 import { byId } from './byId.js'
 import { products } from './products.js'
@@ -79,3 +81,9 @@ export const faqs = [
 
 /** One entry by id. The service pages pick their FAQ subset this way; an unknown id fails the build. */
 export const faqById = byId(faqs, 'faqs')
+
+/**
+ * The homepage's subset. The other five (what, speed, ai-quality, cost, ownership) are answered
+ * by a section of their own on that page; the service pages still show them.
+ */
+export const homeFaqs = ['client-work', 'founding', 'slip', 'after', 'existing-code', 'location'].map(faqById)

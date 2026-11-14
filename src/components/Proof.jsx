@@ -1,4 +1,4 @@
-import { proofItems as items } from '../content/proof'
+import { homeProofItems as items } from '../content/proof'
 import { productsPhrase } from '../content/products'
 
 export const ProofItem = ({ it }) => {

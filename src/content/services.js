@@ -30,7 +30,7 @@ export const services = [
     card: {
       title: 'Websites that rank and convert',
       tagline: 'Built to load fast and get found.',
-      desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch. Structured data, clean semantics, proper meta tags and a sitemap all go in during the build, and I measure Core Web Vitals before launch instead of leaving them as cleanup for later.',
+      desc: 'Marketing sites, landing pages and portfolios, designed and built from scratch, with Core Web Vitals measured before launch.',
       tags: ['Design & build', 'SEO foundation', 'Core Web Vitals', 'Analytics'],
     },
     summary: `marketing sites and landing pages from ${PRICE_SITE_LABEL}, usually live in ${weeksText(SITE_WEEKS)} weeks`,
@@ -70,7 +70,7 @@ export const services = [
     card: {
       title: 'SaaS & MVP builds',
       tagline: 'From an idea to a product people can sign into.',
-      desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them. It goes out on infrastructure that can take growth, so you’re not rebuilding the foundations the month it starts working.',
+      desc: 'We agree on the smallest version that proves the idea, then I build it: auth, data model, the core flows, payments if you need them.',
       tags: ['MVP scoping', 'Full-stack build', 'Auth & payments', 'Deploy pipeline'],
     },
     summary: `SaaS products and MVPs from ${PRICE_SAAS_LABEL}, usually live in ${weeksText(SAAS_WEEKS)} weeks`,

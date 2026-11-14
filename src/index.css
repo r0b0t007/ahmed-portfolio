@@ -717,10 +717,6 @@ p { text-wrap: pretty; }
 .ed-role { font-size: var(--t-h3); font-weight: 700; line-height: 1.3; }
 .ed-org { font-size: var(--t-body); color: var(--ink-2); }
 .ed-project { font-size: var(--t-body); font-weight: 600; color: var(--ink); margin: var(--space-2) 0 var(--space-3); }
-.ed-bullets { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
-.ed-bullet { font-size: var(--t-body); color: var(--ink-2); padding-left: var(--space-6); position: relative; line-height: 1.6; max-width: 66ch; }
-/* The rendered "—" is replaced by a signal square; the dash stays in the DOM for text. */
-.ed-bullet span { position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; overflow: hidden; color: transparent; background: var(--signal); }
 .ed-tools { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 @media (max-width: 640px) { .ed-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); } }
 

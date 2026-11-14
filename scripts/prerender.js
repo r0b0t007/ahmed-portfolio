@@ -27,7 +27,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { routes, absoluteUrl } from '../src/content/routes.js'
 import { home as frHome } from '../src/content/fr/home.js'
-import { injectMarkup, rewriteHead, addAlternates, assertPage, buildSitemap, buildRedirects } from './lib/pages.js'
+import { injectMarkup, rewriteHead, addAlternates, assertPage, assertFaqMatches, buildSitemap, buildRedirects } from './lib/pages.js'
 import { pageToMarkdown, notFoundMarkdown } from './lib/markdown.js'
 import { markdownPath, NOT_FOUND_MARKDOWN } from '../edge/negotiate.js'
 
@@ -74,6 +74,7 @@ for (const route of routes) {
       })
     const html = injectMarkup(head, render(route.path))
     assertPage(html, url)
+    assertFaqMatches(html, url)
     // 404.html's "Get in touch" is a fixed /#contact link (src/404.html); the homepage must keep
     // rendering that anchor, or the link lands at the top of the page instead of the form.
     if (route.kind === 'home' && !html.includes('id="contact"')) throw new Error('homepage has no id="contact" for 404.html to link to')

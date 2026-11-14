@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { injectMarkup, rewriteHead, addAlternates, assertPage, buildSitemap, buildRedirects, fillErrorPage } from './pages.js'
+import { injectMarkup, rewriteHead, addAlternates, assertPage, assertFaqMatches, buildSitemap, buildRedirects, fillErrorPage } from './pages.js'
 
 const TEMPLATE = `<!doctype html><html lang="en"><head>
 <title>Home | Ahmed Chioua</title>
@@ -93,6 +93,31 @@ test('assertPage rejects two h1s and a canonical for another URL', () => {
   assert.throws(() => assertPage(two, PAGE.url), /one <h1>/)
   const one = injectMarkup(TEMPLATE, markup())
   assert.throws(() => assertPage(one, PAGE.url), /canonical/)
+})
+
+const faqPage = (schema, rows) => {
+  const node = { '@type': 'FAQPage', mainEntity: schema.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }
+  const ld = `<script type="application/ld+json">${JSON.stringify({ '@graph': [{ '@type': 'Person' }, node] })}</script>`
+  return `<head>${ld}</head><body>${rows.map(([q, a]) => `<div><h3 class="ed-faq-q">${q}</h3><p class="ed-faq-a">${a}</p></div>`).join('')}</body>`
+}
+
+test('assertFaqMatches accepts a FAQPage that lists what the page shows, entities decoded', () => {
+  const html = faqPage([['How fast is "fast"?', 'It’s a date & a price.'], ['Who?', 'Me.']],
+    [['How fast is &quot;fast&quot;?', 'It’s a date &amp; a price.'], ['Who?', 'Me.']])
+  assert.doesNotThrow(() => assertFaqMatches(html, 'https://ahmedchioua.com/'))
+})
+
+test('assertFaqMatches rejects a missing, extra, reordered or reworded entry', () => {
+  const a = ['A?', 'One.'], b = ['B?', 'Two.']
+  assert.throws(() => assertFaqMatches(faqPage([a, b], [a]), 'u'), /lists 2 entries, the page shows 1/)
+  assert.throws(() => assertFaqMatches(faqPage([a], [a, b]), 'u'), /lists 1 entries, the page shows 2/)
+  assert.throws(() => assertFaqMatches(faqPage([a, b], [b, a]), 'u'), /first difference at entry 1/)
+  assert.throws(() => assertFaqMatches(faqPage([a, b], [a, ['B?', 'Two!']]), 'u'), /first difference at entry 2 \("B\?"\)/)
+})
+
+test('assertFaqMatches ignores a page with FAQ rows but no FAQPage node', () => {
+  const html = '<head><script type="application/ld+json">{"@type":"Service"}</script></head><body><h3 class="ed-faq-q">A?</h3><p class="ed-faq-a">One.</p></body>'
+  assert.doesNotThrow(() => assertFaqMatches(html, 'u'))
 })
 
 test('buildSitemap lists each URL once', () => {

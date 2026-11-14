@@ -9,9 +9,8 @@ const Hero = () => (
     <div className="ed-hero-text">
       <h1 className="ed-h1">Your site or SaaS, live in weeks. Fixed price. <em>Date in writing.</em></h1>
       <p className="ed-lead">
-        A working link in <strong>{FIRST_LINK_DAYS} days</strong>. A launch date you can plan around. A price
-        that doesn&rsquo;t move. Built by an engineer with nine years shipping production software
-        for Bell, BMW and Bayer.
+        A working link in <strong>{FIRST_LINK_DAYS} days</strong>. Built by an engineer with nine years
+        shipping production software for Bell, BMW and Bayer.
       </p>
       <div className="ed-cta-row">
         <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink"><CtaLabel long={CTA_LABEL_LONG} short={CTA_LABEL} /></a>

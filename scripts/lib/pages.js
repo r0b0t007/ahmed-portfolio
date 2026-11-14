@@ -130,6 +130,31 @@ export function assertPage(html, url) {
   }
 }
 
+const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', '#x27': "'", '#39': "'" }
+const decodeEntities = s => s.replace(/&(amp|lt|gt|quot|#x27|#39);/g, (_, e) => ENTITIES[e])
+
+/**
+ * Google requires FAQPage text to match what the page shows. The schema (vite.config.js, or a
+ * route's jsonLd) and the section (FaqRow) each choose their list of entries, so this compares
+ * the two in the finished HTML: same questions, same answers, same order. A page with no
+ * FAQPage node is not checked; a page that shows FAQ rows without one is allowed.
+ */
+export function assertFaqMatches(html, url) {
+  const schema = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .flatMap(m => { const data = JSON.parse(m[1]); return data['@graph'] ?? [data] })
+    .filter(node => node['@type'] === 'FAQPage')
+    .flatMap(node => node.mainEntity)
+    .map(q => [q.name, q.acceptedAnswer.text])
+  if (schema.length === 0) return
+  const visible = [...html.matchAll(/<h3 class="ed-faq-q">([\s\S]*?)<\/h3><p class="ed-faq-a">([\s\S]*?)<\/p>/g)]
+    .map(m => [decodeEntities(m[1]), decodeEntities(m[2])])
+  const at = schema.findIndex((entry, i) => entry[0] !== visible[i]?.[0] || entry[1] !== visible[i]?.[1])
+  if (schema.length !== visible.length || at !== -1) {
+    const where = at === -1 ? '' : `; first difference at entry ${at + 1} ("${schema[at][0]}")`
+    throw new Error(`[prerender] ${url}: FAQPage lists ${schema.length} entries, the page shows ${visible.length}${where}`)
+  }
+}
+
 // No lastmod: a build date would change on every deploy and teach Google to ignore it.
 // changefreq and priority are ignored by Google, so they are left out too.
 export const buildSitemap = urls => [

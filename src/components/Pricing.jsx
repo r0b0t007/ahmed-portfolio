@@ -64,9 +64,6 @@ const Pricing = () => (
           what to build, what to leave out, and who answers when it breaks at an awkward hour.
           You&rsquo;re paying for those.
         </p>
-        <p className="ed-price-a">
-          Cheap development is the expensive option. You just pay for it later, as a rebuild.
-        </p>
         <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink ed-price-cta">
           Lock in a price and a date
         </a>
