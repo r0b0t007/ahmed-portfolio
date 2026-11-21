@@ -581,6 +581,7 @@ p { text-wrap: pretty; }
    sit above the step's title, in the same column. */
 .ed-steps { max-width: 1000px; border-top: 2px solid var(--ink); }
 .ed-step { padding: var(--space-6) 0; border-bottom: 1px solid var(--rule); }
+.ed-steps-cta { margin-top: var(--space-8); }
 .ed-step-side { display: flex; align-items: baseline; gap: var(--space-4); margin-bottom: var(--space-3); }
 .ed-step-n {
   font-family: var(--display); font-weight: 800; font-size: 2.5rem; line-height: 1;

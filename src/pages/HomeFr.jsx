@@ -67,6 +67,9 @@ const HomeFr = () => {
         <div className="ed-steps">
           {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
         </div>
+        <div className="ed-cta-row ed-steps-cta">
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink"><CtaLabel long={ui.cta.long} short={ui.cta.short} /></a>
+        </div>
       </section>
 
       <section id="proof" className="section">
