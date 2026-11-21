@@ -1,5 +1,6 @@
 import { ordinal } from '../lib/ordinal'
-import { FIRST_LINK_DAYS } from '../content/site'
+import { BOOKING_URL, CTA_LABEL, CTA_LABEL_LONG, FIRST_LINK_DAYS } from '../content/site'
+import { CtaLabel } from './CtaLabel'
 import { homeSteps as steps } from '../content/process'
 
 export const Step = ({ s, i }) => {
@@ -31,6 +32,12 @@ const Process = () => (
 
     <div className="ed-steps">
       {steps.map((s, i) => <Step key={s.title} s={s} i={i} />)}
+    </div>
+
+    {/* The one booking key between the hero and the price table. On a phone the header's key is
+        inside the menu, so without this a reader scrolls five sections with nothing to press. */}
+    <div className="ed-cta-row ed-steps-cta">
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-ink"><CtaLabel long={CTA_LABEL_LONG} short={CTA_LABEL} /></a>
     </div>
 
   </section>
